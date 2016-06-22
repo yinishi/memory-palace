@@ -1,0 +1,4 @@
+• Editor: This method involves the use of an external tool to construct the
+scene, followed by exporting the result (for example, in JSON format), and
+importing it when the application executes
+
