@@ -1,4 +1,5 @@
 'use strict'
+console.log("room")
 // CONSTANTS
 const WIDTH = require("./constants").WIDTH;
 const HEIGHT = require("./constants").HEIGHT;
