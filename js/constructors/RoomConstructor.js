@@ -1,3 +1,5 @@
+const THREE = require("three");
+
 function Room() {
   this.mesh = new THREE.Object3D()
 
@@ -5,7 +7,8 @@ function Room() {
   var wallSize = floorSize / 2
 
   let floorGeometry = new THREE.PlaneBufferGeometry(floorSize, floorSize);
-  let floorMaterial = new THREE.MeshBasicMaterial({ color: 0xcccccc });
+  let floorMaterial = new THREE.MeshBasicMaterial({ color: 0xccccff });
+  floorMaterial.side = THREE.DoubleSide;
   let floor = new THREE.Mesh(floorGeometry, floorMaterial);
 
   // GRID
@@ -31,17 +34,20 @@ function Room() {
 
   let wallGeometry = new THREE.PlaneBufferGeometry(wallSize, floorSize);
   let wallMaterial1 = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+  wallMaterial1.side = THREE.DoubleSide;
   let wall1 = new THREE.Mesh(wallGeometry, wallMaterial1)
   wall1.rotation.set(0, Math.PI / 2, 0)
   wall1.position.set(-wallSize, 0, wallSize / 2)
 
   let wallMaterial2 = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
   let wall2 = new THREE.Mesh(wallGeometry, wallMaterial2)
+  wallMaterial2.side = THREE.DoubleSide;
   wall2.rotation.set(0, Math.PI / 2, 0)
   wall2.position.set(wallSize, 0, wallSize / 2)
 
   let wallMaterial3 = new THREE.MeshBasicMaterial({ color: 0x0000ff });
   let wall3 = new THREE.Mesh(wallGeometry, wallMaterial3)
+  wallMaterial3.side = THREE.DoubleSide;
   wall3.rotation.set(Math.PI / 2, 0, Math.PI / 2)
   wall3.position.set(0, wallSize, wallSize / 2)
 

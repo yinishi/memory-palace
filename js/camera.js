@@ -1,22 +1,24 @@
+const THREE = require("three");
 const WIDTH = require("./constants").WIDTH;
 const HEIGHT = require("./constants").HEIGHT;
 const ASPECT = WIDTH / HEIGHT;
 let PI = Math.PI;
 
 let positionX = 0;
-let positionY = 0;
-let positionZ = 100;
+let positionY = -70;
+let positionZ = 40;
 
 let rotationX = 0;
 let rotationY = 0;
 let rotationZ = 0;
 let fiveDegrees = (((PI/2)/3)/3)/2;
-
+// 
 
 let camera = new THREE.PerspectiveCamera(60, ASPECT, 1, 10000);
 
 camera.position.set(positionX, positionY, positionZ);
-camera.rotation.set(rotationX, rotationY, rotationZ);
+camera.lookAt(new THREE.Vector3(0,0,0));
+// camera.rotation.set(rotationX, rotationY, rotationZ);
 
 function getCamera() {
 	return camera;
@@ -28,28 +30,58 @@ function moveRight() {
 	camera.position.x+=3;
 }
 function moveUp() {
-	camera.position.y+=3;
+	if (camera.rotation.x < (PI/2)) {
+		camera.position.z+=3;
+	}
+	else {
+		camera.position.y+=3;
+	}
 }
 function moveDown() {
-	camera.position.y-=3;
+	if (camera.rotation.x < (PI/2)) {
+		camera.position.z-=3;
+	}
+	else {
+		camera.position.y-=3;
+	}
 }
 function lookDown() {
-	camera.rotation.x-=fiveDegrees;
+	//if (camera.rotation.x < (PI/2)) {
+		camera.rotation.x-=fiveDegrees;
+
+	//}
 }
 function lookUp() {
-	camera.rotation.x+=fiveDegrees;
+	//if (camera.rotation.x < (PI/2)) {
+		camera.rotation.x+=fiveDegrees;
+	//}
 }
 function lookLeft() {
-	camera.rotation.y+=fiveDegrees;
+	//if (camera.rotation.x < (PI/2)) {
+		camera.rotation.y+=fiveDegrees;
+		// camera.rotation.x+=fiveDegrees/2;
+		//camera.rotation.z-=fiveDegrees/2;
+	// }	
 }
 function lookRight() {
+
 	camera.rotation.y-=fiveDegrees;
 }
 function moveForward(){
-	camera.position.z-=3;
+	if (camera.rotation.x < (PI/2)) {
+		camera.position.y-=3;
+	}
+	else {
+		camera.position.z+=3;
+	}
 }
 function moveBackward(){
-	camera.position.z+=3;
+	if (camera.rotation.x < (PI/2)) {
+		camera.position.y+=3;
+	}
+	else {
+		camera.position.z+=3;
+	}
 }
 //zoomout- increasing position z 
 //zoomin- decreasing position z 

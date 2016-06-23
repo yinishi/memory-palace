@@ -1,3 +1,5 @@
+const THREE = require("three");
+
 function Room() {
     this.mesh = new THREE.Object3D()
 

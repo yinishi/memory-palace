@@ -1,3 +1,5 @@
+const THREE = require("three");
+
 function loadObject (jsonString)  {
 	var objectLoader = new THREE.ObjectLoader();
 	return new Promise (function(res, rej) {

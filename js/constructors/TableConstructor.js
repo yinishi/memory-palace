@@ -1,3 +1,5 @@
+const THREE = require("three");
+
 function Table() {
 	this.mesh = new THREE.Object3D()
 

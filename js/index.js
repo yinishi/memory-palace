@@ -1,17 +1,19 @@
 'use strict'
 console.log("room")
 // CONSTANTS
+const THREE = require("three");
 const WIDTH = require("./constants").WIDTH;
 const HEIGHT = require("./constants").HEIGHT;
 const ASPECT = WIDTH / HEIGHT;
 const UNITSIZE = require("./constants").UNITSIZE;
-// CONSTRUCTOR FUNCTIONS
 const Room = require('./constructors/RoomConstructor.js')
 const Table = require('./constructors/TableConstructor.js')
 const cameraControls = require('./camera.js');
-// REQUIRING OBJECTS
 const camera = cameraControls.getCamera();
+const MOVESPEED = 100;
+const LOOKSPEED = 0.075;
 
+require('three-first-person-controls')(THREE);
 
 // CREATING SCENE
 const scene = new THREE.Scene();
@@ -22,39 +24,48 @@ let table = new Table().mesh
 
 // CREATE A ROOM
 let room = new Room().mesh
-const roomRotationX = - Math.PI / 2 
+const roomRotationX = (- Math.PI / 2) +.75 
 const roomRotationY = 0
 const roomRotationZ = -0.3
-room.rotation.set(roomRotationX, roomRotationY, roomRotationZ)
+// room.rotation.set(roomRotationX, roomRotationY, roomRotationZ)
 room.scale.set(3, 3, 3)
-
-
+// room.position.set(30,30,30)
+console.log("room position", room.position)
 scene.add(room)
 
 
-// CUBE /////////////
-
-var geomCube = new THREE.BoxGeometry(4, 4, 4);
-var matCube = new THREE.MeshBasicMaterial({color: 0x000000})
-var cube = new THREE.Mesh(geomCube, matCube);
- 
+// Table /////////////
 table.position.set(0, -10, 6)
 room.add(table)
 
 
 // RENDERER
 let renderer = require("./renderer");
-renderer.render(scene, camera);
+
 
 // CREATE CONTAINER
 var container = document.createElement('div');
 document.body.appendChild(container);
 container.appendChild(renderer.domElement);
 
+// const controls = new THREE.FirstPersonControls(camera);
+// // controls.lookVertical = false; 
+// console.log(controls)
+
+// function frame() {
+// 	requestAnimationFrame(frame)
+// 	controls.update(5)
+// 	renderer.render(scene, camera);
+// }
+// frame()
+
+
 // CONTROLLS
 window.addEventListener('wheel', e => wheelEvents(e));
 
 function wheelEvents(event){
+
+	// console.log(event.deltaY);
 	if(event.deltaY > 0){
 		cameraControls.moveForward();
 		renderer.render(scene, camera);
@@ -63,8 +74,8 @@ function wheelEvents(event){
 		renderer.render(scene, camera);
 	}
 }
- 
 $("body").keydown(function(e) {
+	console.log(camera.rotation.x)
 	if(e.keyCode === 37) { //left
 		cameraControls.moveLeft();
 		renderer.render(scene, camera)

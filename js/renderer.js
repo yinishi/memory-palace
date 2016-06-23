@@ -1,5 +1,6 @@
 'use strict'
 
+const THREE = require("three");
 const WIDTH = require("./constants").WIDTH;
 const HEIGHT = require("./constants").HEIGHT;
 
