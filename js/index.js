@@ -14,6 +14,16 @@ var objects = require("./constants").objects;
 var isShiftDown = false;
 var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
+var myObject;
+
+//Add a teapot
+
+// instantiate a loader
+var loader = new THREE.ObjectLoader();
+
+loader.load('js/utah-teapot-threejs/utah-teapot.json', function(object){
+	myObject = object
+});
 
 // CREATING SCENE
 const scene = new THREE.Scene();
@@ -29,7 +39,7 @@ scene.add( directionalLight );
 const camera = cameraControls.getCamera();
 scene.add(camera);
 
-// // CREATE A TABLE
+// CREATE A TABLE
 var tableInstance = new Table();
 let table = tableInstance.container
 
@@ -45,14 +55,14 @@ room.scale.set(3, 3, 3)
 scene.add(room)
 objects = objects.concat(roomInstance.objects)
 
-// roll-over helpers
-var rollOverGeo = new THREE.BoxGeometry( 3, 3, 3 );
-var rollOverMaterial = new THREE.MeshBasicMaterial( { color: 0xff0000, opacity: 0.5, transparent: true } );
-var rollOverMesh = new THREE.Mesh( rollOverGeo, rollOverMaterial );
-scene.add( rollOverMesh );
-// cubes
-var cubeGeo = new THREE.BoxGeometry( 3, 3, 3 );
-var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xfeb74c } );
+// // roll-over helpers
+// var rollOverGeo = new THREE.BoxGeometry( 3, 3, 3 );
+// var rollOverMaterial = new THREE.MeshBasicMaterial( { color: 0xff0000, opacity: 0.5, transparent: true } );
+// var rollOverMesh = new THREE.Mesh( rollOverGeo, rollOverMaterial );
+// scene.add( rollOverMesh );
+// // cubes
+// var cubeGeo = new THREE.BoxGeometry( 3, 3, 3 );
+// var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xfeb74c } );
  
 table.position.set(0, -10, 6)
 room.add(table)
@@ -145,8 +155,11 @@ function onDocumentMouseMove( event ) {
 	var intersects = raycaster.intersectObjects( objects );
 	if ( intersects.length > 0 ) {
 		var intersect = intersects[ 0 ];
-		rollOverMesh.position.copy( intersect.point ).add( intersect.face.normal );
-		rollOverMesh.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
+		myObject.scale.set(.3, .3, .3)
+		myObject.rotation.set(Math.PI/2, 0, 0)
+		myObject.position.copy( intersect.point ).add( intersect.face.normal );
+		myObject.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
+		scene.add(myObject)
 	}
 	render();
 }
@@ -165,11 +178,19 @@ function onDocumentMouseDown( event ) {
 			}
 		// create cube
 		} else {
-			var voxel = new THREE.Mesh( cubeGeo, cubeMaterial );
-			voxel.position.copy( intersect.point ).add( intersect.face.normal );
-			voxel.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
-			scene.add( voxel );
-			objects.push( voxel );
+			// var voxel = new THREE.Mesh( cubeGeo, cubeMaterial );
+			// voxel.position.copy( intersect.point ).add( intersect.face.normal );
+			// voxel.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
+			// scene.add( voxel );
+			// objects.push( voxel );
+			
+				var myObject2 = myObject.clone();
+				myObject2.scale.set(.3, .3, .3)
+				myObject2.rotation.set(Math.PI/2, 0, 0)
+				myObject2.position.copy( intersect.point ).add( intersect.face.normal );
+				myObject2.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
+				scene.add( myObject2 );
+				objects.push( myObject2 );
 		}
 		render();
 	}
