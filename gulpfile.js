@@ -19,3 +19,4 @@ gulp.task('browserify', function() {
 });
 
 gulp.watch('js/*/*', ['browserify']);
+gulp.watch('js/*', ['browserify']);
