@@ -1,6 +1,7 @@
 'use strict'
 
 const constants = {
+	objects: [],
 	WIDTH : window.innerWidth,
 	HEIGHT : window.innerHeight,
 	// ASPECT : constants.WIDTH / constants.HEIGHT,

@@ -1,12 +1,14 @@
+// var floor;
 function Room() {
-  this.mesh = new THREE.Object3D()
+  this.container = new THREE.Object3D()
+  this.objects = [];
 
   var floorSize = 30
   var wallSize = floorSize / 2
 
   let floorGeometry = new THREE.PlaneBufferGeometry(floorSize, floorSize);
   let floorMaterial = new THREE.MeshBasicMaterial({ color: 0xcccccc });
-  let floor = new THREE.Mesh(floorGeometry, floorMaterial);
+  var floor = new THREE.Mesh(floorGeometry, floorMaterial);
 
   // GRID
 
@@ -27,9 +29,10 @@ function Room() {
   floor.add(line);
 
 
-  this.mesh.add(floor)
+  this.container.add(floor)
+  this.objects.push(floor);
 
-  let wallGeometry = new THREE.PlaneBufferGeometry(wallSize, floorSize);
+  let wallGeometry = new THREE.BoxGeometry(wallSize, floorSize, 1);
   let wallMaterial1 = new THREE.MeshBasicMaterial({ color: 0xff0000 });
   let wall1 = new THREE.Mesh(wallGeometry, wallMaterial1)
   wall1.rotation.set(0, Math.PI / 2, 0)
@@ -37,7 +40,7 @@ function Room() {
 
   let wallMaterial2 = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
   let wall2 = new THREE.Mesh(wallGeometry, wallMaterial2)
-  wall2.rotation.set(0, Math.PI / 2, 0)
+  wall2.rotation.set(0, Math.PI / 2, Math.PI)
   wall2.position.set(wallSize, 0, wallSize / 2)
 
   let wallMaterial3 = new THREE.MeshBasicMaterial({ color: 0x0000ff });
@@ -45,13 +48,12 @@ function Room() {
   wall3.rotation.set(Math.PI / 2, 0, Math.PI / 2)
   wall3.position.set(0, wallSize, wallSize / 2)
 
-  // let wall3 = new THREE.Mesh(wallGeometry, wallMaterial)
-  // wall3.rotation.set(0, Math.PI/2, 0)
-  // wall3.position.set(0, -15, 15)
-
-  this.mesh.add(wall1)
-  this.mesh.add(wall2)
-  this.mesh.add(wall3)
+  this.container.add(wall1)
+  this.container.add(wall2)
+  this.container.add(wall3)
+  this.objects.push(wall1)
+  // this.objects.push(wall2)
+  // this.objects.push(wall3)
 
 
 
