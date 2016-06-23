@@ -18,4 +18,4 @@ gulp.task('browserify', function() {
         .pipe( gulp.dest('minjs') );
 });
 
-gulp.watch('js/*', ['browserify']);
+gulp.watch('js/*/*', ['browserify']);

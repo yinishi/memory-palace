@@ -18,11 +18,16 @@ scene.add(camera);
 
 // CREATE A ROOM
 let room = new Room()
-const roomRotationX = 2
-const roomRotationY = -Math.PI / 2 - 1.7
-const roomRotationZ = 2
+const roomRotationX = - Math.PI / 2 + 0.5
+const roomRotationY = 0
+const roomRotationZ = -0.3
+// room.mesh.rotation.set(roomRotationX, roomRotationY, roomRotationZ)
 room.mesh.rotation.set(roomRotationX, roomRotationY, roomRotationZ)
+room.mesh.scale.set(3, 3, 3)
+
 scene.add(room.mesh)
+
+
 
 // RENDERER
 let renderer = require("./renderer");
