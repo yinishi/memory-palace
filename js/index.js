@@ -1,5 +1,4 @@
 'use strict'
-console.log("room")
 // CONSTANTS
 const WIDTH = require("./constants").WIDTH;
 const HEIGHT = require("./constants").HEIGHT;
@@ -10,41 +9,61 @@ const Room = require('./constructors/RoomConstructor.js')
 const Table = require('./constructors/TableConstructor.js')
 const cameraControls = require('./camera.js');
 // REQUIRING OBJECTS
-const camera = cameraControls.getCamera();
+var objects = require("./constants").objects;
 
+var isShiftDown = false;
+var raycaster = new THREE.Raycaster();
+var mouse = new THREE.Vector2();
 
 // CREATING SCENE
 const scene = new THREE.Scene();
 
+//ADDING LIGHT
+var ambientLight = new THREE.AmbientLight( 0x606060 );
+scene.add( ambientLight );
+var directionalLight = new THREE.DirectionalLight( 0xffffff );
+directionalLight.position.set( 1, 0.75, 0.5 ).normalize();
+scene.add( directionalLight );
+
+//ADDING CAMERA
+const camera = cameraControls.getCamera();
 scene.add(camera);
+
 // // CREATE A TABLE
-let table = new Table().mesh
+var tableInstance = new Table();
+let table = tableInstance.container
 
 // CREATE A ROOM
-let room = new Room().mesh
+var roomInstance = new Room()
+let room = roomInstance.container
 const roomRotationX = - Math.PI / 2 
 const roomRotationY = 0
 const roomRotationZ = -0.3
-room.rotation.set(roomRotationX, roomRotationY, roomRotationZ)
+// room.rotation.set(roomRotationX, roomRotationY, roomRotationZ)
 room.scale.set(3, 3, 3)
 
-
 scene.add(room)
+objects = objects.concat(roomInstance.objects)
 
-
-// CUBE /////////////
-
-var geomCube = new THREE.BoxGeometry(4, 4, 4);
-var matCube = new THREE.MeshBasicMaterial({color: 0x000000})
-var cube = new THREE.Mesh(geomCube, matCube);
+// roll-over helpers
+var rollOverGeo = new THREE.BoxGeometry( 3, 3, 3 );
+var rollOverMaterial = new THREE.MeshBasicMaterial( { color: 0xff0000, opacity: 0.5, transparent: true } );
+var rollOverMesh = new THREE.Mesh( rollOverGeo, rollOverMaterial );
+scene.add( rollOverMesh );
+// cubes
+var cubeGeo = new THREE.BoxGeometry( 3, 3, 3 );
+var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xfeb74c } );
  
 table.position.set(0, -10, 6)
 room.add(table)
-
+objects = objects.concat(tableInstance.objects);
 
 // RENDERER
 let renderer = require("./renderer");
-renderer.render(scene, camera);
+var render = function(){
+	renderer.render(scene, camera);
+}
+render();
 
 // CREATE CONTAINER
 var container = document.createElement('div');
@@ -67,39 +86,39 @@ function wheelEvents(event){
 $("body").keydown(function(e) {
 	if(e.keyCode === 37) { //left
 		cameraControls.moveLeft();
-		renderer.render(scene, camera)
+		render();
 	}
 	else if(e.keyCode === 39) { //right
 		cameraControls.moveRight();
-		renderer.render(scene, camera)
+		render();
 	}
 	else if(e.keyCode === 38) { //up
 		cameraControls.moveUp();
-		renderer.render(scene, camera)
+		render();
 	}
 	else if(e.keyCode === 40) { //down
 		cameraControls.moveDown();
-		renderer.render(scene, camera)
+		render();
 	}
 	//look up //c
 	else if (e.keyCode === 67) {
 		cameraControls.lookUp();
-		renderer.render(scene, camera);
+		render();
 	}
 	//look down //x
 	else if (e.keyCode === 88) {
 		cameraControls.lookDown();
-		renderer.render(scene, camera);
+		render();
 	}
 	//look left //z
 	else if (e.keyCode === 90) {
 		cameraControls.lookLeft();
-		renderer.render(scene, camera);
+		render();
 	}
 	//look right //v
 	else if (e.keyCode === 86) {
 		cameraControls.lookRight();
-		renderer.render(scene, camera);
+		render();
 	}
 
 });
@@ -111,4 +130,57 @@ function onWindowResize() {
 	camera.aspect = window.innerWidth / window.innerHeight;
 	camera.updateProjectionMatrix();
 	renderer.setSize( window.innerWidth, window.innerHeight );
+}
+
+//DROPPING OBJECTS
+document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+document.addEventListener( 'keydown', onDocumentKeyDown, false );
+document.addEventListener( 'keyup', onDocumentKeyUp, false );
+
+function onDocumentMouseMove( event ) {
+	event.preventDefault();
+	mouse.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
+	raycaster.setFromCamera( mouse, camera );
+	var intersects = raycaster.intersectObjects( objects );
+	if ( intersects.length > 0 ) {
+		var intersect = intersects[ 0 ];
+		rollOverMesh.position.copy( intersect.point ).add( intersect.face.normal );
+		rollOverMesh.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
+	}
+	render();
+}
+function onDocumentMouseDown( event ) {
+	event.preventDefault();
+	mouse.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
+	raycaster.setFromCamera( mouse, camera );
+	var intersects = raycaster.intersectObjects( objects );
+	if ( intersects.length > 0 ) {
+		var intersect = intersects[ 0 ];
+		// delete cube
+		if ( isShiftDown ) {
+			if ( !roomInstance.objects.includes(intersect.object) || !tableInstance.objects.includes(intersect.object)) {
+				scene.remove( intersect.object );
+				objects.splice( objects.indexOf( intersect.object ), 1 );
+			}
+		// create cube
+		} else {
+			var voxel = new THREE.Mesh( cubeGeo, cubeMaterial );
+			voxel.position.copy( intersect.point ).add( intersect.face.normal );
+			voxel.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
+			scene.add( voxel );
+			objects.push( voxel );
+		}
+		render();
+	}
+}
+function onDocumentKeyDown( event ) {
+	switch( event.keyCode ) {
+		case 16: isShiftDown = true; break;
+	}
+}
+function onDocumentKeyUp( event ) {
+	switch ( event.keyCode ) {
+		case 16: isShiftDown = false; break;
+	}
 }

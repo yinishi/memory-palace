@@ -1,5 +1,6 @@
 function Table() {
-	this.mesh = new THREE.Object3D()
+	this.container = new THREE.Object3D()
+	this.objects = [];
 
 	var tabletopWidth = 6;
 	var tabletopLength = 4;
@@ -29,11 +30,13 @@ function Table() {
 	let leg4 = new THREE.Mesh(geomLeg, matLeg);
 	leg4.position.set(-2, 1.5, -2)
 
-	this.mesh.add(tabletop);
-	this.mesh.add(leg1);
-	this.mesh.add(leg2);
-	this.mesh.add(leg3);
-	this.mesh.add(leg4);
+	this.container.add(tabletop);
+	this.container.add(leg1);
+	this.container.add(leg2);
+	this.container.add(leg3);
+	this.container.add(leg4);
+
+	this.objects.push(tabletop);
 }
 
 module.exports = Table;
