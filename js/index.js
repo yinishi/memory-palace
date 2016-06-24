@@ -8,8 +8,12 @@ const UNITSIZE = require("./constants").UNITSIZE;
 const Room = require('./constructors/RoomConstructor.js')
 const Table = require('./constructors/TableConstructor.js')
 const cameraControls = require('./camera.js');
+
 // REQUIRING OBJECTS
 var objects = require("./constants").objects;
+
+// Object loader
+var objectLoader = require('./Objects.js');
 
 var isShiftDown = false;
 var raycaster = new THREE.Raycaster();
@@ -20,10 +24,29 @@ var myObject;
 
 // instantiate a loader
 var loader = new THREE.ObjectLoader();
+objectLoader('js/utah-teapot-threejs/utah-teapot.json')
+	.then(function(teapot){
+		teapot.scale.set(.3, .3, .3)
+		teapot.rotation.set(Math.PI/2, 0, 0)
+		myObject = teapot;
+	})
 
-loader.load('js/utah-teapot-threejs/utah-teapot.json', function(object){
-	myObject = object
-});
+var ObjectTeapot = {item: 'js/utah-teapot-threejs/utah-teapot.json', positionx: -9.78849431, positiony: 10.4618582, positionz: 2.499999999 };
+console.log(ObjectTeapot.item, "object");
+objectLoader(ObjectTeapot.item)
+	.then(function(teapot){
+		teapot.scale.set(.3, .3, .3)
+		teapot.rotation.set(Math.PI/2, 0, 0)
+		teapot.position.set(ObjectTeapot.positionx, ObjectTeapot.positiony, ObjectTeapot.positionz)
+		scene.add(teapot);
+		render();
+	})
+
+// loader.load('js/utah-teapot-threejs/utah-teapot.json', function(object){
+// 	object.scale.set(.3, .3, .3)
+// 	object.rotation.set(Math.PI/2, 0, 0)
+// 	myObject = object
+// })
 
 // CREATING SCENE
 const scene = new THREE.Scene();
@@ -155,8 +178,8 @@ function onDocumentMouseMove( event ) {
 	var intersects = raycaster.intersectObjects( objects );
 	if ( intersects.length > 0 ) {
 		var intersect = intersects[ 0 ];
-		myObject.scale.set(.3, .3, .3)
-		myObject.rotation.set(Math.PI/2, 0, 0)
+		// myObject.scale.set(.3, .3, .3)
+		// myObject.rotation.set(Math.PI/2, 0, 0)
 		myObject.position.copy( intersect.point ).add( intersect.face.normal );
 		myObject.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
 		scene.add(myObject)
@@ -185,12 +208,11 @@ function onDocumentMouseDown( event ) {
 			// objects.push( voxel );
 			
 				var myObject2 = myObject.clone();
-				myObject2.scale.set(.3, .3, .3)
-				myObject2.rotation.set(Math.PI/2, 0, 0)
 				myObject2.position.copy( intersect.point ).add( intersect.face.normal );
 				myObject2.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
 				scene.add( myObject2 );
 				objects.push( myObject2 );
+				console.log(myObject2);
 		}
 		render();
 	}
