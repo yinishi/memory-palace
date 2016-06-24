@@ -1,15 +1,19 @@
 <html>
 	<head>
 		<title>Memory Palace</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 		<link rel="styles/main.css">
 	</head>
 
-	<body>
-		<!-- <button id="lookUp">up</button>
-		<button id="lookLeft">left</button>
-		<button id="lookRight">right</button>
-		<button id="lookDown">down</button> -->
-		<script src="js/three.min.js"></script>
+	<body ng-app="memoryPalace">
+		<navbar></navbar>
+
+<!-- 		<div class="container"> -->
+			<!-- <a ui-sref="room">click</a> -->
+        	<div id="main" ui-view></div>
+    	<!-- </div> -->
+
+		<script src="browser/js/three.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 		<script src="minjs/bundled.js"></script>
 	</body>

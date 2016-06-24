@@ -12,10 +12,41 @@ const cameraControls = require('./camera.js');
 // REQUIRING OBJECTS
 var objects = require("./constants").objects;
 
+// Object loader
+var objectLoader = require('./Objects.js');
+
 var isShiftDown = false;
 var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
 var myObject;
+
+//Add a teapot
+
+// instantiate a loader
+var loader = new THREE.ObjectLoader();
+objectLoader('js/utah-teapot-threejs/utah-teapot.json')
+	.then(function(teapot){
+		teapot.scale.set(.3, .3, .3)
+		teapot.rotation.set(Math.PI/2, 0, 0)
+		myObject = teapot;
+	})
+
+var ObjectTeapot = {item: 'js/utah-teapot-threejs/utah-teapot.json', positionx: -9.78849431, positiony: 10.4618582, positionz: 2.499999999 };
+console.log(ObjectTeapot.item, "object");
+objectLoader(ObjectTeapot.item)
+	.then(function(teapot){
+		teapot.scale.set(.3, .3, .3)
+		teapot.rotation.set(Math.PI/2, 0, 0)
+		teapot.position.set(ObjectTeapot.positionx, ObjectTeapot.positiony, ObjectTeapot.positionz)
+		scene.add(teapot);
+		render();
+	})
+
+// loader.load('js/utah-teapot-threejs/utah-teapot.json', function(object){
+// 	object.scale.set(.3, .3, .3)
+// 	object.rotation.set(Math.PI/2, 0, 0)
+// 	myObject = object
+// })
 
 // CREATING SCENE
 const scene = new THREE.Scene();
@@ -172,17 +203,18 @@ objects = objects.concat(tableInstance.objects);
 
 // CREATE CONTAINER
 var container = document.createElement('div');
-document.body.appendChild(container);
+document.getElementById("world").appendChild(container);
+console.log("hi")
 container.appendChild(renderer.domElement);
 
 //resize image to fit screen
-window.addEventListener( 'resize', onWindowResize, false );
+// window.addEventListener( 'resize', onWindowResize, false );
 
-function onWindowResize() {
-	camera.aspect = window.innerWidth / window.innerHeight;
-	camera.updateProjectionMatrix();
-	renderer.setSize( window.innerWidth, window.innerHeight );
-}
+// function onWindowResize() {
+// 	camera.aspect = window.innerWidth / window.innerHeight;
+// 	camera.updateProjectionMatrix();
+// 	renderer.setSize( window.innerWidth, window.innerHeight );
+// }
 
 //DROPPING OBJECTS
 document.addEventListener( 'mousemove', onDocumentMouseMove, false );
@@ -197,8 +229,8 @@ function onDocumentMouseMove( event ) {
 	var intersects = raycaster.intersectObjects( objects );
 	if ( intersects.length > 0 ) {
 		var intersect = intersects[ 0 ];
-		myObject.scale.set(.3, .3, .3)
-		myObject.rotation.set(Math.PI/2, 0, 0)
+		// myObject.scale.set(.3, .3, .3)
+		// myObject.rotation.set(Math.PI/2, 0, 0)
 		myObject.position.copy( intersect.point ).add( intersect.face.normal );
 		myObject.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
 		scene.add(myObject)
@@ -227,12 +259,11 @@ function onDocumentMouseDown( event ) {
 			// objects.push( voxel );
 			
 				var myObject2 = myObject.clone();
-				myObject2.scale.set(.3, .3, .3)
-				myObject2.rotation.set(Math.PI/2, 0, 0)
 				myObject2.position.copy( intersect.point ).add( intersect.face.normal );
 				myObject2.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
 				scene.add( myObject2 );
 				objects.push( myObject2 );
+				console.log(myObject2);
 		}
 		render();
 	}
