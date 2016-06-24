@@ -28,6 +28,8 @@ loader.load('js/utah-teapot-threejs/utah-teapot.json', function(object){
 // CREATING SCENE
 const scene = new THREE.Scene();
 
+scene.fog = new THREE.Fog( 0xffffff, 0, 750 );
+
 //ADDING LIGHT
 var ambientLight = new THREE.AmbientLight( 0x606060 );
 scene.add( ambientLight );
@@ -38,6 +40,144 @@ scene.add( directionalLight );
 //ADDING CAMERA
 const camera = cameraControls.getCamera();
 scene.add(camera);
+
+// controls
+var PointerLockControls = require('./PointerLockControls.js')
+var controls = new PointerLockControls(camera); // Handles camera control
+scene.add( controls.getObject() );
+var controlsEnabled = true;
+controls.enabled = true;
+
+
+
+var moveForward = false;
+var moveBackward = false;
+var moveLeft = false;
+var moveRight = false;
+var canJump = false;
+
+var prevTime = performance.now();
+var velocity = new THREE.Vector3();
+
+var onKeyDown = function ( event ) {
+
+switch ( event.keyCode ) {
+
+	case 38: // up
+	case 87: // w
+		moveForward = true;
+		break;
+
+	case 37: // left
+	case 65: // a
+		moveLeft = true; break;
+
+	case 40: // down
+	case 83: // s
+		moveBackward = true;
+		break;
+
+	case 39: // right
+	case 68: // d
+		moveRight = true;
+		break;
+
+	case 32: // space
+		if ( canJump === true ) velocity.y += 350;
+		canJump = false;
+		break;
+
+}
+
+};
+
+var onKeyUp = function ( event ) {
+
+switch( event.keyCode ) {
+
+	case 38: // up
+	case 87: // w
+		moveForward = false;
+		break;
+
+	case 37: // left
+	case 65: // a
+		moveLeft = false;
+		break;
+
+	case 40: // down
+	case 83: // s
+		moveBackward = false;
+		break;
+
+	case 39: // right
+	case 68: // d
+		moveRight = false;
+		break;
+
+}
+
+};
+
+document.addEventListener( 'keydown', onKeyDown, false );
+document.addEventListener( 'keyup', onKeyUp, false );
+
+
+
+				function animate() {
+
+				requestAnimationFrame( animate );
+
+				if ( controlsEnabled ) {
+					raycaster.ray.origin.copy( controls.getObject().position );
+					raycaster.ray.origin.y -= 10;
+
+					var intersections = raycaster.intersectObjects( objects );
+
+					var isOnObject = intersections.length > 0;
+
+					var time = performance.now();
+					var delta = ( time - prevTime ) / 1000;
+
+					velocity.x -= velocity.x * 10.0 * delta;
+					velocity.z -= velocity.z * 10.0 * delta;
+
+					velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
+
+					if ( moveForward ) velocity.z -= 400.0 * delta;
+					if ( moveBackward ) velocity.z += 400.0 * delta;
+
+					if ( moveLeft ) velocity.x -= 400.0 * delta;
+					if ( moveRight ) velocity.x += 400.0 * delta;
+
+					if ( isOnObject === true ) {
+						velocity.y = Math.max( 0, velocity.y );
+
+						canJump = true;
+					}
+
+					controls.getObject().translateX( velocity.x * delta );
+					controls.getObject().translateY( velocity.y * delta );
+					controls.getObject().translateZ( velocity.z * delta );
+
+					if ( controls.getObject().position.y < 10 ) {
+
+						velocity.y = 0;
+						controls.getObject().position.y = 10;
+
+						canJump = true;
+
+					}
+
+					prevTime = time;
+
+				}
+
+				renderer.render( scene, camera );
+
+			}
+
+
 
 // CREATE A TABLE
 var tableInstance = new Table();
@@ -71,6 +211,8 @@ objects = objects.concat(tableInstance.objects);
 // RENDERER
 let renderer = require("./renderer");
 var render = function(){
+	// controls.update()
+	animate()
 	renderer.render(scene, camera);
 }
 render();
@@ -81,57 +223,57 @@ document.body.appendChild(container);
 container.appendChild(renderer.domElement);
 
 // CONTROLLS
-window.addEventListener('wheel', e => wheelEvents(e));
+// window.addEventListener('wheel', e => wheelEvents(e));
 
-function wheelEvents(event){
-	if(event.deltaY > 0){
-		cameraControls.moveForward();
-		renderer.render(scene, camera);
-	}else{
-		cameraControls.moveBackward();
-		renderer.render(scene, camera);
-	}
-}
+// function wheelEvents(event){
+// 	if(event.deltaY > 0){
+// 		cameraControls.moveForward();
+// 		renderer.render(scene, camera);
+// 	}else{
+// 		cameraControls.moveBackward();
+// 		renderer.render(scene, camera);
+// 	}
+// }
  
-$("body").keydown(function(e) {
-	if(e.keyCode === 37) { //left
-		cameraControls.moveLeft();
-		render();
-	}
-	else if(e.keyCode === 39) { //right
-		cameraControls.moveRight();
-		render();
-	}
-	else if(e.keyCode === 38) { //up
-		cameraControls.moveUp();
-		render();
-	}
-	else if(e.keyCode === 40) { //down
-		cameraControls.moveDown();
-		render();
-	}
-	//look up //c
-	else if (e.keyCode === 67) {
-		cameraControls.lookUp();
-		render();
-	}
-	//look down //x
-	else if (e.keyCode === 88) {
-		cameraControls.lookDown();
-		render();
-	}
-	//look left //z
-	else if (e.keyCode === 90) {
-		cameraControls.lookLeft();
-		render();
-	}
-	//look right //v
-	else if (e.keyCode === 86) {
-		cameraControls.lookRight();
-		render();
-	}
+// $("body").keydown(function(e) {
+// 	if(e.keyCode === 37) { //left
+// 		cameraControls.moveLeft();
+// 		render();
+// 	}
+// 	else if(e.keyCode === 39) { //right
+// 		cameraControls.moveRight();
+// 		render();
+// 	}
+// 	else if(e.keyCode === 38) { //up
+// 		cameraControls.moveUp();
+// 		render();
+// 	}
+// 	else if(e.keyCode === 40) { //down
+// 		cameraControls.moveDown();
+// 		render();
+// 	}
+// 	//look up //c
+// 	else if (e.keyCode === 67) {
+// 		cameraControls.lookUp();
+// 		render();
+// 	}
+// 	//look down //x
+// 	else if (e.keyCode === 88) {
+// 		cameraControls.lookDown();
+// 		render();
+// 	}
+// 	//look left //z
+// 	else if (e.keyCode === 90) {
+// 		cameraControls.lookLeft();
+// 		render();
+// 	}
+// 	//look right //v
+// 	else if (e.keyCode === 86) {
+// 		cameraControls.lookRight();
+// 		render();
+// 	}
 
-});
+// });
 
 //resize image to fit screen
 window.addEventListener( 'resize', onWindowResize, false );
