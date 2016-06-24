@@ -28,6 +28,7 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
 
 		// CREATING SCENE
 		const scene = new THREE.Scene();
+		scene.fog = new THREE.Fog( 0xffffff, 0, 750 );
 
 		//ADDING LIGHT
 		var ambientLight = new THREE.AmbientLight( 0x606060 );
