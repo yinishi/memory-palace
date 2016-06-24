@@ -45,10 +45,11 @@ module.exports = function() {
 	  wall3.rotation.set(Math.PI / 2, 0, Math.PI / 2)
 	  wall3.position.set(0, wallSize, wallSize / 2)
 
-	  this.container.add(wall1)
-	  this.container.add(wall2)
-	  this.container.add(wall3)
-	  this.objects.push(wall1)
+	  this.container.add(wall1);
+	  this.container.add(wall2);
+	  this.container.add(wall3);
+	  this.objects.push(wall1);
+	  this.container.rotation.set(-Math.PI/2, 0, 0);
 	}
 }
 

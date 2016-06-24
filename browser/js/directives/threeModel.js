@@ -57,15 +57,240 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
 		room.add(table)
 		objects = objects.concat(tableInstance.objects);
 
+		// colorful floor
+var geometry = new THREE.PlaneGeometry( 2000, 2000, 100, 100 );
+geometry.rotateX( - Math.PI / 2 );
+
+for ( var i = 0, l = geometry.vertices.length; i < l; i ++ ) {
+
+	var vertex = geometry.vertices[ i ];
+	vertex.x += Math.random() * 20 - 10;
+	vertex.y += Math.random() * 2;
+	vertex.z += Math.random() * 20 - 10;
+
+}
+
+for ( var i = 0, l = geometry.faces.length; i < l; i ++ ) {
+
+	var face = geometry.faces[ i ];
+	face.vertexColors[ 0 ] = new THREE.Color().setHSL( Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+	face.vertexColors[ 1 ] = new THREE.Color().setHSL( Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+	face.vertexColors[ 2 ] = new THREE.Color().setHSL( Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+
+}
+
+var material = new THREE.MeshBasicMaterial( { vertexColors: THREE.VertexColors } );
+
+var mesh = new THREE.Mesh( geometry, material );
+scene.add( mesh );
+
 		// RENDERER
 		let renderer = new THREE.WebGLRenderer();
 		renderer.setClearColor( 0xf0f0f0 );
 		renderer.setSize( WIDTH, HEIGHT);
-		var render = function(){
-			renderer.render(scene, camera);
+
+function render() {
+
+	requestAnimationFrame( render );
+
+	if ( controlsEnabled ) {
+		raycaster.ray.origin.copy( controls.getObject().position );
+		raycaster.ray.origin.y -= 10;
+
+		var intersections = raycaster.intersectObjects( objects );
+
+		var isOnObject = intersections.length > 0;
+
+		var time = performance.now();
+		var delta = ( time - prevTime ) / 1000;
+
+		velocity.x -= velocity.x * 10.0 * delta;
+		velocity.z -= velocity.z * 10.0 * delta;
+
+		velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
+
+		if ( moveForward ) velocity.z -= 400.0 * delta;
+		if ( moveBackward ) velocity.z += 400.0 * delta;
+
+		if ( moveLeft ) velocity.x -= 400.0 * delta;
+		if ( moveRight ) velocity.x += 400.0 * delta;
+
+
+
+		if ( isOnObject === true ) {
+			velocity.y = Math.max( 0, velocity.y );
+
+			canJump = true;
 		}
 
+		controls.getObject().translateX( velocity.x * delta );
+		controls.getObject().translateY( velocity.y * delta );
+		controls.getObject().translateZ( velocity.z * delta );
+
+		if ( controls.getObject().position.y < 10 ) {
+
+			velocity.y = 0;
+			controls.getObject().position.y = 10;
+
+			canJump = true;
+
+		}
+
+		prevTime = time;
+
+	}
+
+	renderer.render( scene, camera );
+
+}
+
 		render();
+
+// CONTROLS
+var controls = new PointerLockControls(camera);
+scene.add( controls.getObject() );
+var controlsEnabled = true;
+controls.enabled = true;
+
+
+var moveForward = false;
+var moveBackward = false;
+var moveLeft = false;
+var moveRight = false;
+var canJump = false;
+
+var prevTime = performance.now();
+var velocity = new THREE.Vector3();
+
+var onKeyDown = function ( event ) {
+
+	switch ( event.keyCode ) {
+
+		case 38: // up
+			moveForward = true;
+			break;
+
+		case 37: // left
+			moveLeft = true; break;
+
+		case 40: // down
+			moveBackward = true;
+			break;
+
+		case 39: // right
+			moveRight = true;
+			break;
+
+		case 32: // space
+			if ( canJump === true ) velocity.y += 350;
+			canJump = false;
+			break;
+	}
+
+};
+
+var onKeyUp = function ( event ) {
+	switch( event.keyCode ) {
+
+		case 38: // up
+			moveForward = false;
+			break;
+
+		case 37: // left
+			moveLeft = false;
+			break;
+
+		case 40: // down
+			moveBackward = false;
+			break;
+
+		case 39: // right
+			moveRight = false;
+			break;
+
+	}
+};
+
+document.addEventListener( 'keydown', onKeyDown, false );
+document.addEventListener( 'keyup', onKeyUp, false );
+
+// 3D Controls - PointerLockControls
+function PointerLockControls ( camera ) {
+
+	var scope = this;
+
+	camera.rotation.set( 0, 0, 0 );
+
+	var pitchObject = new THREE.Object3D();
+	pitchObject.add( camera );
+
+	var yawObject = new THREE.Object3D();
+	yawObject.position.y = 10;
+	yawObject.add( pitchObject );
+
+	var PI_2 = Math.PI / 2;
+
+	var onKeyDown = function ( event ) {
+
+		if ( scope.enabled === false ) return;
+
+		switch(event.keyCode){
+
+			case 87: // w, look up
+						pitchObject.rotation.x += .05;
+				break;
+			case 83: // s, look down
+				pitchObject.rotation.x -= 0.05;
+				break;
+			case 65: // a, look left
+				yawObject.rotation.y += 0.05;
+				break;
+			case 68: // d, look right
+				yawObject.rotation.y -= 0.05;
+				break;
+				}
+
+		//check	180 deg, doesn't allow user to flip over	
+		pitchObject.rotation.x = Math.max( - PI_2, Math.min( PI_2, pitchObject.rotation.x ) );
+
+	};
+
+	this.dispose = function() {
+
+		document.removeEventListener( 'keydown', onKeyDown, false );
+
+	};
+
+	document.addEventListener( 'keydown', onKeyDown, false );
+
+	this.enabled = false;
+
+	this.getObject = function () {
+
+		return yawObject;
+
+	};
+
+	this.getDirection = function() {
+
+		// assumes the camera itself is not rotated
+
+		var direction = new THREE.Vector3( 0, 0, - 1 );
+		var rotation = new THREE.Euler( 0, 0, 0, "YXZ" );
+
+		return function( v ) {
+
+			rotation.set( pitchObject.rotation.x, yawObject.rotation.y, 0 );
+
+			v.copy( direction ).applyEuler( rotation );
+
+			return v;
+
+		};
+
+	}();
+
+};
 
 		// CREATE CONTAINER
 		e[0].appendChild(renderer.domElement);
