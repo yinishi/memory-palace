@@ -6,3 +6,4 @@ require('angular-ui-router');
 var app = angular.module('memoryPalace', []);
 
 require('./js/controllers');
+require('./js/directives');
