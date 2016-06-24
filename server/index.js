@@ -46,9 +46,11 @@ app.use(passport.session());
 
 app.use('/auth', require('./auth/auth.router'));
 
-app.get('/', function (req, res) {
-        res.sendFile(path.join(__dirname, '../index.html'));
-    });
 
 app.use('/browser', Express.static(path.join(__dirname, '../browser')));
 app.use('/minjs', Express.static(path.join(__dirname, '../minjs')));
+
+
+app.get('/*', function (req, res) {
+        res.sendFile(path.join(__dirname, '../index.html'));
+    });

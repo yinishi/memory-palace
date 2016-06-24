@@ -2,6 +2,9 @@
   <div class="buffer local">
     <form name="userInfo">
       <div class="form-group">
+      <label>name</label>
+        <input type="text" class="form-control" ng-model="userInfo.name" required />
+      </div>
         <label>email</label>
         <input type="text" class="form-control" ng-model="userInfo.email" required />
       </div>
@@ -9,8 +12,7 @@
         <label>password</label>
         <input type="password" class="form-control" ng-model="userInfo.password" required />
       </div>
-      <button ng-click="login()" type="submit" class="btn btn-block btn-primary">sign in</button>
-      <a ui-sref="signup">Don't have an account?</a>
+      <button ng-click="signup()" type="submit" class="btn btn-block btn-primary">sign in</button>
     </form>
   </div>
 <!--   <div class="or buffer"> -->

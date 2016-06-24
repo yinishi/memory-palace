@@ -13,5 +13,10 @@ app.config(['$stateProvider', function ($stateProvider) {
     	url: "/login",
         templateUrl: '/browser/js/templates/login.html',
         controller: 'login'
+    })
+    .state("signup", {
+        url: "/signup",
+        templateUrl: '/browser/js/templates/signup.html',
+        controller: 'login'
     });
 }]);
