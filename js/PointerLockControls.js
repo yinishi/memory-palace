@@ -17,6 +17,8 @@ THREE.PointerLockControls = function ( camera ) {
 
 	var PI_2 = Math.PI / 2;
 
+	var xEvent = 0;
+
 	var onKeyDown = function ( event ) {
 
 		if ( scope.enabled === false ) return;
@@ -24,16 +26,23 @@ THREE.PointerLockControls = function ( camera ) {
 		switch(event.keyCode){
 
 			case 87: // w, look up
-				pitchObject.rotation.x += 0.05;
-				break;
-			case 65: // a, look left
-				yawObject.rotation.y += 0.05;
+				xEvent++;
+				console.log('b',pitchObject.rotation.x)
+				// if(pitchObject.rotation.x >= .09){
+						pitchObject.rotation.x += .05;
+				// }else{
+					
+				// }
+				console.log('c',pitchObject.rotation.x)
 				break;
 			case 83: // s, look down
 				pitchObject.rotation.x -= 0.05;
 				break;
+			case 65: // a, look left
+				yawObject.rotation.y += 0.05;
+				break;
 			case 68: // d, look right
-				yawObject.rotation.y -= 0.05
+				yawObject.rotation.y -= 0.05;
 				break;
 				}
 

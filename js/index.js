@@ -8,6 +8,7 @@ const UNITSIZE = require("./constants").UNITSIZE;
 const Room = require('./constructors/RoomConstructor.js')
 const Table = require('./constructors/TableConstructor.js')
 const cameraControls = require('./camera.js');
+
 // REQUIRING OBJECTS
 var objects = require("./constants").objects;
 
@@ -132,11 +133,9 @@ var material = new THREE.MeshBasicMaterial( { vertexColors: THREE.VertexColors }
 
 var mesh = new THREE.Mesh( geometry, material );
 scene.add( mesh );
-// objects.push(mesh)
+//objects.push(mesh);
 
-//Add a teapot
-
-// instantiate a loader
+// TEAPOT
 var loader = new THREE.ObjectLoader();
 
 loader.load('js/utah-teapot-threejs/utah-teapot.json', function(object){
