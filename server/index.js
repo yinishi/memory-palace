@@ -14,5 +14,5 @@ app.get('/', function (req, res) {
         res.sendFile(path.join(__dirname, '../index.html'));
     });
 
-app.use('/js', Express.static(path.join(__dirname, '../js')));
+app.use('/browser', Express.static(path.join(__dirname, '../browser')));
 app.use('/minjs', Express.static(path.join(__dirname, '../minjs')));
