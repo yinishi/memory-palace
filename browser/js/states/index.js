@@ -8,5 +8,10 @@ app.config(['$stateProvider', function ($stateProvider) {
     .state("room", {
     	url: "/room",
         templateUrl: '/browser/js/templates/room.html',
+    })
+    .state("login", {
+    	url: "/login",
+        templateUrl: '/browser/js/templates/login.html',
+        controller: 'login'
     });
 }]);
