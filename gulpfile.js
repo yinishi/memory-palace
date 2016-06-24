@@ -6,7 +6,7 @@ const streamify = require('gulp-streamify');
 const babel = require('gulp-babel');
 
 gulp.task('browserify', function() {
-    return browserify('./js/index.js')
+    return browserify('./browser/app.js')
     	.transform("babelify", {presets: ["es2015"]})
   
         .bundle()
@@ -18,5 +18,5 @@ gulp.task('browserify', function() {
         .pipe( gulp.dest('minjs') );
 });
 
-gulp.watch('js/*/*', ['browserify']);
-gulp.watch('js/*', ['browserify']);
+gulp.watch('browser/**/*.js', ['browserify']);
+// gulp.watch('js/*', ['browserify']);
