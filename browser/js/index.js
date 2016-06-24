@@ -77,70 +77,71 @@ render();
 
 // CREATE CONTAINER
 var container = document.createElement('div');
-document.body.appendChild(container);
+document.getElementById("world").appendChild(container);
+console.log("hi")
 container.appendChild(renderer.domElement);
 
 // CONTROLLS
-window.addEventListener('wheel', e => wheelEvents(e));
+// window.addEventListener('wheel', e => wheelEvents(e));
 
-function wheelEvents(event){
-	if(event.deltaY > 0){
-		cameraControls.moveForward();
-		renderer.render(scene, camera);
-	}else{
-		cameraControls.moveBackward();
-		renderer.render(scene, camera);
-	}
-}
+// function wheelEvents(event){
+// 	if(event.deltaY > 0){
+// 		cameraControls.moveForward();
+// 		renderer.render(scene, camera);
+// 	}else{
+// 		cameraControls.moveBackward();
+// 		renderer.render(scene, camera);
+// 	}
+// }
  
-$("body").keydown(function(e) {
-	if(e.keyCode === 37) { //left
-		cameraControls.moveLeft();
-		render();
-	}
-	else if(e.keyCode === 39) { //right
-		cameraControls.moveRight();
-		render();
-	}
-	else if(e.keyCode === 38) { //up
-		cameraControls.moveUp();
-		render();
-	}
-	else if(e.keyCode === 40) { //down
-		cameraControls.moveDown();
-		render();
-	}
-	//look up //c
-	else if (e.keyCode === 67) {
-		cameraControls.lookUp();
-		render();
-	}
-	//look down //x
-	else if (e.keyCode === 88) {
-		cameraControls.lookDown();
-		render();
-	}
-	//look left //z
-	else if (e.keyCode === 90) {
-		cameraControls.lookLeft();
-		render();
-	}
-	//look right //v
-	else if (e.keyCode === 86) {
-		cameraControls.lookRight();
-		render();
-	}
+// $("body").keydown(function(e) {
+// 	if(e.keyCode === 37) { //left
+// 		cameraControls.moveLeft();
+// 		render();
+// 	}
+// 	else if(e.keyCode === 39) { //right
+// 		cameraControls.moveRight();
+// 		render();
+// 	}
+// 	else if(e.keyCode === 38) { //up
+// 		cameraControls.moveUp();
+// 		render();
+// 	}
+// 	else if(e.keyCode === 40) { //down
+// 		cameraControls.moveDown();
+// 		render();
+// 	}
+// 	//look up //c
+// 	else if (e.keyCode === 67) {
+// 		cameraControls.lookUp();
+// 		render();
+// 	}
+// 	//look down //x
+// 	else if (e.keyCode === 88) {
+// 		cameraControls.lookDown();
+// 		render();
+// 	}
+// 	//look left //z
+// 	else if (e.keyCode === 90) {
+// 		cameraControls.lookLeft();
+// 		render();
+// 	}
+// 	//look right //v
+// 	else if (e.keyCode === 86) {
+// 		cameraControls.lookRight();
+// 		render();
+// 	}
 
-});
+// });
 
 //resize image to fit screen
-window.addEventListener( 'resize', onWindowResize, false );
+// window.addEventListener( 'resize', onWindowResize, false );
 
-function onWindowResize() {
-	camera.aspect = window.innerWidth / window.innerHeight;
-	camera.updateProjectionMatrix();
-	renderer.setSize( window.innerWidth, window.innerHeight );
-}
+// function onWindowResize() {
+// 	camera.aspect = window.innerWidth / window.innerHeight;
+// 	camera.updateProjectionMatrix();
+// 	renderer.setSize( window.innerWidth, window.innerHeight );
+// }
 
 //DROPPING OBJECTS
 document.addEventListener( 'mousemove', onDocumentMouseMove, false );
