@@ -16,15 +16,6 @@ var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
 var myObject;
 
-//Add a teapot
-
-// instantiate a loader
-var loader = new THREE.ObjectLoader();
-
-loader.load('js/utah-teapot-threejs/utah-teapot.json', function(object){
-	myObject = object
-});
-
 // CREATING SCENE
 const scene = new THREE.Scene();
 
@@ -41,13 +32,15 @@ scene.add( directionalLight );
 const camera = cameraControls.getCamera();
 scene.add(camera);
 
+// renderer
+let renderer = require("./renderer");
+
 // controls
 var PointerLockControls = require('./PointerLockControls.js')
 var controls = new PointerLockControls(camera); // Handles camera control
 scene.add( controls.getObject() );
 var controlsEnabled = true;
 controls.enabled = true;
-
 
 
 var moveForward = false;
@@ -123,61 +116,43 @@ document.addEventListener( 'keydown', onKeyDown, false );
 document.addEventListener( 'keyup', onKeyUp, false );
 
 
+// floor
 
-				function animate() {
+var geometry = new THREE.PlaneGeometry( 2000, 2000, 100, 100 );
+geometry.rotateX( - Math.PI / 2 );
 
-				requestAnimationFrame( animate );
+for ( var i = 0, l = geometry.vertices.length; i < l; i ++ ) {
 
-				if ( controlsEnabled ) {
-					raycaster.ray.origin.copy( controls.getObject().position );
-					raycaster.ray.origin.y -= 10;
+	var vertex = geometry.vertices[ i ];
+	vertex.x += Math.random() * 20 - 10;
+	vertex.y += Math.random() * 2;
+	vertex.z += Math.random() * 20 - 10;
 
-					var intersections = raycaster.intersectObjects( objects );
+}
 
-					var isOnObject = intersections.length > 0;
+for ( var i = 0, l = geometry.faces.length; i < l; i ++ ) {
 
-					var time = performance.now();
-					var delta = ( time - prevTime ) / 1000;
+	var face = geometry.faces[ i ];
+	face.vertexColors[ 0 ] = new THREE.Color().setHSL( Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+	face.vertexColors[ 1 ] = new THREE.Color().setHSL( Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+	face.vertexColors[ 2 ] = new THREE.Color().setHSL( Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
 
-					velocity.x -= velocity.x * 10.0 * delta;
-					velocity.z -= velocity.z * 10.0 * delta;
+}
 
-					velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
+var material = new THREE.MeshBasicMaterial( { vertexColors: THREE.VertexColors } );
 
-					if ( moveForward ) velocity.z -= 400.0 * delta;
-					if ( moveBackward ) velocity.z += 400.0 * delta;
-
-					if ( moveLeft ) velocity.x -= 400.0 * delta;
-					if ( moveRight ) velocity.x += 400.0 * delta;
-
-					if ( isOnObject === true ) {
-						velocity.y = Math.max( 0, velocity.y );
-
-						canJump = true;
-					}
-
-					controls.getObject().translateX( velocity.x * delta );
-					controls.getObject().translateY( velocity.y * delta );
-					controls.getObject().translateZ( velocity.z * delta );
-
-					if ( controls.getObject().position.y < 10 ) {
-
-						velocity.y = 0;
-						controls.getObject().position.y = 10;
-
-						canJump = true;
-
-					}
-
-					prevTime = time;
-
-				}
-
-				renderer.render( scene, camera );
-
-			}
+var mesh = new THREE.Mesh( geometry, material );
+scene.add( mesh );
 
 
+//Add a teapot
+
+// instantiate a loader
+var loader = new THREE.ObjectLoader();
+
+loader.load('js/utah-teapot-threejs/utah-teapot.json', function(object){
+	myObject = object
+});
 
 // CREATE A TABLE
 var tableInstance = new Table();
@@ -186,11 +161,9 @@ let table = tableInstance.container
 // CREATE A ROOM
 var roomInstance = new Room()
 let room = roomInstance.container
-const roomRotationX = - Math.PI / 2 
-const roomRotationY = 0
-const roomRotationZ = -0.3
-// room.rotation.set(roomRotationX, roomRotationY, roomRotationZ)
-room.scale.set(3, 3, 3)
+room.rotation.set(-Math.PI/2, 0, 0);
+// room.position.set(0, -30, 0);
+room.scale.set(30, 30, 30);
 
 scene.add(room)
 objects = objects.concat(roomInstance.objects)
@@ -208,72 +181,11 @@ table.position.set(0, -10, 6)
 room.add(table)
 objects = objects.concat(tableInstance.objects);
 
-// RENDERER
-let renderer = require("./renderer");
-var render = function(){
-	// controls.update()
-	animate()
-	renderer.render(scene, camera);
-}
-render();
 
 // CREATE CONTAINER
 var container = document.createElement('div');
 document.body.appendChild(container);
 container.appendChild(renderer.domElement);
-
-// CONTROLLS
-// window.addEventListener('wheel', e => wheelEvents(e));
-
-// function wheelEvents(event){
-// 	if(event.deltaY > 0){
-// 		cameraControls.moveForward();
-// 		renderer.render(scene, camera);
-// 	}else{
-// 		cameraControls.moveBackward();
-// 		renderer.render(scene, camera);
-// 	}
-// }
- 
-// $("body").keydown(function(e) {
-// 	if(e.keyCode === 37) { //left
-// 		cameraControls.moveLeft();
-// 		render();
-// 	}
-// 	else if(e.keyCode === 39) { //right
-// 		cameraControls.moveRight();
-// 		render();
-// 	}
-// 	else if(e.keyCode === 38) { //up
-// 		cameraControls.moveUp();
-// 		render();
-// 	}
-// 	else if(e.keyCode === 40) { //down
-// 		cameraControls.moveDown();
-// 		render();
-// 	}
-// 	//look up //c
-// 	else if (e.keyCode === 67) {
-// 		cameraControls.lookUp();
-// 		render();
-// 	}
-// 	//look down //x
-// 	else if (e.keyCode === 88) {
-// 		cameraControls.lookDown();
-// 		render();
-// 	}
-// 	//look left //z
-// 	else if (e.keyCode === 90) {
-// 		cameraControls.lookLeft();
-// 		render();
-// 	}
-// 	//look right //v
-// 	else if (e.keyCode === 86) {
-// 		cameraControls.lookRight();
-// 		render();
-// 	}
-
-// });
 
 //resize image to fit screen
 window.addEventListener( 'resize', onWindowResize, false );
@@ -346,4 +258,68 @@ function onDocumentKeyUp( event ) {
 	switch ( event.keyCode ) {
 		case 16: isShiftDown = false; break;
 	}
+}
+
+
+// RENDER EVERYTHING HERE
+
+var render = function(){
+	// controls.update()
+	animate()
+	renderer.render(scene, camera);
+}
+render();
+
+// Animate function for the controls - called in the render function
+function animate() {
+
+	requestAnimationFrame( animate );
+
+	if ( controlsEnabled ) {
+		raycaster.ray.origin.copy( controls.getObject().position );
+		raycaster.ray.origin.y -= 10;
+
+		var intersections = raycaster.intersectObjects( objects );
+
+		var isOnObject = intersections.length > 0;
+
+		var time = performance.now();
+		var delta = ( time - prevTime ) / 1000;
+
+		velocity.x -= velocity.x * 10.0 * delta;
+		velocity.z -= velocity.z * 10.0 * delta;
+
+		velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
+
+		if ( moveForward ) velocity.z -= 400.0 * delta;
+		if ( moveBackward ) velocity.z += 400.0 * delta;
+
+		if ( moveLeft ) velocity.x -= 400.0 * delta;
+		if ( moveRight ) velocity.x += 400.0 * delta;
+
+		if ( isOnObject === true ) {
+			velocity.y = Math.max( 0, velocity.y );
+
+			canJump = true;
+		}
+
+		controls.getObject().translateX( velocity.x * delta );
+		controls.getObject().translateY( velocity.y * delta );
+		controls.getObject().translateZ( velocity.z * delta );
+
+		if ( controls.getObject().position.y < 10 ) {
+
+			velocity.y = 0;
+			controls.getObject().position.y = 10;
+
+			canJump = true;
+
+		}
+
+		prevTime = time;
+
+	}
+
+	renderer.render( scene, camera );
+
 }
