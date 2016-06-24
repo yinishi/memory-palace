@@ -54,62 +54,51 @@ var velocity = new THREE.Vector3();
 
 var onKeyDown = function ( event ) {
 
-switch ( event.keyCode ) {
+	switch ( event.keyCode ) {
 
-	case 38: // up
-	case 87: // w
-		moveForward = true;
-		break;
+		case 38: // up
+			moveForward = true;
+			break;
 
-	case 37: // left
-	case 65: // a
-		moveLeft = true; break;
+		case 37: // left
+			moveLeft = true; break;
 
-	case 40: // down
-	case 83: // s
-		moveBackward = true;
-		break;
+		case 40: // down
+			moveBackward = true;
+			break;
 
-	case 39: // right
-	case 68: // d
-		moveRight = true;
-		break;
+		case 39: // right
+			moveRight = true;
+			break;
 
-	case 32: // space
-		if ( canJump === true ) velocity.y += 350;
-		canJump = false;
-		break;
-
-}
+		case 32: // space
+			if ( canJump === true ) velocity.y += 350;
+			canJump = false;
+			break;
+	}
 
 };
 
 var onKeyUp = function ( event ) {
+	switch( event.keyCode ) {
 
-switch( event.keyCode ) {
+		case 38: // up
+			moveForward = false;
+			break;
 
-	case 38: // up
-	case 87: // w
-		moveForward = false;
-		break;
+		case 37: // left
+			moveLeft = false;
+			break;
 
-	case 37: // left
-	case 65: // a
-		moveLeft = false;
-		break;
+		case 40: // down
+			moveBackward = false;
+			break;
 
-	case 40: // down
-	case 83: // s
-		moveBackward = false;
-		break;
+		case 39: // right
+			moveRight = false;
+			break;
 
-	case 39: // right
-	case 68: // d
-		moveRight = false;
-		break;
-
-}
-
+	}
 };
 
 document.addEventListener( 'keydown', onKeyDown, false );
@@ -143,7 +132,7 @@ var material = new THREE.MeshBasicMaterial( { vertexColors: THREE.VertexColors }
 
 var mesh = new THREE.Mesh( geometry, material );
 scene.add( mesh );
-
+// objects.push(mesh)
 
 //Add a teapot
 
@@ -263,17 +252,9 @@ function onDocumentKeyUp( event ) {
 
 // RENDER EVERYTHING HERE
 
-var render = function(){
-	// controls.update()
-	animate()
-	renderer.render(scene, camera);
-}
-render();
+function render() {
 
-// Animate function for the controls - called in the render function
-function animate() {
-
-	requestAnimationFrame( animate );
+	requestAnimationFrame( render );
 
 	if ( controlsEnabled ) {
 		raycaster.ray.origin.copy( controls.getObject().position );
@@ -296,6 +277,8 @@ function animate() {
 
 		if ( moveLeft ) velocity.x -= 400.0 * delta;
 		if ( moveRight ) velocity.x += 400.0 * delta;
+
+
 
 		if ( isOnObject === true ) {
 			velocity.y = Math.max( 0, velocity.y );

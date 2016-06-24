@@ -17,27 +17,38 @@ THREE.PointerLockControls = function ( camera ) {
 
 	var PI_2 = Math.PI / 2;
 
-	var onMouseMove = function ( event ) {
+	var onKeyDown = function ( event ) {
 
 		if ( scope.enabled === false ) return;
 
-		var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
-		var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
+		switch(event.keyCode){
 
-		yawObject.rotation.y -= movementX * 0.002;
-		pitchObject.rotation.x -= movementY * 0.002;
+			case 87: // w, look up
+				pitchObject.rotation.x += 0.05;
+				break;
+			case 65: // a, look left
+				yawObject.rotation.y += 0.05;
+				break;
+			case 83: // s, look down
+				pitchObject.rotation.x -= 0.05;
+				break;
+			case 68: // d, look right
+				yawObject.rotation.y -= 0.05
+				break;
+				}
 
+		//check	180 deg, doesn't allow user to flip over	
 		pitchObject.rotation.x = Math.max( - PI_2, Math.min( PI_2, pitchObject.rotation.x ) );
 
 	};
 
 	this.dispose = function() {
 
-		document.removeEventListener( 'mousemove', onMouseMove, false );
+		document.removeEventListener( 'keydown', onKeyDown, false );
 
 	};
 
-	document.addEventListener( 'mousemove', onMouseMove, false );
+	document.addEventListener( 'keydown', onKeyDown, false );
 
 	this.enabled = false;
 
