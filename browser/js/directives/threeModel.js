@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = function ($window, roomFactory, tableFactory) {
+module.exports = function ($window, roomFactory, tableFactory, $document) {
 	 return {
         restrict: 'E',
         scope: {
@@ -82,11 +82,10 @@ module.exports = function ($window, roomFactory, tableFactory) {
 		}
 
 		//DROPPING OBJECTS
-		e.bind("click", onDocumentMouseDown);
-		// document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-		// document.addEventListener( 'mousedown', onDocumentMouseDown, false );
-		// document.addEventListener( 'keydown', onDocumentKeyDown, false );
-		// document.addEventListener( 'keyup', onDocumentKeyUp, false );
+		e.on( 'mousemove', onDocumentMouseMove);
+		e.bind( 'mousedown', onDocumentMouseDown);
+		// $document.on( 'keydown', onDocumentKeyDown);
+		// $document.on( 'keyup', onDocumentKeyUp);
 
 		function onDocumentMouseMove( event ) {
 			event.preventDefault();
@@ -103,8 +102,9 @@ module.exports = function ($window, roomFactory, tableFactory) {
 			}
 			render();
 		}
+
 		function onDocumentMouseDown( event ) {
-			console.log("heeey")
+		
 			event.preventDefault();
 			mouse.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
 			raycaster.setFromCamera( mouse, camera );
@@ -136,16 +136,17 @@ module.exports = function ($window, roomFactory, tableFactory) {
 				render();
 			}
 		}
-		function onDocumentKeyDown( event ) {
-			switch( event.keyCode ) {
-				case 16: isShiftDown = true; break;
-			}
-		}
-		function onDocumentKeyUp( event ) {
-			switch ( event.keyCode ) {
-				case 16: isShiftDown = false; break;
-			}
-		}
+		// function onDocumentKeyDown( event ) {
+		// 	console.log("shift pressed")
+		// 	switch( event.keyCode ) {
+		// 		case 16: isShiftDown = true; break;
+		// 	}
+		// }
+		// function onDocumentKeyUp( event ) {
+		// 	switch ( event.keyCode ) {
+		// 		case 16: isShiftDown = false; break;
+		// 	}
+		// }
 
 
         }
