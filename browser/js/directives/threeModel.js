@@ -1,35 +1,28 @@
 'use strict'
 
-module.exports = function ($window) {
+module.exports = function ($window, roomFactory, tableFactory) {
 	 return {
         restrict: 'E',
         scope: {
         },
         link: function(s,e,a) {
-        console.log("we are here", e)
-		// CONSTANTS
-		const WIDTH = $window.innerWidth;
-		const HEIGHT = $window.innerHeight;
-		const ASPECT = WIDTH / HEIGHT;
-		const UNITSIZE = 250;
-		// CONSTRUCTOR FUNCTIONS
-		// const Room = require('./constructors/RoomConstructor.js')
-		// const Table = require('./constructors/TableConstructor.js')
-		// const cameraControls = require('./camera.js');
-		// REQUIRING OBJECTS
-		// var objects = [];
-
-		var isShiftDown = false;
-		var raycaster = new THREE.Raycaster();
-		var mouse = new THREE.Vector2();
-		var myObject;
+			// CONSTANTS
+			const WIDTH = $window.innerWidth;
+			const HEIGHT = $window.innerHeight;
+			const ASPECT = WIDTH / HEIGHT;
+			const UNITSIZE = 250;
+			// REQUIRING OBJECTS
+			var objects = [];
+			var isShiftDown = false;
+			var raycaster = new THREE.Raycaster();
+			var mouse = new THREE.Vector2();
+			var myObject;
 
 		//Add a teapot
-
 		// instantiate a loader
 		var loader = new THREE.ObjectLoader();
 
-		loader.load('js/utah-teapot-threejs/utah-teapot.json', function(object){
+		loader.load('/browser/js/utah-teapot-threejs/utah-teapot.json', function(object){
 			myObject = object
 		});
 
@@ -49,33 +42,20 @@ module.exports = function ($window) {
 		scene.add(camera);
 
 		// CREATE A TABLE
-		// var tableInstance = new Table();
-		// let table = tableInstance.container
+		var tableInstance = new tableFactory();
+		let table = tableInstance.container
 
 		// CREATE A ROOM
-		// var roomInstance = new Room()
-		// let room = roomInstance.container
-		// const roomRotationX = - Math.PI / 2 
-		// const roomRotationY = 0
-		// const roomRotationZ = -0.3
-		// room.rotation.set(roomRotationX, roomRotationY, roomRotationZ)
-		// room.scale.set(3, 3, 3)
+		var roomInstance = new roomFactory();
+		let room = roomInstance.container
+		room.scale.set(3, 3, 3)
+		scene.add(room);
 
-		// scene.add(room)
-		// objects = objects.concat(roomInstance.objects)
+		objects = objects.concat(roomInstance.objects)
 
-		// // roll-over helpers
-		// var rollOverGeo = new THREE.BoxGeometry( 3, 3, 3 );
-		// var rollOverMaterial = new THREE.MeshBasicMaterial( { color: 0xff0000, opacity: 0.5, transparent: true } );
-		// var rollOverMesh = new THREE.Mesh( rollOverGeo, rollOverMaterial );
-		// scene.add( rollOverMesh );
-		// // cubes
-		// var cubeGeo = new THREE.BoxGeometry( 3, 3, 3 );
-		// var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xfeb74c } );
-		 
-		// table.position.set(0, -10, 6)
-		// room.add(table)
-		// objects = objects.concat(tableInstance.objects);
+		table.position.set(0, -10, 6)
+		room.add(table)
+		objects = objects.concat(tableInstance.objects);
 
 		// RENDERER
 		let renderer = new THREE.WebGLRenderer();
@@ -84,75 +64,25 @@ module.exports = function ($window) {
 		var render = function(){
 			renderer.render(scene, camera);
 		}
+
 		render();
 
 		// CREATE CONTAINER
 		e[0].appendChild(renderer.domElement);
 	
 
-		// CONTROLLS
-		// window.addEventListener('wheel', e => wheelEvents(e));
-
-		// function wheelEvents(event){
-		// 	if(event.deltaY > 0){
-		// 		cameraControls.moveForward();
-		// 		renderer.render(scene, camera);
-		// 	}else{
-		// 		cameraControls.moveBackward();
-		// 		renderer.render(scene, camera);
-		// 	}
-		// }
-		 
-		// $("body").keydown(function(e) {
-		// 	if(e.keyCode === 37) { //left
-		// 		cameraControls.moveLeft();
-		// 		render();
-		// 	}
-		// 	else if(e.keyCode === 39) { //right
-		// 		cameraControls.moveRight();
-		// 		render();
-		// 	}
-		// 	else if(e.keyCode === 38) { //up
-		// 		cameraControls.moveUp();
-		// 		render();
-		// 	}
-		// 	else if(e.keyCode === 40) { //down
-		// 		cameraControls.moveDown();
-		// 		render();
-		// 	}
-		// 	//look up //c
-		// 	else if (e.keyCode === 67) {
-		// 		cameraControls.lookUp();
-		// 		render();
-		// 	}
-		// 	//look down //x
-		// 	else if (e.keyCode === 88) {
-		// 		cameraControls.lookDown();
-		// 		render();
-		// 	}
-		// 	//look left //z
-		// 	else if (e.keyCode === 90) {
-		// 		cameraControls.lookLeft();
-		// 		render();
-		// 	}
-		// 	//look right //v
-		// 	else if (e.keyCode === 86) {
-		// 		cameraControls.lookRight();
-		// 		render();
-		// 	}
-
-		// });
 
 		//resize image to fit screen
-		// window.addEventListener( 'resize', onWindowResize, false );
+		$window.addEventListener( 'resize', onWindowResize, false );
 
-		// function onWindowResize() {
-		// 	camera.aspect = window.innerWidth / window.innerHeight;
-		// 	camera.updateProjectionMatrix();
-		// 	renderer.setSize( window.innerWidth, window.innerHeight );
-		// }
+		function onWindowResize() {
+			camera.aspect = $window.innerWidth / $window.innerHeight;
+			camera.updateProjectionMatrix();
+			renderer.setSize( $window.innerWidth, $window.innerHeight );
+		}
 
 		//DROPPING OBJECTS
+		e.bind("click", onDocumentMouseDown);
 		// document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 		// document.addEventListener( 'mousedown', onDocumentMouseDown, false );
 		// document.addEventListener( 'keydown', onDocumentKeyDown, false );
@@ -174,6 +104,7 @@ module.exports = function ($window) {
 			render();
 		}
 		function onDocumentMouseDown( event ) {
+			console.log("heeey")
 			event.preventDefault();
 			mouse.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
 			raycaster.setFromCamera( mouse, camera );

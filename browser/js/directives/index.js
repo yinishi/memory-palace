@@ -1,4 +1,4 @@
 var app = require('angular').module('memoryPalace');
 
 app.directive('navbar', require("./navbar"));
-app.directive('threeModel', ['$window', require("./threeModel")]);
+app.directive('threeModel', ['$window', 'roomFactory', "tableFactory", require("./threeModel")]);

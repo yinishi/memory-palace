@@ -5,13 +5,11 @@ function Room() {
 
   var floorSize = 30
   var wallSize = floorSize / 2
-
   let floorGeometry = new THREE.PlaneBufferGeometry(floorSize, floorSize);
   let floorMaterial = new THREE.MeshBasicMaterial({ color: 0xcccccc });
   var floor = new THREE.Mesh(floorGeometry, floorMaterial);
 
   // GRID
-
   var size = 15,
     step = 1;
   var geometry = new THREE.Geometry();
@@ -27,8 +25,6 @@ function Room() {
 
   line.rotation.set(Math.PI / 2, 0, 0);
   floor.add(line);
-
-
   this.container.add(floor)
   this.objects.push(floor);
 
@@ -52,12 +48,6 @@ function Room() {
   this.container.add(wall2)
   this.container.add(wall3)
   this.objects.push(wall1)
-  // this.objects.push(wall2)
-  // this.objects.push(wall3)
-
-
-
-
 }
 
 module.exports = Room;
