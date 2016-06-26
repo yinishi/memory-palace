@@ -15,6 +15,7 @@ app.config(['$urlRouterProvider', '$locationProvider', function ($urlRouterProvi
     // });)
 }]);
 
+
 require('./js/controllers');
 require('./js/factories');
 require('./js/directives');

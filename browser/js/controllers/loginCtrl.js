@@ -1,20 +1,20 @@
 'use strict'
 
-module.exports = function ($scope, $state, $http) {
+module.exports = function ($scope, $state, $http, authFactory) {
 	$scope.signup = function(){
-		console.log("here", $scope.userInfo)
-		$http.post('/auth/signup', $scope.userInfo)
-			.then(function(user){
-				console.log(user.data)
-				$state.go('login');
-			})
-	}
-	$scope.login = function(){
-		console.log("here", $scope.userInfo)
-		$http.post('/auth/login', $scope.userInfo)
-			.then(function(user){
-				console.log(user.data)
+		var pwMatch = ($scope.userInfo.password && ($scope.userInfo.password === $scope.userInfo.confirmPassword)); 
+		if (!$scope.userInfo.$invalid && pwMatch) {
+			authFactory.signup($scope.userInfo)
+			.then(user => {
 				$state.go('room');
 			});
+		}
+	}
+	$scope.login = function(){
+		authFactory.login($scope.userInfo)
+		.then(user => {
+			$state.go('room');
+		});
+		console.log("here", $scope.userInfo);
 	}
 };

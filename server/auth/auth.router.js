@@ -35,8 +35,8 @@ router.post('/signup', function (req, res, next) {
   User.create(req.body)
   .then(function (user) {
     req.login(user, function (err) {
-      console.log("user", req.user)
-      console.log("session", req.session)
+      // console.log("user", req.user)
+      // console.log("session", req.session)
       if (err) next(err);
       else res.status(201).json(user);
     });
@@ -45,10 +45,11 @@ router.post('/signup', function (req, res, next) {
 });
 
 router.get('/me', function (req, res, next) {
+  console.log(req.user);
   res.json(req.user);
 });
 
-router.delete('/me', function (req, res, next) {
+router.delete('/logout', function (req, res, next) {
   req.logout();
   res.status(204).end();
 });
