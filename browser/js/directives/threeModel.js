@@ -304,26 +304,11 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory,
 			room.add(table);
 			objects = objects.concat(tableInstance.objects);
 
-
-
 			//PLACING OBJECTS
 			e.on( 'mousemove', onDocumentMouseMove);
 			e.bind( 'mousedown', onDocumentMouseDown);
 			$document.on( 'keydown', onDocumentKeyDown);
 			$document.on( 'keyup', onDocumentKeyUp);
-
-			// // TEAPOT
-			// var loader = new THREE.ObjectLoader();
-			// loader.load('/browser/js/monster.json', function(object){
-			// 	// myObject = object;
-			// 	// object.scale.set(.3, .3, .3);
-			// 	var cube = new THREE.Mesh(new THREE.BoxGeometry(19, 19, 5), new THREE.MeshBasicMaterial({visible: false}));
-			// 	cube.add(object);
-			// 	myObject = cube;
-			// });
-
-			// test object - use if need to place sphere
-			// myObject = new THREE.Mesh(new THREE.SphereGeometry(5), new THREE.MeshLambertMaterial())
 
 			function onDocumentMouseMove( event ) {
 
