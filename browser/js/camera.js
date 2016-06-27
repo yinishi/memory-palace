@@ -13,7 +13,7 @@ let rotationZ = 0;
 let fiveDegrees = (((PI/2)/3)/3)/2;
 
 
-let camera = new THREE.PerspectiveCamera(60, ASPECT, 1, 10000);
+let camera = new THREE.PerspectiveCamera(75, ASPECT, 1, 10000);
 
 camera.position.set(positionX, positionY, positionZ);
 camera.rotation.set(rotationX, rotationY, rotationZ);
