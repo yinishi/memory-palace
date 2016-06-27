@@ -287,6 +287,8 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
 
 			var mesh = new THREE.Mesh( geometry, material );
 			scene.add( mesh );
+			objects.push(mesh);
+			var floorObjects = [mesh];
 
 			// CREATE A TABLE
 			var tableInstance = new tableFactory();
@@ -316,9 +318,13 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
 			loader.load('/browser/js/monster.json', function(object){
 				// myObject = object;
 				// object.scale.set(.3, .3, .3);
-				var cube = new THREE.Mesh(new THREE.BoxGeometry(22, 22, 22), new THREE.MeshBasicMaterial({visible: false}));
+				var cube = new THREE.Mesh(new THREE.BoxGeometry(19, 19, 5), new THREE.MeshBasicMaterial({visible: false}));
 				cube.add(object);
+				console.log('obj is', object)
 				myObject = cube;
+
+				// myObject = object;
+				console.log('myObject', myObject);
 				// myObject.rotation.set(Math.PI/2, 0, 0);
 			});
 
@@ -332,17 +338,17 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
 			// 	myObject = object;
 			// })
 
-			console.log('in the threemodel file', objects);
+			// console.log('in the threemodel file', objects);
 			var elWidth = renderer.domElement.offsetWidth, elHeight = renderer.domElement.offsetHeight;
 			function onDocumentMouseMove( event ) {
 				event.preventDefault();
 				mouse.set( ( event.clientX / elWidth ) * 2 - 1, - ( event.clientY / elHeight ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
-				var intersects = raycaster.intersectObjects( objects );
+				var intersects = raycaster.intersectObjects( objects);
 				if ( intersects.length > 0 ) {
 					var intersect = intersects[ 0 ];
 					myObject.position.copy( intersect.point ).add( intersect.face.normal );
-					// myObject.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
+					myObject.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
 					scene.add(myObject);
 				}
 			}
@@ -350,15 +356,17 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
 			function onDocumentMouseDown( event ) {
 			
 				event.preventDefault();
-				mouse.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
+				mouse.set( ( event.clientX / elWidth ) * 2 - 1, - ( event.clientY / elHeight ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
-				var intersects = raycaster.intersectObjects( objects );
+				var intersects = raycaster.intersectObjects( objects);
 				console.log(intersects)
 				if ( intersects.length > 0 ) {
 					var intersect = intersects[ 0 ];
 					// delete cube
 					if ( isShiftDown ) {
-						if ( !roomInstance.objects.includes(intersect.object) || !tableInstance.objects.includes(intersect.object)) {
+						console.log(intersect.object, "intersect object", intersect, "intersect")
+						if ( !roomInstance.objects.includes(intersect.object) && !tableInstance.objects.includes(intersect.object) && !floorObjects.includes(intersect.object)) {
+
 							scene.remove( intersect.object );
 							objects.splice( objects.indexOf( intersect.object ), 1 );
 						}
@@ -372,8 +380,9 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
 							
 							var myObject2 = myObject.clone();
 							myObject2.position.copy( intersect.point ).add( intersect.face.normal );
-							// myObject2.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
+							myObject2.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
 							scene.add( myObject2 );
+							console.log(myObject2, "myObject2");
 							objects.push( myObject2 );
 					}
 				}
