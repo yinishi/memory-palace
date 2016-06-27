@@ -7,14 +7,19 @@ module.exports = function(){
     return new Promise(function (res, rej) {
       loader.load(link, function(object){
         object.scale.set(scale,scale,scale);
-        res(object);
+
+      //add object to a cube for collison detection and removing objects  
+        var cube = new THREE.Mesh(new THREE.BoxGeometry(20, 20, 20), 
+        new THREE.MeshBasicMaterial({visible: false})); 
+        cube.add(object);
+        res(cube);
       });
     });
   }
   var currObjectName = 'teapot';
 
-  var _teapot = null
-  var cache = {}
+  var _teapot = null;
+  var cache = {};
 
   var a = {
     getObjects : function(){
