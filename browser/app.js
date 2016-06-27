@@ -5,9 +5,15 @@ require('angular-ui-router');
 
 var app = angular.module('memoryPalace', ["ui.router"]);
 
-// console.log("here", require('./js/factories'));
+app.config(['$urlRouterProvider', '$locationProvider', function ($urlRouterProvider, $locationProvider) {
+    $locationProvider.html5Mode(true);
+    $urlRouterProvider.when('/', '/room');
+}]);
+
 
 require('./js/controllers');
 require('./js/factories');
 require('./js/directives');
 require('./js/states');
+
+
