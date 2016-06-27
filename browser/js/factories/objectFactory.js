@@ -10,6 +10,8 @@ module.exports = function(){
       });
     });
   }
+  var currObjectName = 'teapot';
+
   var a = {
     getObjects : function(){
       return ['teapot', 'fox','table', 'staff'];
@@ -27,7 +29,16 @@ module.exports = function(){
       return load('/browser/objects/table-kitchen/table.json');
     },
     updateCurrentObj: function (objectName) {
+            console.log('updating', objectName)
       return this[objectName]();
+    },
+    setCurrentObject : function(object){
+      console.log('setting', currObjectName)
+      currObjectName = object;
+    },
+    getCurrentObject : function () {
+      console.log('getting', currObjectName)
+      return currObjectName;
     }
   };
 

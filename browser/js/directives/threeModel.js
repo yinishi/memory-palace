@@ -289,7 +289,8 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory,
 			// loader.load('/browser/js/utah-teapot-threejs/utah-teapot.json', function(object){
 			// 	myObject = object;
 			// });
-			objectFactory.updateCurrentObj("fox")
+			var currObjectName = objectFactory.getCurrentObject();
+			objectFactory.updateCurrentObj(currObjectName)
 			.then(function(object) {
 				myObject = object; 
 			});
