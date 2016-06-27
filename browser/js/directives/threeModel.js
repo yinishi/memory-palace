@@ -1,6 +1,7 @@
 'use strict'
 
-module.exports = function ($window, roomFactory, tableFactory, $document) {
+module.exports = function ($window, roomFactory, tableFactory, objectFactory, 
+	$document) {
 	 return {
         restrict: 'E',
         	scope: {
@@ -258,7 +259,6 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
 			var isShiftDown = false;
 			var raycaster = new THREE.Raycaster();
 			var mouse = new THREE.Vector2();
-			var myObject;
 
 			// COLORFUL FLOOR
 			var geometry = new THREE.PlaneGeometry( 2000, 2000, 100, 100 );
@@ -312,29 +312,30 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
 			$document.on( 'keydown', onDocumentKeyDown);
 			$document.on( 'keyup', onDocumentKeyUp);
 
-			// TEAPOT
-			var loader = new THREE.ObjectLoader();
-			loader.load('/browser/js/monster.json', function(object){
-				// myObject = object;
-				// object.scale.set(.3, .3, .3);
-				var cube = new THREE.Mesh(new THREE.BoxGeometry(19, 19, 5), new THREE.MeshBasicMaterial({visible: false}));
-				cube.add(object);
-				myObject = cube;
-			});
+			// // TEAPOT
+			// var loader = new THREE.ObjectLoader();
+			// loader.load('/browser/js/monster.json', function(object){
+			// 	// myObject = object;
+			// 	// object.scale.set(.3, .3, .3);
+			// 	var cube = new THREE.Mesh(new THREE.BoxGeometry(19, 19, 5), new THREE.MeshBasicMaterial({visible: false}));
+			// 	cube.add(object);
+			// 	myObject = cube;
+			// });
 
 			// test object - use if need to place sphere
 			// myObject = new THREE.Mesh(new THREE.SphereGeometry(5), new THREE.MeshLambertMaterial())
 
 			function onDocumentMouseMove( event ) {
+
 				event.preventDefault();
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
 				var intersects = raycaster.intersectObjects( objects);
 				if ( intersects.length > 0 ) {
 					var intersect = intersects[ 0 ];
-					myObject.position.copy( intersect.point ).add( intersect.face.normal );
-					myObject.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
-					scene.add(myObject);
+					objectFactory.currentObject.position.copy( intersect.point ).add( intersect.face.normal );
+					objectFactory.currentObject.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
+					scene.add(objectFactory.currentObject);
 				}
 			}
 
@@ -361,8 +362,9 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
 						// voxel.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
 						// scene.add( voxel );
 						// objects.push( voxel );
-							
-							var myObject2 = myObject.clone();
+
+							var myObject2 = objectFactory.currentObject.clone();
+
 							myObject2.position.copy( intersect.point ).add( intersect.face.normal );
 							myObject2.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
 							scene.add( myObject2 );
