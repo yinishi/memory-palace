@@ -24,9 +24,14 @@ module.exports = function(){
   var a = {
     getObjects : function(){
      return [{name: 'teapot', image: "./browser/images/teapot.jpg", scale: .3},
-             {name: 'fox', image: "./browser/images/fox.js", scale: .3},
-             {name: 'table', image: "./browser/images/fox.js", scale: 10},
-             {name: 'staff', image: "./browser/images/staff.js", scale: 2}];
+             {name: 'fox', image: "./browser/images/fox.jpg", scale: .3},
+             {name: 'table', image: "./browser/images/table.jpg", scale: 10},
+             {name: 'staff', image: "./browser/images/staff.jpg", scale: 2},
+             {name: 'monster', image: "./browser/images/monster.jpg", scale: 1},
+             {name: 'brain', image: "./browser/images/brain.jpg", scale: 3},
+             {name: 'sofa', image: "./browser/images/sofa.jpg", scale: 2},
+             {name: 'cat-mug', image: "./browser/images/cat-mug.png", scale: 3},
+             {name: 'mug', image: "./browser/images/mug.png", scale: .2}];
     },
     // get teapot() {
     //   return (cache['teapot'] || (cache['teapot'] = load('/browser/objects/teapot/teapot.json')));
