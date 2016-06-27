@@ -17,11 +17,11 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
 
 			// CREATING SCENE
 			const scene = new THREE.Scene();
-			scene.fog = new THREE.Fog( 0xffffff, 0, 750 );
+			// scene.fog = new THREE.Fog( 0xffffff, 0, 750 );
 		
 			//ADDING LIGHT
-			var ambientLight = new THREE.AmbientLight( 0x606060 );
-			scene.add( ambientLight );
+			// var ambientLight = new THREE.AmbientLight( 0x606060 );
+			// scene.add( ambientLight );
 			var directionalLight = new THREE.DirectionalLight( 0xffffff );
 			directionalLight.position.set( 1, 0.75, 0.5 ).normalize();
 			scene.add( directionalLight );
@@ -48,11 +48,10 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
 
 			var onKeyDown = function ( event ) {
 
-				event.preventDefault();
-
 				switch ( event.keyCode ) {
 
 					case 38: // up
+						event.preventDefault();
 						moveForward = true;
 						break;
 
@@ -60,6 +59,7 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
 						moveLeft = true; break;
 
 					case 40: // down
+						event.preventDefault();
 						moveBackward = true;
 						break;
 
@@ -77,11 +77,10 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
 
 			var onKeyUp = function ( event ) {
 
-				event.preventDefault();
-				
 				switch( event.keyCode ) {
 
 					case 38: // up
+						event.preventDefault();
 						moveForward = false;
 						break;
 
@@ -90,6 +89,7 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
 						break;
 
 					case 40: // down
+						event.preventDefault();
 						moveBackward = false;
 						break;
 
@@ -288,48 +288,63 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
 			var mesh = new THREE.Mesh( geometry, material );
 			scene.add( mesh );
 
-			// TEAPOT
-			var loader = new THREE.ObjectLoader();
-			loader.load('/browser/js/utah-teapot-threejs/utah-teapot.json', function(object){
-				myObject = object;
-			});
-
 			// CREATE A TABLE
 			var tableInstance = new tableFactory();
 			let table = tableInstance.container;
+			table.scale.set(5, 5, 5)
 
 			// CREATE A ROOM
 			var roomInstance = new roomFactory();
 			let room = roomInstance.container;
-			room.scale.set(3, 3, 3);
 			scene.add(room);
 
 			objects = objects.concat(roomInstance.objects);
 
-			table.position.set(0, -10, 6);
+			table.position.set(0, 5, 6);
 			room.add(table);
 			objects = objects.concat(tableInstance.objects);
 
 			//PLACING OBJECTS
 			e.on( 'mousemove', onDocumentMouseMove);
 			e.bind( 'mousedown', onDocumentMouseDown);
-			// $document.on( 'keydown', onDocumentKeyDown);
-			// $document.on( 'keyup', onDocumentKeyUp);
+			// e.bind('dblclick', onDoubleClick);
+			$document.on( 'keydown', onDocumentKeyDown);
+			$document.on( 'keyup', onDocumentKeyUp);
 
+			// TEAPOT
+			var loader = new THREE.ObjectLoader();
+			loader.load('/browser/js/monster.json', function(object){
+				// myObject = object;
+				// object.scale.set(.3, .3, .3);
+				var cube = new THREE.Mesh(new THREE.BoxGeometry(22, 22, 22), new THREE.MeshBasicMaterial({visible: false}));
+				cube.add(object);
+				myObject = cube;
+				// myObject.rotation.set(Math.PI/2, 0, 0);
+			});
+
+			// test object - use if need to place sphere
+			// myObject = new THREE.Mesh(new THREE.SphereGeometry(5), new THREE.MeshLambertMaterial())
+
+			// var loader = new THREE.JSONLoader();
+			// loader.load('/browser/js/monster.json', function(geometry, materials){
+			// 	var material = new THREE.MultiMaterial(materials);
+			// 	var object = new THREE.Mesh(geometry, material);
+			// 	myObject = object;
+			// })
+
+			console.log('in the threemodel file', objects);
+			var elWidth = renderer.domElement.offsetWidth, elHeight = renderer.domElement.offsetHeight;
 			function onDocumentMouseMove( event ) {
 				event.preventDefault();
-				mouse.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
+				mouse.set( ( event.clientX / elWidth ) * 2 - 1, - ( event.clientY / elHeight ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
 				var intersects = raycaster.intersectObjects( objects );
 				if ( intersects.length > 0 ) {
 					var intersect = intersects[ 0 ];
-					myObject.scale.set(.3, .3, .3);
-					myObject.rotation.set(Math.PI/2, 0, 0);
 					myObject.position.copy( intersect.point ).add( intersect.face.normal );
-					myObject.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
+					// myObject.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
 					scene.add(myObject);
 				}
-				render();
 			}
 
 			function onDocumentMouseDown( event ) {
@@ -338,6 +353,7 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
 				mouse.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
 				var intersects = raycaster.intersectObjects( objects );
+				console.log(intersects)
 				if ( intersects.length > 0 ) {
 					var intersect = intersects[ 0 ];
 					// delete cube
@@ -353,29 +369,46 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
 						// voxel.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
 						// scene.add( voxel );
 						// objects.push( voxel );
-						
+							
 							var myObject2 = myObject.clone();
-							myObject2.scale.set(.3, .3, .3);
-							myObject2.rotation.set(Math.PI/2, 0, 0);
 							myObject2.position.copy( intersect.point ).add( intersect.face.normal );
-							myObject2.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
+							// myObject2.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
 							scene.add( myObject2 );
 							objects.push( myObject2 );
 					}
-					render();
 				}
 			}
-			// function onDocumentKeyDown( event ) {
-			// 	console.log("shift pressed")
-			// 	switch( event.keyCode ) {
-			// 		case 16: isShiftDown = true; break;
-			// 	}
-			// }
-			// function onDocumentKeyUp( event ) {
-			// 	switch ( event.keyCode ) {
-			// 		case 16: isShiftDown = false; break;
-			// 	}
-			// }
+
+		// 	//delete object
+		// 	function onDoubleClick (event){
+		// 		console.log("in double click")
+		// 		event.preventDefault();
+		// 		mouse.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
+		// 		raycaster.setFromCamera( mouse, camera );
+		// 		var intersects = raycaster.intersectObjects( objects );
+		// 		console.log(intersects)
+		// 		if ( intersects.length > 0 ) {
+		// 			var intersect = intersects[ 0 ];
+		// 		if ( !roomInstance.objects.includes(intersect.object) && !tableInstance.objects.includes(intersect.object )) {
+		// 					scene.remove( intersect.object );
+		// 					objects.splice( objects.indexOf( intersect.object ), 1 );
+		// 			}
+		// 		}
+		// }
+
+			function onDocumentKeyDown( event ) {
+				switch( event.keyCode ) {
+					case 16: 
+					isShiftDown = true; 
+					console.log("shift pressed");
+					break;
+				}
+			}
+			function onDocumentKeyUp( event ) {
+				switch ( event.keyCode ) {
+					case 16: isShiftDown = false; break;
+				}
+			}
 
 			// CALL RENDER FUNCTION
 			render();

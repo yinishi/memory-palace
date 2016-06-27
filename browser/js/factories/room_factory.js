@@ -3,7 +3,7 @@ module.exports = function() {
 	  this.container = new THREE.Object3D()
 	  this.objects = [];
 
-	  var floorSize = 30
+	  var floorSize = 90
 	  var wallSize = floorSize / 2
 
 	  let floorGeometry = new THREE.PlaneBufferGeometry(floorSize, floorSize);
