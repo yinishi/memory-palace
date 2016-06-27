@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function ($state, authFactory) {
+module.exports = function ($state, authFactory, $rootScope) {
 	 return {
         restrict: 'E',
         scope: {

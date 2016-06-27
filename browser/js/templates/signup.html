@@ -4,17 +4,19 @@
       <div class="form-group">
       <label>name</label>
         <input type="text" class="form-control" placeholder="name" ng-model="userInfo.name" required />
+        <span ng-show="submitted &&name.$error.required">Name is required.</span>
       </div>
       <div class="form-group">
         <label>email</label>
         <input type="email" class="form-control" placeholder="email" ng-model="userInfo.email" required />
-        <span ng-show="userInfo.$dirty && userInfo.$error.email">Email is required.</span>
+        <span ng-show="submitted &&userInfo.email.$error.required">Email is required.</span>
+        <span ng-show="submitted &&userInfo.$error.email">Please enter a valid email.</span>
       </div>
       <div class="form-group">
         <label>password</label>
         <input type="password" class="form-control" placeholder="password" ng-model="userInfo.password" required />
         <input class="form-control" placeholder="confirm password" ng-model="userInfo.confirmPassword" required />
-        <span ng-show="userInfo.$dirty && (!userInfo.password || (userInfo.password !== userInfo.confirmPassword))">Passwords must match</span>
+        <span ng-show="submitted && (!userInfo.password || (userInfo.password !== userInfo.confirmPassword))">Passwords must match.</span>
       </div>
       <button ng-click="signup()" type="submit" class="btn btn-block btn-primary">sign in</button>
     </form>
