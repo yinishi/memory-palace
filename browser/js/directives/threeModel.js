@@ -8,10 +8,10 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
         link: function(s,e,a) {
 		
 			/*  ESSENTIAL THREE.JS COMPONENTS */
-
+			console.log(e, "e");
 			// CONSTANTS
 			const WIDTH = $window.innerWidth;
-			const HEIGHT = $window.innerHeight;
+			const HEIGHT = $window.innerHeight * 0.93;
 			const ASPECT = WIDTH / HEIGHT;
 			const UNITSIZE = 250;
 
@@ -244,9 +244,9 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
 			$window.addEventListener( 'resize', onWindowResize, false );
 
 			function onWindowResize() {
-				camera.aspect = $window.innerWidth / $window.innerHeight;
+				camera.aspect = $window.innerWidth / $window.innerHeight * 0.9;
 				camera.updateProjectionMatrix();
-				renderer.setSize( $window.innerWidth, $window.innerHeight );
+				renderer.setSize( $window.innerWidth, $window.innerHeight  * 0.9);
 			}
 
 			// CREATE CONTAINER
@@ -339,10 +339,10 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
 			// })
 
 			// console.log('in the threemodel file', objects);
-			var elWidth = renderer.domElement.offsetWidth, elHeight = renderer.domElement.offsetHeight;
+			// var elWidth = renderer.domElement.offsetWidth, elHeight = renderer.domElement.offsetHeight;
 			function onDocumentMouseMove( event ) {
 				event.preventDefault();
-				mouse.set( ( event.clientX / elWidth ) * 2 - 1, - ( event.clientY / elHeight ) * 2 + 1 );
+				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
 				var intersects = raycaster.intersectObjects( objects);
 				if ( intersects.length > 0 ) {
@@ -356,7 +356,7 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
 			function onDocumentMouseDown( event ) {
 			
 				event.preventDefault();
-				mouse.set( ( event.clientX / elWidth ) * 2 - 1, - ( event.clientY / elHeight ) * 2 + 1 );
+				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
 				var intersects = raycaster.intersectObjects( objects);
 				console.log(intersects)
