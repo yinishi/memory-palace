@@ -6,18 +6,11 @@ module.exports = function(){
     var loader = new THREE.ObjectLoader();
     return new Promise(function (res, rej) {
       loader.load(link, function(object){
-        console.log('inload in promise', object);
         res(object);
       });
     });
   }
   var currObjectName = 'teapot';
-
-  // function load () {
-  //   loader.load(link, function(object){ 
-  //     a.currentObject = object;
-  //   });
-  // }
 
   var _teapot = null
   var cache = {}
@@ -26,17 +19,17 @@ module.exports = function(){
     getObjects : function(){
       return ['teapot', 'fox','table', 'staff'];
     },
-    get teapot() {
-      return (cache['teapot'] || (cache['teapot'] = load('/browser/objects/teapot/teapot.json')));
-    },
-    fox: load('/browser/objects/fox/fox.json'),
-    staff: load('/browser/objects/staff/staff.json'),
-    table: load('/browser/objects/table/table.json'),
+    // get teapot() {
+    //   return (cache['teapot'] || (cache['teapot'] = load('/browser/objects/teapot/teapot.json')));
+    // },
+    // fox: load('/browser/objects/fox/fox.json'),
+    // staff: load('/browser/objects/staff/staff.json'),
+    // table: load('/browser/objects/table/table.json'),
     currentObject: null,
     setCurrentObject: function(name){
       (cache[name] || (cache[name] = load(`/browser/objects/${name}/${name}.json`)))
-        .then(obj => this.currentObject = obj)
-      a[name].then(obj => this.currentObject = obj)
+        .then(obj => this.currentObject = obj);
+      a[name].then(obj => this.currentObject = obj);
     }
   };
 

@@ -12,11 +12,9 @@ module.exports = function ($http, $rootScope) {
   //   return !!user && (me.id == user.id || me == user);
   // };
   function toData (response) {
-    console.log("HERE", response.data)
     return response.data;
   }
   function setUser (newUser) {
-    console.log("here", newUser);
     user = newUser;
     return user;
   }

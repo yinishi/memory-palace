@@ -255,7 +255,6 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory,
 			var isShiftDown = false;
 			var raycaster = new THREE.Raycaster();
 			var mouse = new THREE.Vector2();
-			var myObject;
 
 			// COLORFUL FLOOR
 			var geometry = new THREE.PlaneGeometry( 2000, 2000, 100, 100 );
@@ -283,16 +282,6 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory,
 
 			var mesh = new THREE.Mesh( geometry, material );
 			scene.add( mesh );
-
-			// // TEAPOT
-			// var loader = new THREE.ObjectLoader();
-			// loader.load('/browser/js/utah-teapot-threejs/utah-teapot.json', function(object){
-			// 	myObject = object;
-			// });
-			//var currObjectName = objectFactory.getCurrentObjectName();
-		 
-			// myObject = objectFactory.currentObject;
-
 			
 			// CREATE A TABLE
 			var tableInstance = new tableFactory();
