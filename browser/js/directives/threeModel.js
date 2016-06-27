@@ -48,6 +48,8 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
 
 			var onKeyDown = function ( event ) {
 
+				event.preventDefault();
+
 				switch ( event.keyCode ) {
 
 					case 38: // up
@@ -74,6 +76,9 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
 			};
 
 			var onKeyUp = function ( event ) {
+
+				event.preventDefault();
+				
 				switch( event.keyCode ) {
 
 					case 38: // up
