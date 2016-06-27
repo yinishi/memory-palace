@@ -314,7 +314,6 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory,
 				if ( intersects.length > 0 ) {
 					var intersect = intersects[ 0 ];
 					objectFactory.currentObject.scale.set(.3, .3, .3);
-					objectFactory.currentObject.rotation.set(Math.PI/2, 0, 0);
 					objectFactory.currentObject.position.copy( intersect.point ).add( intersect.face.normal );
 					objectFactory.currentObject.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
 					scene.add(objectFactory.currentObject);
@@ -345,7 +344,6 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory,
 						
 							var myObject2 = objectFactory.currentObject.clone();
 							myObject2.scale.set(.3, .3, .3);
-							myObject2.rotation.set(Math.PI/2, 0, 0);
 							myObject2.position.copy( intersect.point ).add( intersect.face.normal );
 							myObject2.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
 							scene.add( myObject2 );
