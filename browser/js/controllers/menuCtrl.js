@@ -1,8 +1,7 @@
  module.exports = function($scope, objectFactory){
 
   $scope.objects = objectFactory.getObjects();
-  $scope.setCurrentObject = function (obj) {
-      console.log('inscope', obj)
-      objectFactory.setCurrentObject(obj);
-  }
-}
+  $scope.setCurrentObject = function (objectName) {
+    objectFactory.setCurrentObject(objectName);
+  };
+};

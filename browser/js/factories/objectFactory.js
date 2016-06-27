@@ -1,5 +1,6 @@
-module.exports = function(){
+'use strict'
 
+module.exports = function(){
 
   function load (link) {
     var loader = new THREE.ObjectLoader();
@@ -12,35 +13,32 @@ module.exports = function(){
   }
   var currObjectName = 'teapot';
 
+  // function load () {
+  //   loader.load(link, function(object){ 
+  //     a.currentObject = object;
+  //   });
+  // }
+
+  var _teapot = null
+  var cache = {}
+
   var a = {
     getObjects : function(){
       return ['teapot', 'fox','table', 'staff'];
     },
-    teapot : function(){
-      return load('/browser/objects/utah-teapot-threejs/utah-teapot.json');
+    get teapot() {
+      return (cache['teapot'] || (cache['teapot'] = load('/browser/objects/teapot/teapot.json')));
     },
-    fox : function(){
-      return load('/browser/objects/fox/fox.json');
-    },
-    staff : function(){
-      return load('/browser/objects/staff/staff.json');
-    },
-    table : function(){
-      return load('/browser/objects/table-kitchen/table.json');
-    },
-    updateCurrentObj: function (objectName) {
-            console.log('updating', objectName)
-      return this[objectName]();
-    },
-    setCurrentObject : function(object){
-      console.log('setting', currObjectName)
-      currObjectName = object;
-    },
-    getCurrentObject : function () {
-      console.log('getting', currObjectName)
-      return currObjectName;
+    fox: load('/browser/objects/fox/fox.json'),
+    staff: load('/browser/objects/staff/staff.json'),
+    table: load('/browser/objects/table/table.json'),
+    currentObject: null,
+    setCurrentObject: function(name){
+      (cache[name] || (cache[name] = load(`/browser/objects/${name}/${name}.json`)))
+        .then(obj => this.currentObject = obj)
+      a[name].then(obj => this.currentObject = obj)
     }
   };
 
   return a;
-}
+};

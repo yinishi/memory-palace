@@ -289,11 +289,10 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory,
 			// loader.load('/browser/js/utah-teapot-threejs/utah-teapot.json', function(object){
 			// 	myObject = object;
 			// });
-			var currObjectName = objectFactory.getCurrentObject();
-			objectFactory.updateCurrentObj(currObjectName)
-			.then(function(object) {
-				myObject = object; 
-			});
+			//var currObjectName = objectFactory.getCurrentObjectName();
+		 
+			// myObject = objectFactory.currentObject;
+
 			
 			// CREATE A TABLE
 			var tableInstance = new tableFactory();
@@ -325,11 +324,11 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory,
 				var intersects = raycaster.intersectObjects( objects );
 				if ( intersects.length > 0 ) {
 					var intersect = intersects[ 0 ];
-					myObject.scale.set(.3, .3, .3);
-					myObject.rotation.set(Math.PI/2, 0, 0);
-					myObject.position.copy( intersect.point ).add( intersect.face.normal );
-					myObject.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
-					scene.add(myObject);
+					objectFactory.currentObject.scale.set(.3, .3, .3);
+					objectFactory.currentObject.rotation.set(Math.PI/2, 0, 0);
+					objectFactory.currentObject.position.copy( intersect.point ).add( intersect.face.normal );
+					objectFactory.currentObject.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
+					scene.add(objectFactory.currentObject);
 				}
 				render();
 			}
@@ -356,7 +355,7 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory,
 						// scene.add( voxel );
 						// objects.push( voxel );
 						
-							var myObject2 = myObject.clone();
+							var myObject2 = objectFactory.currentObject.clone();
 							myObject2.scale.set(.3, .3, .3);
 							myObject2.rotation.set(Math.PI/2, 0, 0);
 							myObject2.position.copy( intersect.point ).add( intersect.face.normal );
