@@ -48,7 +48,6 @@ app.use('/auth', require('./auth/auth.router'));
 
 
 app.use('/browser', Express.static(path.join(__dirname, '../browser')));
-// app.use('/bower-components', Express.static(path.join(__dirname, '../minjs')));
 app.use('/minjs', Express.static(path.join(__dirname, '../minjs')));
 
 
