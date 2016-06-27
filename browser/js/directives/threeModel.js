@@ -1,6 +1,7 @@
 'use strict'
 
-module.exports = function ($window, roomFactory, tableFactory, $document) {
+module.exports = function ($window, roomFactory, tableFactory, objectFactory, 
+	$document) {
 	 return {
         restrict: 'E',
         	scope: {
@@ -283,12 +284,16 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
 			var mesh = new THREE.Mesh( geometry, material );
 			scene.add( mesh );
 
-			// TEAPOT
-			var loader = new THREE.ObjectLoader();
-			loader.load('/browser/js/utah-teapot-threejs/utah-teapot.json', function(object){
-				myObject = object;
+			// // TEAPOT
+			// var loader = new THREE.ObjectLoader();
+			// loader.load('/browser/js/utah-teapot-threejs/utah-teapot.json', function(object){
+			// 	myObject = object;
+			// });
+			objectFactory.updateCurrentObj("fox")
+			.then(function(object) {
+				myObject = object; 
 			});
-
+			
 			// CREATE A TABLE
 			var tableInstance = new tableFactory();
 			let table = tableInstance.container;
@@ -312,6 +317,7 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
 			// $document.on( 'keyup', onDocumentKeyUp);
 
 			function onDocumentMouseMove( event ) {
+
 				event.preventDefault();
 				mouse.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
