@@ -16,7 +16,6 @@ module.exports = function ($state, authFactory, $rootScope) {
                 });
             }
             setUser();
-            console.log("USER", scope.user);
         	scope.logout = function () {
 		        return authFactory.logout()
 		        .then(function () {

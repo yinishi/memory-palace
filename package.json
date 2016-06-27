@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon --watch server -e js,html server/index.js",
-    "watch": "node_modules/.bin/watchify -d browser/app.js -o minjs/bundled.js -v",
+    "watch": "node_modules/.bin/watchify browser/app.js -o minjs/bundled.js -v -d",
     "build": "node_modules/.bin/browserify browser/app.js | node_modules/.bin/uglifyjs > minjs/bundled.js"
   },
   "author": "",
