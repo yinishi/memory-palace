@@ -5,4 +5,6 @@
   $scope.setCurrentObject = function (objectName) {
     objectFactory.setCurrentObject(objectName);
   };
+
+  
 };

@@ -2,10 +2,11 @@
 
 module.exports = function(){
 
-  function load (link) {
+  function load (link, scale) {
     var loader = new THREE.ObjectLoader();
     return new Promise(function (res, rej) {
       loader.load(link, function(object){
+        object.scale.set(scale,scale,scale);
         res(object);
       });
     });
@@ -17,7 +18,10 @@ module.exports = function(){
 
   var a = {
     getObjects : function(){
-      return ['teapot', 'fox','table', 'staff'];
+     return [{name: 'teapot', image: "./browser/images/teapot.jpg", scale: .3},
+             {name: 'fox', image: "./browser/images/fox.js", scale: .3},
+             {name: 'table', image: "./browser/images/fox.js", scale: 10},
+             {name: 'staff', image: "./browser/images/staff.js", scale: 2}];
     },
     // get teapot() {
     //   return (cache['teapot'] || (cache['teapot'] = load('/browser/objects/teapot/teapot.json')));
@@ -26,11 +30,13 @@ module.exports = function(){
     // staff: load('/browser/objects/staff/staff.json'),
     // table: load('/browser/objects/table/table.json'),
     currentObject: null,
-    setCurrentObject: function(name){
-      (cache[name] || (cache[name] = load(`/browser/objects/${name}/${name}.json`)))
+    setCurrentObject: function(object){
+      var name = object.name;
+      var scale = object.scale;
+      (cache[name] || (cache[name] = load(`/browser/objects/${name}/${name}.json`, scale)))
         .then(obj => this.currentObject = obj)
         
-      a[name].then(obj => this.currentObject = obj);
+      //a[name].then(obj => this.currentObject = obj);
     }
   };
 
