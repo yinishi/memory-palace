@@ -319,7 +319,6 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory,
 					objectFactory.currentObject.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
 					scene.add(objectFactory.currentObject);
 				}
-				render();
 			}
 
 			function onDocumentMouseDown( event ) {
@@ -352,7 +351,6 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory,
 							scene.add( myObject2 );
 							objects.push( myObject2 );
 					}
-					render();
 				}
 			}
 			// function onDocumentKeyDown( event ) {

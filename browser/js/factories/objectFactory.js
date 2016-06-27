@@ -28,7 +28,8 @@ module.exports = function(){
     currentObject: null,
     setCurrentObject: function(name){
       (cache[name] || (cache[name] = load(`/browser/objects/${name}/${name}.json`)))
-        .then(obj => this.currentObject = obj);
+        .then(obj => this.currentObject = obj)
+        
       a[name].then(obj => this.currentObject = obj);
     }
   };
