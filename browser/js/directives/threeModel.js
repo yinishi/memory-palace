@@ -8,8 +8,7 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
         link: function(s,e,a) {
 		
 			/*  ESSENTIAL THREE.JS COMPONENTS */
-			console.log(e, "e");
-			// CONSTANTS
+				// CONSTANTS
 			const WIDTH = $window.innerWidth;
 			const HEIGHT = $window.innerHeight * 0.93;
 			const ASPECT = WIDTH / HEIGHT;
@@ -244,9 +243,9 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
 			$window.addEventListener( 'resize', onWindowResize, false );
 
 			function onWindowResize() {
-				camera.aspect = $window.innerWidth / $window.innerHeight * 0.9;
+				camera.aspect = $window.innerWidth / $window.innerHeight * 0.93;
 				camera.updateProjectionMatrix();
-				renderer.setSize( $window.innerWidth, $window.innerHeight  * 0.9);
+				renderer.setSize( $window.innerWidth, $window.innerHeight  * 0.93);
 			}
 
 			// CREATE CONTAINER
@@ -290,11 +289,6 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
 			objects.push(mesh);
 			var floorObjects = [mesh];
 
-			// CREATE A TABLE
-			var tableInstance = new tableFactory();
-			let table = tableInstance.container;
-			table.scale.set(5, 5, 5)
-
 			// CREATE A ROOM
 			var roomInstance = new roomFactory();
 			let room = roomInstance.container;
@@ -302,14 +296,19 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
 
 			objects = objects.concat(roomInstance.objects);
 
-			table.position.set(0, 5, 6);
+			// CREATE A TABLE
+			var tableInstance = new tableFactory();
+			let table = tableInstance.container;
+			table.scale.set(5, 5, 5)
+			table.position.set(0, 6, 20);
 			room.add(table);
 			objects = objects.concat(tableInstance.objects);
+
+
 
 			//PLACING OBJECTS
 			e.on( 'mousemove', onDocumentMouseMove);
 			e.bind( 'mousedown', onDocumentMouseDown);
-			// e.bind('dblclick', onDoubleClick);
 			$document.on( 'keydown', onDocumentKeyDown);
 			$document.on( 'keyup', onDocumentKeyUp);
 
@@ -320,26 +319,12 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
 				// object.scale.set(.3, .3, .3);
 				var cube = new THREE.Mesh(new THREE.BoxGeometry(19, 19, 5), new THREE.MeshBasicMaterial({visible: false}));
 				cube.add(object);
-				console.log('obj is', object)
 				myObject = cube;
-
-				// myObject = object;
-				console.log('myObject', myObject);
-				// myObject.rotation.set(Math.PI/2, 0, 0);
 			});
 
 			// test object - use if need to place sphere
 			// myObject = new THREE.Mesh(new THREE.SphereGeometry(5), new THREE.MeshLambertMaterial())
 
-			// var loader = new THREE.JSONLoader();
-			// loader.load('/browser/js/monster.json', function(geometry, materials){
-			// 	var material = new THREE.MultiMaterial(materials);
-			// 	var object = new THREE.Mesh(geometry, material);
-			// 	myObject = object;
-			// })
-
-			// console.log('in the threemodel file', objects);
-			// var elWidth = renderer.domElement.offsetWidth, elHeight = renderer.domElement.offsetHeight;
 			function onDocumentMouseMove( event ) {
 				event.preventDefault();
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
@@ -359,12 +344,11 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
 				var intersects = raycaster.intersectObjects( objects);
-				console.log(intersects)
+				
 				if ( intersects.length > 0 ) {
 					var intersect = intersects[ 0 ];
 					// delete cube
 					if ( isShiftDown ) {
-						console.log(intersect.object, "intersect object", intersect, "intersect")
 						if ( !roomInstance.objects.includes(intersect.object) && !tableInstance.objects.includes(intersect.object) && !floorObjects.includes(intersect.object)) {
 
 							scene.remove( intersect.object );
@@ -382,34 +366,15 @@ module.exports = function ($window, roomFactory, tableFactory, $document) {
 							myObject2.position.copy( intersect.point ).add( intersect.face.normal );
 							myObject2.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
 							scene.add( myObject2 );
-							console.log(myObject2, "myObject2");
 							objects.push( myObject2 );
 					}
 				}
 			}
 
-		// 	//delete object
-		// 	function onDoubleClick (event){
-		// 		console.log("in double click")
-		// 		event.preventDefault();
-		// 		mouse.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
-		// 		raycaster.setFromCamera( mouse, camera );
-		// 		var intersects = raycaster.intersectObjects( objects );
-		// 		console.log(intersects)
-		// 		if ( intersects.length > 0 ) {
-		// 			var intersect = intersects[ 0 ];
-		// 		if ( !roomInstance.objects.includes(intersect.object) && !tableInstance.objects.includes(intersect.object )) {
-		// 					scene.remove( intersect.object );
-		// 					objects.splice( objects.indexOf( intersect.object ), 1 );
-		// 			}
-		// 		}
-		// }
-
 			function onDocumentKeyDown( event ) {
 				switch( event.keyCode ) {
 					case 16: 
 					isShiftDown = true; 
-					console.log("shift pressed");
 					break;
 				}
 			}
