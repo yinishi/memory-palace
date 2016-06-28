@@ -28,7 +28,7 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 
 			//ADDING CAMERA
 			let camera = new THREE.PerspectiveCamera(60, ASPECT, 1, 10000);
-			camera.position.set(0, 0, 100);
+			// camera.position.set(0, 0, 100);
 			scene.add(camera);
 
 			// CONTROLS
@@ -116,8 +116,8 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 				pitchObject.add( camera );
 
 				var yawObject = new THREE.Object3D();
-				yawObject.position.y = 10;
 				yawObject.add( pitchObject );
+				pitchObject.position.y = 10;
 
 				var PI_2 = Math.PI / 2;
 
