@@ -51,24 +51,15 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 
 				switch ( event.keyCode ) {
 
-					case 38: // up
-						event.preventDefault();
+					case 87: // w, move forward
 						moveForward = true;
 						break;
 
-					case 37: // left
-						moveLeft = true; break;
-
-					case 40: // down
-						event.preventDefault();
+					case 83: // s, move backward
 						moveBackward = true;
 						break;
 
-					case 39: // right
-						moveRight = true;
-						break;
-
-					case 32: // space
+					case 32: // space, jump
 						event.preventDefault();
 						if ( canJump === true ) velocity.y += 350;
 						canJump = false;
@@ -81,24 +72,13 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 
 				switch( event.keyCode ) {
 
-					case 38: // up
-						event.preventDefault();
+					case 87: // forward
 						moveForward = false;
 						break;
 
-					case 37: // left
-						moveLeft = false;
-						break;
-
-					case 40: // down
-						event.preventDefault();
+					case 83: // backward
 						moveBackward = false;
 						break;
-
-					case 39: // right
-						moveRight = false;
-						break;
-
 				}
 			};
 
@@ -127,16 +107,16 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 
 					switch(event.keyCode){
 
-						case 87: // w, rotate up
+						case 69: // e, look down
 							pitchObject.rotation.x -= 3 * Math.PI / 180;
 							break;
-						case 83: // s, rotate down
+						case 81: // q, look up
 							pitchObject.rotation.x += 3 * Math.PI / 180;
 							break;
-						case 65: // a, rotate left
+						case 68: // d, rotate right 
 							yawObject.rotation.y -= 3 * Math.PI / 180;
 							break;
-						case 68: // d, rotate right
+						case 65: // a, rotate left
 							yawObject.rotation.y += 3 * Math.PI / 180;
 							break;
 							}
