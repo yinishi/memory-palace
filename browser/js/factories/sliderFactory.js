@@ -21,16 +21,35 @@ module.exports = function () {
 
 			return actualWidth + paddingLeft + paddingRight + marginLeft + marginRight;
 		}
-		function _startShow() {
-			return setInterval(function() {
-				this.wrapper.style.left = -1*this.current*this.slideWidth + "px";
-				this.current++;
+		function _moveRight() {
+			this.wrapper.style.right = -1*this.current*this.slideWidth + "px";
+			this.current++;
 
-				if ( this.current === this.numItems ) {
-					this.current = 0;
-				}
-			}.bind(this), 500);
+			if ( this.current === this.numItems ) {
+				this.current = 0;
+			}
 		}
+		function _moveLeft() {
+			console.log()
+			this.wrapper.style.left = -1*this.current*this.slideWidth + "px";
+			this.current++;
+
+			if ( this.current === this.numItems ) {
+				this.current = 0;
+			}
+		}
+
+		// function _startShow() {
+		// 	return setInterval(function() {
+		// 		this.wrapper.style.left = -1*this.current*this.slideWidth + "px";
+		// 		this.current++;
+
+		// 		if ( this.current === this.numItems ) {
+		// 			this.current = 0;
+		// 		}
+		// 	}.bind(this), 500);
+		// }
+
 		function _addWrapper() {
 			this.slider.innerHTML = "<div class='slider__wrapper'>"
 									+ this.slider.innerHTML
@@ -51,10 +70,9 @@ module.exports = function () {
 			this.slideWidth = getOuterWidth( this.items[ 0 ] );
 			this.numItems = this.items.length;
 			this.current = 0;
-			this.intervalID = _startShow.call( this );
 		} // the constructor function
 
-		Slider.prototype.goToSlide = function goToSlide( slideNum ) {
+		Slider.prototype.goToSlide = function ( slideNum, direction ) {
 			console.log("here");
 			var isUndefined = (typeof slideNum === "undefined");
 			var isSlideNaN = isNaN( slideNum );
@@ -64,8 +82,9 @@ module.exports = function () {
 			if (  isUndefined || isSlideNaN || isLessThan1 || isGreaterThanLength ) {
 				return;
 			}
-			// this.current -= 1; 
-			this._startShow();
+			this.current = slideNum - 1;
+			if (direction === "left") _moveLeft.call(this);
+			if (direction === "right") _moveRight.call(this);
 		};
 
 		return Slider

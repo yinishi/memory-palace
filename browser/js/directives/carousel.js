@@ -11,12 +11,13 @@ module.exports = function ($window, sliderFactory) {
 			var nextBtn = el.find(".next");
 			var prevBtn = el.find(".prev");
 			nextBtn.click(function() {
-				sel.current+=1;
-				sel.go
+				var nextSlide = sel.current+1;
+				sel.goToSlide(nextSlide, "left");
 				console.log("next", sel.current)
 			});
 			prevBtn.click(function() {
-				sel.current-=1;
+				var prevSlide = sel.current-1;
+				sel.goToSlide(prevSlide, "right");
 				console.log("prev", sel.current)
 			});
 			console.log("el", el.find(".next"))
