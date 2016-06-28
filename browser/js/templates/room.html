@@ -1,12 +1,16 @@
 <div>
 	<three-model></three-model>
   <div class="container-fluid" ng-controller="menuCtrl">
-  <h1> object</h1>
+<!--   <h1> object</h1>
     <ul ng-repeat='object in objects'>
+    <img src="{{object.image}}" />
       <li><a ng-click="setCurrentObject(object)">{{object.name}}</a></li>
     </ul>
-  </div>
+  </div> -->
+
+	<slick autoplay="true" slides-to-show="3" slides-to-scroll="3"> 
+	   <div ng-repeat="object in objects">
+	    <img data-lazy="{{object.image}}">
+	   </div>
+	</slick>
 </div>
-<!-- <slick infinite="true" slides-to-show="3" slides-to-scroll="3">
-  ...
-</slick> -->
