@@ -127,17 +127,17 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 
 					switch(event.keyCode){
 
-						case 87: // w, look up
-							pitchObject.rotation.x += .05;
+						case 87: // w, rotate up
+							pitchObject.rotation.x -= 3 * Math.PI / 180;
 							break;
-						case 83: // s, look down
-							pitchObject.rotation.x -= 0.05;
+						case 83: // s, rotate down
+							pitchObject.rotation.x += 3 * Math.PI / 180;
 							break;
-						case 65: // a, look left
-							yawObject.rotation.y += 0.05;
+						case 65: // a, rotate left
+							yawObject.rotation.y -= 3 * Math.PI / 180;
 							break;
-						case 68: // d, look right
-							yawObject.rotation.y -= 0.05;
+						case 68: // d, rotate right
+							yawObject.rotation.y += 3 * Math.PI / 180;
 							break;
 							}
 
