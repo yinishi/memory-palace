@@ -1,7 +1,16 @@
+<div>
+
+<button class="prev" ng-click="prev()">prev</button>
+	<ul ng-repeat="object in objects">
+		<li>{{object.name}}</li>
+	</ul>
 	<div class="slider object-slider">
-		<div class="slider__item"></div>
+		<!-- <div ng-repeat='object in objects' ng-style="{ 'background-image': 'url({{object.image}})'}" class="slider__item"></div> -->
 		<div class="slider__item"></div>
 		<div class="slider__item"></div>
 		<div class="slider__item"></div>
 		<div class="slider__item"></div>
 	</div><!-- slider -->
+	<button class="next" ng-click="next()">next</button>
+
+</div>
