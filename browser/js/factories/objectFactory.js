@@ -16,9 +16,9 @@ module.exports = function(){
       });
     });
   }
-  var currObjectName = 'teapot';
+  // var currObjectName = 'teapot';
 
-  var _teapot = null;
+  // var _teapot = null;
   var cache = {};
 
   var a = {
