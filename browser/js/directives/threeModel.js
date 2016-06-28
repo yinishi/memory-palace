@@ -14,14 +14,15 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory,
 			const HEIGHT = $window.innerHeight * 0.93;
 			const ASPECT = WIDTH / HEIGHT;
 			const UNITSIZE = 250;
+			let objects = [];
 
 			// CREATING SCENE
 			const scene = new THREE.Scene();
-			// scene.fog = new THREE.Fog( 0xffffff, 0, 750 );
+			scene.fog = new THREE.Fog( 0xffffff, 0, 750 );
 		
 			//ADDING LIGHT
-			// var ambientLight = new THREE.AmbientLight( 0x606060 );
-			// scene.add( ambientLight );
+			var ambientLight = new THREE.AmbientLight( 0x606060 );
+			scene.add( ambientLight );
 			var directionalLight = new THREE.DirectionalLight( 0xffffff );
 			directionalLight.position.set( 1, 0.75, 0.5 ).normalize();
 			scene.add( directionalLight );
@@ -33,6 +34,7 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory,
 
 			// CONTROLS
 			var controls = new PointerLockControls(camera);
+			objects.push(controls.getObject());
 			scene.add( controls.getObject() );
 			var controlsEnabled = true;
 			controls.enabled = true;
@@ -68,6 +70,7 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory,
 						break;
 
 					case 32: // space
+						event.preventDefault();
 						if ( canJump === true ) velocity.y += 350;
 						canJump = false;
 						break;
@@ -126,7 +129,7 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory,
 					switch(event.keyCode){
 
 						case 87: // w, look up
-									pitchObject.rotation.x += .05;
+							pitchObject.rotation.x += .05;
 							break;
 						case 83: // s, look down
 							pitchObject.rotation.x -= 0.05;
@@ -255,7 +258,6 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory,
 			/* OBJETCS */
 
 			// REQUIRING OBJECTS
-			var objects = [];
 			var isShiftDown = false;
 			var raycaster = new THREE.Raycaster();
 			var mouse = new THREE.Vector2();
@@ -316,7 +318,7 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory,
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
 				var intersects = raycaster.intersectObjects( objects);
-				if ( intersects.length > 0 ) {
+				if ( objectFactory.currentObject && intersects.length > 0 ) {
 					var intersect = intersects[ 0 ];
 					objectFactory.currentObject.position.copy( intersect.point ).add( intersect.face.normal );
 					objectFactory.currentObject.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
@@ -348,12 +350,14 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory,
 						// scene.add( voxel );
 						// objects.push( voxel );
 
-							var myObject2 = objectFactory.currentObject.clone();
+							if (objectFactory.currentObject) {
+								var myObject2 = objectFactory.currentObject.clone();
+								myObject2.position.copy( intersect.point ).add( intersect.face.normal );
+								myObject2.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
+								scene.add( myObject2 );
+								objects.push( myObject2 );
+							}
 
-							myObject2.position.copy( intersect.point ).add( intersect.face.normal );
-							myObject2.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
-							scene.add( myObject2 );
-							objects.push( myObject2 );
 					}
 				}
 			}
