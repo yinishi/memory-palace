@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = function ($window, roomFactory, tableFactory, objectFactory, shelfFactory,	$document) {
+module.exports = function ($window, roomFactory, tableFactory, objectFactory, shelfFactory,	$document, storingFactory) {
 	 return {
         restrict: 'E',
         	scope: {
@@ -254,7 +254,7 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			// CREATE CONTAINER
 			e[0].appendChild(renderer.domElement);
 
-			/* OBJETCS */
+			/* OBJECTS */
 
 			// REQUIRING OBJECTS
 			var isShiftDown = false;
@@ -300,7 +300,7 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			// DIAMOND SHELVES
 			var shelfInstance = new shelfFactory();
 			let shelf = shelfInstance.container;
-			shelf.position.set(0, 5, 0);
+			shelf.position.set(0, 5, -70);
 			shelf.rotation.set(0, Math.PI / 2, 0);
 			scene.add(shelf);
 			objects = objects.concat(shelfInstance.objects);
@@ -313,9 +313,25 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			room.add(table);
 			objects = objects.concat(tableInstance.objects);
 
+			//RETRIVE STORED OBJECTS
+			storingFactory.retrieveObjects()
+				.then(function(items){
+					if(Array.isArray(items)){
+						items.forEach(function(item){
+							return objectFactory.load(`/browser/objects/${item.name}/${item.name}.json`, item.scale)
+								.then(function(obj){
+									obj.position.set(item.positionX, item.positionY, item.positionZ);
+									obj.storingId = item.id;
+									scene.add(obj);
+									objects.push(obj);
+								})
+						})
+					}
+				})
+
 			//PLACING OBJECTS
 			e.on( 'mousemove', onDocumentMouseMove);
-			e.bind( 'mousedown', onDocumentMouseDown);
+			e.on( 'mousedown', onDocumentMouseDown);
 			$document.on( 'keydown', onDocumentKeyDown);
 			$document.on( 'keyup', onDocumentKeyUp);
 
@@ -334,7 +350,6 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			}
 
 			function onDocumentMouseDown( event ) {
-			
 				event.preventDefault();
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
@@ -345,9 +360,10 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 					// delete cube
 					if ( isShiftDown ) {
 						if ( !roomInstance.objects.includes(intersect.object) && !tableInstance.objects.includes(intersect.object) && !floorObjects.includes(intersect.object)) {
-
+							storingFactory.deleteObject(intersect.object.storingId);
 							scene.remove( intersect.object );
 							objects.splice( objects.indexOf( intersect.object ), 1 );
+
 						}
 					// create cube
 					} else {
@@ -356,13 +372,15 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 						// voxel.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
 						// scene.add( voxel );
 						// objects.push( voxel );
-
+						
 							if (objectFactory.currentObject) {
 								var myObject2 = objectFactory.currentObject.clone();
 								myObject2.position.copy( intersect.point ).add( intersect.face.normal );
 								myObject2.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
 								scene.add( myObject2 );
 								objects.push( myObject2 );
+								storingFactory.storeObject({name: myObject2.name, positionX: myObject2.position.x, positionY: myObject2.position.y, positionZ: myObject2.position.z, scale: objectFactory.currentObject.storageScale})
+								objectFactory.currentObject = null;
 							}
 
 					}

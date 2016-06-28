@@ -2,8 +2,8 @@
 
   $scope.objects = objectFactory.getObjects();
 
-  $scope.setCurrentObject = function (objectName) {
-    objectFactory.setCurrentObject(objectName);
+  $scope.setCurrentObject = function (object) {
+    objectFactory.setCurrentObject(object);
   };
 
   
