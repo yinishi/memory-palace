@@ -8,9 +8,9 @@
     </ul>
   </div> -->
 
-	<slick autoplay="true" slides-to-show="3" slides-to-scroll="3"> 
-	   <div ng-repeat="object in objects">
-	    <img data-lazy="{{object.image}}">
+	<slick settings="slickConfig" autoplay="true" slides-to-show="3" slides-to-scroll="1"> 
+	   <div class="item objectImg" ng-repeat="object in objects">
+	    <img class="objectImg" src="{{object.image}}">
 	   </div>
 	</slick>
 </div>
