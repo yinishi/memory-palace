@@ -28,6 +28,10 @@ app.use(session({
   saveUninitialized: false
 }));
 
+app.use(passport.initialize());
+
+app.use(passport.session());
+
 passport.serializeUser(function (user, done) {
   done(null, user.id);
 });
@@ -40,10 +44,6 @@ passport.deserializeUser(function (id, done) {
   .catch(done);
 });
 
-app.use(passport.initialize());
-
-app.use(passport.session());
-
 app.use('/auth', require('./auth/auth.router'));
 
 
@@ -55,6 +55,7 @@ app.use('/minjs', Express.static(path.join(__dirname, '../minjs')));
 
 app.use(Express.static(path.join(__dirname, '../styles')));
 
+app.use('/api', require('./api'));
 
 app.get('/*', function (req, res) {
         res.sendFile(path.join(__dirname, '../index.html'));

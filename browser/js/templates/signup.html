@@ -15,7 +15,7 @@
       <div class="form-group">
         <label>password</label>
         <input type="password" class="form-control" placeholder="password" ng-model="userInfo.password" required />
-        <input class="form-control" placeholder="confirm password" ng-model="userInfo.confirmPassword" required />
+        <input type="password" class="form-control" placeholder="confirm password" ng-model="userInfo.confirmPassword" required />
         <span ng-show="submitted && (!userInfo.password || (userInfo.password !== userInfo.confirmPassword))">Passwords must match.</span>
       </div>
       <button ng-click="signup()" type="submit" class="btn btn-block btn-primary">sign in</button>

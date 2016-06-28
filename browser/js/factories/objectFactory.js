@@ -15,9 +15,9 @@ module.exports = function(){
       });
     });
   }
-  var currObjectName = 'teapot';
+  // var currObjectName = 'teapot';
 
-  var _teapot = null;
+  // var _teapot = null;
   var cache = {};
 
   var a = {
@@ -30,17 +30,24 @@ module.exports = function(){
              {name: 'brain', image: "./browser/images/brain.jpg", scale: 3},
              {name: 'sofa', image: "./browser/images/sofa.jpg", scale: 2},
              {name: 'cat-mug', image: "./browser/images/cat-mug.png", scale: 3},
-             {name: 'mug', image: "./browser/images/mug.png", scale: .2}];
+             {name: 'mug', image: "./browser/images/mug.png", scale: .2},
+             {name: 'tree', image: "./browser/images/tree.png", scale: .1}];
     },
     currentObject: null,
     setCurrentObject: function(object){
       var name = object.name;
       var scale = object.scale;
       (cache[name] || (cache[name] = load(`/browser/objects/${name}/${name}.json`, scale)))
+        .then(function(obj){
+          obj.name = name;
+          obj.storageScale = scale;
+          return obj;
+        })
         .then(obj => this.currentObject = obj)
         
       //a[name].then(obj => this.currentObject = obj);
-    }
+    },
+    load: load
   };
 
   return a;
