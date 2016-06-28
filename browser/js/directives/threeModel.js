@@ -316,15 +316,15 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			//RETRIVE STORED OBJECTS
 			storingFactory.retrieveObjects()
 				.then(function(items){
-					console.log("here?", items)
-					items.forEach(function(item){
-						return objectFactory.load(`/browser/objects/${item.name}/${item.name}.json`, item.scale)
-							.then(function(obj){
-								obj.position.set(item.positionX, item.positionY, item.positionZ)
-								console.log(obj)
-								scene.add(obj)
-							})
-					})
+					if(items){
+						items.forEach(function(item){
+							return objectFactory.load(`/browser/objects/${item.name}/${item.name}.json`, item.scale)
+								.then(function(obj){
+									obj.position.set(item.positionX, item.positionY, item.positionZ)
+									scene.add(obj)
+								})
+						})
+					}
 				})
 
 			//PLACING OBJECTS
