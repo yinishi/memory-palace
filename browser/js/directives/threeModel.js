@@ -321,6 +321,7 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 							return objectFactory.load(`/browser/objects/${item.name}/${item.name}.json`, item.scale)
 								.then(function(obj){
 									obj.position.set(item.positionX, item.positionY, item.positionZ);
+									obj.position.set(item.scaleX, item.scaleY, item.scaleZ);
 									obj.storingId = item.id;
 									scene.add(obj);
 									objects.push(obj);
@@ -334,6 +335,7 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			e.on( 'mousedown', onDocumentMouseDown);
 			$document.on( 'keydown', onDocumentKeyDown);
 			$document.on( 'keyup', onDocumentKeyUp);
+			e.on('wheel', onPinch);
 
 			function onDocumentMouseMove( event ) {
 
@@ -379,13 +381,22 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 								myObject2.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
 								scene.add( myObject2 );
 								objects.push( myObject2 );
-								storingFactory.storeObject({name: myObject2.name, positionX: myObject2.position.x, positionY: myObject2.position.y, positionZ: myObject2.position.z, scale: objectFactory.currentObject.storageScale})
+								storingFactory.storeObject({
+									name: myObject2.name, 
+									positionX: myObject2.position.x, 
+									positionY: myObject2.position.y, 
+									positionZ: myObject2.position.z, 
+									scaleX: myObject2.scale.x,
+									scaleY: myObject2.scale.y,
+									scaleZ: myObject2.scale.z})
 								objectFactory.currentObject = null;
 							}
 
 					}
 				}
 			}
+
+
 
 			function onDocumentKeyDown( event ) {
 				switch( event.keyCode ) {
@@ -397,6 +408,18 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			function onDocumentKeyUp( event ) {
 				switch ( event.keyCode ) {
 					case 16: isShiftDown = false; break;
+				}
+			}
+
+			function onPinch(event){
+				if(event.ctrlKey === true){
+				event.preventDefault();
+				var delta = -event.originalEvent.deltaY/2;
+				// console.log(event.originalEvent.deltaY, "event")
+				// console.log(objectFactory.currentObject, "currentObject")
+				var currentScale = objectFactory.currentObject.scale;
+				objectFactory.currentObject.scale.set(currentScale.x + delta, currentScale.y + delta, currentScale.z + delta)
+					.clamp(new THREE.Vector3( 0.1, 0.1, 0.1 ), new THREE.Vector3( 50, 50, 50 ))	
 				}
 			}
 
