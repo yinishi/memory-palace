@@ -1,5 +1,7 @@
 <div>
+	<div class="room-container">
 	<three-model></three-model>
+	<
   <div class="container-fluid" ng-controller="menuCtrl">
 <!--   <h1> object</h1>
     <ul ng-repeat='object in objects'>
@@ -10,7 +12,7 @@
 
 	<slick settings="slickConfig" autoplay="true" slides-to-show="3" slides-to-scroll="1"> 
 	   <div class="item objectImg" ng-repeat="object in objects">
-	    <img class="objectImg" src="{{object.image}}">
+	    <a ng-click="setCurrentObject(object)"><img class="objectImg" src="{{object.image}}"></a>
 	   </div>
 	</slick>
 </div>

@@ -8,7 +8,7 @@
  	
   $scope.slickConfig = {
     enabled: true,
-    autoplay: true,
+    autoplay: false,
     draggable: false,  
     autoplaySpeed: 3000,
     method: {},
