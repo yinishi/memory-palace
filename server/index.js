@@ -50,6 +50,7 @@ app.use('/auth', require('./auth/auth.router'));
 app.use('/browser', Express.static(path.join(__dirname, '../browser')));
 app.use('/minjs', Express.static(path.join(__dirname, '../minjs')));
 
+app.use('/api', require('./api'));
 
 app.get('/*', function (req, res) {
         res.sendFile(path.join(__dirname, '../index.html'));

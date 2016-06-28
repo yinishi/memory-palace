@@ -16,7 +16,6 @@ router.post('/login', function (req, res, next) {
     attributes: {include: ['password', 'salt']}
   })
   .then(function (user) {
-
     if (!user || !user.correctPassword(req.body.password)) {
       throw HttpError(401);
     }
@@ -29,13 +28,10 @@ router.post('/login', function (req, res, next) {
 });
 
 router.post('/signup', function (req, res, next) {
-  console.log("in route", req.body)
   delete req.body.isAdmin;
   User.create(req.body)
   .then(function (user) {
     req.login(user, function (err) {
-      // console.log("user", req.user)
-      // console.log("session", req.session)
       if (err) next(err);
       else res.status(201).json(user);
     });
