@@ -6,7 +6,6 @@ var HttpError = require('../utils/HttpError');
 var User = require('../db/models/User');
 
 router.post('/login', function (req, res, next) {
-  console.log("login", req.body)
   if (!req.body.email || !req.body.password) {
     return next(HttpError(401));
   }
@@ -45,7 +44,6 @@ router.post('/signup', function (req, res, next) {
 });
 
 router.get('/me', function (req, res, next) {
-  console.log(req.user);
   res.json(req.user);
 });
 
