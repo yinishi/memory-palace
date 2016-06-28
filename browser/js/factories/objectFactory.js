@@ -31,7 +31,8 @@ module.exports = function(){
              {name: 'brain', image: "./browser/images/brain.jpg", scale: 3},
              {name: 'sofa', image: "./browser/images/sofa.jpg", scale: 2},
              {name: 'cat-mug', image: "./browser/images/cat-mug.png", scale: 3},
-             {name: 'mug', image: "./browser/images/mug.png", scale: .2}];
+             {name: 'mug', image: "./browser/images/mug.png", scale: .2},
+             {name: 'tree', image: "./browser/images/tree.png", scale: .1}];
     },
     // get teapot() {
     //   return (cache['teapot'] || (cache['teapot'] = load('/browser/objects/teapot/teapot.json')));
