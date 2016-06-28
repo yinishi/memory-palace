@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = function ($window, roomFactory, tableFactory, objectFactory, shelfFactory,	$document) {
+module.exports = function ($window, roomFactory, tableFactory, objectFactory, shelfFactory,	$document, storingFactory) {
 	 return {
         restrict: 'E',
         	scope: {
@@ -254,7 +254,7 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			// CREATE CONTAINER
 			e[0].appendChild(renderer.domElement);
 
-			/* OBJETCS */
+			/* OBJECTS */
 
 			// REQUIRING OBJECTS
 			var isShiftDown = false;
@@ -313,6 +313,22 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			room.add(table);
 			objects = objects.concat(tableInstance.objects);
 
+			//RETRIVE STORED OBJECTS
+			storingFactory.retrieveObjects()
+				.then(function(items){
+					if(Array.isArray(items)){
+						items.forEach(function(item){
+							return objectFactory.load(`/browser/objects/${item.name}/${item.name}.json`, item.scale)
+								.then(function(obj){
+									obj.position.set(item.positionX, item.positionY, item.positionZ);
+									obj.storingId = item.id;
+									scene.add(obj);
+									objects.push(obj);
+								})
+						})
+					}
+				})
+
 			//PLACING OBJECTS
 			e.on( 'mousemove', onDocumentMouseMove);
 			e.bind( 'mousedown', onDocumentMouseDown);
@@ -345,9 +361,10 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 					// delete cube
 					if ( isShiftDown ) {
 						if ( !roomInstance.objects.includes(intersect.object) && !tableInstance.objects.includes(intersect.object) && !floorObjects.includes(intersect.object)) {
-
+							storingFactory.deleteObject(intersect.object.storingId);
 							scene.remove( intersect.object );
 							objects.splice( objects.indexOf( intersect.object ), 1 );
+
 						}
 					// create cube
 					} else {
@@ -363,6 +380,7 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 								myObject2.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
 								scene.add( myObject2 );
 								objects.push( myObject2 );
+								storingFactory.storeObject({name: myObject2.name, positionX: myObject2.position.x, positionY: myObject2.position.y, positionZ: myObject2.position.z, scale: objectFactory.currentObject.storageScale})
 							}
 
 					}

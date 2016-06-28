@@ -45,10 +45,16 @@ module.exports = function(){
       var name = object.name;
       var scale = object.scale;
       (cache[name] || (cache[name] = load(`/browser/objects/${name}/${name}.json`, scale)))
+        .then(function(obj){
+          obj.name = name;
+          obj.storageScale = scale;
+          return obj;
+        })
         .then(obj => this.currentObject = obj)
         
       //a[name].then(obj => this.currentObject = obj);
-    }
+    },
+    load: load
   };
 
   return a;
