@@ -3,7 +3,7 @@
 module.exports = function ($scope, $state, $http, authFactory) {
 	$scope.submitted = false;
 	$scope.signup = function(){
-		console.log($scope.submitted)
+		// console.log($scope.submitted)
 		$scope.submitted = true;
 		var pwMatch = ($scope.userInfo.password && ($scope.userInfo.password === $scope.userInfo.confirmPassword)); 
 		if (!$scope.userInfo.$invalid && pwMatch) {
