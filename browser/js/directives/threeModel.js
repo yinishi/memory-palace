@@ -331,7 +331,7 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 
 			//PLACING OBJECTS
 			e.on( 'mousemove', onDocumentMouseMove);
-			e.bind( 'mousedown', onDocumentMouseDown);
+			e.on( 'mousedown', onDocumentMouseDown);
 			$document.on( 'keydown', onDocumentKeyDown);
 			$document.on( 'keyup', onDocumentKeyUp);
 
@@ -350,7 +350,6 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			}
 
 			function onDocumentMouseDown( event ) {
-			
 				event.preventDefault();
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
@@ -373,7 +372,7 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 						// voxel.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
 						// scene.add( voxel );
 						// objects.push( voxel );
-
+						
 							if (objectFactory.currentObject) {
 								var myObject2 = objectFactory.currentObject.clone();
 								myObject2.position.copy( intersect.point ).add( intersect.face.normal );
@@ -381,6 +380,7 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 								scene.add( myObject2 );
 								objects.push( myObject2 );
 								storingFactory.storeObject({name: myObject2.name, positionX: myObject2.position.x, positionY: myObject2.position.y, positionZ: myObject2.position.z, scale: objectFactory.currentObject.storageScale})
+								objectFactory.currentObject = null;
 							}
 
 					}
