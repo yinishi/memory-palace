@@ -316,12 +316,14 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			//RETRIVE STORED OBJECTS
 			storingFactory.retrieveObjects()
 				.then(function(items){
-					if(items){
+					if(Array.isArray(items)){
 						items.forEach(function(item){
 							return objectFactory.load(`/browser/objects/${item.name}/${item.name}.json`, item.scale)
 								.then(function(obj){
-									obj.position.set(item.positionX, item.positionY, item.positionZ)
-									scene.add(obj)
+									obj.position.set(item.positionX, item.positionY, item.positionZ);
+									obj.storingId = item.id;
+									scene.add(obj);
+									objects.push(obj);
 								})
 						})
 					}
@@ -359,9 +361,10 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 					// delete cube
 					if ( isShiftDown ) {
 						if ( !roomInstance.objects.includes(intersect.object) && !tableInstance.objects.includes(intersect.object) && !floorObjects.includes(intersect.object)) {
-
+							storingFactory.deleteObject(intersect.object.storingId);
 							scene.remove( intersect.object );
 							objects.splice( objects.indexOf( intersect.object ), 1 );
+
 						}
 					// create cube
 					} else {

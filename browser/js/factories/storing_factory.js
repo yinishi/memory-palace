@@ -6,9 +6,11 @@ module.exports = function($http) {
 		retrieveObjects: function(){
 			return $http.get('/api/items')
 				.then(function(items){
-					console.log(items, "items")
 					return items.data;
 				})
+		},
+		deleteObject: function(id){
+			return $http.delete('/api/items/'+ id)
 		}
 	}
 

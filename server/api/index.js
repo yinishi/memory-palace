@@ -7,28 +7,42 @@ var Item = db.model('item');
 
 //get all saved items for a user
 router.get('/items', function(req, res, next){
-	Item.findAll({
-				where: {
-					userId: req.user.id
-				}
-			})
-		.then(function(items){
-				res.send(items)
-			})
+	if(req.user){
+		Item.findAll({
+					where: {
+						userId: req.user.id
+					}
+				})
+			.then(function(items){
+					res.send(items)
+				})
+	}
+	else res.sendStatus(200);
 })
 
-//save an item to a user
+//save an item
 router.post('/items', function(req, res, next){
-	User.findOne({where: {
-		email: req.body.email
-	}})
-		.then(function(user){
-			req.body.userId = req.user.id;
-			return Item.create(req.body)
+	if(req.user){
+		req.body.userId = req.user.id;
+		return Item.create(req.body)
+			.then(function(item){
+				res.send(item)
 			})
-		.then(function(item){
-			res.send(item)
-		})
+	}
+	else res.sendStatus(200);
 
 })
+
+//delete an item
+router.delete('/items/:id', function(req, res, next){
+	if(req.user){
+		req.body.userId = req.user.id;
+		Item.destroy({where:{
+			userId: req.user.id,
+			id: req.params.id
+		}})
+	}
+	else res.sendStatus(200);
+})
+
 module.exports = router;
