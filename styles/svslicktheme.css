@@ -1,7 +1,13 @@
 @charset 'UTF-8';
 /* Slider */
 
-.objectImg .imgDiv {
+/*.objectImg .divimg {
+  background-size: cover;
+  width: 90%;
+  height: 400px;
+  max-height: 400px;
+} */
+.objectImg img {
   width: 90%;
   height: 400px;
   max-height: 400px;

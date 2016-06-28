@@ -6,18 +6,5 @@
     objectFactory.setCurrentObject(objectName);
   };
  	
-  $scope.slickConfig = {
-    enabled: true,
-    autoplay: false,
-    draggable: false,  
-    autoplaySpeed: 3000,
-    method: {},
-    event: {
-	        beforeChange: function (event, slick, currentSlide, nextSlide) {
-	        },
-	        afterChange: function (event, slick, currentSlide, nextSlide) {
-	        }
-	    }
-	};
-  
+
 };

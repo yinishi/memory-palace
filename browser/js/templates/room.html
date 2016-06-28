@@ -9,10 +9,19 @@
       <li><a ng-click="setCurrentObject(object)">{{object.name}}</a></li>
     </ul>
   </div> -->
+  <div class="slider slider-1">
+		<div ng-repeat='object in objects' ng-style="{ 'background-image': 'url({{object.image}})'}" class="slider__item"></div>
+	<!-- 	<div class="slider__item"></div>
+		<div class="slider__item"></div> -->
+	</div>
 
-	<slick settings="slickConfig" autoplay="true" slides-to-show="3" slides-to-scroll="1"> 
-	   <div class="item objectImg" ng-repeat="object in objects">
-	    <a ng-click="setCurrentObject(object)"><img class="objectImg" src="{{object.image}}"></a>
-	   </div>
-	</slick>
+  <!-- 	<div ng-repeat='object in objects' class="slider slider-1">
+		<div ng-style="{ 'background-image': 'url({{object.image}})'}" class="slider__item">
+	  	</div>
+	</div><!-- slider -->
+
+<!--   	<button class="arrow next">
+  	next
+  	</button> -->
+
 </div>
