@@ -1,7 +1,6 @@
 'use strict'
 
-module.exports = function ($window, roomFactory, tableFactory, objectFactory, 
-	$document) {
+module.exports = function ($window, roomFactory, tableFactory, objectFactory, shelfFactory,	$document) {
 	 return {
         restrict: 'E',
         	scope: {
@@ -295,6 +294,13 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory,
 			scene.add(room);
 
 			objects = objects.concat(roomInstance.objects);
+
+			// DIAMOND SHELF ROOM
+			var shelfInstance = new shelfFactory();
+			let shelf = shelfInstance.container;
+			shelf.position.set(60, 5, 0);
+			scene.add(shelf);
+			objects = objects.concat(shelfInstance.objects);
 
 			// CREATE A TABLE
 			var tableInstance = new tableFactory();
