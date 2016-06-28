@@ -116,8 +116,8 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 				pitchObject.add( camera );
 
 				var yawObject = new THREE.Object3D();
-				yawObject.position.y = 10;
 				yawObject.add( pitchObject );
+				pitchObject.position.y = 10;
 
 				var PI_2 = Math.PI / 2;
 
