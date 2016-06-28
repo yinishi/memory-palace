@@ -9,6 +9,9 @@ var Item = db.define('item', {
   positionX: Sequelize.INTEGER,
   positionY: Sequelize.INTEGER,
   positionZ: Sequelize.INTEGER,
+  scaleX: Sequelize.INTEGER,
+  scaleY: Sequelize.INTEGER,
+  scaleZ: Sequelize.INTEGER,
   message: Sequelize.TEXT,
   scale: Sequelize.DECIMAL
 });
