@@ -297,10 +297,11 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 
 			objects = objects.concat(roomInstance.objects);
 
-			// DIAMOND SHELF ROOM
+			// DIAMOND SHELVES
 			var shelfInstance = new shelfFactory();
 			let shelf = shelfInstance.container;
-			shelf.position.set(60, 5, 0);
+			shelf.position.set(0, 5, 0);
+			shelf.rotation.set(0, Math.PI / 2, 0);
 			scene.add(shelf);
 			objects = objects.concat(shelfInstance.objects);
 
@@ -308,7 +309,7 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			var tableInstance = new tableFactory();
 			let table = tableInstance.container;
 			table.scale.set(5, 5, 5)
-			table.position.set(0, 6, 20);
+			table.position.set(0, -40, 20);
 			room.add(table);
 			objects = objects.concat(tableInstance.objects);
 
