@@ -300,7 +300,7 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			// DIAMOND SHELVES
 			var shelfInstance = new shelfFactory();
 			let shelf = shelfInstance.container;
-			shelf.position.set(0, 5, 0);
+			shelf.position.set(0, 5, -70);
 			shelf.rotation.set(0, Math.PI / 2, 0);
 			scene.add(shelf);
 			objects = objects.concat(shelfInstance.objects);
