@@ -1,10 +1,21 @@
 @charset 'UTF-8';
 /* Slider */
 
+.objectImg .imgDiv {
+ background-color: red;
+  background-size: cover; 
+  width: 90%;
+  height: 400px;
+  max-height: 400px;
+}
+.imgDiv {
+background-size: cover;
+}
 .slick-loading .slick-list
 {
     background: #fff url('./ajax-loader.gif') center center no-repeat;
 }
+
 
 /* Icons */
 /*@font-face
