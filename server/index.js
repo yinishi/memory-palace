@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var passport = require('passport');
 var User = require('./db/models/User');
+var favicon = require('serve-favicon');
 
 var port = process.env.PORT || 8080;
 
@@ -46,16 +47,15 @@ passport.deserializeUser(function (id, done) {
 
 app.use('/auth', require('./auth/auth.router'));
 
-
 app.use('/browser', Express.static(path.join(__dirname, '../browser')));
 
 app.use(Express.static(path.join(__dirname, '../bower-components')));
 
 app.use('/minjs', Express.static(path.join(__dirname, '../minjs')));
 
-app.use('/styles', Express.static(path.join(__dirname, '../styles/styles.css')));
-
 app.use(Express.static(path.join(__dirname, '../styles')));
+
+app.use(favicon(__dirname + '/favicon.ico'));
 
 app.use('/api', require('./api'));
 
