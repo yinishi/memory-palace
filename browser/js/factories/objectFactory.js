@@ -2,13 +2,13 @@
 
 module.exports = function(){
  
-  function load (link, scale) {
+  function load (link, scalex, scaley, scalez) {
     var loader = new THREE.ObjectLoader();
     return new Promise(function (res, rej) {
       loader.load(link, function(object){
-        object.scale.set(scale,scale,scale);
+        object.scale.set(scalex,scaley,scalez);
         //add object to a cube for collison detection and removing objects 
-        var cubeSize = 10*scale; 
+        var cubeSize = 10*scalex; 
         var cube = new THREE.Mesh(new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize), 
         new THREE.MeshBasicMaterial({visible: false})); 
         cube.add(object);
@@ -44,7 +44,7 @@ module.exports = function(){
     setCurrentObject: function(object){
       var name = object.name;
       var scale = object.scale;
-      (cache[name] || (cache[name] = load(`/browser/objects/${name}/${name}.json`, scale)))
+      (cache[name] || (cache[name] = load(`/browser/objects/${name}/${name}.json`, scale, scale, scale)))
         .then(function(obj){
           obj.name = name;
           obj.storageScale = scale;
