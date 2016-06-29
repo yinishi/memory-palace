@@ -6,13 +6,18 @@ module.exports = function(){
     var loader = new THREE.ObjectLoader();
     return new Promise(function (res, rej) {
       loader.load(link, function(object){
+        // var boundingBox = object
+        // console.log(boundingBox, "object")
         object.scale.set(scalex,scaley,scalez);
+        //object.scale.set(1,1,1)
         //add object to a cube for collison detection and removing objects 
-        var cubeSize = 10*scalex; 
-        var cube = new THREE.Mesh(new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize), 
-        new THREE.MeshBasicMaterial({visible: false})); 
-        cube.add(object);
-        res(cube);
+        // var sphereSize = object.children[0].geometry.boundingSphere.radius; 
+        // var sphere = new THREE.Mesh(new THREE.SphereGeometry(sphereSize), 
+        // new THREE.MeshBasicMaterial({visible: false})); 
+        var boundingBox = new THREE.BoundingBoxHelper(object);
+        boundingBox.update();
+        object.bbox = boundingBox   
+        res(object);
       });
     });
   }
@@ -43,6 +48,7 @@ module.exports = function(){
              {name: 'soccer-ball', image: "./browser/images/soccer-ball.jpg", scale: .07}];
     },
     currentObject: null,
+    currentBox: null,
     setCurrentObject: function(object){
       var name = object.name;
       var scale = object.scale;
@@ -54,7 +60,9 @@ module.exports = function(){
         })
         .then(obj => {
         this.previousObject = this.currentObject;
+        this.previousBox = this.currentBox;
         this.currentObject = obj;
+        this.currentBox = this.currentObject.bbox;
       })
         
       //a[name].then(obj => this.currentObject = obj);

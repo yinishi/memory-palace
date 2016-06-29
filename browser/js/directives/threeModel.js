@@ -327,8 +327,12 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 					var intersect = intersects[ 0 ];
 					objectFactory.currentObject.position.copy( intersect.point ).add( intersect.face.normal );
 					objectFactory.currentObject.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
-					if(objectFactory.previousObject) scene.remove(objectFactory.previousObject)
+					if(objectFactory.previousObject) scene.remove(objectFactory.previousObject);
+					if(objectFactory.previousBox) scene.remove(objectFactory.previousBox)
 					scene.add(objectFactory.currentObject);
+					// objectFactory.currentObject.bbox.visible = false;
+					objectFactory.currentObject.bbox.update()
+					scene.add(objectFactory.currentObject.bbox)
 				}
 			}
 
@@ -336,8 +340,9 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 				event.preventDefault();
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
+				console.log(objects, "objects")
 				var intersects = raycaster.intersectObjects( objects);
-				
+				console.log(intersects, "intersects")
 				if ( intersects.length > 0 ) {
 					var intersect = intersects[ 0 ];
 					// delete cube
@@ -363,7 +368,8 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 								myObject2.position.copy( intersect.point ).add( intersect.face.normal );
 								myObject2.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
 								scene.add( myObject2 );
-								objects.push( myObject2 );
+								console.log(objectFactory.currentObject.bbox.clone(), "myObject2")
+								objects.push( objectFactory.currentObject.bbox.clone() );
 								storingFactory.storeObject({
 									name: myObject2.name, 
 									positionX: myObject2.position.x, 
