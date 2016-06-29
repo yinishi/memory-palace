@@ -1,4 +1,4 @@
-module.exports = function() {
+module.exports = function(wallFactory) {
 	return function () {
 	  this.container = new THREE.Object3D()
 	  this.objects = [];
@@ -12,8 +12,7 @@ module.exports = function() {
 	  
 	  this.container.add(floor)
 	  this.objects.push(floor);
-
-	  let wallGeometry = new THREE.BoxGeometry(wallSize, floorSize, 1);
+	  
 	  let wallMaterial1 = new THREE.MeshBasicMaterial({ color: 0xff0000 });
 	  let wall1 = new THREE.Mesh(wallGeometry, wallMaterial1)
 	  wall1.rotation.set(0, Math.PI / 2, 0)
