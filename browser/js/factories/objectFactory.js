@@ -30,6 +30,7 @@ module.exports = function(){
         var cube = new THREE.Mesh(new THREE.BoxGeometry(20, 20, 20), 
         new THREE.MeshBasicMaterial({visible: false})); 
         cube.add(object);
+        //cube.isCollisionMeshForObject = object
         res(cube);
       });
     });

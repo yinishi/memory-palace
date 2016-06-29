@@ -335,7 +335,9 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 					objectFactory.currentObject.position.copy( intersect.point ).add( intersect.face.normal );
 					objectFactory.currentObject.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
 					if(objectFactory.previousObject) scene.remove(objectFactory.previousObject);
+
 // 					if(objectFactory.previousBox) scene.remove(objectFactory.previousBox)
+
 					scene.add(objectFactory.currentObject);
 					// objectFactory.currentObject.bbox.visible = false;
 					// objectFactory.currentObject.bbox.update()
@@ -349,6 +351,7 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 				raycaster.setFromCamera( mouse, camera );
 				console.log(objects, "objects")
 				var intersects = raycaster.intersectObjects( objects);
+
 				if ( intersects.length > 0 ) {
 					var intersect = intersects[ 0 ];
 					// delete cube
