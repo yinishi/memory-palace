@@ -41,11 +41,23 @@ module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory)
 			let table = tableInstance.container;
 			table.scale.set(5, 5, 5)
 			table.position.set(0, -40, 20); 
-			
-			load('./browser/images/bed.jpg', 15)
-			.then(bedObj => { 
-				bed = bedObj 
+			console.log("hereBED", load('./browser/objects/bed/bed.json', 15))
+			load('./browser/objects/bean-bag/bean-bag.json', 15)
+			.then(beanBag => { 
+				console.log(beanBag)
+				beanBag.scale.set(2,2,2);
+				beanBag.position.set(wallSize*2,-(wallSize-20),0);
+				beanBag.rotation.x = THREE.Math.degToRad(90);
+				// beanBag.rotation.set(Math.PI/2, Math.PI/2, 0);  
+				mainRoom.container.add(beanBag);
+			});
+			load('./browser/objects/bed/bed.json', 15)
+			.then(bedObj => {      
+				let bed = bedObj;
+				bed.position.set(wallSize*2, 20, 10);
+				bed.rotation.set(Math.PI/2, Math.PI/2, 0);  
 				mainRoom.container.add(bed);
+				// console.log("hereBED", bed);
 			});
 
 			mainRoom.container.add(table);
