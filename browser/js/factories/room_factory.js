@@ -10,17 +10,18 @@ module.exports = function(wallFactory) {
 	  let floorGeometry = new THREE.PlaneBufferGeometry(floorSize, floorSize);
 	  let floorMaterial = new THREE.MeshBasicMaterial({ color: 0xcccccc });
 	  var floor = new THREE.Mesh(floorGeometry, floorMaterial);
-	  
+	  let hallwayW = (wallSize+(wallSize/2))
+
 	  this.container.add(floor)
 	  this.objects.push(floor);   
 
 	  let wallGeometry = new THREE.BoxGeometry(wallSize, floorSize, 1);
 	  // let doubleWallGeometry = new THREE.BoxGeometry(wallSize, (floorSize*3), 1);
-	  // let halfWallGeometry = new THREE.BoxGeometry(wallSize, (floorSize/2), 1);
+	  let outerWallGeometry = new THREE.BoxGeometry(wallSize, (floorSize+hallwayW-40), 1);
 	  
 	  //purple
 	  //let wallMaterial1 = new THREE.MeshBasicMaterial({ color: "purple" });
-	  let wall1 = new THREE.Mesh(wallGeometry, material2)
+	  let wall1 = new THREE.Mesh(outerWallGeometry, material2)
 	  wall1.rotation.set(0, Math.PI / 2, 0)
 	  wall1.position.set(-wallSize, 0, wallSize / 2)
 	  //green

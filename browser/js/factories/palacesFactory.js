@@ -26,18 +26,16 @@ module.exports = function(roomFactory, wallFactory){
 			let wall4 = new wallFactory(wallSize, 150, woodtex, "horizontal").mesh;
 			wall4.position.set(wallSize*2, -wallSize, wallSize / 2);
 
-			let wall5 = new wallFactory(wallSize, (floorSize*2), material, "horizontal").mesh;
+			let wall5 = new wallFactory(wallSize, (floorSize*2.5), material, "horizontal").mesh;
 			//-150-75
-		
-			wall5.position.set(wallSize*2, (-hallwayW), wallSize / 2)
+			wall5.position.set(wallSize*1.5, (-hallwayW), wallSize / 2)
 			wall5.material.side = THREE.BackSide;
 
 			//bed room 
 			let wall6 = new wallFactory(wallSize, floorSize*1.5, woodtex, "horizontal").mesh;
-
 			wall6.position.set(wallSize*2.5, wallSize, wallSize / 2);
 			//end wall
-			let wall7 = new wallFactory(wallSize, floorSize+hallwayW, material, "verticalClockwise").mesh;
+			let wall7 = new wallFactory(wallSize, (floorSize+hallwayW-40), material, "verticalClockwise").mesh;
 
 			wall7.position.set(wallSize*4, 0, wallSize / 2);
 
