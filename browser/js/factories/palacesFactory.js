@@ -19,9 +19,6 @@ module.exports = function(roomFactory, wallFactory){
 			const wallSize = floorSize/2
 			
 			const mainRoom = new roomFactory(floorSize, wallSize, material, woodtex);
-			//bathroom?
-			// const smallRoom = new roomFactory(wallSize, wallSize, material).container;
-			// smallRoom.position.set(wallSize*3.5,-wallSize,0)
 
 			//hallway
 			let hallwayW = (wallSize+(wallSize/2))
@@ -34,8 +31,8 @@ module.exports = function(roomFactory, wallFactory){
 		
 			wall5.position.set(wallSize*2, (-hallwayW), wallSize / 2)
 			wall5.material.side = THREE.BackSide;
-			//bed room 
 
+			//bed room 
 			let wall6 = new wallFactory(wallSize, floorSize*1.5, woodtex, "horizontal").mesh;
 
 			wall6.position.set(wallSize*2.5, wallSize, wallSize / 2);
