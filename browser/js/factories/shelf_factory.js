@@ -12,7 +12,7 @@ module.exports = function() {
     var height = 1;
     var length = 10;
     var geomShelf = new THREE.BoxGeometry(width, height, length);
-    var matShelf = new THREE.MeshPhongMaterial({color: 0xffffff});
+    var matShelf = new THREE.MeshPhongMaterial({color: 0xff0000});
 
     for (var i = 0; i < numShelves; i++) {
       var shelf = new THREE.Mesh(geomShelf, matShelf);
