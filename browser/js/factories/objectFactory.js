@@ -2,22 +2,35 @@
 
 module.exports = function(){
  
-  function load (link, scalex, scaley, scalez) {
+  function load (link, scale, name) {
     var loader = new THREE.ObjectLoader();
     return new Promise(function (res, rej) {
       loader.load(link, function(object){
         // var boundingBox = object
         // console.log(boundingBox, "object")
-        object.scale.set(scalex,scaley,scalez);
+        if(!scale) {
+          a.getObjects().forEach(function(object){
+            if(object.name === name) scale = object.scale;
+          });
+        }
+        object.scale.set(scale,scale,scale);
         //object.scale.set(1,1,1)
-        //add object to a cube for collison detection and removing objects 
-        // var sphereSize = object.children[0].geometry.boundingSphere.radius; 
-        // var sphere = new THREE.Mesh(new THREE.SphereGeometry(sphereSize), 
-        // new THREE.MeshBasicMaterial({visible: false})); 
-        var boundingBox = new THREE.BoundingBoxHelper(object);
-        boundingBox.update();
-        object.bbox = boundingBox   
-        res(object);
+        //add object to a cube for collison detection and removing objects
+
+//      // bounding box stuff
+//         // var sphereSize = object.children[0].geometry.boundingSphere.radius; 
+//         // var sphere = new THREE.Mesh(new THREE.SphereGeometry(sphereSize), 
+//         // new THREE.MeshBasicMaterial({visible: false})); 
+//         var boundingBox = new THREE.BoundingBoxHelper(object);
+//         boundingBox.update();
+//         object.bbox = boundingBox   
+//         res(object);
+
+        // var cubeSize = 10*customScale; 
+        var cube = new THREE.Mesh(new THREE.BoxGeometry(20, 20, 20), 
+        new THREE.MeshBasicMaterial({visible: false})); 
+        cube.add(object);
+        res(cube);
       });
     });
   }
@@ -45,14 +58,18 @@ module.exports = function(){
              {name: 'turtle', image: "./browser/images/turtle.png", scale: 12},
              {name: 'bed', image: "./browser/images/bed.jpg", scale: 15},
              {name: 'dress', image: "./browser/images/dress.jpg", scale: .5},
-             {name: 'soccer-ball', image: "./browser/images/soccer-ball.jpg", scale: .07}];
+             {name: 'soccer-ball', image: "./browser/images/soccer-ball.jpg", scale: .07},
+             {name: 'pink-bed', image: "./browser/images/pink-bed.png", scale: 15},
+             {name: 'computer', image: "./browser/images/computer.png", scale: 5},
+             {name: 'backgammon', image: "./browser/images/backgammon.png", scale: 5},
+             {name: 'book', image: "./browser/images/book.png", scale: 1}];
     },
     currentObject: null,
     currentBox: null,
     setCurrentObject: function(object){
       var name = object.name;
       var scale = object.scale;
-      (cache[name] || (cache[name] = load(`/browser/objects/${name}/${name}.json`, scale, scale, scale)))
+      (cache[name] || (cache[name] = load(`/browser/objects/${name}/${name}.json`, scale)))
         .then(function(obj){
           obj.name = name;
           obj.storageScale = scale;
