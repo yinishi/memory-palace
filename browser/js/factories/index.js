@@ -1,6 +1,7 @@
 var app = require('angular').module('memoryPalace');
 
-app.factory('roomFactory', require("./room_factory"));
+app.factory('wallFactory', require("./wallFactory"));
+app.factory('roomFactory', ["wallFactory", require("./room_factory")]);
 app.factory('tableFactory', require("./table_factory"));
 app.factory('authFactory', ['$http', '$rootScope', require("./authFactory")]);
 app.factory('objectFactory', require("./objectFactory"));

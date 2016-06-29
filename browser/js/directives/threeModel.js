@@ -291,8 +291,15 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			var floorObjects = [mesh];
 
 			// CREATE A ROOM
-			var roomInstance = new roomFactory();
+			var roomInstance = new roomFactory(150);
 			let room = roomInstance.container;
+		
+			
+			var testroomInstance = new roomFactory(75);
+			let testroom = testroomInstance.container;
+			testroom.position.set(100,0,0)
+			testroom.rotation.set(0,Math.PI / 2,0)
+			scene.add(testroom);
 			scene.add(room);
 
 			objects = objects.concat(roomInstance.objects);
