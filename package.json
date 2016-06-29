@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "angular": "^1.5.7",
+    "angular-slick-carousel": "^3.1.5",
     "angular-ui-router": "^0.3.1",
     "angularslick": "^0.2.2",
     "babel-preset-es2015": "^6.9.0",
