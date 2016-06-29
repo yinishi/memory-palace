@@ -1,6 +1,7 @@
 module.exports = function($http) {
 	return {
 		storeObject: function(body){
+			console.log("here")
 			return $http.post('/api/items', body)
 		},
 		retrieveObjects: function(){
