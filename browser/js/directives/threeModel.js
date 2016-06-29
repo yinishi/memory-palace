@@ -52,24 +52,15 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 
 				switch ( event.keyCode ) {
 
-					case 38: // up
-						event.preventDefault();
+					case 87: // w, move forward
 						moveForward = true;
 						break;
 
-					case 37: // left
-						moveLeft = true; break;
-
-					case 40: // down
-						event.preventDefault();
+					case 83: // s, move backward
 						moveBackward = true;
 						break;
 
-					case 39: // right
-						moveRight = true;
-						break;
-
-					case 32: // space
+					case 32: // space, jump
 						event.preventDefault();
 						if ( canJump === true ) velocity.y += 350;
 						canJump = false;
@@ -82,24 +73,13 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 
 				switch( event.keyCode ) {
 
-					case 38: // up
-						event.preventDefault();
+					case 87: // forward
 						moveForward = false;
 						break;
 
-					case 37: // left
-						moveLeft = false;
-						break;
-
-					case 40: // down
-						event.preventDefault();
+					case 83: // backward
 						moveBackward = false;
 						break;
-
-					case 39: // right
-						moveRight = false;
-						break;
-
 				}
 			};
 
@@ -128,16 +108,16 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 
 					switch(event.keyCode){
 
-						case 87: // w, rotate up
+						case 69: // e, look down
 							pitchObject.rotation.x -= 3 * Math.PI / 180;
 							break;
-						case 83: // s, rotate down
+						case 81: // q, look up
 							pitchObject.rotation.x += 3 * Math.PI / 180;
 							break;
-						case 65: // a, rotate left
+						case 68: // d, rotate right 
 							yawObject.rotation.y -= 3 * Math.PI / 180;
 							break;
-						case 68: // d, rotate right
+						case 65: // a, rotate left
 							yawObject.rotation.y += 3 * Math.PI / 180;
 							break;
 							}
@@ -326,10 +306,10 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 				.then(function(items){
 					if(Array.isArray(items)){
 						items.forEach(function(item){
-							return objectFactory.load(`/browser/objects/${item.name}/${item.name}.json`, item.scale)
+							return objectFactory.load(`/browser/objects/${item.name}/${item.name}.json`, item.scaleX, item.scaleY, item.scaleZ)
 								.then(function(obj){
 									obj.position.set(item.positionX, item.positionY, item.positionZ);
-									obj.position.set(item.scaleX, item.scaleY, item.scaleZ);
+									obj.scale.set(item.scaleX, item.scaleY, item.scaleZ);
 									obj.storingId = item.id;
 									scene.add(obj);
 									objects.push(obj);
@@ -355,6 +335,7 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 					var intersect = intersects[ 0 ];
 					objectFactory.currentObject.position.copy( intersect.point ).add( intersect.face.normal );
 					objectFactory.currentObject.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
+					if(objectFactory.previousObject) scene.remove(objectFactory.previousObject)
 					scene.add(objectFactory.currentObject);
 				}
 			}
@@ -369,9 +350,11 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 					var intersect = intersects[ 0 ];
 					// delete cube
 					if ( isShiftDown ) {
+					
 						if ( !roomInstance.objects.includes(intersect.object) && !tableInstance.objects.includes(intersect.object) && !floorObjects.includes(intersect.object)) {
-							storingFactory.deleteObject(intersect.object.storingId);
+						
 							scene.remove( intersect.object );
+							storingFactory.deleteObject(intersect.object.storingId);
 							objects.splice( objects.indexOf( intersect.object ), 1 );
 
 						}
@@ -397,7 +380,6 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 									scaleX: myObject2.scale.x,
 									scaleY: myObject2.scale.y,
 									scaleZ: myObject2.scale.z})
-								objectFactory.currentObject = null;
 							}
 
 					}
@@ -423,8 +405,6 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 				if(event.ctrlKey === true){
 				event.preventDefault();
 				var delta = -event.originalEvent.deltaY/2;
-				// console.log(event.originalEvent.deltaY, "event")
-				// console.log(objectFactory.currentObject, "currentObject")
 				var currentScale = objectFactory.currentObject.scale;
 				objectFactory.currentObject.scale.set(currentScale.x + delta, currentScale.y + delta, currentScale.z + delta)
 					.clamp(new THREE.Vector3( 0.1, 0.1, 0.1 ), new THREE.Vector3( 50, 50, 50 ))	

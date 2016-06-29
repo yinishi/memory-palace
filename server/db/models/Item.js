@@ -6,14 +6,13 @@ var db = require('.././_db.js');
 
 var Item = db.define('item', {
   name: Sequelize.STRING,
-  positionX: Sequelize.INTEGER,
-  positionY: Sequelize.INTEGER,
-  positionZ: Sequelize.INTEGER,
-  scaleX: Sequelize.INTEGER,
-  scaleY: Sequelize.INTEGER,
-  scaleZ: Sequelize.INTEGER,
-  message: Sequelize.TEXT,
-  scale: Sequelize.DECIMAL
+  positionX: Sequelize.DECIMAL,
+  positionY: Sequelize.DECIMAL,
+  positionZ: Sequelize.DECIMAL,
+  scaleX: Sequelize.DECIMAL,
+  scaleY: Sequelize.DECIMAL,
+  scaleZ: Sequelize.DECIMAL,
+  message: Sequelize.TEXT
 });
 
 
