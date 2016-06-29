@@ -43,7 +43,10 @@ module.exports = function(){
           obj.storageScale = scale;
           return obj;
         })
-        .then(obj => this.currentObject = obj)
+        .then(obj => {
+        this.previousObject = this.currentObject;
+        this.currentObject = obj;
+      })
         
       //a[name].then(obj => this.currentObject = obj);
     },

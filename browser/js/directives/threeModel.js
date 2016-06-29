@@ -327,6 +327,7 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 					var intersect = intersects[ 0 ];
 					objectFactory.currentObject.position.copy( intersect.point ).add( intersect.face.normal );
 					objectFactory.currentObject.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
+					if(objectFactory.previousObject) scene.remove(objectFactory.previousObject)
 					scene.add(objectFactory.currentObject);
 				}
 			}
@@ -341,9 +342,11 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 					var intersect = intersects[ 0 ];
 					// delete cube
 					if ( isShiftDown ) {
+						console.log("shift")
 						if ( !roomInstance.objects.includes(intersect.object) && !tableInstance.objects.includes(intersect.object) && !floorObjects.includes(intersect.object)) {
-							storingFactory.deleteObject(intersect.object.storingId);
+							console.log("delete")
 							scene.remove( intersect.object );
+							storingFactory.deleteObject(intersect.object.storingId);
 							objects.splice( objects.indexOf( intersect.object ), 1 );
 
 						}
@@ -369,7 +372,6 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 									scaleX: myObject2.scale.x,
 									scaleY: myObject2.scale.y,
 									scaleZ: myObject2.scale.z})
-								objectFactory.currentObject = null;
 							}
 
 					}
