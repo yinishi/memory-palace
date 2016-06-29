@@ -29,7 +29,7 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 
 			//ADDING CAMERA
 			let camera = new THREE.PerspectiveCamera(60, ASPECT, 1, 10000);
-			// camera.position.set(0, 0, 100);
+			camera.rotation.set(0, 0, 100);
 			scene.add(camera);
 
 			// CONTROLS

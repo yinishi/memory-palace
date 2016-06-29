@@ -1,40 +1,46 @@
 'use strict'
 
-module.exports = function(roomFactory){
+module.exports = function(roomFactory, wallFactory){
 	//var room = 3 sides 
-	var textureLoader = new THREE.TextureLoader();
+	var loadTexture = function (file) {
+		const texture = THREE.ImageUtils.loadTexture("./browser/textures/"+file);
+		texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+			texture.repeat.set( 2, 2 );
+		let material = new THREE.MeshBasicMaterial( { map: texture, overdraw: 0.5 } );
+		return material;
+	}
 
 	return {
 		defaultPalace: function () {
-			const texture = THREE.ImageUtils.loadTexture("./browser/textures/white-stone.jpg", {}, function() {
-			});
-			console.log(texture)
-			texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-			texture.repeat.set( 2, 2 );
+			const material = loadTexture('white-stone.jpg')
+			const woodtex = loadTexture('wood-wall.jpg')
+
+			const floorSize = 150;
+			const wallSize = floorSize/2
 			
-			var material = new THREE.MeshBasicMaterial( { map: texture, overdraw: 0.5 } );
+			const mainRoom = new roomFactory(floorSize, wallSize, material, woodtex);
+			//bathroom?
+			// const smallRoom = new roomFactory(wallSize, wallSize, material).container;
+			// smallRoom.position.set(wallSize*3.5,-wallSize,0)
 
-			const wallSize = 75
-			let wallGeometry = new THREE.BoxGeometry(wallSize, 150, 1);
-			const mainRoom = new roomFactory(150, material);
-			const smallRoom = new roomFactory(75).container;
-			smallRoom.position.set(120,0,0)
-
-			
-
-			// let wallMaterial4 = new THREE.MeshBasicMaterial({ color: "red" });
-			let wall4 = new THREE.Mesh(wallGeometry, material)
-			wall4.rotation.set(Math.PI / 2, 0, Math.PI / 2)
+			//hallway
+			let wall4 = new wallFactory(wallSize, 150, woodtex).mesh;
 			wall4.position.set(wallSize*2, -wallSize, wallSize / 2);
-			 
-			mainRoom.container.add(smallRoom)
-			mainRoom.container.add(wall4)
-			// testroom.rotation.set(0,Math.PI / 2,0)
-			// const smallRoom = new roomFactory(150);
-			// const wallSize = 150 / 2
+
+			let wall5 = new wallFactory(wallSize, (floorSize*3), material).mesh;
+			wall5.position.set(wallSize*2, (-wallSize+(-(wallSize/2))), wallSize / 2)
+			wall5.material.side = THREE.BackSide;
+			//bed room 
+			let wall6 = new wallFactory(wallSize, floorSize*2, woodtex).mesh;
+			wall6.position.set(wallSize*3, wallSize, wallSize / 2);
+
+			mainRoom.container.add(wall4);
+			mainRoom.container.add(wall5);
+			mainRoom.container.add(wall6);
 			this.palace = mainRoom;
 		}
 	}
 	
+	//mesh.material.side = THREE.BackSide;
 
 }
