@@ -244,7 +244,6 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 
 			// REQUIRING OBJECTS
 			var isShiftDown = false;
-			var rotateObject = false;
 
 			var raycaster = new THREE.Raycaster();
 			var mouse = new THREE.Vector2();
@@ -324,7 +323,6 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			$document.on( 'keydown', onDocumentKeyDown);
 			$document.on( 'keyup', onDocumentKeyUp);
 			e.on('wheel', onWheel);
-			console.log('EVENTZZ',e);
 
 			function onDocumentMouseMove( event ) {
 
@@ -361,18 +359,6 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 						}
 					// create cube
 					} 
-					else if( rotateObject ){
-						console.log(intersects[ 0 ].object.rotation)
-						
-						// while( rotateObject ){
-						// 	console.log('rotate', rotateObject)
-						// 	intersects[ 0 ].object.rotation.y += .1;
-						// 	$document.on( 'keyup', function(){
-						// 		rotateObject = false;
-						// 	});
-						// }		
-					
-					}
 					else {
 							// Add an object to the scene
 							if (objectFactory.currentObject) {
@@ -402,21 +388,13 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 					case 16: 
 					isShiftDown = true; 
 					break;
-					case 17: //control
-					rotateObject = true;
-					break;
 				}
-				console.log(rotateObject)
 			}
 			function onDocumentKeyUp( event ) {
 				switch ( event.keyCode ) {
 					case 16: isShiftDown = false; 
 					break;
-					case 17: //control
-					rotateObject = false;
-					break;
 				}
-				console.log(rotateObject) 
 			}
 
 			function onWheel($event){
@@ -434,13 +412,6 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 					if(objectFactory.currentObject){
 						objectFactory.currentObject.rotation.y += delta;
 					}
-				}
-			}
-
-			function rotateObject(event){
-				if(event.keyCode === 111) { //o
-					event.preventDefault();
-					console.log('rotation');
 				}
 			}
 
