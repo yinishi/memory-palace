@@ -7,10 +7,11 @@ module.exports = function(wallFactory) {
 
 	  // var floorSize = 150
 	  // var wallSize = 75
-	  let floorGeometry = new THREE.PlaneBufferGeometry(floorSize, floorSize);
+	  let hallwayW = (wallSize+(wallSize/2))
+	  let floorGeometry = new THREE.PlaneBufferGeometry((floorSize*3)+hallwayW+40, floorSize+hallwayW);
 	  let floorMaterial = new THREE.MeshBasicMaterial({ color: 0xcccccc });
 	  var floor = new THREE.Mesh(floorGeometry, floorMaterial);
-	  let hallwayW = (wallSize+(wallSize/2))
+	  
 
 	  this.container.add(floor)
 	  this.objects.push(floor);   

@@ -7,5 +7,5 @@ app.factory('authFactory', ['$http', '$rootScope', require("./authFactory")]);
 app.factory('objectFactory', require("./objectFactory"));
 app.factory('shelfFactory', require("./shelf_Factory"));
 app.factory('storingFactory', ['$http', require("./storing_Factory")]);
-app.factory('palacesFactory', ['roomFactory', 'wallFactory', require("./palacesFactory")]);
+app.factory('palacesFactory', ['roomFactory', 'objectFactory', 'tableFactory', 'wallFactory', require("./palacesFactory")]);
 

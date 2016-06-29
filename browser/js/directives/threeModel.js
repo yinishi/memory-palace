@@ -267,6 +267,7 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			var material = new THREE.MeshBasicMaterial( { vertexColors: THREE.VertexColors } );
 
 			var mesh = new THREE.Mesh( geometry, material );
+			mesh.position.y = -2
 			scene.add( mesh );
 			objects.push(mesh);
 			var floorObjects = [mesh];
@@ -274,13 +275,7 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			// CREATE A ROOM
 			var roomInstance = new PALACE.defaultPalace().palace
 			let room = roomInstance.container;
-		
-			console.log("test2")
-			// var testroomInstance = new roomFactory(75);
-			// let testroom = testroomInstance.container;
-			// testroom.position.set(120,0,0)
-			// // testroom.rotation.set(0,Math.PI / 2,0)
-			// scene.add(testroom);
+
 			scene.add(room);
 
 			objects = objects.concat(roomInstance.objects);
@@ -294,12 +289,12 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			objects = objects.concat(shelfInstance.objects);
 
 			// CREATE A TABLE
-			var tableInstance = new tableFactory();
-			let table = tableInstance.container;
-			table.scale.set(5, 5, 5)
-			table.position.set(0, -40, 20);
-			room.add(table);
-			objects = objects.concat(tableInstance.objects);
+			// var tableInstance = new tableFactory();
+			// let table = tableInstance.container;
+			// table.scale.set(5, 5, 5)
+			// table.position.set(0, -40, 20);
+			// room.add(table);
+			//objects = objects.concat(tableInstance.objects);
 
 			//RETRIVE STORED OBJECTS
 			storingFactory.retrieveObjects()
