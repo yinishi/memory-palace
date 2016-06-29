@@ -38,7 +38,9 @@ module.exports = function(){
              {name: 'flower', image: "./browser/images/flower.jpg", scale: .2},
              {name: 'cat', image: "./browser/images/cat.jpg", scale: 12},
              {name: 'turtle', image: "./browser/images/turtle.png", scale: 12},
-             {name: 'bed', image: "./browser/images/bed.jpg", scale: 15}];
+             {name: 'bed', image: "./browser/images/bed.jpg", scale: 15},
+             {name: 'dress', image: "./browser/images/dress.jpg", scale: .5},
+             {name: 'soccer-ball', image: "./browser/images/soccer-ball.jpg", scale: .07}];
     },
     currentObject: null,
     setCurrentObject: function(object){
