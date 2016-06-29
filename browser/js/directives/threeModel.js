@@ -342,9 +342,9 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 					var intersect = intersects[ 0 ];
 					// delete cube
 					if ( isShiftDown ) {
-						console.log("shift")
+					
 						if ( !roomInstance.objects.includes(intersect.object) && !tableInstance.objects.includes(intersect.object) && !floorObjects.includes(intersect.object)) {
-							console.log("delete")
+						
 							scene.remove( intersect.object );
 							storingFactory.deleteObject(intersect.object.storingId);
 							objects.splice( objects.indexOf( intersect.object ), 1 );
@@ -397,8 +397,6 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 				if(event.ctrlKey === true){
 				event.preventDefault();
 				var delta = -event.originalEvent.deltaY/2;
-				// console.log(event.originalEvent.deltaY, "event")
-				// console.log(objectFactory.currentObject, "currentObject")
 				var currentScale = objectFactory.currentObject.scale;
 				objectFactory.currentObject.scale.set(currentScale.x + delta, currentScale.y + delta, currentScale.z + delta)
 					.clamp(new THREE.Vector3( 0.1, 0.1, 0.1 ), new THREE.Vector3( 50, 50, 50 ))	
