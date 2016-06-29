@@ -12,7 +12,6 @@ module.exports = function(){
         var cube = new THREE.Mesh(new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize), 
         new THREE.MeshBasicMaterial({visible: false})); 
         cube.add(object);
-        //cube.isCollisionMeshForObject = object
         res(cube);
       });
     });
@@ -56,7 +55,7 @@ module.exports = function(){
         .then(obj => {
         this.previousObject = this.currentObject;
         this.currentObject = obj;
-      })
+      });
         
       //a[name].then(obj => this.currentObject = obj);
     },

@@ -10,7 +10,7 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			/*  ESSENTIAL THREE.JS COMPONENTS */
 			// CONSTANTS
 			var WIDTH = $window.innerWidth;
-			var HEIGHT = $window.innerHeight * 0.93;
+			var HEIGHT = $window.innerHeight;
 			var ASPECT = WIDTH / HEIGHT;
 			const UNITSIZE = 250;
 			let objects = [];
@@ -232,7 +232,7 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			function onWindowResize() {
 				console.log('windowDidResize', e[0].offsetWidth, e[0].offsetHeight)
 				// const w = renderer.domElement.offsetWidth, h = renderer.domElement.offsetHeight
-				const w = $window.innerWidth, h = $window.innerHeight * 0.93
+				const w = $window.innerWidth, h = $window.innerHeight;
 				// camera.aspect = $window.innerWidth / $window.innerHeight * 0.93;
 				camera.aspect = w / h
 				camera.updateProjectionMatrix();
@@ -312,14 +312,15 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 							return objectFactory.load(`/browser/objects/${item.name}/${item.name}.json`, item.scaleX, item.scaleY, item.scaleZ)
 								.then(function(obj){
 									obj.position.set(item.positionX, item.positionY, item.positionZ);
+									obj.rotation.set(item.rotationX, item.rotationY, item.rotationZ);
 									obj.scale.set(item.scaleX, item.scaleY, item.scaleZ);
 									obj.storingId = item.id;
 									scene.add(obj);
 									objects.push(obj);
-								})
-						})
+								});
+						});
 					}
-				})
+				});
 
 			//PLACING OBJECTS
 			e.on( 'mousemove', onDocumentMouseMove);
@@ -375,12 +376,15 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 									name: myObject2.name, 
 									positionX: myObject2.position.x, 
 									positionY: myObject2.position.y, 
-									positionZ: myObject2.position.z, 
+									positionZ: myObject2.position.z,
+									rotationX: myObject2.rotation.x,
+									rotationY: myObject2.rotation.y,
+									rotationZ: myObject2.rotation.z,
+
 									scaleX: myObject2.scale.x,
 									scaleY: myObject2.scale.y,
 									scaleZ: myObject2.scale.z});
-								console.log('spawned', myObject2, 'uuid', myObject2.uuid)
-								//objectFactory.currentObject = null
+								console.log('spawned', myObject2, 'uuid', myObject2.uuid);
 							}
 
 					}
@@ -411,8 +415,9 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 					$event.preventDefault();
 					var delta = -event.deltaY/2;
 					var currentScale = objectFactory.currentObject.scale;
-					objectFactory.currentObject.scale.set(currentScale.x + delta, currentScale.y + delta, currentScale.z + delta)
-						.clamp(new THREE.Vector3( 0.1, 0.1, 0.1 ), new THREE.Vector3( 50, 50, 50 ))	
+					objectFactory.currentObject
+						.scale.set(currentScale.x + delta, currentScale.y + delta, currentScale.z + delta)
+						.clamp(new THREE.Vector3( 0.1, 0.1, 0.1 ), new THREE.Vector3( 50, 50, 50 ))	;
 				}else if(Math.abs(event.deltaX) > .1 ){ //two finger left and right scroll
 					$event.preventDefault();
 					var delta = -event.deltaX/20;
