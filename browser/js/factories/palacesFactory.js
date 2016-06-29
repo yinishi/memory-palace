@@ -6,16 +6,16 @@ module.exports = function(roomFactory){
 
 	return {
 		defaultPalace: function () {
-			const texture = THREE.ImageUtils.loadTexture("./browser/textures/stone-wall.jpg", {}, function() {
+			const texture = THREE.ImageUtils.loadTexture("./browser/textures/white-stone.jpg", {}, function() {
 			});
-		
 			console.log(texture)
+			texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+			texture.repeat.set( 2, 2 );
+			
 			var material = new THREE.MeshBasicMaterial( { map: texture, overdraw: 0.5 } );
 
 			const wallSize = 75
 			let wallGeometry = new THREE.BoxGeometry(wallSize, 150, 1);
-	  
-
 			const mainRoom = new roomFactory(150, material);
 			const smallRoom = new roomFactory(75).container;
 			smallRoom.position.set(120,0,0)
