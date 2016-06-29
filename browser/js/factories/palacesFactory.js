@@ -24,19 +24,30 @@ module.exports = function(roomFactory, wallFactory){
 			// smallRoom.position.set(wallSize*3.5,-wallSize,0)
 
 			//hallway
-			let wall4 = new wallFactory(wallSize, 150, woodtex).mesh;
+			let hallwayW = (wallSize+(wallSize/2))
+
+			let wall4 = new wallFactory(wallSize, 150, woodtex, "horizontal").mesh;
 			wall4.position.set(wallSize*2, -wallSize, wallSize / 2);
 
-			let wall5 = new wallFactory(wallSize, (floorSize*3), material).mesh;
-			wall5.position.set(wallSize*2, (-wallSize+(-(wallSize/2))), wallSize / 2)
+			let wall5 = new wallFactory(wallSize, (floorSize*2), material, "horizontal").mesh;
+			//-150-75
+		
+			wall5.position.set(wallSize*2, (-hallwayW), wallSize / 2)
 			wall5.material.side = THREE.BackSide;
 			//bed room 
-			let wall6 = new wallFactory(wallSize, floorSize*2, woodtex).mesh;
-			wall6.position.set(wallSize*3, wallSize, wallSize / 2);
+
+			let wall6 = new wallFactory(wallSize, floorSize*1.5, woodtex, "horizontal").mesh;
+
+			wall6.position.set(wallSize*2.5, wallSize, wallSize / 2);
+			//end wall
+			let wall7 = new wallFactory(wallSize, floorSize+hallwayW, material, "verticalClockwise").mesh;
+
+			wall7.position.set(wallSize*4, 0, wallSize / 2);
 
 			mainRoom.container.add(wall4);
 			mainRoom.container.add(wall5);
 			mainRoom.container.add(wall6);
+			mainRoom.container.add(wall7);
 			this.palace = mainRoom;
 		}
 	}
