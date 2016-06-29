@@ -38,6 +38,8 @@ module.exports = function(){
              {name: 'flower', image: "./browser/images/flower.jpg", scale: .2},
              {name: 'cat', image: "./browser/images/cat.jpg", scale: 12},
              {name: 'turtle', image: "./browser/images/turtle.png", scale: 12},
+             {name: 'apple', image: "./browser/images/apple.jpeg", scale: 1},
+             {name: 'shoe-nike', image: "./browser/images/shoe-nike.jpg", scale: 1},
              {name: 'bed', image: "./browser/images/bed.jpg", scale: 15}];
     },
     currentObject: null,
