@@ -8,7 +8,7 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
         link: function(s,e,a) {
 		
 			/*  ESSENTIAL THREE.JS COMPONENTS */
-				// CONSTANTS
+			// CONSTANTS
 			var WIDTH = $window.innerWidth;
 			var HEIGHT = $window.innerHeight * 0.93;
 			var ASPECT = WIDTH / HEIGHT;
@@ -30,6 +30,10 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			let camera = new THREE.PerspectiveCamera(60, ASPECT, 1, 10000);
 			// camera.position.set(0, 0, 100);
 			scene.add(camera);
+
+			//MODAL
+			var blocker = document.getElementById( 'blocker' );
+			//blocker.style.display = 'none';
 
 			// CONTROLS
 			var controls = new PointerLockControls(camera);
@@ -387,6 +391,9 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 				switch( event.keyCode ) {
 					case 16: 
 					isShiftDown = true; 
+					break;
+					case 27:
+					blocker.style.display = 'none'; //esc
 					break;
 				}
 			}

@@ -53,6 +53,8 @@ app.use(Express.static(path.join(__dirname, '../bower-components')));
 
 app.use('/minjs', Express.static(path.join(__dirname, '../minjs')));
 
+app.use('/styles', Express.static(path.join(__dirname, '../styles/styles.css')));
+
 app.use(Express.static(path.join(__dirname, '../styles')));
 
 app.use('/api', require('./api'));
