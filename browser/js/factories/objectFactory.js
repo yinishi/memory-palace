@@ -66,7 +66,7 @@ module.exports = function(){
              {name: 'book', image: "./browser/images/book.png", scale: 1}];
     },
     currentObject: null,
-    currentBox: null,
+    // currentBox: null,
     setCurrentObject: function(object){
       var name = object.name;
       var scale = object.scale;
@@ -78,9 +78,9 @@ module.exports = function(){
         })
         .then(obj => {
         this.previousObject = this.currentObject;
-        this.previousBox = this.currentBox;
+        // this.previousBox = this.currentBox;
         this.currentObject = obj;
-        this.currentBox = this.currentObject.bbox;
+        // this.currentBox = this.currentObject.bbox;
       })
         
       //a[name].then(obj => this.currentObject = obj);

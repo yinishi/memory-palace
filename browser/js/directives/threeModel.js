@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = function ($window, roomFactory, tableFactory, objectFactory, shelfFactory,	$document, storingFactory) {
+module.exports = function (palacesFactory, $window, roomFactory, tableFactory, objectFactory, shelfFactory,	$document, storingFactory) {
 	 return {
         restrict: 'E',
         	scope: {
@@ -13,6 +13,7 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			var HEIGHT = $window.innerHeight * 0.93;
 			var ASPECT = WIDTH / HEIGHT;
 			const UNITSIZE = 250;
+			const PALACE = palacesFactory;
 			let objects = [];
 
 			// CREATING SCENE
@@ -22,13 +23,13 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			//ADDING LIGHT
 			var ambientLight = new THREE.AmbientLight( 0x606060 );
 			scene.add( ambientLight );
-			var directionalLight = new THREE.DirectionalLight( 0xffffff );
+			var directionalLight = new THREE.DirectionalLight( 0xaabbff );
 			directionalLight.position.set( 1, 0.75, 0.5 ).normalize();
 			scene.add( directionalLight );
 
 			//ADDING CAMERA
 			let camera = new THREE.PerspectiveCamera(60, ASPECT, 1, 10000);
-			// camera.position.set(0, 0, 100);
+			camera.rotation.set(0, 0, 100);
 			scene.add(camera);
 
 			// CONTROLS
@@ -164,7 +165,7 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 
 			// RENDERER
 			let renderer = new THREE.WebGLRenderer();
-			renderer.setClearColor( 0xf0f0f0 );
+			renderer.setClearColor( 0x7ec0ee );
 			renderer.setSize( WIDTH, HEIGHT);
 
 			function render() {
@@ -237,6 +238,26 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 				HEIGHT = h
 			}
 
+			// SKYDOME
+				var vertexShader = document.getElementById( 'vertexShader' ).textContent;
+				var fragmentShader = document.getElementById( 'fragmentShader' ).textContent;
+				var uniforms = {
+					topColor: 	 { type: "c", value: new THREE.Color( 0x0077ff ) },
+					bottomColor: { type: "c", value: new THREE.Color( 0xffffff ) },
+					offset:		 { type: "f", value: 400 },
+					exponent:	 { type: "f", value: 0.6 }
+				};
+				uniforms.topColor.value.copy( directionalLight.color );
+				var skyGeo = new THREE.SphereGeometry( 4000, 32, 15 );
+				var skyMat = new THREE.ShaderMaterial( {
+					uniforms: uniforms,
+					vertexShader: vertexShader,
+					fragmentShader: fragmentShader,
+					side: THREE.BackSide
+				} );
+				var sky = new THREE.Mesh( skyGeo, skyMat );
+				scene.add( sky );
+
 			// CREATE CONTAINER
 			e[0].appendChild(renderer.domElement);
 
@@ -273,13 +294,15 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			var material = new THREE.MeshBasicMaterial( { vertexColors: THREE.VertexColors } );
 
 			var mesh = new THREE.Mesh( geometry, material );
+			mesh.position.y = -2
 			scene.add( mesh );
 			objects.push(mesh);
 			var floorObjects = [mesh];
 
 			// CREATE A ROOM
-			var roomInstance = new roomFactory();
+			var roomInstance = new PALACE.defaultPalace().palace
 			let room = roomInstance.container;
+
 			scene.add(room);
 
 			objects = objects.concat(roomInstance.objects);
@@ -293,12 +316,12 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			objects = objects.concat(shelfInstance.objects);
 
 			// CREATE A TABLE
-			var tableInstance = new tableFactory();
-			let table = tableInstance.container;
-			table.scale.set(5, 5, 5)
-			table.position.set(0, -40, 20);
-			room.add(table);
-			objects = objects.concat(tableInstance.objects);
+			// var tableInstance = new tableFactory();
+			// let table = tableInstance.container;
+			// table.scale.set(5, 5, 5)
+			// table.position.set(0, -40, 20);
+			// room.add(table);
+			//objects = objects.concat(tableInstance.objects);
 
 			//RETRIVE STORED OBJECTS
 			storingFactory.retrieveObjects()
