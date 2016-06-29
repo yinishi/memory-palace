@@ -12,6 +12,9 @@ var Item = db.define('item', {
   scaleX: Sequelize.DECIMAL,
   scaleY: Sequelize.DECIMAL,
   scaleZ: Sequelize.DECIMAL,
+  rotationX: Sequelize.DECIMAL,
+  rotationY: Sequelize.DECIMAL,
+  rotationZ: Sequelize.DECIMAL,
   message: Sequelize.TEXT
 });
 

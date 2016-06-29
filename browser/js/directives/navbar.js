@@ -16,7 +16,7 @@ module.exports = function ($state, authFactory, $rootScope) {
             }
             $rootScope.$on('user', function(user){
                 scope.user = user;
-            })
+            });
             setUser();
         	scope.logout = function () {
                 scope.user = null;
@@ -24,7 +24,7 @@ module.exports = function ($state, authFactory, $rootScope) {
 		        .then(function () {
 		          $state.go('login');
 		        });
-	      	}
+	      	};
         }
-     }
-}
+     };
+};
