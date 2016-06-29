@@ -298,10 +298,10 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 				.then(function(items){
 					if(Array.isArray(items)){
 						items.forEach(function(item){
-							return objectFactory.load(`/browser/objects/${item.name}/${item.name}.json`, item.scale)
+							return objectFactory.load(`/browser/objects/${item.name}/${item.name}.json`, item.scaleX, item.scaleY, item.scaleZ)
 								.then(function(obj){
 									obj.position.set(item.positionX, item.positionY, item.positionZ);
-									obj.position.set(item.scaleX, item.scaleY, item.scaleZ);
+									obj.scale.set(item.scaleX, item.scaleY, item.scaleZ);
 									obj.storingId = item.id;
 									scene.add(obj);
 									objects.push(obj);
@@ -327,6 +327,7 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 					var intersect = intersects[ 0 ];
 					objectFactory.currentObject.position.copy( intersect.point ).add( intersect.face.normal );
 					objectFactory.currentObject.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
+					if(objectFactory.previousObject) scene.remove(objectFactory.previousObject)
 					scene.add(objectFactory.currentObject);
 				}
 			}
@@ -341,9 +342,11 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 					var intersect = intersects[ 0 ];
 					// delete cube
 					if ( isShiftDown ) {
+					
 						if ( !roomInstance.objects.includes(intersect.object) && !tableInstance.objects.includes(intersect.object) && !floorObjects.includes(intersect.object)) {
-							storingFactory.deleteObject(intersect.object.storingId);
+						
 							scene.remove( intersect.object );
+							storingFactory.deleteObject(intersect.object.storingId);
 							objects.splice( objects.indexOf( intersect.object ), 1 );
 
 						}
@@ -369,7 +372,6 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 									scaleX: myObject2.scale.x,
 									scaleY: myObject2.scale.y,
 									scaleZ: myObject2.scale.z})
-								objectFactory.currentObject = null;
 							}
 
 					}
@@ -395,8 +397,6 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 				if(event.ctrlKey === true){
 				event.preventDefault();
 				var delta = -event.originalEvent.deltaY/2;
-				// console.log(event.originalEvent.deltaY, "event")
-				// console.log(objectFactory.currentObject, "currentObject")
 				var currentScale = objectFactory.currentObject.scale;
 				objectFactory.currentObject.scale.set(currentScale.x + delta, currentScale.y + delta, currentScale.z + delta)
 					.clamp(new THREE.Vector3( 0.1, 0.1, 0.1 ), new THREE.Vector3( 50, 50, 50 ))	

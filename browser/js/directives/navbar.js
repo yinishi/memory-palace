@@ -12,11 +12,14 @@ module.exports = function ($state, authFactory, $rootScope) {
                 authFactory.getLoggedInUser()
                 .then(function(user){
                     scope.user = user;
-                    //rootscope? refresh?
                 });
             }
+            $rootScope.$on('user', function(user){
+                scope.user = user;
+            })
             setUser();
         	scope.logout = function () {
+                scope.user = null;
 		        return authFactory.logout()
 		        .then(function () {
 		          $state.go('login');
