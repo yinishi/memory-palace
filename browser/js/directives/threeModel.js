@@ -9,9 +9,9 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 		
 			/*  ESSENTIAL THREE.JS COMPONENTS */
 				// CONSTANTS
-			const WIDTH = $window.innerWidth;
-			const HEIGHT = $window.innerHeight * 0.93;
-			const ASPECT = WIDTH / HEIGHT;
+			var WIDTH = $window.innerWidth;
+			var HEIGHT = $window.innerHeight * 0.93;
+			var ASPECT = WIDTH / HEIGHT;
 			const UNITSIZE = 250;
 			let objects = [];
 
@@ -226,9 +226,15 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			$window.addEventListener( 'resize', onWindowResize, false );
 
 			function onWindowResize() {
-				camera.aspect = $window.innerWidth / $window.innerHeight * 0.93;
+				console.log('windowDidResize', e[0].offsetWidth, e[0].offsetHeight)
+				// const w = renderer.domElement.offsetWidth, h = renderer.domElement.offsetHeight
+				const w = $window.innerWidth, h = $window.innerHeight * 0.93
+				// camera.aspect = $window.innerWidth / $window.innerHeight * 0.93;
+				camera.aspect = w / h
 				camera.updateProjectionMatrix();
-				renderer.setSize( $window.innerWidth, $window.innerHeight  * 0.93);
+				renderer.setSize(w, h)
+				WIDTH = w
+				HEIGHT = h
 			}
 
 			// CREATE CONTAINER
@@ -238,6 +244,7 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 
 			// REQUIRING OBJECTS
 			var isShiftDown = false;
+
 			var raycaster = new THREE.Raycaster();
 			var mouse = new THREE.Vector2();
 
@@ -315,19 +322,19 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			e.on( 'mousedown', onDocumentMouseDown);
 			$document.on( 'keydown', onDocumentKeyDown);
 			$document.on( 'keyup', onDocumentKeyUp);
-			e.on('wheel', onPinch);
+			e.on('wheel', onWheel);
 
 			function onDocumentMouseMove( event ) {
 
 				event.preventDefault();
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
-				var intersects = raycaster.intersectObjects( objects);
+				var intersects = raycaster.intersectObjects(objects, true);
 				if ( objectFactory.currentObject && intersects.length > 0 ) {
 					var intersect = intersects[ 0 ];
 					objectFactory.currentObject.position.copy( intersect.point ).add( intersect.face.normal );
 					objectFactory.currentObject.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
-					if(objectFactory.previousObject) scene.remove(objectFactory.previousObject)
+					if(objectFactory.previousObject) scene.remove(objectFactory.previousObject);
 					scene.add(objectFactory.currentObject);
 				}
 			}
@@ -337,12 +344,12 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
 				var intersects = raycaster.intersectObjects( objects);
-				
+				console.log('did fire ray and hit', intersects)
 				if ( intersects.length > 0 ) {
 					var intersect = intersects[ 0 ];
 					// delete cube
-					if ( isShiftDown ) {
-					
+					if ( event.originalEvent.shiftKey ) {
+						console.log('will remove object', intersect.object.uuid)
 						if ( !roomInstance.objects.includes(intersect.object) && !tableInstance.objects.includes(intersect.object) && !floorObjects.includes(intersect.object)) {
 						
 							scene.remove( intersect.object );
@@ -351,13 +358,9 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 
 						}
 					// create cube
-					} else {
-						// var voxel = new THREE.Mesh( cubeGeo, cubeMaterial );
-						// voxel.position.copy( intersect.point ).add( intersect.face.normal );
-						// voxel.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
-						// scene.add( voxel );
-						// objects.push( voxel );
-						
+					} 
+					else {
+							// Add an object to the scene
 							if (objectFactory.currentObject) {
 								var myObject2 = objectFactory.currentObject.clone();
 								myObject2.position.copy( intersect.point ).add( intersect.face.normal );
@@ -371,14 +374,14 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 									positionZ: myObject2.position.z, 
 									scaleX: myObject2.scale.x,
 									scaleY: myObject2.scale.y,
-									scaleZ: myObject2.scale.z})
+									scaleZ: myObject2.scale.z});
+								console.log('spawned', myObject2, 'uuid', myObject2.uuid)
+								//objectFactory.currentObject = null
 							}
 
 					}
 				}
 			}
-
-
 
 			function onDocumentKeyDown( event ) {
 				switch( event.keyCode ) {
@@ -389,17 +392,26 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			}
 			function onDocumentKeyUp( event ) {
 				switch ( event.keyCode ) {
-					case 16: isShiftDown = false; break;
+					case 16: isShiftDown = false; 
+					break;
 				}
 			}
 
-			function onPinch(event){
-				if(event.ctrlKey === true){
-				event.preventDefault();
-				var delta = -event.originalEvent.deltaY/2;
-				var currentScale = objectFactory.currentObject.scale;
-				objectFactory.currentObject.scale.set(currentScale.x + delta, currentScale.y + delta, currentScale.z + delta)
-					.clamp(new THREE.Vector3( 0.1, 0.1, 0.1 ), new THREE.Vector3( 50, 50, 50 ))	
+			function onWheel($event){
+				var event = $event.originalEvent;
+
+				if(event.ctrlKey === true){ //pinch
+					$event.preventDefault();
+					var delta = -event.deltaY/2;
+					var currentScale = objectFactory.currentObject.scale;
+					objectFactory.currentObject.scale.set(currentScale.x + delta, currentScale.y + delta, currentScale.z + delta)
+						.clamp(new THREE.Vector3( 0.1, 0.1, 0.1 ), new THREE.Vector3( 50, 50, 50 ))	
+				}else if(Math.abs(event.deltaX) > .1 ){ //two finger left and right scroll
+					$event.preventDefault();
+					var delta = -event.deltaX/20;
+					if(objectFactory.currentObject){
+						objectFactory.currentObject.rotation.y += delta;
+					}
 				}
 			}
 
