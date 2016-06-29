@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = function ($scope, $state, $http, authFactory) {
+module.exports = function ($scope, $state, $http, authFactory, $rootScope) {
 	$scope.submitted = false;
 	$scope.signup = function(){
 		// console.log($scope.submitted)
@@ -9,6 +9,7 @@ module.exports = function ($scope, $state, $http, authFactory) {
 		if (!$scope.userInfo.$invalid && pwMatch) {
 			authFactory.signup($scope.userInfo)
 			.then(user => {
+				$rootScope.$broadcast('user', user);
 				$state.go('room');
 			});
 		}
@@ -16,6 +17,8 @@ module.exports = function ($scope, $state, $http, authFactory) {
 	$scope.login = function(){
 		authFactory.login($scope.userInfo)
 		.then(user => {
+			console.log(user, "user")
+			$rootScope.$broadcast('user', user)
 			$state.go('room');
 		});
 		console.log("here", $scope.userInfo);
