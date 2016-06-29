@@ -296,11 +296,11 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			let room = roomInstance.container;
 		
 			console.log("test2")
-			var testroomInstance = new roomFactory(75);
-			let testroom = testroomInstance.container;
-			testroom.position.set(120,0,0)
-			// testroom.rotation.set(0,Math.PI / 2,0)
-			scene.add(testroom);
+			// var testroomInstance = new roomFactory(75);
+			// let testroom = testroomInstance.container;
+			// testroom.position.set(120,0,0)
+			// // testroom.rotation.set(0,Math.PI / 2,0)
+			// scene.add(testroom);
 			scene.add(room);
 
 			objects = objects.concat(roomInstance.objects);
