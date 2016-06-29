@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = function ($window, roomFactory, tableFactory, objectFactory, shelfFactory,	$document, storingFactory) {
+module.exports = function (palacesFactory, $window, roomFactory, tableFactory, objectFactory, shelfFactory,	$document, storingFactory) {
 	 return {
         restrict: 'E',
         	scope: {
@@ -13,6 +13,7 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			const HEIGHT = $window.innerHeight * 0.93;
 			const ASPECT = WIDTH / HEIGHT;
 			const UNITSIZE = 250;
+			const PALACE = palacesFactory;
 			let objects = [];
 
 			// CREATING SCENE
@@ -291,14 +292,14 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			var floorObjects = [mesh];
 
 			// CREATE A ROOM
-			var roomInstance = new roomFactory(150);
+			var roomInstance = new PALACE.defaultPalace().palace
 			let room = roomInstance.container;
 		
-			
+			console.log("test2")
 			var testroomInstance = new roomFactory(75);
 			let testroom = testroomInstance.container;
-			testroom.position.set(100,0,0)
-			testroom.rotation.set(0,Math.PI / 2,0)
+			testroom.position.set(120,0,0)
+			// testroom.rotation.set(0,Math.PI / 2,0)
 			scene.add(testroom);
 			scene.add(room);
 

@@ -36,21 +36,21 @@ module.exports = function(wallFactory) {
 	  wall3.rotation.set(Math.PI / 2, 0, Math.PI / 2)
 	  wall3.position.set(0, wallSize, wallSize / 2)
 	  //red
-	  let wallMaterial4 = new THREE.MeshBasicMaterial({ color: "red" });
-	  let wall4 = new THREE.Mesh(wallGeometry, wallMaterial4)
-	  wall4.rotation.set(Math.PI / 2, 0, Math.PI / 2)
-	  wall4.position.set(wallSize*2, -wallSize, wallSize / 2);
+	  // let wallMaterial4 = new THREE.MeshBasicMaterial({ color: "red" });
+	  // let wall4 = new THREE.Mesh(wallGeometry, wallMaterial4)
+	  // wall4.rotation.set(Math.PI / 2, 0, Math.PI / 2)
+	  // wall4.position.set(wallSize*2, -wallSize, wallSize / 2);
 	  
-	  let wallMaterial5 = new THREE.MeshBasicMaterial({ color: "green" });
-	  let wall5 = new THREE.Mesh(doubleWallGeometry, wallMaterial5)
-	  wall5.rotation.set(Math.PI / 2, 0, Math.PI / 2)
-	  wall5.position.set(wallSize*2, (-wallSize+(-(wallSize/2))), wallSize / 2)
+	  // let wallMaterial5 = new THREE.MeshBasicMaterial({ color: "green" });
+	  // let wall5 = new THREE.Mesh(doubleWallGeometry, wallMaterial5)
+	  // wall5.rotation.set(Math.PI / 2, 0, Math.PI / 2)
+	  // wall5.position.set(wallSize*2, (-wallSize+(-(wallSize/2))), wallSize / 2)
 
 	  this.container.add(wall1);
 	  this.container.add(wall2);
 	  this.container.add(wall3);
-	  this.container.add(wall4);
-	  this.container.add(wall5);
+	  // this.container.add(wall4);
+	  // this.container.add(wall5);
 	  this.objects.push(wall1);
 	  this.container.rotation.set(-Math.PI/2, 0, 0);
 	}
