@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = function ($window, roomFactory, tableFactory, objectFactory, shelfFactory,	$document, storingFactory) {
+module.exports = function (palacesFactory, $window, roomFactory, tableFactory, objectFactory, shelfFactory,	$document, storingFactory) {
 	 return {
         restrict: 'E',
         	scope: {
@@ -13,6 +13,7 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			var HEIGHT = $window.innerHeight * 0.93;
 			var ASPECT = WIDTH / HEIGHT;
 			const UNITSIZE = 250;
+			const PALACE = palacesFactory;
 			let objects = [];
 
 			// CREATING SCENE
@@ -28,7 +29,7 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 
 			//ADDING CAMERA
 			let camera = new THREE.PerspectiveCamera(60, ASPECT, 1, 10000);
-			// camera.position.set(0, 0, 100);
+			camera.rotation.set(0, 0, 100);
 			scene.add(camera);
 
 			// CONTROLS
@@ -273,13 +274,15 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			var material = new THREE.MeshBasicMaterial( { vertexColors: THREE.VertexColors } );
 
 			var mesh = new THREE.Mesh( geometry, material );
+			mesh.position.y = -2
 			scene.add( mesh );
 			objects.push(mesh);
 			var floorObjects = [mesh];
 
 			// CREATE A ROOM
-			var roomInstance = new roomFactory();
+			var roomInstance = new PALACE.defaultPalace().palace
 			let room = roomInstance.container;
+
 			scene.add(room);
 
 			objects = objects.concat(roomInstance.objects);
@@ -293,12 +296,12 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			objects = objects.concat(shelfInstance.objects);
 
 			// CREATE A TABLE
-			var tableInstance = new tableFactory();
-			let table = tableInstance.container;
-			table.scale.set(5, 5, 5)
-			table.position.set(0, -40, 20);
-			room.add(table);
-			objects = objects.concat(tableInstance.objects);
+			// var tableInstance = new tableFactory();
+			// let table = tableInstance.container;
+			// table.scale.set(5, 5, 5)
+			// table.position.set(0, -40, 20);
+			// room.add(table);
+			//objects = objects.concat(tableInstance.objects);
 
 			//RETRIVE STORED OBJECTS
 			storingFactory.retrieveObjects()
