@@ -1,5 +1,5 @@
 module.exports = function(wallFactory) {
-	return function (floorSize, wallSize, material, material2) {
+	return function (floorSize, wallSize, material, material2, floorMaterial) {
 
 
 	  this.container = new THREE.Object3D()
@@ -9,7 +9,7 @@ module.exports = function(wallFactory) {
 	  // var wallSize = 75
 	  let hallwayW = (wallSize+(wallSize/2))
 	  let floorGeometry = new THREE.PlaneBufferGeometry((floorSize*3)+hallwayW+40, floorSize+hallwayW);
-	  let floorMaterial = new THREE.MeshBasicMaterial({ color: 0xcccccc });
+	  // let floorMaterial = new THREE.MeshBasicMaterial({ color: 0xcccccc });
 	  var floor = new THREE.Mesh(floorGeometry, floorMaterial);
 	  
 
