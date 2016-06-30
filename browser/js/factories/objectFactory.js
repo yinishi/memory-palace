@@ -8,34 +8,26 @@ function load (link, scale, name) {
       loader.load(link, function(object){
         if(!scale) {
           a.getObjects().forEach(function(item){
-            if(item.name === name) scale = item.scale;
+            console.log(item.scale, "item scale")
+            if(item.name === name) object.scale.set(item.scale,item.scale,item.scale);
           });
         }
         else object.scale.set(scale,scale,scale);
-        //add object to a cube for collison detection and removing objects 
-        var cubeSize = 10*scale; 
-        var cube = new THREE.Mesh(new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize), 
+    
+        var boundingBox = new THREE.BoundingBoxHelper(object);
+        boundingBox.add(object);
+        boundingBox.update();
+      
+        var cube = new THREE.Mesh(new THREE.BoxGeometry(boundingBox.box.max.x-boundingBox.box.min.x, boundingBox.box.max.y-boundingBox.box.min.y, boundingBox.box.max.z-boundingBox.box.min.z), 
         new THREE.MeshBasicMaterial({visible: false})); 
-        cube.add(object);
+        cube.add(object); 
         res(cube);
-
-//      // bounding box stuff
-//         // var sphereSize = object.children[0].geometry.boundingSphere.radius; 
-//         // var sphere = new THREE.Mesh(new THREE.SphereGeometry(sphereSize), 
-//         // new THREE.MeshBasicMaterial({visible: false})); 
-//         var boundingBox = new THREE.BoundingBoxHelper(object);
-//         boundingBox.update();
-//         object.bbox = boundingBox   
-//         res(object);
       });
     });
   }
   var invisibleCube = new THREE.Mesh(new THREE.BoxGeometry(20, 20, 20), 
         new THREE.MeshBasicMaterial({visible: false})); 
 
-  // var currObjectName = 'teapot';
-
-  // var _teapot = null;
   var cache = {};
 
   var a = {
@@ -65,7 +57,6 @@ function load (link, scale, name) {
     },
     invsibleObject: invisibleCube,
     currentObject: invisibleCube,
-    // currentBox: null,
     setCurrentObject: function(object){
       var name = object.name;
       var scale = object.scale;
@@ -77,9 +68,7 @@ function load (link, scale, name) {
         })
         .then(obj => {
         this.previousObject = this.currentObject;
-        // this.previousBox = this.currentBox;
         this.currentObject = obj;
-        // this.currentBox = this.currentObject.bbox;
       })
         
       //a[name].then(obj => this.currentObject = obj);
