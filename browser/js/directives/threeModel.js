@@ -108,10 +108,9 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 
 				var onKeyDown = function ( event ) {
 
-					if ( scope.enabled === false ) return;
+					if ( !scope.enabled ) return;
 
 					switch(event.keyCode){
-
 						case 69: // e, look down
 							pitchObject.rotation.x -= 3 * Math.PI / 180;
 							break;
@@ -124,9 +123,9 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 						case 65: // a, rotate left
 							yawObject.rotation.y += 3 * Math.PI / 180;
 							break;
-							}
+					}
 
-					//check	180 deg, doesn't allow user to flip over	
+					//check	180 deg, doesn't allow user to flip over
 					pitchObject.rotation.x = Math.max( - PI_2, Math.min( PI_2, pitchObject.rotation.x ) );
 
 				};
@@ -175,6 +174,8 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			var raycasterCamera;
 			var forward_vec = new THREE.Vector3(0, 0, -1);
 			var backward_vec = new THREE.Vector3(0, 0, -1);
+			// var left_vec = new THREE.Vector3(1, 0, 0);
+			// var right_vec = new THREE.Vector3(-1, 0, 0);
 
 			function render() {
 
@@ -185,19 +186,36 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 					// COLLISION DETECTION - FORWARD
 					raycasterCamera = new THREE.Raycaster()
 					raycasterCamera.ray.origin.copy( controls.getObject().position );
-					raycasterCamera.setFromCamera(forward_vector, camera)
+					raycasterCamera.setFromCamera(forward_vec, camera)
 					raycasterCamera.ray.origin.z -= 1;
 					var collisions = raycasterCamera.intersectObjects( scene.children, true );
 					
-					var colliding = collisions.length > 1;
+					var collidingForward = collisions.length > 1;
 
-					if (colliding && moveForward && collisions[0].distance < 10) {
+					if (collidingForward && moveForward && collisions[0].distance < 15) {
+						console.log('colliding forwards, distance is', collisions[0].distance);
 						moveForward = false;
 						velocity.x = 0;
 						velocity.y = 0;
 						velocity.z = 0;
 					}
 
+					// COLLISION DETECTION - BACKWARD
+					raycasterCamera = new THREE.Raycaster()
+					raycasterCamera.ray.origin.copy( controls.getObject().position );
+					raycasterCamera.setFromCamera(backward_vec, camera)
+					raycasterCamera.ray.origin.z += 5;
+					var collisions = raycasterCamera.intersectObjects( scene.children, true );
+					
+					var collidingBackward = collisions.length > 1;
+
+					if (collidingBackward && moveBackward && collisions[0].distance < 20) {
+						console.log('colliding backwards, distance is', collisions[0].distance);
+						moveBackward = false;
+						velocity.x = 0;
+						velocity.y = 0;
+						velocity.z = 0;
+					}
 					/////////////////////////
 
 					// REGULAR MOVEMENT
