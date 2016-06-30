@@ -4,9 +4,7 @@ module.exports = function (modalFactory){
         templateUrl: '/browser/js/templates/carousel.html',
         controller: 'menuCtrl',
         link: function (s,a,e) {
-        	s.showCarousel = modalFactory.getCarousel()
-		   console.log("link carousel!!", s.showCarousel.data)
-		  	
+        	s.showCarousel = modalFactory.getCarousel();	
         } 
   }
 }

@@ -6,18 +6,17 @@
   border: 1px solid white;
 }
 .ctrlsIcon {
-  margin-bottom: 20px;
  /* background-image: url('browser/icons/white-map-01.png')*/*/
 }
 .roomIcon {
-  width: 80px;
-  height: 80px;
-  background-color: red;
+  width: 90px;
+  height: 90px;
+/*  background-color: red;*/
 
 }
 .roomIcons {
   width: 10%;
-  border: 3px solid white;
+/*  border: 3px solid white;*/
   margin-bottom: 5px;
 }
 
