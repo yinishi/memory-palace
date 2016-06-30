@@ -172,16 +172,9 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			renderer.setClearColor( 0x7ec0ee );
 			renderer.setSize( WIDTH, HEIGHT);
 
-			var rcUp, rcDown, rcLeft, rcRight, rcFront, rcBack;
-
-			var front_vector = new THREE.Vector3(0, 0, -1);
-			var left_vector = new THREE.Vector3(0, -1, 0);
-			var right_vector = new THREE.Vector3(0, 1, 0);
-			var back_vector = new THREE.Vector3(0, 0, 1);
-			var up_vector = new THREE.Vector3(0, 1, 0);
-			var down_vector = new THREE.Vector3(0, -1, 0);
-
-			var once = false
+			var raycasterCamera;
+			var forward_vec = new THREE.Vector3(0, 0, -1);
+			var backward_vec = new THREE.Vector3(0, 0, -1);
 
 			function render() {
 
@@ -189,47 +182,25 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 
 				if ( controlsEnabled ) {
 
-					// FRONT
-					rcFront = new THREE.Raycaster()
-					rcFront.ray.origin.copy( controls.getObject().position );
-					rcFront.ray.direction.copy( front_vector );
-					rcFront.ray.origin.z -= 1;
-					var collisions = rcFront.intersectObjects( scene.children, true );
+					// COLLISION DETECTION - FORWARD
+					raycasterCamera = new THREE.Raycaster()
+					raycasterCamera.ray.origin.copy( controls.getObject().position );
+					raycasterCamera.setFromCamera(forward_vector, camera)
+					raycasterCamera.ray.origin.z -= 1;
+					var collisions = raycasterCamera.intersectObjects( scene.children, true );
 					
-					var collidingFrontOrBack = collisions.length > 1 && collisions[0].distance < 2;
+					var colliding = collisions.length > 1;
 
-					if (collidingFrontOrBack && !once) {
-						console.log('collisions are', collisions)
-						once = true
-					}
-
-					// var collidingFrontOrBack = false;
-					// // ddsdawd
-
-					// console.log('collidingFrontOrBack', collidingFrontOrBack);
-					// console.log('moveForward', moveForward);
-					
-					// if (collisions.length) {
-					// 	for (var i = 0; i < collisions.length; i++) {
-					// 		console.log('collision', i, ': ', collisions[i]);
-					// 	}
-					// }
-					
-					if (collidingFrontOrBack && moveForward) {
-						console.log('in move forward, dist from nearest collision wis', collisions[0].distance)
+					if (colliding && moveForward && collisions[0].distance < 10) {
 						moveForward = false;
-						console.log(rcFront);
+						velocity.x = 0;
+						velocity.y = 0;
+						velocity.z = 0;
 					}
 
-					
-					if (collidingFrontOrBack && moveBackward) {
-						console.log('in move backwrad, dist from nearest collision is', collisions[0].distance)
-						moveBackward = false;
-						console.log(moveBackward);
-					}
 					/////////////////////////
 
-
+					// REGULAR MOVEMENT
 					
 					var time = performance.now();
 					var delta = ( time - prevTime ) / 1000;
@@ -240,7 +211,7 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 					velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
 
 					if ( moveForward) velocity.z -= 400.0 * delta;
-					if ( moveBackward && !collidingFrontOrBack) velocity.z += 400.0 * delta;
+					if ( moveBackward) velocity.z += 400.0 * delta;
 
 					if ( moveLeft ) velocity.x -= 400.0 * delta;
 					if ( moveRight ) velocity.x += 400.0 * delta;
