@@ -7,11 +7,11 @@ module.exports = function($http) {
 			return $http.get('/api/items')
 				.then(function(items){
 					return items.data;
-				})
+				});
 		},
 		deleteObject: function(id){
-			return $http.delete('/api/items/'+ id)
+			return $http.delete('/api/items/'+ id);
 		}
-	}
+	};
 
-}
+};

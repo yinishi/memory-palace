@@ -14,11 +14,11 @@ router.get('/items', function(req, res, next){
 					}
 				})
 			.then(function(items){
-					res.send(items)
-				})
+					res.send(items);
+				});
 	}
 	else res.sendStatus(200);
-})
+});
 
 //save an item
 router.post('/items', function(req, res, next){
@@ -26,12 +26,12 @@ router.post('/items', function(req, res, next){
 		req.body.userId = req.user.id;
 		return Item.create(req.body)
 			.then(function(item){
-				res.send(item)
-			})
+				res.send(item);
+			});
 	}
 	else res.sendStatus(200);
 
-})
+});
 
 //delete an item
 router.delete('/items/:id', function(req, res, next){
@@ -40,9 +40,9 @@ router.delete('/items/:id', function(req, res, next){
 		Item.destroy({where:{
 			userId: req.user.id,
 			id: req.params.id
-		}})
+		}});
 	}
 	else res.sendStatus(200);
-})
+});
 
 module.exports = router;

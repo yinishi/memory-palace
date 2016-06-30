@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = function ($window, roomFactory, tableFactory, objectFactory, shelfFactory,	$document, storingFactory) {
+module.exports = function (palacesFactory, $window, roomFactory, tableFactory, objectFactory, shelfFactory,	$document, storingFactory) {
 	 return {
         restrict: 'E',
         	scope: {
@@ -8,11 +8,12 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
         link: function(s,e,a) {
 		
 			/*  ESSENTIAL THREE.JS COMPONENTS */
-				// CONSTANTS
+			// CONSTANTS
 			var WIDTH = $window.innerWidth;
-			var HEIGHT = $window.innerHeight * 0.93;
+			var HEIGHT = $window.innerHeight;
 			var ASPECT = WIDTH / HEIGHT;
 			const UNITSIZE = 250;
+			const PALACE = palacesFactory;
 			let objects = [];
 
 			// CREATING SCENE
@@ -22,14 +23,18 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			//ADDING LIGHT
 			var ambientLight = new THREE.AmbientLight( 0x606060 );
 			scene.add( ambientLight );
-			var directionalLight = new THREE.DirectionalLight( 0xffffff );
+			var directionalLight = new THREE.DirectionalLight( 0xaabbff );
 			directionalLight.position.set( 1, 0.75, 0.5 ).normalize();
 			scene.add( directionalLight );
 
 			//ADDING CAMERA
 			let camera = new THREE.PerspectiveCamera(60, ASPECT, 1, 10000);
-			// camera.position.set(0, 0, 100);
+			camera.rotation.set(0, 0, 100);
 			scene.add(camera);
+
+			//MODAL
+			var blocker = document.getElementById( 'blocker' );
+			//blocker.style.display = 'none';
 
 			// CONTROLS
 			var controls = new PointerLockControls(camera);
@@ -164,7 +169,7 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 
 			// RENDERER
 			let renderer = new THREE.WebGLRenderer();
-			renderer.setClearColor( 0xf0f0f0 );
+			renderer.setClearColor( 0x7ec0ee );
 			renderer.setSize( WIDTH, HEIGHT);
 
 			function render() {
@@ -228,7 +233,7 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			function onWindowResize() {
 				console.log('windowDidResize', e[0].offsetWidth, e[0].offsetHeight)
 				// const w = renderer.domElement.offsetWidth, h = renderer.domElement.offsetHeight
-				const w = $window.innerWidth, h = $window.innerHeight * 0.93
+				const w = $window.innerWidth, h = $window.innerHeight;
 				// camera.aspect = $window.innerWidth / $window.innerHeight * 0.93;
 				camera.aspect = w / h
 				camera.updateProjectionMatrix();
@@ -236,6 +241,26 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 				WIDTH = w
 				HEIGHT = h
 			}
+
+			// SKYDOME
+				var vertexShader = document.getElementById( 'vertexShader' ).textContent;
+				var fragmentShader = document.getElementById( 'fragmentShader' ).textContent;
+				var uniforms = {
+					topColor: 	 { type: "c", value: new THREE.Color( 0x0077ff ) },
+					bottomColor: { type: "c", value: new THREE.Color( 0xffffff ) },
+					offset:		 { type: "f", value: 400 },
+					exponent:	 { type: "f", value: 0.6 }
+				};
+				uniforms.topColor.value.copy( directionalLight.color );
+				var skyGeo = new THREE.SphereGeometry( 4000, 32, 15 );
+				var skyMat = new THREE.ShaderMaterial( {
+					uniforms: uniforms,
+					vertexShader: vertexShader,
+					fragmentShader: fragmentShader,
+					side: THREE.BackSide
+				} );
+				var sky = new THREE.Mesh( skyGeo, skyMat );
+				scene.add( sky );
 
 			// CREATE CONTAINER
 			e[0].appendChild(renderer.domElement);
@@ -273,13 +298,15 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			var material = new THREE.MeshBasicMaterial( { vertexColors: THREE.VertexColors } );
 
 			var mesh = new THREE.Mesh( geometry, material );
+			mesh.position.y = -2
 			scene.add( mesh );
 			objects.push(mesh);
 			var floorObjects = [mesh];
 
 			// CREATE A ROOM
-			var roomInstance = new roomFactory();
+			var roomInstance = new PALACE.defaultPalace().palace
 			let room = roomInstance.container;
+			room.position.set(10, 0, -100);
 			scene.add(room);
 
 			objects = objects.concat(roomInstance.objects);
@@ -287,35 +314,36 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 			// DIAMOND SHELVES
 			var shelfInstance = new shelfFactory();
 			let shelf = shelfInstance.container;
-			shelf.position.set(0, 5, -70);
+			shelf.position.set(10, 5, -170);
 			shelf.rotation.set(0, Math.PI / 2, 0);
 			scene.add(shelf);
 			objects = objects.concat(shelfInstance.objects);
 
 			// CREATE A TABLE
-			var tableInstance = new tableFactory();
-			let table = tableInstance.container;
-			table.scale.set(5, 5, 5)
-			table.position.set(0, -40, 20);
-			room.add(table);
-			objects = objects.concat(tableInstance.objects);
+			// var tableInstance = new tableFactory();
+			// let table = tableInstance.container;
+			// table.scale.set(5, 5, 5)
+			// table.position.set(0, -40, 20);
+			// room.add(table);
+			//objects = objects.concat(tableInstance.objects);
 
 			//RETRIVE STORED OBJECTS
 			storingFactory.retrieveObjects()
 				.then(function(items){
 					if(Array.isArray(items)){
 						items.forEach(function(item){
-							return objectFactory.load(`/browser/objects/${item.name}/${item.name}.json`, item.scaleX, item.scaleY, item.scaleZ)
+							return objectFactory.load(`/browser/objects/${item.name}/${item.name}.json`, null, item.name)
 								.then(function(obj){
 									obj.position.set(item.positionX, item.positionY, item.positionZ);
+									obj.rotation.set(item.rotationX, item.rotationY, item.rotationZ);
 									obj.scale.set(item.scaleX, item.scaleY, item.scaleZ);
 									obj.storingId = item.id;
 									scene.add(obj);
 									objects.push(obj);
-								})
-						})
+								});
+						});
 					}
-				})
+				});
 
 			//PLACING OBJECTS
 			e.on( 'mousemove', onDocumentMouseMove);
@@ -335,7 +363,13 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 					objectFactory.currentObject.position.copy( intersect.point ).add( intersect.face.normal );
 					objectFactory.currentObject.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
 					if(objectFactory.previousObject) scene.remove(objectFactory.previousObject);
+
+// 					if(objectFactory.previousBox) scene.remove(objectFactory.previousBox)
+
 					scene.add(objectFactory.currentObject);
+					// objectFactory.currentObject.bbox.visible = false;
+					// objectFactory.currentObject.bbox.update()
+					// scene.add(objectFactory.currentObject.bbox)
 				}
 			}
 
@@ -343,8 +377,9 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 				event.preventDefault();
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
+				console.log(objects, "objects")
 				var intersects = raycaster.intersectObjects( objects);
-				console.log('did fire ray and hit', intersects)
+
 				if ( intersects.length > 0 ) {
 					var intersect = intersects[ 0 ];
 					// delete cube
@@ -366,17 +401,21 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 								myObject2.position.copy( intersect.point ).add( intersect.face.normal );
 								myObject2.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
 								scene.add( myObject2 );
-								objects.push( myObject2 );
+								// console.log(objectFactory.currentObject.bbox.clone(), "myObject2")
+								// objects.push( objectFactory.currentObject.bbox.clone() );
 								storingFactory.storeObject({
 									name: myObject2.name, 
 									positionX: myObject2.position.x, 
 									positionY: myObject2.position.y, 
-									positionZ: myObject2.position.z, 
+									positionZ: myObject2.position.z,
+									rotationX: myObject2.rotation.x,
+									rotationY: myObject2.rotation.y,
+									rotationZ: myObject2.rotation.z,
+
 									scaleX: myObject2.scale.x,
 									scaleY: myObject2.scale.y,
 									scaleZ: myObject2.scale.z});
-								console.log('spawned', myObject2, 'uuid', myObject2.uuid)
-								//objectFactory.currentObject = null
+								console.log('spawned', myObject2, 'uuid', myObject2.uuid);
 							}
 
 					}
@@ -387,6 +426,9 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 				switch( event.keyCode ) {
 					case 16: 
 					isShiftDown = true; 
+					break;
+					case 27:
+					blocker.style.display = 'none'; //esc
 					break;
 				}
 			}
@@ -404,8 +446,9 @@ module.exports = function ($window, roomFactory, tableFactory, objectFactory, sh
 					$event.preventDefault();
 					var delta = -event.deltaY/2;
 					var currentScale = objectFactory.currentObject.scale;
-					objectFactory.currentObject.scale.set(currentScale.x + delta, currentScale.y + delta, currentScale.z + delta)
-						.clamp(new THREE.Vector3( 0.1, 0.1, 0.1 ), new THREE.Vector3( 50, 50, 50 ))	
+					objectFactory.currentObject
+						.scale.set(currentScale.x + delta, currentScale.y + delta, currentScale.z + delta)
+						.clamp(new THREE.Vector3( 0.1, 0.1, 0.1 ), new THREE.Vector3( 50, 50, 50 ))	;
 				}else if(Math.abs(event.deltaX) > .1 ){ //two finger left and right scroll
 					$event.preventDefault();
 					var delta = -event.deltaX/20;
