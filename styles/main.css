@@ -5,7 +5,23 @@
 body { margin: 0;
 		 }
 
-.room {
+.navbar-default {
+  background-color: #2C2C80;
+  border: 0px solid #3157A2;
+}
+/*//#168BEE*//*#2C2C80 #284DB2*/
+.navbar-default .navbar-brand {
+  color: white;
+}
+
+.navbar-default .navbar-nav>li>a {
+  color: white;
+}
+.navbar-default .navbar-brand:hover {
+  color: #CCDAED;
+}
+.navbar-default .navbar-nav>li>a:hover  {
+  color: #CCDAED;
 }
 
 #memory {
