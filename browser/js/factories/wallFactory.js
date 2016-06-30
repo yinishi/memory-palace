@@ -18,7 +18,7 @@ module.exports = function() {
 	return function (wallSize, wallHeight, material, orientation) {
 			let wallGeometry = new THREE.BoxGeometry(wallSize, wallHeight, 1);
 			let wall = new THREE.Mesh(wallGeometry, material);
-			console.log(orientation)
+			// console.log(orientation)
 			rotate[orientation](wall);
 			this.mesh = wall;
   		}

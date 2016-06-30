@@ -131,15 +131,15 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 
 				};
 
-				this.dispose = function() {
+				// this.dispose = function() {
 
-					document.removeEventListener( 'keydown', onKeyDown, false );
+				// 	document.removeEventListener( 'keydown', onKeyDown, false );
 
-				};
+				// };
 
-				document.addEventListener( 'keydown', onKeyDown, false );
+				// document.addEventListener( 'keydown', onKeyDown, false );
 
-				this.enabled = false;
+				// this.enabled = false;
 
 				this.getObject = function () {
 
@@ -267,9 +267,7 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 
 			/* OBJECTS */
 
-			// REQUIRING OBJECTS
-			var isShiftDown = false;
-
+			// setting up stacking capabilities
 			var raycaster = new THREE.Raycaster();
 			var mouse = new THREE.Vector2();
 
@@ -349,27 +347,25 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			e.on( 'mousemove', onDocumentMouseMove);
 			e.on( 'mousedown', onDocumentMouseDown);
 			$document.on( 'keydown', onDocumentKeyDown);
-			$document.on( 'keyup', onDocumentKeyUp);
 			e.on('wheel', onWheel);
+
 
 			function onDocumentMouseMove( event ) {
 
 				event.preventDefault();
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
-				var intersects = raycaster.intersectObjects(objects, true);
+				var intersects = raycaster.intersectObjects( objects);
 				if ( objectFactory.currentObject && intersects.length > 0 ) {
 					var intersect = intersects[ 0 ];
 					objectFactory.currentObject.position.copy( intersect.point ).add( intersect.face.normal );
 					objectFactory.currentObject.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
 					if(objectFactory.previousObject) scene.remove(objectFactory.previousObject);
-
-// 					if(objectFactory.previousBox) scene.remove(objectFactory.previousBox)
-
+					if(objectFactory.previousBox) scene.remove(objectFactory.previousBox);
 					scene.add(objectFactory.currentObject);
 					// objectFactory.currentObject.bbox.visible = false;
-					// objectFactory.currentObject.bbox.update()
-					// scene.add(objectFactory.currentObject.bbox)
+					// objectFactory.currentObject.bbox.update();
+					// scene.add(objectFactory.currentObject.bbox);
 				}
 			}
 
@@ -377,15 +373,14 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 				event.preventDefault();
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
-				console.log(objects, "objects")
 				var intersects = raycaster.intersectObjects( objects);
-
+				
 				if ( intersects.length > 0 ) {
 					var intersect = intersects[ 0 ];
 					// delete cube
 					if ( event.originalEvent.shiftKey ) {
-						console.log('will remove object', intersect.object.uuid)
-						if ( !roomInstance.objects.includes(intersect.object) && !tableInstance.objects.includes(intersect.object) && !floorObjects.includes(intersect.object)) {
+					
+						if ( !roomInstance.objects.includes(intersect.object) && !floorObjects.includes(intersect.object)) {
 						
 							scene.remove( intersect.object );
 							storingFactory.deleteObject(intersect.object.storingId);
@@ -393,9 +388,13 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 
 						}
 					// create cube
-					} 
-					else {
-							// Add an object to the scene
+					} else {
+						// var voxel = new THREE.Mesh( cubeGeo, cubeMaterial );
+						// voxel.position.copy( intersect.point ).add( intersect.face.normal );
+						// voxel.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
+						// scene.add( voxel );
+						// objects.push( voxel );
+						
 							if (objectFactory.currentObject) {
 								var myObject2 = objectFactory.currentObject.clone();
 								myObject2.position.copy( intersect.point ).add( intersect.face.normal );
@@ -403,6 +402,7 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 								scene.add( myObject2 );
 								// console.log(objectFactory.currentObject.bbox.clone(), "myObject2")
 								// objects.push( objectFactory.currentObject.bbox.clone() );
+								objects.push( myObject2 );
 								storingFactory.storeObject({
 									name: myObject2.name, 
 									positionX: myObject2.position.x, 
@@ -410,31 +410,21 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 									positionZ: myObject2.position.z,
 									rotationX: myObject2.rotation.x,
 									rotationY: myObject2.rotation.y,
-									rotationZ: myObject2.rotation.z,
-
+									rotationZ: myObject2.rotation.z, 
 									scaleX: myObject2.scale.x,
 									scaleY: myObject2.scale.y,
-									scaleZ: myObject2.scale.z});
-								console.log('spawned', myObject2, 'uuid', myObject2.uuid);
+									scaleZ: myObject2.scale.z})
 							}
 
 					}
 				}
 			}
 
+
 			function onDocumentKeyDown( event ) {
 				switch( event.keyCode ) {
-					case 16: 
-					isShiftDown = true; 
-					break;
 					case 27:
 					blocker.style.display = 'none'; //esc
-					break;
-				}
-			}
-			function onDocumentKeyUp( event ) {
-				switch ( event.keyCode ) {
-					case 16: isShiftDown = false; 
 					break;
 				}
 			}
