@@ -4,9 +4,11 @@
 	<div class="room-container">
 	<three-model></three-model>
   <div class="container-fluid" ng-controller="menuCtrl">
-	<slick settings="slickConfig" autoplay="true" slides-to-show="5" slides-to-scroll="1"> 
+	
+  <slick class="carousel" settings="slickConfig" autoplay="true" slides-to-show="5" slides-to-scroll="1"> 
 	   <div class="item objectImg" ng-repeat="object in objects">
 	   	<div ng-click="setCurrentObject(object)" ng-style="{'background-image':'url({{object.image}})'}" class="imgDiv"></div>
 	   </div>
 	</slick>
+
 </div>
