@@ -32,10 +32,6 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			camera.rotation.set(0, 0, 100);
 			scene.add(camera);
 
-			//MODAL
-			var blocker = document.getElementById( 'blocker' );
-			//blocker.style.display = 'none';
-
 			// CONTROLS
 			var controls = new PointerLockControls(camera);
 			objects.push(controls.getObject());
@@ -426,9 +422,6 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 				switch( event.keyCode ) {
 					case 16: 
 					isShiftDown = true; 
-					break;
-					case 27:
-					blocker.style.display = 'none'; //esc
 					break;
 				}
 			}
