@@ -1,5 +1,6 @@
 var app = require('angular').module('memoryPalace');
 
+app.factory('modalFactory', require("./modalFactory"));
 app.factory('wallFactory', require("./wallFactory"));
 app.factory('roomFactory', ["wallFactory", require("./room_factory")]);
 app.factory('tableFactory', require("./table_factory"));
