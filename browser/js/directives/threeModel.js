@@ -127,15 +127,15 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 
 				};
 
-				// this.dispose = function() {
+				this.dispose = function() {
 
-				// 	document.removeEventListener( 'keydown', onKeyDown, false );
+					document.removeEventListener( 'keydown', onKeyDown, false );
 
-				// };
+				};
 
-				// document.addEventListener( 'keydown', onKeyDown, false );
+				document.addEventListener( 'keydown', onKeyDown, false );
 
-				// this.enabled = false;
+				this.enabled = false;
 
 				this.getObject = function () {
 
