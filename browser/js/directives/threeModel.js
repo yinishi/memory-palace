@@ -306,7 +306,7 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			// CREATE A ROOM
 			var roomInstance = new PALACE.defaultPalace().palace
 			let room = roomInstance.container;
-
+			room.position.set(10, 0, -100);
 			scene.add(room);
 
 			objects = objects.concat(roomInstance.objects);
@@ -314,7 +314,7 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			// DIAMOND SHELVES
 			var shelfInstance = new shelfFactory();
 			let shelf = shelfInstance.container;
-			shelf.position.set(0, 5, -70);
+			shelf.position.set(10, 5, -170);
 			shelf.rotation.set(0, Math.PI / 2, 0);
 			scene.add(shelf);
 			objects = objects.concat(shelfInstance.objects);
