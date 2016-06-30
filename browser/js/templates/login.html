@@ -1,15 +1,17 @@
-<div class="container">
+<div class="container login-container">
   <div class="buffer local">
-    <form name="userInfo">
+    <form name="userInfo" class="form-horizontal">
       <div class="form-group">
-        <label>email</label>
-        <input type="text" class="form-control" ng-model="userInfo.email" required />
+        <label>Email</label>
+        <input type="text" class="form-control" ng-model="userInfo.email" placeholder="email" required />
       </div>
       <div class="form-group">
-        <label>password</label>
-        <input type="password" class="form-control" ng-model="userInfo.password" required />
+        <label>Password</label>
+        <input type="password" class="form-control" ng-model="userInfo.password" placeholder="password" required />
       </div>
-      <button ng-click="login()" type="submit" class="btn btn-block btn-primary">sign in</button>
+      <button ng-click="login()" type="submit" class="btn btn-primary">Log In</button>
+      <br>
+      <br>
       <a ui-sref="signup">Don't have an account?</a>
     </form>
   </div>

@@ -8,7 +8,6 @@ function load (link, scale, name) {
       loader.load(link, function(object){
         if(!scale) {
           a.getObjects().forEach(function(item){
-            console.log(item.scale, "item scale")
             if(item.name === name) object.scale.set(item.scale,item.scale,item.scale);
           });
         }
