@@ -24,7 +24,7 @@ function load (link, scale, name) {
       });
     });
   }
-  var invisibleCube = new THREE.Mesh(new THREE.BoxGeometry(20, 20, 20), 
+  var invisibleCube = new THREE.Mesh(new THREE.BoxGeometry(50, 50, 50), 
         new THREE.MeshBasicMaterial({visible: false})); 
 
   var cache = {};
