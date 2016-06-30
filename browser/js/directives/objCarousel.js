@@ -1,9 +1,6 @@
 module.exports = function (){
 	return {
         restrict: 'E',
-        // scope: {
-        	
-        // },
         template: `<div class="container carousel-container">
     <slick class="carousel" settings="slickConfig" slides-to-show="5" slides-to-scroll="1" responsive="[{breakpoint: 1500,settings:{ slidesToShow:4},
     	},
