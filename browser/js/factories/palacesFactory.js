@@ -41,10 +41,10 @@ module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory)
 			let table = tableInstance.container;
 			table.scale.set(5, 5, 5)
 			table.position.set(0, -40, 20); 
-			console.log("hereBED", load('./browser/objects/bed/bed.json', 15))
+			// console.log("hereBED", load('./browser/objects/bed/bed.json', 15))
 			load('./browser/objects/bean-bag/bean-bag.json', 15)
 			.then(beanBag => { 
-				console.log(beanBag)
+				// console.log(beanBag)
 				beanBag.scale.set(2,2,2);
 				beanBag.position.set(wallSize*2,-(wallSize-20),0);
 				beanBag.rotation.x = THREE.Math.degToRad(90);
