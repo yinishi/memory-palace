@@ -5,10 +5,10 @@ module.exports = function (modalFactory) {
         	
         },
         templateUrl: '/browser/js/templates/controlsModal.html',
-        // link: function (s,a,e) {
-        // 	s.show = modalFactory.getControls;
-        // 	console.log("link ctrls", s.show)
+        link: function (s,a,e) {
+        	s.showControls = modalFactory.getControls();
+        	console.log("link ctrls", s.showControls)
         	
-        // }
+        }
     }
 }
