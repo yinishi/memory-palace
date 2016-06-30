@@ -29,7 +29,6 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 
 			//ADDING CAMERA
 			let camera = new THREE.PerspectiveCamera(60, ASPECT, 1, 10000);
-			camera.rotation.set(0, 0, 100);
 			scene.add(camera);
 
 			//MODAL
@@ -101,8 +100,6 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			function PointerLockControls ( camera ) {
 
 				var scope = this;
-
-				camera.rotation.set( 0, 0, 0 );
 
 				var pitchObject = new THREE.Object3D();
 				pitchObject.add( camera );
