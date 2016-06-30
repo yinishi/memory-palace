@@ -32,7 +32,7 @@ function load (link, scale, name) {
   var a = {
     getObjects : function(){
      return [{name: 'teapot', image: "./browser/images/teapot.png", scale: .3},
-             {name: 'fox', image: "./browser/images/fox.jpg", scale: .3},
+             {name: 'fox', image: "./browser/images/fox.png", scale: .3},
              {name: 'table', image: "./browser/images/table.png", scale: 10},
              {name: 'staff', image: "./browser/images/staff.jpg", scale: 2},
              {name: 'monster', image: "./browser/images/monster.png", scale: 1},
