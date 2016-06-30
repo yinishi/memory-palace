@@ -5,4 +5,8 @@
   $scope.setCurrentObject = function (object) {
     objectFactory.setCurrentObject(object);
   }
+  // $scope.showCarousel = function () {
+  // 	console.log("carousel!!", modalFactory.getCarousel)
+  // 	modalFactory.getCarousel()
+  // }
 };

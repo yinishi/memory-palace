@@ -1,23 +1,12 @@
-module.exports = function (){
-	return {
+module.exports = function (modalFactory){
+  return {
         restrict: 'E',
-        template: `<div class="container carousel-container">
-    <slick class="carousel" settings="slickConfig" slides-to-show="5" slides-to-scroll="1" responsive="[{breakpoint: 1500,settings:{ slidesToShow:4},
-    	},
-    	{
-    		breakpoint: 1300,
-    		settings:{ slidesToShow:3},
-    	}
-    	
-   
-    	]"> 
-       <div class="item objectImg" ng-repeat="object in objects">
-        <div ng-click="setCurrentObject(object)" ng-style="{'background-image':'url({{object.image}})'}" class="imgDiv"></div>
-       </div>
-    </slick>
-  </div>`,
-   controller: 'menuCtrl',
-
-	}
-
+        templateUrl: '/browser/js/templates/carousel.html',
+        controller: 'menuCtrl',
+        link: function (s,a,e) {
+        	s.showCarousel = modalFactory.getCarousel()
+		   console.log("link carousel!!", s.showCarousel.data)
+		  	
+        } 
+  }
 }

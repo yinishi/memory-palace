@@ -5,10 +5,13 @@ module.exports = function (modalFactory) {
         },
         templateUrl: '/browser/js/templates/roomIcons.html',     
         link: function (s,a,e) {
-        	s.toggleControls = function () {
-                modalFactory.toggleControls();
+        	s.toggleControls = modalFactory.toggleControls;
+
+            s.toggleCarousel = function () {
+                console.log("carousel!!", modalFactory.getCarousel)
+                modalFactory.toggleCarousel();
             }
-            console.log(s.toggleControls )
+            
         }
     }
 }
