@@ -52,7 +52,7 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			var prevTime = performance.now();
 			var velocity = new THREE.Vector3();
 
-			var onKeyDown = function ( event ) {
+			function onKeyDown ( event ) {
 
 				switch ( event.keyCode ) {
 
@@ -69,11 +69,17 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 						if ( canJump === true ) velocity.y += 350;
 						canJump = false;
 						break;
+					case 16: 
+						isShiftDown = true; 
+						break;
+					case 27:
+						blocker.style.display = 'none'; //esc
+						break;
 				}
 
 			};
 
-			var onKeyUp = function ( event ) {
+			function onKeyUp ( event ) {
 
 				switch( event.keyCode ) {
 
@@ -84,11 +90,12 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 					case 83: // backward
 						moveBackward = false;
 						break;
+
+					case 16: 
+						isShiftDown = false; 
+						break;
 				}
 			};
-
-			document.addEventListener( 'keydown', onKeyDown, false );
-			document.addEventListener( 'keyup', onKeyUp, false );
 
 			// 3D CONTROLS - PointerLockControls
 			function PointerLockControls ( camera ) {
@@ -345,13 +352,6 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 					}
 				});
 
-			//PLACING OBJECTS
-			e.on( 'mousemove', onDocumentMouseMove);
-			e.on( 'mousedown', onDocumentMouseDown);
-			$document.on( 'keydown', onDocumentKeyDown);
-			$document.on( 'keyup', onDocumentKeyUp);
-			e.on('wheel', onWheel);
-
 			function onDocumentMouseMove( event ) {
 
 				event.preventDefault();
@@ -422,22 +422,6 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 				}
 			}
 
-			function onDocumentKeyDown( event ) {
-				switch( event.keyCode ) {
-					case 16: 
-					isShiftDown = true; 
-					break;
-					case 27:
-					blocker.style.display = 'none'; //esc
-					break;
-				}
-			}
-			function onDocumentKeyUp( event ) {
-				switch ( event.keyCode ) {
-					case 16: isShiftDown = false; 
-					break;
-				}
-			}
 
 			function onWheel($event){
 				var event = $event.originalEvent;
@@ -457,6 +441,14 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 					}
 				}
 			}
+
+			
+			// EVENT LISTENERS
+			e.on( 'mousemove', onDocumentMouseMove);
+			e.on( 'mousedown', onDocumentMouseDown);
+			e.on('wheel', onWheel);
+			document.addEventListener( 'keydown', onKeyDown, false );
+			document.addEventListener( 'keyup', onKeyUp, false );
 
 			// CALL RENDER FUNCTION
 			render();
