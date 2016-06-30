@@ -1,21 +1,23 @@
 'use strict'
 
 module.exports = function(){
- 
-  function load (link, scale, name) {
+
+function load (link, scale, name) {
     var loader = new THREE.ObjectLoader();
     return new Promise(function (res, rej) {
       loader.load(link, function(object){
-        // var boundingBox = object
-        // console.log(boundingBox, "object")
         if(!scale) {
-          a.getObjects().forEach(function(object){
-            if(object.name === name) scale = object.scale;
+          a.getObjects().forEach(function(item){
+            if(item.name === name) scale = item.scale;
           });
         }
-        object.scale.set(scale,scale,scale);
-        //object.scale.set(1,1,1)
-        //add object to a cube for collison detection and removing objects
+        else object.scale.set(scale,scale,scale);
+        //add object to a cube for collison detection and removing objects 
+        var cubeSize = 10*scale; 
+        var cube = new THREE.Mesh(new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize), 
+        new THREE.MeshBasicMaterial({visible: false})); 
+        cube.add(object);
+        res(cube);
 
 //      // bounding box stuff
 //         // var sphereSize = object.children[0].geometry.boundingSphere.radius; 
@@ -25,15 +27,10 @@ module.exports = function(){
 //         boundingBox.update();
 //         object.bbox = boundingBox   
 //         res(object);
-
-        // var cubeSize = 10*customScale; 
-        var cube = new THREE.Mesh(new THREE.BoxGeometry(20, 20, 20), 
-        new THREE.MeshBasicMaterial({visible: false})); 
-        cube.add(object);
-        res(cube);
       });
     });
   }
+
   // var currObjectName = 'teapot';
 
   // var _teapot = null;
