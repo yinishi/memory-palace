@@ -51,6 +51,7 @@ background-size: cover;
     height: 20px;
     margin-top: -10px;
     padding: 0;
+    font-size: 20px;
 
     cursor: pointer;
 
@@ -106,11 +107,27 @@ background-size: cover;
 }
 .slick-prev:before
 {
-    content: '←';
+    position: relative;
+    content: "";
+    display: inline-block;
+    width: 2em;
+    height: 2em;
+    border-right: 0.5em solid black;
+    border-top: 0.5em solid black;
+    transform: rotate(225deg);
+
+    
 }
 [dir='rtl'] .slick-prev:before
 {
-    content: '→';
+    position: relative;
+    content: "";
+    display: inline-block;
+    width: 2em;
+    height: 2em;
+    border-right: 0.5em solid black;
+    border-top: 0.5em solid black;
+    transform: rotate(45deg);
 }
 
 .slick-next
@@ -124,11 +141,25 @@ background-size: cover;
 }
 .slick-next:before
 {
-    content: '→';
+    position: relative;
+    content: "";
+    display: inline-block;
+    width: 2em;
+    height: 2em;
+    border-right: 0.5em solid black;
+    border-top: 0.5em solid black;
+    transform: rotate(45deg);
 }
 [dir='rtl'] .slick-next:before
 {
-    content: '←';
+   position: relative;
+    content: "";
+    display: inline-block;
+    width: 2em;
+    height: 2em;
+    border-right: 0.5em solid black;
+    border-top: 0.5em solid black;
+    transform: rotate(45deg);
 }
 
 /* Dots */
