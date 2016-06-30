@@ -1,9 +1,11 @@
 /* Slider */
+slick{
+    max-width: 80%;
+}
 
 .slick-slider
 {
     position: relative;
-
     display: block;
 
     -moz-box-sizing: border-box;
