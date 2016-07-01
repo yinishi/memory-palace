@@ -1,7 +1,10 @@
 module.exports = function ($scope, modalFactory, objectFactory) {
 	$scope.welcomeModal = modalFactory.getWelcomeControls();
 	
-  	
+  	$scope.setCurrentObject = function (object) {
+	  objectFactory.setCurrentObject(object);
+	}
+
   	$scope.toggle = function () {
   		modalFactory.turnOffWelcome()
   		$scope.showCarousel = modalFactory.getCarousel()

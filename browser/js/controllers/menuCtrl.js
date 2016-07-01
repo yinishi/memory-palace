@@ -4,8 +4,7 @@
  	$scope.showCarousel = modalFactory.getCarousel()
   	$scope.objects = objectFactory.getObjects();
 
-  	
-  	console.log("ctrl", $scope.showCarousel)	
+  	// console.log("ctrl", $scope.showCarousel)	
 	$scope.setCurrentObject = function (object) {
 	  objectFactory.setCurrentObject(object);
 	}
