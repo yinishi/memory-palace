@@ -31,21 +31,26 @@ function load (link, scale, name) {
 
   var a = {
     getObjects : function(){
-     return [{name: 'teapot', image: "./browser/images/teapot.png", scale: .3},
-             {name: 'fox', image: "./browser/images/fox.png", scale: .3},
-             {name: 'table', image: "./browser/images/table.png", scale: 10},
-             {name: 'flower', image: "./browser/images/flower.png", scale: .2},
-             {name: 'turtle', image: "./browser/images/turtle.png", scale: 12},
-             {name: 'bed', image: "./browser/images/bed.png", scale: 15},
-             {name: 'dress', image: "./browser/images/dress.png", scale: .5},
-             {name: 'soccer-ball', image: "./browser/images/soccer-ball.jpg", scale: .07},
-             {name: 'pink-bed', image: "./browser/images/pink-bed.png", scale: 15},
-             {name: 'computer', image: "./browser/images/computer.png", scale: 5},
-             {name: 'backgammon', image: "./browser/images/backgammon.png", scale: 3},
-             {name: 'book', image: "./browser/images/book.png", scale: 1},
-             {name: 'pokeball', image: "./browser/images/pokeball.jpg", scale: .03},
-             {name: 'headphones', image: "./browser/images/headphones.jpg", scale: 2},
-             {name: 'couch', image: "./browser/images/couch.png", scale: 20}];
+     return [
+        {name: 'teapot', image: "./browser/images/teapot.png", scale: .3},
+        {name: 'cat-mug', image: "./browser/images/cat-mug.png", scale: 3},    
+        {name: 'mug', image: "./browser/images/mug.png", scale: .2},   
+        {name: 'table', image: "./browser/images/table.png", scale: 10},
+        {name: 'pink-bed', image: "./browser/images/pink-bed.png", scale: 15},
+        {name: 'bed', image: "./browser/images/bed.png", scale: 15},
+        {name: 'couch', image: "./browser/images/couch.png", scale: 20},
+        {name: 'computer', image: "./browser/images/computer.png", scale: 5},
+        {name: 'backgammon', image: "./browser/images/backgammon.png", scale: 3},
+        {name: 'book', image: "./browser/images/book.png", scale: 1},
+        {name: 'pokeball', image: "./browser/images/pokeball.jpg", scale: .03},
+        {name: 'headphones', image: "./browser/images/headphones.jpg", scale: 2},
+        {name: 'fox', image: "./browser/images/fox.png", scale: .3},
+        {name: 'flower', image: "./browser/images/flower.png", scale: .2},
+        {name: 'tree', image: "./browser/images/tree.png", scale: .1},
+        {name: 'turtle', image: "./browser/images/turtle.png", scale: 12},
+        {name: 'dress', image: "./browser/images/dress.png", scale: .5},
+        {name: 'soccer-ball', image: "./browser/images/soccer-ball.jpg", scale: .07}
+        ];
     },
     invsibleObject: invisibleCube,
     currentObject: invisibleCube,
