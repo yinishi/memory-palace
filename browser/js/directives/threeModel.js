@@ -206,9 +206,21 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 									obj.rotation.set(item.rotationX, item.rotationY, item.rotationZ);
 									obj.scale.set(item.scaleX, item.scaleY, item.scaleZ);
 									obj.storingId = item.id;
+									
+									console.log(item.message, "message", item, "obj")
+									//add message
+									var text = new Text2D(item.message, {font: '30px Arial', fillStyle: '#000000', antialias: true })
+									text.material.alphaTest = 0.1;
+									text.scale.set(.3, .3, .3);
+									text.position.set(obj.positionX, obj.positionY, obj.positionZ)
+									text.position.y += 20;
+									text.visible = false;
+									obj.messageMesh = text;
+									scene.add(text);
 									scene.add(obj);
 									objects.push(obj);
-								});
+									});
+
 						});
 					}
 				});
@@ -234,8 +246,10 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 				}
 				if (intersects.length > 0 ) {
 					if(intersects[0].object.messageMesh && !messageShown) {
+
 						messageShown = intersects[0].object.messageMesh;
 						messageShown.visible = true;
+						console.log("here", intersects[0].object.messageMesh)
 					}
 					if(!objectFactory.currentObject) objectFactory.currentObject = objectFactory.invisibleObject; 
 					var intersect = intersects[ 0 ];
@@ -279,14 +293,10 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 								text.position.copy( intersect.point ).add( intersect.face.normal );
 								text.position.addScalar( 3/2 );
 								text.position.y += 20;
-								text.rotation.set(0,0,0);
 								text.visible = false;
 								myObject2.messageMesh = text;
 								scene.add( myObject2 );
 								scene.add(text);
-								
-								objectFactory.previousObject = objectFactory.currentObject;
-								objectFactory.currentObject = objectFactory.invisibleObject;
 
 								objects.push( myObject2 );
 								storingFactory.storeObject({
@@ -299,8 +309,12 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 									rotationZ: myObject2.rotation.z, 
 									scaleX: myObject2.scale.x,
 									scaleY: myObject2.scale.y,
-									scaleZ: myObject2.scale.z})
+									scaleZ: myObject2.scale.z,
+									message: objectFactory.currentObject.message})
 							}
+							// exchanging object for invisible cube (invisble pointer)
+							objectFactory.previousObject = objectFactory.currentObject;
+								objectFactory.currentObject = objectFactory.invisibleObject;
 
 					}
 				}
