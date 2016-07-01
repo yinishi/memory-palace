@@ -284,7 +284,9 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 								myObject2.messageMesh = text;
 								scene.add( myObject2 );
 								scene.add(text);
-
+								
+								objectFactory.previousObject = objectFactory.currentObject;
+								objectFactory.currentObject = objectFactory.invisibleObject;
 
 								objects.push( myObject2 );
 								storingFactory.storeObject({

@@ -12,8 +12,6 @@ module.exports = function (objectFactory) {
 		getControls: () => showControls, 
 		toggleCarousel: function () {
 			showCarousel.data = !showCarousel.data;
-			objectFactory.previousObject = objectFactory.currentObject;
-			objectFactory.currentObject = objectFactory.invisibleObject;
 		},
 		getCarousel: () => showCarousel,
 		turnOffWelcome: function () {
