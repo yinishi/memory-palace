@@ -1,7 +1,7 @@
 'use strict';
 
 var angular = require('angular');
-var three2d = require('three-text2d').Text2D;
+var Text2D = require('three-text2D').Text2D;
 
 require('angular-ui-router');
 require('jquery'); 
@@ -13,8 +13,6 @@ app.config(['$urlRouterProvider', '$locationProvider', function ($urlRouterProvi
     $locationProvider.html5Mode(true);
     $urlRouterProvider.when('/', '/room');
 }]);
-
-
 
 require('./js/controllers');
 require('./js/factories');

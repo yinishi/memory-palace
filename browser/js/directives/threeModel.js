@@ -3,6 +3,9 @@
 var three2d = require('three-text2d');
 
 
+var THREE_Text = require('three-text2D')
+var Text2D = THREE_Text.Text2D;
+var textAlign = THREE_Text.textAlign;
 module.exports = function (palacesFactory, $window, roomFactory, tableFactory, objectFactory, shelfFactory,	$document, storingFactory) {
 	 return {
         restrict: 'E',
@@ -54,6 +57,7 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			var prevTime = performance.now();
 			var velocity = new THREE.Vector3();
 
+<<<<<<< HEAD
 			var text = new text2d("Hello world!", { align: textAlign.center, font: '300px Arial', fillStyle: 'black', antialias: true })
 			text.position.set(0,0,0)
 			scene.add(text) 
@@ -61,6 +65,8 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			scene.add(sprite)
 console.log("in link", sprite)
 
+=======
+>>>>>>> 30387083b0b853f7917c0ebcbd9895220798c83a
 			// 3D CONTROLS - PointerLockControls
 			function PointerLockControls ( camera ) {
 
@@ -249,7 +255,7 @@ console.log("in link", sprite)
 					if(!objectFactory.currentObject) objectFactory.currentObject = objectFactory.invisibleObject; 
 					var intersect = intersects[ 0 ];
 					objectFactory.currentObject.position.copy( intersect.point ).add( intersect.face.normal );
-					objectFactory.currentObject.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
+					objectFactory.currentObject.position.addScalar( 3/2 );
 					if(objectFactory.previousObject) scene.remove(objectFactory.previousObject);
 					scene.add(objectFactory.currentObject);
 				}
@@ -274,18 +280,26 @@ console.log("in link", sprite)
 
 						}
 					// create cube
-					} else {
-						// var voxel = new THREE.Mesh( cubeGeo, cubeMaterial );
-						// voxel.position.copy( intersect.point ).add( intersect.face.normal );
-						// voxel.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
-						// scene.add( voxel );
-						// objects.push( voxel );
-						
+					} else {						
 							if (objectFactory.currentObject.children.length > 0) {
 								var myObject2 = objectFactory.currentObject.clone();
 								myObject2.position.copy( intersect.point ).add( intersect.face.normal );
-								myObject2.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
+								myObject2.position.addScalar( 3/2 );
 								scene.add( myObject2 );
+
+								//TEXT
+
+								var text = new Text2D("Hello world!", {font: '30px Arial', fillStyle: '#000000', antialias: true })
+								text.material.alphaTest = 0.1;
+								text.scale.set(.3, .3, .3);
+								text.position.copy( intersect.point ).add( intersect.face.normal );
+								text.position.addScalar( 3/2 );
+								text.position.y += 20;
+								text.rotation.set(0,0,0);
+								console.log(text, "text")
+								scene.add(text);
+
+
 								objects.push( myObject2 );
 								storingFactory.storeObject({
 									name: myObject2.name, 
