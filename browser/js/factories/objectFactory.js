@@ -39,18 +39,25 @@ function load (link, scale, name) {
         {name: 'pink-bed', image: "./browser/images/pink-bed.png", scale: 15},
         {name: 'bed', image: "./browser/images/bed.png", scale: 15},
         {name: 'couch', image: "./browser/images/couch.png", scale: 20},
+        {name: 'sofa', image: "./browser/images/sofa.png", scale: 2},
         {name: 'computer', image: "./browser/images/computer.png", scale: 5},
         {name: 'backgammon', image: "./browser/images/backgammon.png", scale: 3},
         {name: 'book', image: "./browser/images/book.png", scale: 1},
         {name: 'pokeball', image: "./browser/images/pokeball.jpg", scale: .03},
+        {name: 'staff', image: "./browser/images/staff.jpg", scale: 2},
         {name: 'headphones', image: "./browser/images/headphones.jpg", scale: 2},
+        {name: 'monster', image: "./browser/images/monster.png", scale: 1},
+        {name: 'brain', image: "./browser/images/brain.png", scale: 3},
         {name: 'fox', image: "./browser/images/fox.png", scale: .3},
+        {name: 'bull', image: "./browser/images/bull.jpg", scale: 2},
+        {name: 'cat', image: "./browser/images/cat.jpg", scale: 12},
+        {name: 'turtle', image: "./browser/images/turtle.png", scale: 12},
         {name: 'flower', image: "./browser/images/flower.png", scale: .2},
         {name: 'tree', image: "./browser/images/tree.png", scale: .1},
-        {name: 'turtle', image: "./browser/images/turtle.png", scale: 12},
         {name: 'dress', image: "./browser/images/dress.png", scale: .5},
-        {name: 'soccer-ball', image: "./browser/images/soccer-ball.jpg", scale: .07}
-        ];
+        {name: 'soccer-ball', image: "./browser/images/soccer-ball.jpg", scale: .07},
+        {name: 'car', image: "./browser/images/car.png", scale: 10}
+      ];
     },
     invsibleObject: invisibleCube,
     currentObject: invisibleCube,
