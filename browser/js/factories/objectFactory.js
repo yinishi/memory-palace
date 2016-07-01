@@ -54,7 +54,7 @@ function load (link, scale, name) {
         {name: 'flower', image: "./browser/images/flower.png", scale: .2},
         {name: 'tree', image: "./browser/images/tree.png", scale: .1},
         {name: 'dress', image: "./browser/images/dress.png", scale: .5},
-        {name: 'soccer-ball', image: "./browser/images/soccer-ball.jpg", scale: .07},
+        {name: 'soccer-ball', image: "./browser/images/soccer-ball.png", scale: .07},
         {name: 'car', image: "./browser/images/car.png", scale: 10}
       ];
     },
