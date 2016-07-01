@@ -58,7 +58,6 @@ module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory)
 				bed.position.set(wallSize*2, 20, 10);
 				bed.rotation.set(Math.PI/2, Math.PI/2, 0);  
 				mainRoom.container.add(bed);
-				// console.log("hereBED", bed);
 			});
 
 			mainRoom.container.add(table);
