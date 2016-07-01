@@ -1,4 +1,8 @@
 'use strict'
+//text2d
+var THREE_Text = require('three-text2D')
+var Text2D = THREE_Text.Text2D;
+var textAlign = THREE_Text.textAlign;
 
 module.exports = function (palacesFactory, $window, roomFactory, tableFactory, objectFactory, shelfFactory,	$document, storingFactory) {
 	 return {
@@ -6,7 +10,6 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
         	scope: {
         },
         link: function(s,e,a) {
-		
 			/*  ESSENTIAL THREE.JS COMPONENTS */
 			// CONSTANTS
 			var WIDTH = $window.innerWidth;
@@ -16,6 +19,7 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			const PALACE = palacesFactory;
 			var PI_2 = Math.PI / 2;
 			let objects = [];
+			let messagesArray = [];
 
 			// CREATING SCENE
 			const scene = new THREE.Scene();
@@ -47,7 +51,6 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 
 			var prevTime = performance.now();
 			var velocity = new THREE.Vector3();
-
 
 			// 3D CONTROLS - PointerLockControls
 			function PointerLockControls ( camera ) {
@@ -191,14 +194,6 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			// scene.add(shelf);
 			// objects = objects.concat(shelfInstance.objects);
 
-			// CREATE A TABLE
-			// var tableInstance = new tableFactory();
-			// let table = tableInstance.container;
-			// table.scale.set(5, 5, 5)
-			// table.position.set(0, -40, 20);
-			// room.add(table);
-			//objects = objects.concat(tableInstance.objects);
-
 			//RETRIVE STORED OBJECTS
 			storingFactory.retrieveObjects()
 				.then(function(items){
@@ -226,17 +221,25 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			e.on('wheel', onWheel);
 			document.addEventListener( 'keydown', onKeyDown, false );
 			document.addEventListener( 'keyup', onKeyUp, false );
-
+			let messageShown = false;
 			function onDocumentMouseMove( event ) {
 				event.preventDefault();
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
-				var intersects = raycaster.intersectObjects( objects);
+				let intersects = raycaster.intersectObjects( objects);
+				if(messageShown){
+					messageShown.visible = false;
+					messageShown = false;
+				}
 				if (intersects.length > 0 ) {
+					if(intersects[0].object.message && !messageShown) {
+						messageShown = intersects[0].object.message;
+						messageShown.visible = true;
+					}
 					if(!objectFactory.currentObject) objectFactory.currentObject = objectFactory.invisibleObject; 
 					var intersect = intersects[ 0 ];
 					objectFactory.currentObject.position.copy( intersect.point ).add( intersect.face.normal );
-					objectFactory.currentObject.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
+					objectFactory.currentObject.position.addScalar( 3/2 );
 					if(objectFactory.previousObject) scene.remove(objectFactory.previousObject);
 					scene.add(objectFactory.currentObject);
 				}
@@ -247,7 +250,7 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
 				var intersects = raycaster.intersectObjects( objects);
-				console.log(objectFactory.currentObject, "currentObject");
+				console.log(intersects, "intersects")
 				if ( intersects.length > 0 ) {
 					var intersect = intersects[ 0 ];
 					// delete cube
@@ -261,18 +264,27 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 
 						}
 					// create cube
-					} else {
-						// var voxel = new THREE.Mesh( cubeGeo, cubeMaterial );
-						// voxel.position.copy( intersect.point ).add( intersect.face.normal );
-						// voxel.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
-						// scene.add( voxel );
-						// objects.push( voxel );
-						
+					} else {						
 							if (objectFactory.currentObject.children.length > 0) {
 								var myObject2 = objectFactory.currentObject.clone();
 								myObject2.position.copy( intersect.point ).add( intersect.face.normal );
-								myObject2.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
+								myObject2.position.addScalar( 3/2 );
+								
+
+								//TEXT
+								var text = new Text2D("Hello world!", {font: '30px Arial', fillStyle: '#000000', antialias: true })
+								text.material.alphaTest = 0.1;
+								text.scale.set(.3, .3, .3);
+								text.position.copy( intersect.point ).add( intersect.face.normal );
+								text.position.addScalar( 3/2 );
+								text.position.y += 20;
+								text.rotation.set(0,0,0);
+								text.visible = false;
+								myObject2.message = text;
 								scene.add( myObject2 );
+								scene.add(text);
+
+
 								objects.push( myObject2 );
 								storingFactory.storeObject({
 									name: myObject2.name, 
@@ -290,7 +302,6 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 					}
 				}
 			}
-
 
 			// useful codes: w = 87, s = 83, 32 = space, up = 38, down = 40, left = 37, right = 39
 			function onKeyDown ( event ) {
@@ -393,15 +404,6 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 					case 83: // s
 						moveBackward = false;
 						break;
-
-					// case 65: // a - move left
-					// 	moveLeft = false;
-					// 	break;
-
-					// case 68: // d - move right
-					// 	moveRight = false;
-					// 	break;
-
 					case 16: // shift
 						isShiftDown = false; 
 						break;

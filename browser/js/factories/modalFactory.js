@@ -1,6 +1,6 @@
 "use strict"
 
-module.exports = function () {
+module.exports = function (objectFactory) {
 	var showCarousel = { data: { false } }
 	var showControls = { data: { false } }
 	var welcomeControls = { data: { true } };
@@ -10,13 +10,13 @@ module.exports = function () {
 		},
 		getControls: () => showControls, 
 		toggleCarousel: function () {
-			showCarousel.data = !showCarousel.data
+			showCarousel.data = !showCarousel.data;
+			objectFactory.previousObject = objectFactory.currentObject;
+			objectFactory.currentObject = objectFactory.invisibleObject;
 		},
 		getCarousel: () => showCarousel,
 		turnOffWelcome: function () {
-			console.log("befoer", welcomeControls)
 			welcomeControls.data = false;
-			console.log("after", welcomeControls)
 		},
 		getWelcomeControls: () => welcomeControls
 	}

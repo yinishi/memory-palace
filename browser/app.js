@@ -1,6 +1,8 @@
 'use strict';
 
 var angular = require('angular');
+var Text2D = require('three-text2D').Text2D;
+
 require('angular-ui-router');
 require('jquery'); 
 require('angular-slick-carousel');
@@ -11,7 +13,6 @@ app.config(['$urlRouterProvider', '$locationProvider', function ($urlRouterProvi
     $locationProvider.html5Mode(true);
     $urlRouterProvider.when('/', '/room');
 }]);
-
 
 require('./js/controllers');
 require('./js/factories');
