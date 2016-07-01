@@ -1,5 +1,5 @@
 'use strict'
-var three2d = require('three-text2d');
+
 module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory){
 	//var room = 3 sides 
 	var loadTexture = function (file) {
@@ -12,13 +12,6 @@ module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory)
 
 	return {
 		defaultPalace: function () {
-			const text2d = three2d.Text2D;
-			const text = new text2d("Hello world!", {font: '30px Arial', fillStyle: 'black', antialias: true })
-			
-			console.log("room", text) 
-			text.position.set(0,0,10)
-			text.rotation.set(Math.PI/2,0, 0)
-			text.scale.set(.2, .2, .2)
 			const material = loadTexture('white-stone.jpg')
 			const woodtex = loadTexture('wood-wall.jpg')
 			const floorMaterial = loadTexture('carpet_red.jpg')
@@ -65,9 +58,8 @@ module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory)
 				bed.position.set(wallSize*2, 20, 10);
 				bed.rotation.set(Math.PI/2, Math.PI/2, 0);  
 				mainRoom.container.add(bed);
-				// console.log("hereBED", bed);
 			});
-			mainRoom.container.add(text);
+
 			mainRoom.container.add(table);
 			mainRoom.objects = mainRoom.objects.concat(tableInstance.objects);
 			mainRoom.container.add(wall4);

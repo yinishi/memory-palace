@@ -1,21 +1,15 @@
 'use strict'
 //text2d
-var three2d = require('three-text2d');
-
-
 var THREE_Text = require('three-text2D')
 var Text2D = THREE_Text.Text2D;
 var textAlign = THREE_Text.textAlign;
+
 module.exports = function (palacesFactory, $window, roomFactory, tableFactory, objectFactory, shelfFactory,	$document, storingFactory) {
 	 return {
         restrict: 'E',
         	scope: {
         },
         link: function(s,e,a) {
-        	console.log(three2d)
-        	var text2d = three2d.Text2D;
-			var textAlign = three2d.textAlign;
-			var SpriteText2D = three2d.SpriteText2D;
 			/*  ESSENTIAL THREE.JS COMPONENTS */
 			// CONSTANTS
 			var WIDTH = $window.innerWidth;
@@ -25,6 +19,7 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			const PALACE = palacesFactory;
 			var PI_2 = Math.PI / 2;
 			let objects = [];
+			let messagesArray = [];
 
 			// CREATING SCENE
 			const scene = new THREE.Scene();
@@ -57,16 +52,6 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			var prevTime = performance.now();
 			var velocity = new THREE.Vector3();
 
-<<<<<<< HEAD
-			var text = new text2d("Hello world!", { align: textAlign.center, font: '300px Arial', fillStyle: 'black', antialias: true })
-			text.position.set(0,0,0)
-			scene.add(text) 
-			var sprite = new SpriteText2D("SPRITE", { align: textAlign.center,  font: '40px Arial', fillStyle: '#000000' , antialias: false })
-			scene.add(sprite)
-console.log("in link", sprite)
-
-=======
->>>>>>> 30387083b0b853f7917c0ebcbd9895220798c83a
 			// 3D CONTROLS - PointerLockControls
 			function PointerLockControls ( camera ) {
 
@@ -210,14 +195,6 @@ console.log("in link", sprite)
 			scene.add(shelf);
 			objects = objects.concat(shelfInstance.objects);
 
-			// CREATE A TABLE
-			// var tableInstance = new tableFactory();
-			// let table = tableInstance.container;
-			// table.scale.set(5, 5, 5)
-			// table.position.set(0, -40, 20);
-			// room.add(table);
-			//objects = objects.concat(tableInstance.objects);
-
 			//RETRIVE STORED OBJECTS
 			storingFactory.retrieveObjects()
 				.then(function(items){
@@ -245,13 +222,21 @@ console.log("in link", sprite)
 			e.on('wheel', onWheel);
 			document.addEventListener( 'keydown', onKeyDown, false );
 			document.addEventListener( 'keyup', onKeyUp, false );
-
+			let messageShown = false;
 			function onDocumentMouseMove( event ) {
 				event.preventDefault();
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
 				var intersects = raycaster.intersectObjects( objects);
+				if(messageShown){
+					messageShown.visible = false;
+					messageShown = false;
+				}
 				if (intersects.length > 0 ) {
+					if(intersects[0].object.message && !messageShown) {
+						messageShown = intersects[0].object.message;
+						messageShown.visible = true;
+					}
 					if(!objectFactory.currentObject) objectFactory.currentObject = objectFactory.invisibleObject; 
 					var intersect = intersects[ 0 ];
 					objectFactory.currentObject.position.copy( intersect.point ).add( intersect.face.normal );
@@ -266,7 +251,7 @@ console.log("in link", sprite)
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
 				var intersects = raycaster.intersectObjects( objects);
-				console.log(objectFactory.currentObject, "currentObject");
+				console.log(intersects, "intersects")
 				if ( intersects.length > 0 ) {
 					var intersect = intersects[ 0 ];
 					// delete cube
@@ -285,10 +270,9 @@ console.log("in link", sprite)
 								var myObject2 = objectFactory.currentObject.clone();
 								myObject2.position.copy( intersect.point ).add( intersect.face.normal );
 								myObject2.position.addScalar( 3/2 );
-								scene.add( myObject2 );
+								
 
 								//TEXT
-
 								var text = new Text2D("Hello world!", {font: '30px Arial', fillStyle: '#000000', antialias: true })
 								text.material.alphaTest = 0.1;
 								text.scale.set(.3, .3, .3);
@@ -296,7 +280,9 @@ console.log("in link", sprite)
 								text.position.addScalar( 3/2 );
 								text.position.y += 20;
 								text.rotation.set(0,0,0);
-								console.log(text, "text")
+								text.visible = false;
+								myObject2.message = text;
+								scene.add( myObject2 );
 								scene.add(text);
 
 
@@ -317,6 +303,18 @@ console.log("in link", sprite)
 					}
 				}
 			}
+			// function onMouseOver(event){
+			// 	// console.log(messagesArray, "messagesArray")
+			// 	event.preventDefault();
+			// 	mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
+			// 	raycaster.setFromCamera( mouse, camera );
+			// 	var intersects = raycaster.intersectObjects( objects);
+			// 	if ( intersects.length > 0 ) {
+			// 		var intersect = intersects[ 0 ];
+			// 	console.log(intersect, "intersect text");
+			// }
+
+			// }
 
 
 			// useful codes: w = 87, s = 83, 32 = space, up = 38, down = 40, left = 37, right = 39
