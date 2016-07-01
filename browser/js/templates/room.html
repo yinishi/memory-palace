@@ -1,20 +1,22 @@
-<div>
-  <modal></modal>
+<div ng-controller="roomCtrl">
+  <modal ng-show="welcomeModal.data"></modal>
   
 	<div class="room-container">
 	<three-model></three-model>
 
-  <div class="col container-fluid carousel-container">
-    <div class="row col">
-    <div class="col-sm-1 col">
-    <room-icons></room-icons>
-    </div>
-    <div class="col-sm-2 col">
-     <ctrl-modal></ctrl-modal>
-    </div>
-    <div class="col-sm-9 col">
-      <obj-carousel></obj-carousel>
-    </div>
+  <div ng-hide="welcomeModal.data">
+    <div class="col container-fluid carousel-container">
+      <div class="row col">
+      <div class="col-sm-1 col">
+      <room-icons></room-icons>
+      </div>
+      <div class="col-sm-2 col">
+       <ctrl-modal></ctrl-modal>
+      </div>
+      <div class="col-sm-9 col">
+        <obj-carousel></obj-carousel>
+      </div>
+      </div>
     </div>
   </div>
 

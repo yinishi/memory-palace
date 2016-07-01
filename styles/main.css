@@ -61,7 +61,7 @@ body {
 
 #memory {
   font-size:80px;
-  font-family: fantasy;
+/*  font-family: fantasy;*/
 }
 
 #memory-subtext{
@@ -69,10 +69,21 @@ body {
   line-height:200%;
 }
 
+/*//#168BEE*//*#2C2C80 #284DB2*/
+/*#image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0)
+  url('browser/icons/pretty-palace-wallpaper-46161-47469-hd-wallpapers.jpg');
+  size:cover;
+}*/
+
 #blocker {
   position: absolute;
   width: 100%;
   height: 100%;
+  z-index: 1;
   background-color: rgba(102,0,204,0.6);
 }
 #instructions {
