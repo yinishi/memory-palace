@@ -41,24 +41,20 @@ img:hover + .buttontext {
   margin-bottom: 5px;
 }
 
-/*.navbar-default {
-  background-color: #2C2C80;
-  border: 0px solid #3157A2;
-}*/
-/*//#168BEE*//*#2C2C80 #284DB2*/
-/*.navbar-default .navbar-brand {
-  color: white;
+.navbar-default {
+    background-color: transparent;
+    border: 0px;
+}
+.navbar-default .navbar-brand {
+ /*   color: white;*/
+    font-weight: bold;
 }
 
 .navbar-default .navbar-nav>li>a {
-  color: white;
+    color: white;
+    font-size: 16px!important;
+    font-weight: bold;
 }
-.navbar-default .navbar-brand:hover {
-  color: #CCDAED;
-}
-.navbar-default .navbar-nav>li>a:hover  {
-  color: #CCDAED;
-}*/
 
 body { 
   margin: 0;
@@ -154,4 +150,25 @@ navbar {
 
 .space {
   margin: 6%;
+}
+
+.form-group {
+  margin: 0 10px;
+  color: #777;
+}
+.message {
+  padding: 10px 10px;
+  margin: 0 10px;
+  position: absolute;
+   top:40%;
+  left:40%;
+  width:30%;
+/*  margin: 40% auto 0 auto;*/
+  /*background-color: transparent;*/
+  background-color: rgba(238, 238, 238, .8);
+  border-radius: 5px;
+
+}
+.message textarea.form-control {
+  width: 90%;
 }

@@ -195,6 +195,8 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			scene.add(shelf);
 			objects = objects.concat(shelfInstance.objects);
 
+
+
 			//RETRIVE STORED OBJECTS
 			storingFactory.retrieveObjects()
 				.then(function(items){
@@ -202,27 +204,46 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 						items.forEach(function(item){
 							return objectFactory.load(`/browser/objects/${item.name}/${item.name}.json`, null, item.name)
 								.then(function(obj){
+									// var y = item.positionY
 									obj.position.set(item.positionX, item.positionY, item.positionZ);
+									// obj.position.y += 20;
 									obj.rotation.set(item.rotationX, item.rotationY, item.rotationZ);
 									obj.scale.set(item.scaleX, item.scaleY, item.scaleZ);
 									obj.storingId = item.id;
-									
-									console.log(item.message, "message", item, "obj")
+									scene.add(obj);
+									// console.log(item.message, "message", item, "obj")
 									//add message
 									var text = new Text2D(item.message, {font: '30px Arial', fillStyle: '#000000', antialias: true })
 									text.material.alphaTest = 0.1;
 									text.scale.set(.3, .3, .3);
-									text.position.set(obj.positionX, obj.positionY, obj.positionZ)
-									text.position.y += 20;
-									text.visible = false;
+									var textY = item.positionY+20;
+									text.position.set(item.positionX, textY , item.positionZ);
+									// text.position.y += 20;
+									// text.visible = false;
+									console.log(obj.position, "obj", text.position, "text")
 									obj.messageMesh = text;
+									
 									scene.add(text);
-									scene.add(obj);
+									
 									objects.push(obj);
 									});
 
+								// //TEXT
+								// var text = new Text2D(objectFactory.currentObject.message, {font: '30px Arial', fillStyle: '#000000', antialias: true })
+								// text.material.alphaTest = 0.1;
+								// text.scale.set(.3, .3, .3);
+								// text.position.copy( intersect.point ).add( intersect.face.normal );
+								// text.position.addScalar( 3/2 );
+								// text.position.y += 20;
+								// text.visible = false;
+								// myObject2.messageMesh = text;
+								// scene.add( myObject2 );
+								// scene.add(text);
+								
 						});
+					
 					}
+
 				});
 
 			/////////////////////
@@ -249,7 +270,8 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 
 						messageShown = intersects[0].object.messageMesh;
 						messageShown.visible = true;
-						console.log("here", intersects[0].object.messageMesh)
+						console.log("here", intersects[0].object.messageMesh.visible)
+						console.log("messageShown", messageShown.visible)
 					}
 					if(!objectFactory.currentObject) objectFactory.currentObject = objectFactory.invisibleObject; 
 					var intersect = intersects[ 0 ];
@@ -322,126 +344,129 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 
 			// useful codes: w = 87, s = 83, 32 = space, up = 38, down = 40, left = 37, right = 39
 			function onKeyDown ( event ) {
+				if(!modalFactory.messageModal.data){
+					switch ( event.keyCode ) {
+						// deleting objects
+						case 16: // shift
+							isShiftDown = true; 
+							break;
 
-				switch ( event.keyCode ) {
-					// deleting objects
-					case 16: // shift
-						isShiftDown = true; 
-						break;
+						// exit modal
+						case 27: // esc
+							blocker.style.display = 'none';
+							break;
+						case 13: // enter
+							blocker.style.display = 'none';
+							break;
 
-					// exit modal
-					case 27: // esc
-						blocker.style.display = 'none';
-						break;
-					case 13: // enter
-						blocker.style.display = 'none';
-						break;
+						// move forward
+						case 38: // up arrow
+							moveForward = true;
+							break;
+						case 87: // w
+							moveForward = true;
+							break;
 
-					// move forward
-					case 38: // up arrow
-						moveForward = true;
-						break;
-					case 87: // w
-						moveForward = true;
-						break;
+						// move backward
+						case 40: // down arrow
+							moveBackward = true;
+							break;
+						case 83: // s
+							moveBackward = true;
+							break;
 
-					// move backward
-					case 40: // down arrow
-						moveBackward = true;
-						break;
-					case 83: // s
-						moveBackward = true;
-						break;
+						// case 65: // a - move left
+						// 	moveLeft = true;
+						// 	break;
 
-					// case 65: // a - move left
-					// 	moveLeft = true;
-					// 	break;
+						// case 68: // d - move right
+						// 	moveRight = true;
+						// 	break;
 
-					// case 68: // d - move right
-					// 	moveRight = true;
-					// 	break;
+						// jump
+						case 32: // space - jump
+							event.preventDefault();
+							if ( canJump === true ) velocity.y += 350;
+							canJump = false;
+							break;
 
-					// jump
-					case 32: // space - jump
-						event.preventDefault();
-						if ( canJump === true ) velocity.y += 350;
-						canJump = false;
-						break;
+						// looking up and down
+						case 81: // q, look up
+							controls.getPitchObject().rotation.x += 3 * Math.PI / 180;
+							break;
+						case 69: // e, look down
+							controls.getPitchObject().rotation.x -= 3 * Math.PI / 180;
+							break;
 
-					// looking up and down
-					case 81: // q, look up
-						controls.getPitchObject().rotation.x += 3 * Math.PI / 180;
-						break;
-					case 69: // e, look down
-						controls.getPitchObject().rotation.x -= 3 * Math.PI / 180;
-						break;
+						// rotate right
+						case 37: // right arrow
+							event.preventDefault();
+							controls.getYawObject().rotation.y += 3 * Math.PI / 180;
+							break;
+						case 65: // a
+							event.preventDefault();
+							controls.getYawObject().rotation.y += 3 * Math.PI / 180;
+							break;
 
-					// rotate right
-					case 37: // right arrow
-						event.preventDefault();
-						controls.getYawObject().rotation.y += 3 * Math.PI / 180;
-						break;
-					case 65: // a
-						event.preventDefault();
-						controls.getYawObject().rotation.y += 3 * Math.PI / 180;
-						break;
+						// rotate left
+						case 39: // left arrow
+							event.preventDefault();
+							controls.getYawObject().rotation.y -= 3 * Math.PI / 180;
+							break;
+						case 68: // d
+							event.preventDefault();
+							controls.getYawObject().rotation.y -= 3 * Math.PI / 180;
+							break;
 
-					// rotate left
-					case 39: // left arrow
-						event.preventDefault();
-						controls.getYawObject().rotation.y -= 3 * Math.PI / 180;
-						break;
-					case 68: // d
-						event.preventDefault();
-						controls.getYawObject().rotation.y -= 3 * Math.PI / 180;
-						break;
-
-					//check	180 deg for looking up and down, doesn't allow user to flip over
-					controls.getPitchObject().rotation.x = Math.max( - PI_2, Math.min( PI_2, controls.getPitchObject().rotation.x ) );
+						//check	180 deg for looking up and down, doesn't allow user to flip over
+						controls.getPitchObject().rotation.x = Math.max( - PI_2, Math.min( PI_2, controls.getPitchObject().rotation.x ) );
+					}
 				}
+			}
 
-			};
+			function onKeyUp (event) {
+				if(!modalFactory.messageModal.data){
+					switch( event.keyCode ) {
 
-			function onKeyUp ( event ) {
+						// reset move forward
+						case 38: // up arrow
+							moveForward = false;
+							break;
+						case 87: // w
+							moveForward = false;
+							break;
 
-				switch( event.keyCode ) {
-
-					// reset move forward
-					case 38: // up arrow
-						moveForward = false;
-						break;
-					case 87: // w
-						moveForward = false;
-						break;
-
-					// reset move backward
-					case 40: // down arrow
-						moveBackward = false;
-						break;
-					case 83: // s
-						moveBackward = false;
-						break;
-					case 16: // shift
-						isShiftDown = false; 
-						break;
+						// reset move backward
+						case 40: // down arrow
+							moveBackward = false;
+							break;
+						case 83: // s
+							moveBackward = false;
+							break;
+						case 16: // shift
+							isShiftDown = false; 
+							break;
+					}
 				}
-			};
+			}
 
 			function onWheel($event){
-				var event = $event.originalEvent;
+				if(!modalFactory.messageModal.data){
+					var event = $event.originalEvent;
 
-				if(event.ctrlKey === true){ //pinch
-					$event.preventDefault();
-					var delta = -event.deltaY/2;
-					var currentScale = objectFactory.currentObject.scale;
-					objectFactory.currentObject
-						.scale.set(currentScale.x + delta, currentScale.y + delta, currentScale.z + delta)
-						.clamp(new THREE.Vector3( 0.1, 0.1, 0.1 ), new THREE.Vector3( 50, 50, 50 ))	;
-				}else if(Math.abs(event.deltaX) > .1 ){ //two finger left and right scroll
-					$event.preventDefault();
-					var delta = -event.deltaX/20;
-					if(objectFactory.currentObject){
-						objectFactory.currentObject.rotation.y += delta;
+					if(event.ctrlKey === true){ //pinch
+						$event.preventDefault();
+						var delta = -event.deltaY/2;
+						var currentScale = objectFactory.currentObject.scale;
+						objectFactory.currentObject
+							.scale.set(currentScale.x + delta, currentScale.y + delta, currentScale.z + delta)
+							.clamp(new THREE.Vector3( 0.1, 0.1, 0.1 ), new THREE.Vector3( 50, 50, 50 ))	;
+					}else if(Math.abs(event.deltaX) > .1 ){ //two finger left and right scroll
+						$event.preventDefault();
+						var delta = -event.deltaX/20;
+						if(objectFactory.currentObject){
+							objectFactory.currentObject.rotation.y += delta;
+						}
 					}
 				}
 			}		
