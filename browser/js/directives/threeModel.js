@@ -336,13 +336,13 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 						moveBackward = true;
 						break;
 
-					// case 65: // a - move left
-					// 	moveLeft = true;
-					// 	break;
+					case 90: // z - move left
+						moveLeft = true;
+						break;
 
-					// case 68: // d - move right
-					// 	moveRight = true;
-					// 	break;
+					case 67: // c - move right
+						moveRight = true;
+						break;
 
 					// jump
 					case 32: // space - jump
@@ -406,6 +406,14 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 						break;
 					case 16: // shift
 						isShiftDown = false; 
+						break;
+
+					case 90: // z - move left
+						moveLeft = false;
+						break;
+
+					case 67: // c - move right
+						moveRight = false;
 						break;
 				}
 			};

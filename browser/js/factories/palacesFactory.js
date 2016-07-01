@@ -33,18 +33,18 @@ module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory)
 			b1Door.position.x = (150 - 1);
 			this.addToScene(b1Door);
 
-			var b1Inner1 = new wallFactory.Wall(75.5, wallHeight, woodtex, false, false)
+			var b1Inner1 = new wallFactory.Wall(75.5 + 75, wallHeight, woodtex, false, false)
 			.clockwiseY()
 			.wall;
-			b1Inner1.position.z = ((-75/2)- 75);
+			b1Inner1.position.z = ((-75/2)- 75) - 225/2;
 			b1Inner1.position.x = (150 - 1);
 
 			this.addToScene(b1Inner1);
 
-			var b1Inner2 = new wallFactory.Wall(75, wallHeight, woodtex, false, false)
+			var b1Inner2 = new wallFactory.Wall(75 - 1, wallHeight, woodtex, false, false)
 			.wall;
 			b1Inner2.position.z = (-150 -1);
-			b1Inner2.position.x = (75/2 -.5);
+			b1Inner2.position.x = (75/2);
 
 			this.addToScene(b1Inner2);
 
@@ -53,7 +53,85 @@ module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory)
 			b1InnerDoor.position.z = (-150 -1);
 			b1InnerDoor.position.x = ((75/2 -.5)+ 75);
 
-			this.addToScene(b1InnerDoor);		
+			this.addToScene(b1InnerDoor);
+
+			//BEDROOM 2
+			var b2Outer1 = new wallFactory.Wall(75.5, wallHeight, whiteStone, false, false)
+			.clockwiseY()
+			.wall;
+			b2Outer1.position.z = (-150 - 75/2);
+			b2Outer1.position.x = 0;
+
+			this.addToScene(b2Outer1);
+
+			var b2Outer2 = new wallFactory.Wall(75 + 1, wallHeight, whiteStone, false, true)
+			.clockwiseY()
+			.wall;
+			b2Outer2.position.z = (-225 - 75/2 - .75);
+			b2Outer2.position.x = 0;
+
+			this.addToScene(b2Outer2);
+
+			var b2Outer3 = new wallFactory.Wall(150.5 - 2.5, wallHeight, whiteStone, false, false)
+			.wall;
+			b2Outer3.position.z = (-225 - 75 -.5);
+			b2Outer3.position.x = 75 -.5;
+
+			this.addToScene(b2Outer3);
+
+			var b2Inner1 = new wallFactory.Wall(75 -1, wallHeight, woodtex, false, false)
+			.wall;
+			b2Inner1.position.z = (-225 -1);
+			b2Inner1.position.x = 75/2;
+
+			this.addToScene(b2Inner1);
+
+			var b2Inner2 = new wallFactory.Wall(75-.5, wallHeight, woodtex, true, false)
+			.clockwiseY()
+			.wall
+			b2Inner2.position.z = (-150 - 75/2 -1);
+			b2Inner2.position.x = 75 -1;
+
+			this.addToScene(b2Inner2);
+
+			//LIVING ROOM
+			var livingroomOuter1 = new wallFactory.Wall(75, wallHeight, whiteStone, false, false)
+			.clockwiseY()
+			.wall;
+			livingroomOuter1.position.z = ((-75/2)- 75) - 225/2 - 75 - 75/2 -.25;
+			livingroomOuter1.position.x = (150 - 1);
+
+			this.addToScene(livingroomOuter1);
+
+			var livingroomOuter2 = new wallFactory.Wall(75, wallHeight, whiteStone, true, false)
+			.wall;
+			livingroomOuter2.position.z = ((-75/2)- 75) - 225/2 - 75 - 75/2 +.25 -75/2;
+			livingroomOuter2.position.x = 75 -.5 + 75 + 75/2;
+
+			this.addToScene(livingroomOuter2);
+
+			var livingroomOuter3 = new wallFactory.Wall(75, wallHeight, whiteStone, false, true)
+			.wall;
+			livingroomOuter3.position.z = ((-75/2)- 75) - 225/2 - 75 - 75/2 +.25 -75/2;
+			livingroomOuter3.position.x = 75 -.5 + 75 + 75/2 + 75;
+
+			this.addToScene(livingroomOuter3);
+
+			var livingroomOuter4 = new wallFactory.Wall(25, wallHeight, whiteStone, false, false)
+			.clockwiseY()
+			.wall;
+			livingroomOuter4.position.z = ((-75/2)- 75) - 225/2 - 75 - 75/2 -.25 -25;
+			livingroomOuter4.position.x = 75 -.5 + 75 + 75/2 + 75 + 75/2;
+
+			this.addToScene(livingroomOuter4);
+
+			//KITCHEN
+			var kitchenInner1 = new wallFactory.Wall(175, wallHeight, woodtex, false, false)
+			.clockwiseY()
+			.wall;
+			kitchenInner1.position.z = ((-75/2)- 75) - 225/2 - 75/2 -.25;
+			kitchenInner1.position.x = 75 -.5 + 75 + 75/2 + 75 + 75/2;
+			this.addToScene(kitchenInner1);
 
 	}
 
