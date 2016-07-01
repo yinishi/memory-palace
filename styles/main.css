@@ -2,12 +2,28 @@
 	margin: 0;
 	padding: 0;
 }
+.buttontext {
+  text-align: right;
+  color: white;
+  display: none;
+}
+img:hover + .buttontext {
+    display: block;
+}
+/*.buttontext:hover {   
+  display: block;
+}*/
+
+.ctrlModal {
+    margin: 0;
+    padding: 0;
+    color: white;
+    font-size: 16px;
+}
 .col {
   border: 1px solid white;
 }
-.ctrlsIcon {
- /* background-image: url('browser/icons/white-map-01.png')*/*/
-}
+
 .roomIcon {
   width: 90px;
   height: 90px;

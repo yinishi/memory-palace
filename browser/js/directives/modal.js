@@ -1,4 +1,4 @@
-module.exports = function ($document) {
+module.exports = function ($document, modalFactory) {
   return {
         restrict: 'E',
         scope: {
@@ -10,6 +10,7 @@ module.exports = function ($document) {
 
           //Enter button closes modal
           scope.toggle = function(){
+            modalFactory.turnOffWelcome()
             blocker.style.display = 'none';
           };
 
