@@ -31,8 +31,7 @@ module.exports = function ($http, $rootScope) {
     signup: function (credentials) {
       return $http.post('/auth/signup', credentials)
       .then(toData)
-      .then(setUser)
-      .then(this.login(credentials));
+      .then(setUser);
     },
     login: function (credentials) {
       return $http.post('/auth/login', credentials)

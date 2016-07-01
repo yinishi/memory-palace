@@ -7,14 +7,13 @@ module.exports = function ($state, authFactory, $rootScope) {
         },
         templateUrl: '/browser/js/templates/navbar.html',
         link: function (scope) {
-            scope.user = null;
             function setUser () {
                 authFactory.getLoggedInUser()
                 .then(function(user){
                     scope.user = user;
                 });
             }
-            $rootScope.$on('user', function(user){
+            $rootScope.$on('newUser', function(event, user){
                 scope.user = user;
             });
             setUser();

@@ -20,3 +20,4 @@ app.config(['$stateProvider', function ($stateProvider) {
         controller: 'login'
     });
 }]);
+
