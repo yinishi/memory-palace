@@ -4,6 +4,7 @@ module.exports = function (objectFactory) {
 	var showCarousel = { data: { false } }
 	var showControls = { data: { false } }
 	var welcomeControls = { data: { true } };
+	var messageModal = { data: { false } };
 	return { 
 		toggleControls: function () {
 			showControls.data = !showControls.data;
@@ -18,6 +19,12 @@ module.exports = function (objectFactory) {
 		turnOffWelcome: function () {
 			welcomeControls.data = false;
 		},
-		getWelcomeControls: () => welcomeControls
+		getWelcomeControls: () => welcomeControls,
+		getMessageModal: () => messageModal,
+		toggleMessageModal : () => {
+			console.log("happening")
+			messageModal.data = !messageModal.data;
+		}
+		// open up input box
 	}
 }

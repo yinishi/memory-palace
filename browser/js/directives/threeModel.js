@@ -233,8 +233,8 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 					messageShown = false;
 				}
 				if (intersects.length > 0 ) {
-					if(intersects[0].object.message && !messageShown) {
-						messageShown = intersects[0].object.message;
+					if(intersects[0].object.messageMesh && !messageShown) {
+						messageShown = intersects[0].object.messageMesh;
 						messageShown.visible = true;
 					}
 					if(!objectFactory.currentObject) objectFactory.currentObject = objectFactory.invisibleObject; 
@@ -270,10 +270,10 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 								var myObject2 = objectFactory.currentObject.clone();
 								myObject2.position.copy( intersect.point ).add( intersect.face.normal );
 								myObject2.position.addScalar( 3/2 );
-								
+								console.log(objectFactory.currentObject.message, "message")
 
 								//TEXT
-								var text = new Text2D("Hello world!", {font: '30px Arial', fillStyle: '#000000', antialias: true })
+								var text = new Text2D(objectFactory.currentObject.message, {font: '30px Arial', fillStyle: '#000000', antialias: true })
 								text.material.alphaTest = 0.1;
 								text.scale.set(.3, .3, .3);
 								text.position.copy( intersect.point ).add( intersect.face.normal );
@@ -281,7 +281,7 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 								text.position.y += 20;
 								text.rotation.set(0,0,0);
 								text.visible = false;
-								myObject2.message = text;
+								myObject2.messageMesh = text;
 								scene.add( myObject2 );
 								scene.add(text);
 
