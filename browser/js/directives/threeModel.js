@@ -177,20 +177,19 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			var floorObjects = [mesh];
 
 			// CREATE A ROOM
-			var roomInstance = new PALACE.defaultPalace().palace
-			let room = roomInstance.container;
-			room.position.set(10, 0, -100);
-			scene.add(room);
+			var roomInstance = new PALACE.defaultPalace().palace;
+			roomInstance.position.set(0,100,0);
+			scene.add(roomInstance);
 
 			objects = objects.concat(roomInstance.objects);
-
-			// DIAMOND SHELVES
-			var shelfInstance = new shelfFactory();
-			let shelf = shelfInstance.container;
-			shelf.position.set(10, 5, -170);
-			shelf.rotation.set(0, Math.PI / 2, 0);
-			scene.add(shelf);
-			objects = objects.concat(shelfInstance.objects);
+			
+			// // DIAMOND SHELVES
+			// var shelfInstance = new shelfFactory();
+			// let shelf = shelfInstance.container;
+			// shelf.position.set(10, 5, -170);
+			// shelf.rotation.set(0, Math.PI / 2, 0);
+			// scene.add(shelf);
+			// objects = objects.concat(shelfInstance.objects);
 
 			// CREATE A TABLE
 			// var tableInstance = new tableFactory();

@@ -1,79 +1,77 @@
 'use strict'
 
 module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory){
-	//var room = 3 sides 
-	var loadTexture = function (file) {
+
+	function defaultPalace() {
+			const whiteStone = loadTexture('white-stone.jpg');
+			const woodtex = loadTexture('wood-wall.jpg');
+			const redCarpet = loadTexture('carpet_red.jpg');
+			const wallHeight = 75;
+
+			const load = objectFactory.load;
+
+			this.objects = [];
+			this.palace =  new THREE.Object3D();
+
+			//BEDROOM 1
+			var b1Outerwall1 = new wallFactory.Wall(150, wallHeight, whiteStone, false, false)
+			.clockwiseY()
+			.wall;
+			b1Outerwall1.position.set(0,0,-75);
+			this.addToScene(b1Outerwall1);
+
+			var b1Outerwall2 = new wallFactory.Wall(150, wallHeight, whiteStone, false, true)
+			.wall;
+			b1Outerwall2.position.x = 75 - 0.5;
+			b1Outerwall2.position.z = .5;
+			this.addToScene(b1Outerwall2);
+
+			var b1Door = new wallFactory.Wall(75, wallHeight, woodtex, true, false)
+			.clockwiseY()
+			.wall;
+			b1Door.position.z = (-75/2);
+			b1Door.position.x = (150 - 1);
+			this.addToScene(b1Door);
+
+			var b1Inner1 = new wallFactory.Wall(75.5, wallHeight, woodtex, false, false)
+			.clockwiseY()
+			.wall;
+			b1Inner1.position.z = ((-75/2)- 75);
+			b1Inner1.position.x = (150 - 1);
+
+			this.addToScene(b1Inner1);
+
+			var b1Inner2 = new wallFactory.Wall(75, wallHeight, woodtex, false, false)
+			.wall;
+			b1Inner2.position.z = (-150 -1);
+			b1Inner2.position.x = (75/2 -.5);
+
+			this.addToScene(b1Inner2);
+
+			var b1InnerDoor = new wallFactory.Wall(75, wallHeight, woodtex, true, false)
+			.wall;
+			b1InnerDoor.position.z = (-150 -1);
+			b1InnerDoor.position.x = ((75/2 -.5)+ 75);
+
+			this.addToScene(b1InnerDoor);		
+
+	}
+
+	function loadTexture(file) {
 		const texture = THREE.ImageUtils.loadTexture("./browser/textures/"+file);
 		texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 			texture.repeat.set( 2, 2 );
 		let material = new THREE.MeshBasicMaterial( { map: texture, overdraw: 0.5 } );
 		return material;
-	}
+	};
+
+	defaultPalace.prototype.addToScene = function(mesh) {
+		this.objects.push(mesh);
+		this.palace.add(mesh);
+	};
 
 	return {
-		defaultPalace: function () {
-			const material = loadTexture('white-stone.jpg')
-			const woodtex = loadTexture('wood-wall.jpg')
-			const floorMaterial = loadTexture('carpet_red.jpg')
-			const floorSize = 150;
-			const wallSize = floorSize/2
-			const mainRoom = new roomFactory(floorSize, wallSize, material, woodtex, floorMaterial);
-			const hallwayW = (wallSize+(wallSize/2))
-			const load = objectFactory.load;
-			//hallway
-			//first room 
-			let wall4 = new wallFactory(wallSize, 150, woodtex, "horizontal").mesh;
-			wall4.position.set(wallSize*2, -wallSize, wallSize / 2);
-			//outer wall
-			let wall5 = new wallFactory(wallSize, (floorSize*2.5), material, "horizontal").mesh;
-			wall5.position.set(wallSize*1.5, (-hallwayW), wallSize / 2)
-			//wall5.material.side = THREE.BackSide;
+		defaultPalace : defaultPalace
+	};
 
-			//bed room 
-			let wall6 = new wallFactory(wallSize, floorSize*1.5, woodtex, "horizontal").mesh;
-			wall6.position.set(wallSize*2.5, wallSize, wallSize / 2);
-
-			//end wall
-			let wall7 = new wallFactory(wallSize, (floorSize+hallwayW-40), material, "verticalClockwise").mesh;
-
-			wall7.position.set(wallSize*4, 0, wallSize / 2);
-			//table 
-			var tableInstance = new tableFactory();
-			let table = tableInstance.container;
-			table.scale.set(5, 5, 5)
-			table.position.set(0, -40, 20); 
-			// console.log("hereBED", load('./browser/objects/bed/bed.json', 15))
-			load('./browser/objects/bean-bag/bean-bag.json', 15)
-			.then(beanBag => { 
-				// console.log(beanBag)
-				beanBag.scale.set(2,2,2);
-				beanBag.position.set(wallSize*2,-(wallSize-20),0);
-				beanBag.rotation.x = THREE.Math.degToRad(90);
-				// beanBag.rotation.set(Math.PI/2, Math.PI/2, 0);  
-				mainRoom.container.add(beanBag);
-			});
-			load('./browser/objects/bed/bed.json', 15)
-			.then(bedObj => {      
-				let bed = bedObj;
-				bed.position.set(wallSize*2, 20, 10);
-				bed.rotation.set(Math.PI/2, Math.PI/2, 0);  
-				mainRoom.container.add(bed);
-				// console.log("hereBED", bed);
-			});
-
-			mainRoom.container.add(table);
-			mainRoom.objects = mainRoom.objects.concat(tableInstance.objects);
-			mainRoom.container.add(wall4);
-			mainRoom.container.add(wall5);
-			mainRoom.container.add(wall6);
-			mainRoom.container.add(wall7);
-			
-
-			this.palace = mainRoom;
-
-		}
-	}
-	
-	//mesh.material.side = THREE.BackSide;
-
-}
+};
