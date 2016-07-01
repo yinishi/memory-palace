@@ -31,22 +31,40 @@ function load (link, scale, name) {
 
   var a = {
     getObjects : function(){
+<<<<<<< HEAD
      return [{name: 'teapot', image: "./browser/images/teapot.jpg", scale: .3},
              {name: 'fox', image: "./browser/images/fox.jpg", scale: .3},
              {name: 'table', image: "./browser/images/table.jpg", scale: 10},
+||||||| merged common ancestors
+     return [{name: 'teapot', image: "./browser/images/teapot.jpg", scale: .3},
+             {name: 'fox', image: "./browser/images/fox.jpg", scale: .3},
+             {name: 'table', image: "", scale: 10},
+=======
+     return [{name: 'teapot', image: "./browser/images/teapot.png", scale: .3},
+             {name: 'fox', image: "./browser/images/fox.png", scale: .3},
+             {name: 'table', image: "./browser/images/table.png", scale: 10},
+>>>>>>> 809418b4d36f60f3e61ac46e1f3245715dd8763b
              {name: 'staff', image: "./browser/images/staff.jpg", scale: 2},
-             {name: 'monster', image: "./browser/images/monster.jpg", scale: 1},
-             {name: 'brain', image: "./browser/images/brain.jpg", scale: 3},
-             {name: 'sofa', image: "./browser/images/sofa.jpg", scale: 2},
+             {name: 'monster', image: "./browser/images/monster.png", scale: 1},
+             {name: 'brain', image: "./browser/images/brain.png", scale: 3},
+             {name: 'sofa', image: "./browser/images/sofa.png", scale: 2},
              {name: 'cat-mug', image: "./browser/images/cat-mug.png", scale: 3},
              {name: 'mug', image: "./browser/images/mug.png", scale: .2},
              {name: 'tree', image: "./browser/images/tree.png", scale: .1},
-             {name: 'car', image: "./browser/images/car.jpg", scale: 10},
+             {name: 'car', image: "./browser/images/car.png", scale: 10},
              {name: 'bull', image: "./browser/images/bull.jpg", scale: 2},
+<<<<<<< HEAD
              {name: 'flower', image: "./browser/images/flower.jpg", scale: .2},
+||||||| merged common ancestors
+             {name: 'flower', image: "./browser/images/flower.jpg", scale: .2},
+             {name: 'cat', image: "./browser/images/cat.jpg", scale: 12},
+=======
+             {name: 'flower', image: "./browser/images/flower.png", scale: .2},
+             {name: 'cat', image: "./browser/images/cat.jpg", scale: 12},
+>>>>>>> 809418b4d36f60f3e61ac46e1f3245715dd8763b
              {name: 'turtle', image: "./browser/images/turtle.png", scale: 12},
-             {name: 'bed', image: "./browser/images/bed.jpg", scale: 15},
-             {name: 'dress', image: "./browser/images/dress.jpg", scale: .5},
+             {name: 'bed', image: "./browser/images/bed.png", scale: 15},
+             {name: 'dress', image: "./browser/images/dress.png", scale: .5},
              {name: 'soccer-ball', image: "./browser/images/soccer-ball.jpg", scale: .07},
              {name: 'pink-bed', image: "./browser/images/pink-bed.png", scale: 15},
              {name: 'computer', image: "./browser/images/computer.png", scale: 5},
