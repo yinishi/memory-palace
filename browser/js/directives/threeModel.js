@@ -394,15 +394,6 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 					case 83: // s
 						moveBackward = false;
 						break;
-
-					// case 65: // a - move left
-					// 	moveLeft = false;
-					// 	break;
-
-					// case 68: // d - move right
-					// 	moveRight = false;
-					// 	break;
-
 					case 16: // shift
 						isShiftDown = false; 
 						break;
