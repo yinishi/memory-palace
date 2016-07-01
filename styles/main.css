@@ -1,7 +1,12 @@
+/* EI: this file could maybe use a refactor; use SCSS to break up into smaller, component-based files? */
+
+/* Ashi sez: checkout browserify-css, sassifyq */
+
 * {
 	margin: 0;
 	padding: 0;
 }
+
 .buttontext {
   text-align: center;
   color: white;

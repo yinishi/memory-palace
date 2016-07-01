@@ -4,6 +4,13 @@ var db = require('../db');
 var User = db.model('user');
 var Item = db.model('item');
 
+// EI: more RESTful to have /users/:id/items/
+// EI: 401 instead of 200 status code?
+// EI: looks like you want to make middleware to check if there's a req.user, otherwise send 401
+
+router.use('/', function (req, res, next) {
+	// check stuff here
+});
 
 //get all saved items for a user
 router.get('/items', function(req, res, next){
