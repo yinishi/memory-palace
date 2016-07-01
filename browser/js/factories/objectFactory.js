@@ -50,7 +50,6 @@ function load (link, scale, name) {
         {name: 'brain', image: "./browser/images/brain.png", scale: 3},
         {name: 'fox', image: "./browser/images/fox.png", scale: .3},
         {name: 'bull', image: "./browser/images/bull.jpg", scale: 2},
-        {name: 'cat', image: "./browser/images/cat.jpg", scale: 12},
         {name: 'turtle', image: "./browser/images/turtle.png", scale: 12},
         {name: 'flower', image: "./browser/images/flower.png", scale: .2},
         {name: 'tree', image: "./browser/images/tree.png", scale: .1},
