@@ -1,4 +1,7 @@
 'use strict'
+//text2d
+var three2d = require('three-text2d');
+
 
 module.exports = function (palacesFactory, $window, roomFactory, tableFactory, objectFactory, shelfFactory,	$document, storingFactory) {
 	 return {
@@ -6,7 +9,10 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
         	scope: {
         },
         link: function(s,e,a) {
-		
+        	console.log(three2d)
+        	var text2d = three2d.Text2D;
+			var textAlign = three2d.textAlign;
+			var SpriteText2D = three2d.SpriteText2D;
 			/*  ESSENTIAL THREE.JS COMPONENTS */
 			// CONSTANTS
 			var WIDTH = $window.innerWidth;
@@ -48,6 +54,12 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			var prevTime = performance.now();
 			var velocity = new THREE.Vector3();
 
+			var text = new text2d("Hello world!", { align: textAlign.center, font: '300px Arial', fillStyle: 'black', antialias: true })
+			text.position.set(0,0,0)
+			scene.add(text) 
+			var sprite = new SpriteText2D("SPRITE", { align: textAlign.center,  font: '40px Arial', fillStyle: '#000000' , antialias: false })
+			scene.add(sprite)
+console.log("in link", sprite)
 
 			// 3D CONTROLS - PointerLockControls
 			function PointerLockControls ( camera ) {
