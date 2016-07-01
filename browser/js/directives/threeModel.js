@@ -183,15 +183,6 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			let room = roomInstance.container;
 			room.position.set(10, 0, -100);
 			scene.add(room);
-			//TEXT
-
-			var text = new Text2D("Hello world!", {font: '30px Arial', fillStyle: '#000000', antialias: true })
-			text.material.alphaTest = 0.1;
-			text.scale.set(.3, .3, .3);
-			text.position.set(10,30,-100);
-			text.rotation.set(0,0,0);
-			console.log(text, "text")
-			scene.add(text);
 
 			objects = objects.concat(roomInstance.objects);
 
@@ -285,6 +276,18 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 								myObject2.position.copy( intersect.point ).add( intersect.face.normal );
 								myObject2.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
 								scene.add( myObject2 );
+
+								//TEXT
+
+								var text = new Text2D("Hello world!", {font: '30px Arial', fillStyle: '#000000', antialias: true })
+								text.material.alphaTest = 0.1;
+								text.scale.set(.3, .3, .3);
+								text.position.set(10,30,-100);
+								text.rotation.set(0,0,0);
+								console.log(text, "text")
+								scene.add(text);
+
+			
 								objects.push( myObject2 );
 								storingFactory.storeObject({
 									name: myObject2.name, 
