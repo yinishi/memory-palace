@@ -1,7 +1,7 @@
 "use strict"
 
 module.exports = function () {
-	var showCarousel = { data: { false } }
+	var showCarousel = { data: { true } }
 	var showControls = { data: { false } }
 	return { 
 		toggleControls: function () {
@@ -9,8 +9,8 @@ module.exports = function () {
 		},
 		getControls: () => showControls, 
 		toggleCarousel: function () {
-			console.log("befoer", showCarousel)
-			showCarousel.data = !showCarousel.data;
+			console.log("befoer", this.showCarousel)
+			showCarousel.data = !showCarousel.data
 			console.log("after", showCarousel)
 		},
 		getCarousel: () => showCarousel
