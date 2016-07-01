@@ -4,6 +4,8 @@ var Sequelize = require('sequelize');
 
 var db = require('.././_db.js');
 
+// AK/EI: position not null?
+
 var Item = db.define('item', {
   name: Sequelize.STRING,
   positionX: Sequelize.DECIMAL,

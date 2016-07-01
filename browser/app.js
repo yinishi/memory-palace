@@ -12,7 +12,6 @@ app.config(['$urlRouterProvider', '$locationProvider', function ($urlRouterProvi
     $urlRouterProvider.when('/', '/room');
 }]);
 
-
 require('./js/controllers');
 require('./js/factories');
 require('./js/directives');

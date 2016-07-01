@@ -5,6 +5,8 @@ const uglify = require('gulp-uglify');
 const streamify = require('gulp-streamify');
 const babel = require('gulp-babel');
 
+//EI: rename your minified js to app.min.js, stick it in your public folder
+
 gulp.task('browserify', function() {
     return browserify('./browser/app.js')
     	.transform("babelify", {presets: ["es2015"]})
