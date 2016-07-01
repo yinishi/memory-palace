@@ -2,6 +2,58 @@
 	margin: 0;
 	padding: 0;
 }
+.buttontext {
+  text-align: right;
+  color: white;
+  display: none;
+}
+img:hover + .buttontext {
+    display: block;
+}
+/*.buttontext:hover {   
+  display: block;
+}*/
+
+.ctrlModal {
+    margin: 0;
+    padding: 0;
+    color: white;
+    font-size: 16px;
+}
+.col {
+  border: 1px solid white;
+}
+
+.roomIcon {
+  width: 90px;
+  height: 90px;
+/*  background-color: red;*/
+
+}
+.roomIcons {
+  width: 10%;
+/*  border: 3px solid white;*/
+  margin-bottom: 5px;
+}
+
+.navbar-default {
+  background-color: #2C2C80;
+  border: 0px solid #3157A2;
+}
+/*//#168BEE*//*#2C2C80 #284DB2*/
+.navbar-default .navbar-brand {
+  color: white;
+}
+
+.navbar-default .navbar-nav>li>a {
+  color: white;
+}
+.navbar-default .navbar-brand:hover {
+  color: #CCDAED;
+}
+.navbar-default .navbar-nav>li>a:hover  {
+  color: #CCDAED;
+}
 
 body { 
   margin: 0;
@@ -9,7 +61,7 @@ body {
 
 #memory {
   font-size:80px;
-  font-family: fantasy;
+/*  font-family: fantasy;*/
 }
 
 #memory-subtext{
@@ -17,10 +69,21 @@ body {
   line-height:200%;
 }
 
+/*//#168BEE*//*#2C2C80 #284DB2*/
+/*#image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0)
+  url('browser/icons/pretty-palace-wallpaper-46161-47469-hd-wallpapers.jpg');
+  size:cover;
+}*/
+
 #blocker {
   position: absolute;
   width: 100%;
   height: 100%;
+  z-index: 1;
   background-color: rgba(102,0,204,0.6);
 }
 #instructions {

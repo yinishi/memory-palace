@@ -2,7 +2,7 @@
 /* Slider */
 
 .carousel{
-    bottom:200px;
+    bottom:250px;
 }
 
 .carousel-container{
@@ -112,8 +112,8 @@
     display: inline-block;
     width: 2em;
     height: 2em;
-    border-right: 0.5em solid black;
-    border-top: 0.5em solid black;
+    border-right: 0.5em solid white;
+    border-top: 0.5em solid white;
     transform: rotate(225deg);
 
     
@@ -146,8 +146,8 @@
     display: inline-block;
     width: 2em;
     height: 2em;
-    border-right: 0.5em solid black;
-    border-top: 0.5em solid black;
+    border-right: 0.5em solid white;
+    border-top: 0.5em solid white;
     transform: rotate(45deg);
 }
 [dir='rtl'] .slick-next:before

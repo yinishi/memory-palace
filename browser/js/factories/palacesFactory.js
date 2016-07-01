@@ -14,9 +14,10 @@ module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory)
 		defaultPalace: function () {
 			const material = loadTexture('white-stone.jpg')
 			const woodtex = loadTexture('wood-wall.jpg')
+			const floorMaterial = loadTexture('carpet_red.jpg')
 			const floorSize = 150;
 			const wallSize = floorSize/2
-			const mainRoom = new roomFactory(floorSize, wallSize, material, woodtex);
+			const mainRoom = new roomFactory(floorSize, wallSize, material, woodtex, floorMaterial);
 			const hallwayW = (wallSize+(wallSize/2))
 			const load = objectFactory.load;
 			//hallway

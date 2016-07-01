@@ -1,26 +1,13 @@
- module.exports = function($scope, objectFactory){
+ 'use strict'
+ module.exports = function(modalFactory, $scope, objectFactory, $window){
+  //loadObjects.then(() => {$scope.showCarousel = modalFactory.getCarousel()});
+ 	$scope.showCarousel = modalFactory.getCarousel()
+  	$scope.objects = objectFactory.getObjects();
 
-  $scope.objects = objectFactory.getObjects();
+  	// console.log("ctrl", $scope.showCarousel)	
+	$scope.setCurrentObject = function (object) {
+	  objectFactory.setCurrentObject(object);
+	}
 
-  $scope.setCurrentObject = function (object) {
-    objectFactory.setCurrentObject(object);
-  };
- 	
- //  $scope.slickConfig = {
- //    enabled: true,
- //    autoplay: false,
- //    draggable: false, 
- //    centerMode: true, 
- //    adaptiveHeight: true,
- //    autoplaySpeed: 3000,
- //    method: {},
- //    event: {
-	//         beforeChange: function (event, slick, currentSlide, nextSlide) {
-	//            console.log(event)
- //          },
-	//         afterChange: function (event, slick, currentSlide, nextSlide) {
-	//         }
-	//     }
-	// };
-  
 };
+
