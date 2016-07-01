@@ -1,12 +1,14 @@
 'use strict';
 
-module.exports = function ($state, authFactory, $rootScope) {
+module.exports = function ($state, authFactory, $rootScope, modalFactory) {
 	 return {
         restrict: 'E',
         scope: {
         },
         templateUrl: '/browser/js/templates/navbar.html',
         link: function (scope) {
+            scope.toggleControls = modalFactory.toggleControls
+            scope.user = null;
             function setUser () {
                 authFactory.getLoggedInUser()
                 .then(function(user){
