@@ -239,7 +239,7 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 					if(!objectFactory.currentObject) objectFactory.currentObject = objectFactory.invisibleObject; 
 					var intersect = intersects[ 0 ];
 					objectFactory.currentObject.position.copy( intersect.point ).add( intersect.face.normal );
-					objectFactory.currentObject.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
+					objectFactory.currentObject.position.addScalar( 3/2 );
 					if(objectFactory.previousObject) scene.remove(objectFactory.previousObject);
 					scene.add(objectFactory.currentObject);
 				}
@@ -264,17 +264,11 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 
 						}
 					// create cube
-					} else {
-						// var voxel = new THREE.Mesh( cubeGeo, cubeMaterial );
-						// voxel.position.copy( intersect.point ).add( intersect.face.normal );
-						// voxel.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
-						// scene.add( voxel );
-						// objects.push( voxel );
-						
+					} else {						
 							if (objectFactory.currentObject.children.length > 0) {
 								var myObject2 = objectFactory.currentObject.clone();
 								myObject2.position.copy( intersect.point ).add( intersect.face.normal );
-								myObject2.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
+								myObject2.position.addScalar( 3/2 );
 								scene.add( myObject2 );
 
 								//TEXT
@@ -282,12 +276,14 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 								var text = new Text2D("Hello world!", {font: '30px Arial', fillStyle: '#000000', antialias: true })
 								text.material.alphaTest = 0.1;
 								text.scale.set(.3, .3, .3);
-								text.position.set(10,30,-100);
+								text.position.copy( intersect.point ).add( intersect.face.normal );
+								text.position.addScalar( 3/2 );
+								text.position.y += 20;
 								text.rotation.set(0,0,0);
 								console.log(text, "text")
 								scene.add(text);
 
-			
+
 								objects.push( myObject2 );
 								storingFactory.storeObject({
 									name: myObject2.name, 
