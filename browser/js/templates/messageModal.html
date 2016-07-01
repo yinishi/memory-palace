@@ -1,7 +1,11 @@
 <div ng-show="!showModal.data" class="message">
-	<form class="form-group message-form" ng-submit="sendMessage()">
-    <label for="message" >Add Message to Your Object</label>
-    <textarea class="form-control" id="message" rows="3" ng-model="message"></textarea>
-    <button type="submit" class="btn btn-primary-outline">Submit</button>
+	<form class="form-group message-form" name="messageForm" >
+    <label for="message" >Add a message to your object</label>
+    <textarea class="form-control" id="message" rows="3" ng-model="message" name="message" ng-maxlength="20"></textarea>
+    <div role="alert">
+    <span class="error" ng-show="messageForm.message.$error.maxlength">Message must be less than 20 characters.</span>
+    </div>
+    <button type="submit" class="btn btn-primary-outline" ng-click="sendMessage()">Submit</button>
+    <button type="submit" class="btn btn-primary-outline" ng-click="sendMessage()">No thanks!</button>
   </form>
 </div>
