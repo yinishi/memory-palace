@@ -332,7 +332,7 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			var material = new THREE.MeshBasicMaterial( { vertexColors: THREE.VertexColors } );
 
 			var mesh = new THREE.Mesh( geometry, material );
-			mesh.position.y = -2
+			mesh.position.y = -2;
 			scene.add( mesh );
 			// objects.push(mesh);
 			var floorObjects = [mesh];
