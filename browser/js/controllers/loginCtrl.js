@@ -8,7 +8,7 @@ module.exports = function ($scope, $state, $http, authFactory, $rootScope) {
 		if (!$scope.userInfo.$invalid && pwMatch) {
 			authFactory.signup($scope.userInfo)
 			.then(user => {
-				$rootScope.$broadcast('user', user);
+				$rootScope.$broadcast('newUser', user);
 				$state.go('room');
 			});
 		}
@@ -16,7 +16,7 @@ module.exports = function ($scope, $state, $http, authFactory, $rootScope) {
 	$scope.login = function(){
 		authFactory.login($scope.userInfo)
 		.then(user => {
-			$rootScope.$broadcast('user', user)
+			$rootScope.$broadcast('newUser', user);
 			$state.go('room');
 		});
 	}

@@ -346,7 +346,6 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 
 
 			function onDocumentMouseMove( event ) {
-
 				event.preventDefault();
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
@@ -357,11 +356,7 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 					objectFactory.currentObject.position.copy( intersect.point ).add( intersect.face.normal );
 					objectFactory.currentObject.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
 					if(objectFactory.previousObject) scene.remove(objectFactory.previousObject);
-					if(objectFactory.previousBox) scene.remove(objectFactory.previousBox);
 					scene.add(objectFactory.currentObject);
-					// objectFactory.currentObject.bbox.visible = false;
-					// objectFactory.currentObject.bbox.update();
-					// scene.add(objectFactory.currentObject.bbox);
 				}
 			}
 
@@ -370,7 +365,7 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
 				var intersects = raycaster.intersectObjects( objects);
-				
+				console.log(objectFactory.currentObject, "currentObject");
 				if ( intersects.length > 0 ) {
 					var intersect = intersects[ 0 ];
 					// delete cube
@@ -391,13 +386,11 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 						// scene.add( voxel );
 						// objects.push( voxel );
 						
-							if (objectFactory.currentObject) {
+							if (objectFactory.currentObject.children.length > 0) {
 								var myObject2 = objectFactory.currentObject.clone();
 								myObject2.position.copy( intersect.point ).add( intersect.face.normal );
 								myObject2.position.divideScalar( 3 ).multiplyScalar( 3 ).addScalar( 3/2 );
 								scene.add( myObject2 );
-								// console.log(objectFactory.currentObject.bbox.clone(), "myObject2")
-								// objects.push( objectFactory.currentObject.bbox.clone() );
 								objects.push( myObject2 );
 								storingFactory.storeObject({
 									name: myObject2.name, 

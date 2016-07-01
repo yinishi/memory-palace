@@ -15,7 +15,7 @@ module.exports = function ($state, authFactory, $rootScope, modalFactory) {
                     scope.user = user;
                 });
             }
-            $rootScope.$on('user', function(user){
+            $rootScope.$on('newUser', function(event, user){
                 scope.user = user;
             });
             setUser();
