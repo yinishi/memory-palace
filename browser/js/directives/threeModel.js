@@ -227,7 +227,7 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 				event.preventDefault();
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
-				var intersects = raycaster.intersectObjects( objects);
+				let intersects = raycaster.intersectObjects( objects);
 				if(messageShown){
 					messageShown.visible = false;
 					messageShown = false;
@@ -303,19 +303,6 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 					}
 				}
 			}
-			// function onMouseOver(event){
-			// 	// console.log(messagesArray, "messagesArray")
-			// 	event.preventDefault();
-			// 	mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
-			// 	raycaster.setFromCamera( mouse, camera );
-			// 	var intersects = raycaster.intersectObjects( objects);
-			// 	if ( intersects.length > 0 ) {
-			// 		var intersect = intersects[ 0 ];
-			// 	console.log(intersect, "intersect text");
-			// }
-
-			// }
-
 
 			// useful codes: w = 87, s = 83, 32 = space, up = 38, down = 40, left = 37, right = 39
 			function onKeyDown ( event ) {
