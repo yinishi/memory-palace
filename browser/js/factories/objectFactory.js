@@ -26,7 +26,6 @@ function load (link, scale, name) {
   }
   var invisibleCube = new THREE.Mesh(new THREE.BoxGeometry(50, 50, 50), 
         new THREE.MeshBasicMaterial({visible: false})); 
-
   var cache = {};
 
   var a = {
@@ -60,9 +59,10 @@ function load (link, scale, name) {
         {name: 'tricycle', image: "./browser/images/tricycle.jpeg", scale: 35}
       ];
     },
-    invsibleObject: invisibleCube,
+    invisibleObject: invisibleCube,
     currentObject: invisibleCube,
     setCurrentObject: function(object){
+
       var name = object.name;
       var scale = object.scale;
       (cache[name] || (cache[name] = load(`/browser/objects/${name}/${name}.json`, scale)))
@@ -74,9 +74,7 @@ function load (link, scale, name) {
         .then(obj => {
         this.previousObject = this.currentObject;
         this.currentObject = obj;
-      })
-        
-      //a[name].then(obj => this.currentObject = obj);
+      });
     },
     load: load
   };
