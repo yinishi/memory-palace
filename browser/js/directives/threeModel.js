@@ -1,5 +1,8 @@
 'use strict'
 
+var THREE_Text = require('three-text2D')
+var Text2D = THREE_Text.Text2D;
+var textAlign = THREE_Text.textAlign;
 module.exports = function (palacesFactory, $window, roomFactory, tableFactory, objectFactory, shelfFactory,	$document, storingFactory) {
 	 return {
         restrict: 'E',
@@ -47,7 +50,6 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 
 			var prevTime = performance.now();
 			var velocity = new THREE.Vector3();
-
 
 			// 3D CONTROLS - PointerLockControls
 			function PointerLockControls ( camera ) {
@@ -181,6 +183,15 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			let room = roomInstance.container;
 			room.position.set(10, 0, -100);
 			scene.add(room);
+			//TEXT
+
+			var text = new Text2D("Hello world!", {font: '30px Arial', fillStyle: '#000000', antialias: true })
+			text.material.alphaTest = 0.1;
+			text.scale.set(.3, .3, .3);
+			text.position.set(10,30,-100);
+			text.rotation.set(0,0,0);
+			console.log(text, "text")
+			scene.add(text);
 
 			objects = objects.concat(roomInstance.objects);
 
