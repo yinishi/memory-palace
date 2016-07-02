@@ -278,13 +278,16 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 								if (objectFactory.currentObject.message) {
 									var messageRaycaster = new THREE.Raycaster();
 									var text = textFactory(intersect.point, objectFactory.currentObject.message);
+									text.lookAt( camera.position );
 									var sprite = new SpriteText2D("SPRITE", { align: textAlign.center,  font: '40px Arial', fillStyle: '#000000' , antialias: false })
 									sprite.material.alphaTest = 0.1;
 									sprite.scale.set(.3, .3, .3);
 									sprite.position.copy( text.position );
 									sprite.position.addScalar( 3/2 );
 									sprite.visible = true;
-									scene.add(sprite)				
+									sprite.lookAt( camera.position );
+									scene.add(sprite)		
+
 									raycaster.setFromCamera( text.position, sprite );
 									var messageIntersections = raycaster.intersectObjects( walls );
 									console.log("message", text.position, messageIntersections);
