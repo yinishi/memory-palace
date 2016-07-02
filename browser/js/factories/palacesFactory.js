@@ -133,11 +133,24 @@ module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory)
 			kitchenInner1.position.x = 75 -.5 + 75 + 75/2 + 75 + 75/2;
 			this.addToScene(kitchenInner1);
 
-			var kitchenOuter1 = new wallFactory.Wall(75, wallHeight, whiteStone, false, false)
+			var kitchenOuter1 = new wallFactory.Wall(75, wallHeight, whiteStone, false, true)
 			.wall;
 			kitchenOuter1.position.z = ((-75/2)- 75) - 225/2 - 75 - 75/2 +.25 -75/2 + 25 -1;
 			kitchenOuter1.position.x = 75 -.5 + 75 + 75/2 + 75 + 75/2 + 75/2;
 			this.addToScene(kitchenOuter1);
+
+			var kitchenOuter2 = new wallFactory.Wall(75, wallHeight, whiteStone, false, false)
+			.wall;
+			kitchenOuter2.position.z = ((-75/2)- 75) - 225/2 - 75 - 75/2 +.25 -75/2 + 25 -1;
+			kitchenOuter2.position.x = 75 -.5 + 75 + 75/2 + 75 + 75/2 + 75/2 + 75;
+			this.addToScene(kitchenOuter2);
+
+			var kitchenInner2 = new wallFactory.Wall(175, wallHeight, woodtex, false, false)
+			.clockwiseY()
+			.wall;
+			kitchenInner2.position.z = ((-75/2)- 75) - 225/2 - 75/2 -.25;
+			kitchenInner2.position.x = 75 -.5 + 75 + 75/2 + 75 + 75/2+100 + 75/2 + 12;
+			this.addToScene(kitchenInner2);
 
 	}
 
