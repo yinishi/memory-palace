@@ -3,7 +3,7 @@
 var THREE_Text = require('three-text2D')
 var Text2D = THREE_Text.Text2D;
 var textAlign = THREE_Text.textAlign;
-
+var SpriteText2D = THREE_Text.SpriteText2D;
 module.exports = function (textFactory, palacesFactory, $window, roomFactory, objectFactory, shelfFactory,	$document, storingFactory, modalFactory, lightFactory) {
 	 return {
         restrict: 'E',
@@ -227,7 +227,7 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
 				let intersects = raycaster.intersectObjects(objects);
-				//var wallIntersections = raycaster.intersectObjects( walls );
+				var wallIntersections = raycaster.intersectObjects( walls );
 
 				if(messageShown){	
 					messageShown.visible = false;
@@ -257,7 +257,6 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 				raycaster.setFromCamera( mouse, camera );
 				var intersects = raycaster.intersectObjects( objects);
 				var wallIntersections = raycaster.intersectObjects( walls );
-				console.log("message", wallIntersections)
 				
 				//add check for if its in the wall
 				if ( intersects.length > 0 && wallIntersections.length <= 1) {
@@ -279,22 +278,29 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 								if (objectFactory.currentObject.message) {
 									var messageRaycaster = new THREE.Raycaster();
 									var text = textFactory(intersect.point, objectFactory.currentObject.message);
-									
-									raycaster.setFromCamera( text.position, camera );
+									var sprite = new SpriteText2D("SPRITE", { align: textAlign.center,  font: '40px Arial', fillStyle: '#000000' , antialias: false })
+									sprite.material.alphaTest = 0.1;
+									sprite.scale.set(.3, .3, .3);
+									sprite.position.copy( text.position );
+									sprite.position.addScalar( 3/2 );
+									sprite.visible = true;
+									scene.add(sprite)				
+									raycaster.setFromCamera( text.position, sprite );
 									var messageIntersections = raycaster.intersectObjects( walls );
+									console.log("message", text.position, messageIntersections);
 									//if its too close to a wall
-									if (messageIntersections.length > 0) {
-										//if its too close to the x 
-										if (messageIntersections[0].point.x < 0) {
-											text.position.x -= (messageIntersections[0].point.x)/2
-										}
-										else if (messageIntersections[0].point.y < 0) {
-											text.position.y -= (messageIntersections[0].point.y)/2
-										}
-									}
+									// if (messageIntersections.length > 0) {
+									// 	//if its too close to the x 
+									// 	if (messageIntersections[0].point.x < 0) {
+									// 		text.position.x -= (messageIntersections[0].point.x)/2
+									// 	}
+									// 	else if (messageIntersections[0].point.y < 0) {
+									// 		text.position.y -= (messageIntersections[0].point.y)
+									// 	}
+									// }
 									myObject2.messageMesh = text;
 									messagesArray.push(myObject2.messageMesh);
-									console.log(messageIntersections);
+									
 									scene.add(text);
 								}
 								
