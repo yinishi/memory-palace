@@ -200,7 +200,6 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 						objectFactory.load(`/browser/objects/${item.name}/${item.name}.json`, null, item.name)
 							.then(obj => {
 								objectFactory.setObjProps(obj, item)
-								obj.hi = "hi";
 								scene.add(obj);
 								scene.add(obj.messageMesh);
 								messagesArray.push(obj.messageMesh)
@@ -278,8 +277,7 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 								if (objectFactory.currentObject.message) {
 									var messageRaycaster = new THREE.Raycaster();
 									var text = textFactory(intersect.point, objectFactory.currentObject.message);
-									text.lookAt( camera.position );
-									var sprite = new SpriteText2D("SPRITE", { align: textAlign.center,  font: '40px Arial', fillStyle: '#000000' , antialias: false })
+									var sprite = new SpriteText2D("SPRITE", { align: textAlign.left,  font: '40px Arial', fillStyle: '#000000' , antialias: false })
 									sprite.material.alphaTest = 0.1;
 									sprite.scale.set(.3, .3, .3);
 									sprite.position.copy( text.position );
@@ -288,9 +286,9 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 									sprite.lookAt( camera.position );
 									scene.add(sprite)		
 
-									raycaster.setFromCamera( text.position, sprite );
-									var messageIntersections = raycaster.intersectObjects( walls );
-									console.log("message", text.position, messageIntersections);
+									// raycaster.setFromCamera( text.position, sprite );
+									//var messageIntersections = raycaster.intersectObjects( walls );
+									console.log("message", text.position);
 									//if its too close to a wall
 									// if (messageIntersections.length > 0) {
 									// 	//if its too close to the x 
