@@ -201,6 +201,49 @@ module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory)
 			b3Inner4.position.z = ((-75/2)- 75) - 225/2 - 75 - 75/2 +.25 -75/2 + 25 -1 + 175;
 			b3Inner4.position.x = 75/2 + 525 - 75 - 1;
 			this.addToScene(b3Inner4);
+
+			// SUNROOM
+
+			var sunroomOuter1 = new wallFactory.Wall(175/2, wallHeight, whiteStone, false, true)
+			.counterClockwiseY()
+			.wall;
+			sunroomOuter1.position.z = ((-75/2)- 75) - 225/2 - 75/2 -.25 - 0.5 + 150 - 75/4 + 0.5;
+			sunroomOuter1.position.x = 600;
+			this.addToScene(sunroomOuter1);
+
+			var sunroomOuter2 = new wallFactory.Wall(175/2, wallHeight, whiteStone, false, true)
+			.clockwiseY()
+			.wall;
+			sunroomOuter2.position.z = ((-75/2)- 75) - 225/2 - 75/2 -.25 - 0.5 + 150 - 75/4 + 0.5 + 75 + 25/2;
+			sunroomOuter2.position.x = 600;
+			this.addToScene(sunroomOuter2);
+
+			var sunroomOuter3 = new wallFactory.Wall(75 -1, wallHeight, whiteStone, false, true)
+			.wall;
+			sunroomOuter3.position.z = ((-75/2)- 75) - 225/2 - 75 - 75/2 +.25 -75/2 + 25 -1 + 175 + 175;
+			sunroomOuter3.position.x = 75/2 + 525;
+			this.addToScene(sunroomOuter3);
+
+			var sunroomInner1 = new wallFactory.Wall(75, wallHeight, woodtex, false, true)
+			.counterClockwiseY()
+			.wall;
+			sunroomInner1.position.z = ((-75/2)- 75) - 225/2 - 75/2 -.25 - 0.5 + 150 - 75/4 + 0.5 - 25/4;
+			sunroomInner1.position.x = 600 - 75;
+			this.addToScene(sunroomInner1);
+
+			var sunroomDoor = new wallFactory.Wall(75, wallHeight, woodtex, true, false)
+			.clockwiseY()
+			.wall;
+			sunroomDoor.position.z = ((-75/2)- 75) - 225/2 - 75/2 -.25 - 0.5 + 150 - 75/2 + 0.5 + 75 + 25/2;
+			sunroomDoor.position.x = 600 - 75;
+			this.addToScene(sunroomDoor);
+
+			var sunroomInner3 = new wallFactory.Wall(25, wallHeight, woodtex, false, false)
+			.clockwiseY()
+			.wall;
+			sunroomInner3.position.z = ((-75/2)- 75) - 225/2 - 75/2 -.25 - 0.5 + 150 - 75/4 + 0.5 + 75 + 50 - 25/4;
+			sunroomInner3.position.x = 600  - 75;
+			this.addToScene(sunroomInner3);
 	}
 
 	function loadTexture(file) {
