@@ -152,6 +152,19 @@ module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory)
 			kitchenInner2.position.x = 75 -.5 + 75 + 75/2 + 75 + 75/2+100 + 75/2 + 12;
 			this.addToScene(kitchenInner2);
 
+			//BEDROOM 3
+			var bedroomOuter1 = new wallFactory.Wall(75, wallHeight, whiteStone, false, false)
+			.wall;
+			bedroomOuter1.position.z = ((-75/2)- 75) - 225/2 - 75 - 75/2 +.25 -75/2 + 25 -1;
+			bedroomOuter1.position.x = 75 -.5 + 75 + 75/2 + 75 + 75/2 + 75/2 + 75 + 75;
+			this.addToScene(bedroomOuter1);
+
+			var bedroomOuter2 = new wallFactory.Wall(75, wallHeight, whiteStone, false, true)
+			.wall;
+			bedroomOuter2.position.z = ((-75/2)- 75) - 225/2 - 75 - 75/2 +.25 -75/2 + 25 -1;
+			bedroomOuter2.position.x = 75 -.5 + 75 + 75/2 + 75 + 75/2 + 75/2 + 75 + 75 + 75;
+			this.addToScene(bedroomOuter2);
+
 	}
 
 	function loadTexture(file) {
