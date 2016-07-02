@@ -90,7 +90,6 @@ function load (link, scale, name, message) {
         obj.storingId = item.id;
         let text = textFactory(obj.position, item.message);
         obj.messageMesh = text;
-        
     }
   };
 

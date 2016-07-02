@@ -208,13 +208,10 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 					});
 				}
 			});
-				console.log(objects)
-				
 
 			/////////////////////
 			 // EVENT LIS
 			/////////////////////
-
 			e.on( 'mousemove', onDocumentMouseMove);
 			e.on( 'mousedown', onDocumentMouseDown);
 			e.on('wheel', onWheel);

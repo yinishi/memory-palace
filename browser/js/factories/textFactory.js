@@ -10,7 +10,7 @@ module.exports = function () {
 		text.position.copy( position );
 		text.position.addScalar( 3/2 );
 		text.position.y += 20;
-		// text.visible = false;
+		text.visible = false;
 		return text
 	}
 }
