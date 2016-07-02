@@ -63,6 +63,5 @@ module.exports = function() {
       this.container.add(shelf);
       this.objects.push(shelf);
     }
-
   }
 }

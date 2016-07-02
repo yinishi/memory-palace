@@ -116,7 +116,6 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 				WIDTH = w
 				HEIGHT = h
 			}
-
 			// SKYDOME
 				var vertexShader = document.getElementById( 'vertexShader' ).textContent;
 				var fragmentShader = document.getElementById( 'fragmentShader' ).textContent;
@@ -179,6 +178,7 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 			// CREATE A ROOM
 			var roomInstance = new PALACE.defaultPalace().palace
 			let room = roomInstance.container;
+			let walls = roomInstance.objects;
 			room.position.set(10, 0, -100);
 			scene.add(room);
 
@@ -203,6 +203,7 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 								obj.hi = "hi";
 								scene.add(obj);
 								scene.add(obj.messageMesh);
+								messagesArray.push(obj.messageMesh)
 								objects.push(obj);
 						});
 					});
@@ -212,6 +213,7 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 			/////////////////////
 			 // EVENT LIS
 			/////////////////////
+
 			e.on( 'mousemove', onDocumentMouseMove);
 			e.on( 'mousedown', onDocumentMouseDown);
 			e.on('wheel', onWheel);
@@ -224,12 +226,16 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 				event.preventDefault();
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
-				let intersects = raycaster.intersectObjects( objects);
-				if(messageShown){
+				let intersects = raycaster.intersectObjects(objects);
+				var wallIntersections = raycaster.intersectObjects( walls );
+				console.log(wallIntersections);
+
+				if(messageShown){	
 					messageShown.visible = false;
 					messageShown = false;
 				}
-				if (intersects.length > 0 ) {
+				//add check for if its in the wall
+				if (intersects.length > 0) {
 					console.log(intersects[0].object.messageMesh)
 					if(intersects[0].object.messageMesh && !messageShown) {
 						messageShown = intersects[0].object.messageMesh;
@@ -251,8 +257,17 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
 				var intersects = raycaster.intersectObjects( objects);
+				var wallIntersections = raycaster.intersectObjects( walls );
+				
+								//add check for if its in the wall
+				if ( intersects.length > 0 && wallIntersections<2) {
+					if (objectFactory.currentObject.messageMesh) {
+						let messageMesh = objectFactory.currentObject.messageMesh
+						let messageRayCaster = new THREE.Raycaster(messageMesh, camera);
+						let messageIntersects = raycaster.intersectObjects( objects );
+						console.log("test", wallIntersections);
 
-				if ( intersects.length > 0 ) {
+					}
 					var intersect = intersects[ 0 ];
 					// delete cube
 					if ( event.originalEvent.shiftKey ) {
@@ -271,11 +286,11 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 								var myObject2 = objectFactory.currentObject.clone();
 								myObject2.position.copy( intersect.point ).add( intersect.face.normal );
 								myObject2.position.addScalar( 3/2 );
-								console.log(objectFactory.currentObject.message, "message")
-
+								console.log(objectFactory.currentObject.message, "message");
 								//TEXT
 								var text = textFactory(intersect.point, objectFactory.currentObject.message);
 								myObject2.messageMesh = text;
+								messagesArray.push(obj.messageMesh);
 								scene.add( myObject2 );
 								scene.add(text);
 
@@ -295,7 +310,7 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 							}
 							// exchanging object for invisible cube (invisble pointer)
 							objectFactory.previousObject = objectFactory.currentObject;
-								objectFactory.currentObject = objectFactory.invisibleObject;
+							objectFactory.currentObject = objectFactory.invisibleObject;
 
 					}
 				}

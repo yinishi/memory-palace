@@ -66,7 +66,10 @@ module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory)
 			mainRoom.container.add(wall5);
 			mainRoom.container.add(wall6);
 			mainRoom.container.add(wall7);
-			
+			mainRoom.objects.push(wall7);
+			mainRoom.objects.push(wall6);
+			mainRoom.objects.push(wall5);
+			mainRoom.objects.push(wall4);
 
 			this.palace = mainRoom;
 
