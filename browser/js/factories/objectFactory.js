@@ -1,8 +1,8 @@
 'use strict'
 
-module.exports = function(){
+module.exports = function(textFactory){
 
-function load (link, scale, name) {
+function load (link, scale, name, message) {
     var loader = new THREE.ObjectLoader();
     return new Promise(function (res, rej) {
       loader.load(link, function(object){
@@ -12,7 +12,10 @@ function load (link, scale, name) {
           });
         }
         else object.scale.set(scale,scale,scale);
-    
+
+        // if (message) {
+        //   object.messageMesh = textFactory(item.message)
+        // } 
         var boundingBox = new THREE.BoundingBoxHelper(object);
         boundingBox.add(object);
         boundingBox.update();

@@ -4,7 +4,7 @@ var THREE_Text = require('three-text2D')
 var Text2D = THREE_Text.Text2D;
 var textAlign = THREE_Text.textAlign;
 
-module.exports = function (palacesFactory, $window, roomFactory, tableFactory, objectFactory, shelfFactory,	$document, storingFactory) {
+module.exports = function (textFactory, palacesFactory, $window, roomFactory, objectFactory, shelfFactory,	$document, storingFactory, modalFactory) {
 	 return {
         restrict: 'E',
         	scope: {
@@ -195,59 +195,38 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			scene.add(shelf);
 			objects = objects.concat(shelfInstance.objects);
 
-
-
 			//RETRIVE STORED OBJECTS
 			storingFactory.retrieveObjects()
-				.then(function(items){
-					if(Array.isArray(items)){
-						items.forEach(function(item){
-							return objectFactory.load(`/browser/objects/${item.name}/${item.name}.json`, null, item.name)
-								.then(function(obj){
-									// var y = item.positionY
-									obj.position.set(item.positionX, item.positionY, item.positionZ);
-									// obj.position.y += 20;
-									obj.rotation.set(item.rotationX, item.rotationY, item.rotationZ);
-									obj.scale.set(item.scaleX, item.scaleY, item.scaleZ);
-									obj.storingId = item.id;
-									scene.add(obj);
-									// console.log(item.message, "message", item, "obj")
-									//add message
-									var text = new Text2D(item.message, {font: '30px Arial', fillStyle: '#000000', antialias: true })
-									text.material.alphaTest = 0.1;
-									text.scale.set(.3, .3, .3);
-									var textY = item.positionY+20;
-									text.position.set(item.positionX, textY , item.positionZ);
-									// text.position.y += 20;
-									// text.visible = false;
-									console.log(obj.position, "obj", text.position, "text")
-									obj.messageMesh = text;
-									
-									scene.add(text);
-									
-									objects.push(obj);
-									});
+			.then(function(items){
+				if(Array.isArray(items)){
+					var objects = items.map(function(item){
+						return objectFactory.load(`/browser/objects/${item.name}/${item.name}.json`, null, item.name)
+							.then(obj => {
+								let positionX = parseInt(item.positionX);
+								let positionY = parseInt(item.positionY);
+								let positionZ = parseInt(item.positionZ);
 
-								// //TEXT
-								// var text = new Text2D(objectFactory.currentObject.message, {font: '30px Arial', fillStyle: '#000000', antialias: true })
-								// text.material.alphaTest = 0.1;
-								// text.scale.set(.3, .3, .3);
-								// text.position.copy( intersect.point ).add( intersect.face.normal );
-								// text.position.addScalar( 3/2 );
-								// text.position.y += 20;
-								// text.visible = false;
-								// myObject2.messageMesh = text;
-								// scene.add( myObject2 );
-								// scene.add(text);
-								
+								obj.position.set(positionX, positionY, positionZ);
+								obj.rotation.set(item.rotationX, item.rotationY, item.rotationZ);
+								obj.scale.set(item.scaleX, item.scaleY, item.scaleZ);
+								obj.storingId = item.id;
+
+
+
+								let text = textFactory(obj.position, item.message);
+								obj.messageMesh = text;
+								scene.add(obj);
+								scene.add(text);
+								objects.push(obj);
 						});
-					
-					}
-
-				});
+					});
+					// return Promise.all(objects);
+				}
+			});
+			
 
 			/////////////////////
-			/* EVENT LISTENERS */
+			 // EVENT LIS
 			/////////////////////
 
 			e.on( 'mousemove', onDocumentMouseMove);
@@ -267,11 +246,8 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 				}
 				if (intersects.length > 0 ) {
 					if(intersects[0].object.messageMesh && !messageShown) {
-
 						messageShown = intersects[0].object.messageMesh;
 						messageShown.visible = true;
-						console.log("here", intersects[0].object.messageMesh.visible)
-						console.log("messageShown", messageShown.visible)
 					}
 					if(!objectFactory.currentObject) objectFactory.currentObject = objectFactory.invisibleObject; 
 					var intersect = intersects[ 0 ];
@@ -283,11 +259,11 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			}
 
 			function onDocumentMouseDown( event ) {
+			if(modalFactory.getMessageModal().data){
 				event.preventDefault();
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
 				var intersects = raycaster.intersectObjects( objects);
-				console.log(intersects, "intersects")
 				if ( intersects.length > 0 ) {
 					var intersect = intersects[ 0 ];
 					// delete cube
@@ -309,13 +285,7 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 								console.log(objectFactory.currentObject.message, "message")
 
 								//TEXT
-								var text = new Text2D(objectFactory.currentObject.message, {font: '30px Arial', fillStyle: '#000000', antialias: true })
-								text.material.alphaTest = 0.1;
-								text.scale.set(.3, .3, .3);
-								text.position.copy( intersect.point ).add( intersect.face.normal );
-								text.position.addScalar( 3/2 );
-								text.position.y += 20;
-								text.visible = false;
+								var text = textFactory(intersect.point, objectFactory.currentObject.message);
 								myObject2.messageMesh = text;
 								scene.add( myObject2 );
 								scene.add(text);
@@ -341,10 +311,11 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 					}
 				}
 			}
+		}
 
 			// useful codes: w = 87, s = 83, 32 = space, up = 38, down = 40, left = 37, right = 39
 			function onKeyDown ( event ) {
-				if(!modalFactory.messageModal.data){
+				if(modalFactory.getMessageModal().data){
 					switch ( event.keyCode ) {
 						// deleting objects
 						case 16: // shift
@@ -425,7 +396,7 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			}
 
 			function onKeyUp (event) {
-				if(!modalFactory.messageModal.data){
+				if(modalFactory.getMessageModal().data){
 					switch( event.keyCode ) {
 
 						// reset move forward
@@ -451,7 +422,7 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			}
 
 			function onWheel($event){
-				if(!modalFactory.messageModal.data){
+				if(modalFactory.getMessageModal().data){
 					var event = $event.originalEvent;
 
 					if(event.ctrlKey === true){ //pinch
@@ -472,7 +443,7 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			}		
 
 			/////////////////////
-			/* RENDER FUNCTION */
+			// RENDER FUNCTION 
 			/////////////////////
 
 			var raycasterCamera;
