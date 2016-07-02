@@ -199,25 +199,12 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 					var objects = items.map(function(item){
 						return objectFactory.load(`/browser/objects/${item.name}/${item.name}.json`, null, item.name)
 							.then(obj => {
-								let positionX = parseInt(item.positionX);
-								let positionY = parseInt(item.positionY);
-								let positionZ = parseInt(item.positionZ);
-
-								obj.position.set(positionX, positionY, positionZ);
-								obj.rotation.set(item.rotationX, item.rotationY, item.rotationZ);
-								obj.scale.set(item.scaleX, item.scaleY, item.scaleZ);
-								obj.storingId = item.id;
-
-
-
-								let text = textFactory(obj.position, item.message);
-								obj.messageMesh = text;
+								objectFactory.setObjProps(obj, item)
 								scene.add(obj);
-								scene.add(text);
+								scene.add(obj.messageMesh);
 								objects.push(obj);
 						});
 					});
-					// return Promise.all(objects);
 				}
 			});
 			
@@ -231,7 +218,9 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 			e.on('wheel', onWheel);
 			document.addEventListener( 'keydown', onKeyDown, false );
 			document.addEventListener( 'keyup', onKeyUp, false );
+
 			let messageShown = false;
+
 			function onDocumentMouseMove( event ) {
 				event.preventDefault();
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
@@ -256,18 +245,21 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 			}
 
 			function onDocumentMouseDown( event ) {
+
 			if(modalFactory.getMessageModal().data){
 				event.preventDefault();
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
 				var intersects = raycaster.intersectObjects( objects);
+
 				if ( intersects.length > 0 ) {
 					var intersect = intersects[ 0 ];
 					// delete cube
 					if ( event.originalEvent.shiftKey ) {
-					
+						//sv floor includes retrieved objects
+						console.log("deleting", !floorObjects.includes(intersect.object));
 						if ( !roomInstance.objects.includes(intersect.object) && !floorObjects.includes(intersect.object)) {
-						
+							
 							scene.remove( intersect.object );
 							storingFactory.deleteObject(intersect.object.storingId);
 							objects.splice( objects.indexOf( intersect.object ), 1 );
