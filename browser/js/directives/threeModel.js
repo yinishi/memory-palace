@@ -18,7 +18,6 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 			const PALACE = palacesFactory;
 			var PI_2 = Math.PI / 2;
 			let objects = [];
-			let messagesArray = [];
 
 			// CREATING SCENE
 			const scene = new THREE.Scene();
@@ -203,7 +202,6 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 								obj.hi = "hi";
 								scene.add(obj);
 								scene.add(obj.messageMesh);
-								messagesArray.push(obj.messageMesh)
 								objects.push(obj);
 						});
 					});
@@ -228,15 +226,13 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 				raycaster.setFromCamera( mouse, camera );
 				let intersects = raycaster.intersectObjects(objects);
 				var wallIntersections = raycaster.intersectObjects( walls );
-				console.log(wallIntersections);
-
+				
 				if(messageShown){	
 					messageShown.visible = false;
 					messageShown = false;
 				}
 				//add check for if its in the wall
 				if (intersects.length > 0) {
-					console.log(intersects[0].object.messageMesh)
 					if(intersects[0].object.messageMesh && !messageShown) {
 						messageShown = intersects[0].object.messageMesh;
 						messageShown.visible = true;
@@ -259,20 +255,16 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 				var intersects = raycaster.intersectObjects( objects);
 				var wallIntersections = raycaster.intersectObjects( walls );
 				
-								//add check for if its in the wall
-				if ( intersects.length > 0 && wallIntersections<2) {
+				//add check for if its in the wall
+				if ( intersects.length > 0 && wallIntersections.length<=1) {
 					if (objectFactory.currentObject.messageMesh) {
 						let messageMesh = objectFactory.currentObject.messageMesh
 						let messageRayCaster = new THREE.Raycaster(messageMesh, camera);
 						let messageIntersects = raycaster.intersectObjects( objects );
-						console.log("test", wallIntersections);
-
 					}
 					var intersect = intersects[ 0 ];
 					// delete cube
 					if ( event.originalEvent.shiftKey ) {
-						//sv floor includes retrieved objects
-						console.log("deleting", intersect.object.storingId);
 						if ( !roomInstance.objects.includes(intersect.object) && !floorObjects.includes(intersect.object)) {
 							
 							scene.remove( intersect.object );
@@ -286,14 +278,13 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 								var myObject2 = objectFactory.currentObject.clone();
 								myObject2.position.copy( intersect.point ).add( intersect.face.normal );
 								myObject2.position.addScalar( 3/2 );
-								console.log(objectFactory.currentObject.message, "message");
 								//TEXT
-								var text = textFactory(intersect.point, objectFactory.currentObject.message);
-								myObject2.messageMesh = text;
-								messagesArray.push(obj.messageMesh);
+								if (objectFactory.currentObject.message) {
+									var text = textFactory(intersect.point, objectFactory.currentObject.message);
+									myObject2.messageMesh = text;
+									scene.add(text);
+								}
 								scene.add( myObject2 );
-								scene.add(text);
-
 								objects.push( myObject2 );
 								storingFactory.storeObject({
 									name: myObject2.name, 
