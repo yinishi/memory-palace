@@ -133,6 +133,12 @@ module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory)
 			kitchenInner1.position.x = 75 -.5 + 75 + 75/2 + 75 + 75/2;
 			this.addToScene(kitchenInner1);
 
+			var kitchenOuter1 = new wallFactory.Wall(75, wallHeight, whiteStone, false, false)
+			.wall;
+			kitchenOuter1.position.z = ((-75/2)- 75) - 225/2 - 75 - 75/2 +.25 -75/2 + 25 -1;
+			kitchenOuter1.position.x = 75 -.5 + 75 + 75/2 + 75 + 75/2 + 75/2;
+			this.addToScene(kitchenOuter1);
+
 	}
 
 	function loadTexture(file) {
