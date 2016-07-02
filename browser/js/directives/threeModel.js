@@ -196,10 +196,11 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 			storingFactory.retrieveObjects()
 			.then(function(items){
 				if(Array.isArray(items)){
-					var objects = items.map(function(item){
-						return objectFactory.load(`/browser/objects/${item.name}/${item.name}.json`, null, item.name)
+					items.forEach(function(item){
+						objectFactory.load(`/browser/objects/${item.name}/${item.name}.json`, null, item.name)
 							.then(obj => {
 								objectFactory.setObjProps(obj, item)
+								obj.hi = "hi";
 								scene.add(obj);
 								scene.add(obj.messageMesh);
 								objects.push(obj);
@@ -207,7 +208,8 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 					});
 				}
 			});
-			
+				console.log(objects)
+				
 
 			/////////////////////
 			 // EVENT LIS
@@ -231,6 +233,7 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 					messageShown = false;
 				}
 				if (intersects.length > 0 ) {
+					console.log(intersects[0].object.messageMesh)
 					if(intersects[0].object.messageMesh && !messageShown) {
 						messageShown = intersects[0].object.messageMesh;
 						messageShown.visible = true;
@@ -257,7 +260,7 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 					// delete cube
 					if ( event.originalEvent.shiftKey ) {
 						//sv floor includes retrieved objects
-						console.log("deleting", !floorObjects.includes(intersect.object));
+						console.log("deleting", intersect.object.storingId);
 						if ( !roomInstance.objects.includes(intersect.object) && !floorObjects.includes(intersect.object)) {
 							
 							scene.remove( intersect.object );
