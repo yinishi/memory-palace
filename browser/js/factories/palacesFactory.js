@@ -211,17 +211,17 @@ module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory)
 			sunroomOuter1.position.x = 600;
 			this.addToScene(sunroomOuter1);
 
-			var sunroomOuter2 = new wallFactory.Wall(175/2, wallHeight, whiteStone, false, true)
+			var sunroomOuter2 = new wallFactory.Wall(175/2 +1, wallHeight, whiteStone, false, true)
 			.clockwiseY()
 			.wall;
 			sunroomOuter2.position.z = ((-75/2)- 75) - 225/2 - 75/2 -.25 - 0.5 + 150 - 75/4 + 0.5 + 75 + 25/2;
 			sunroomOuter2.position.x = 600;
 			this.addToScene(sunroomOuter2);
 
-			var sunroomOuter3 = new wallFactory.Wall(75 -1, wallHeight, whiteStone, false, true)
+			var sunroomOuter3 = new wallFactory.Wall(75, wallHeight, whiteStone, false, true)
 			.wall;
-			sunroomOuter3.position.z = ((-75/2)- 75) - 225/2 - 75 - 75/2 +.25 -75/2 + 25 -1 + 175 + 175;
-			sunroomOuter3.position.x = 75/2 + 525;
+			sunroomOuter3.position.z = ((-75/2)- 75) - 225/2 - 75 - 75/2 +.25 -75/2 + 25 -1 + 175 + 175 + 1.25;
+			sunroomOuter3.position.x = 75/2 + 525 + .5;
 			this.addToScene(sunroomOuter3);
 
 			var sunroomInner1 = new wallFactory.Wall(75, wallHeight, woodtex, false, true)
@@ -238,12 +238,38 @@ module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory)
 			sunroomDoor.position.x = 600 - 75;
 			this.addToScene(sunroomDoor);
 
-			var sunroomInner3 = new wallFactory.Wall(25, wallHeight, woodtex, false, false)
+			var sunroomInner3 = new wallFactory.Wall(25.5, wallHeight, woodtex, false, false)
 			.clockwiseY()
 			.wall;
 			sunroomInner3.position.z = ((-75/2)- 75) - 225/2 - 75/2 -.25 - 0.5 + 150 - 75/4 + 0.5 + 75 + 50 - 25/4;
 			sunroomInner3.position.x = 600  - 75;
 			this.addToScene(sunroomInner3);
+
+			//MAIN HALL
+			var mainHallOuter1 = new wallFactory.Wall(75, wallHeight, whiteStone, false, false)
+			.wall;
+			mainHallOuter1.position.z = ((-75/2)- 75) - 225/2 - 75 - 75/2 +.25 -75/2 + 25 -1 + 175 + 175 +1.25;
+			mainHallOuter1.position.x = 525 - 75/2 + .5;
+			this.addToScene(mainHallOuter1);
+
+			var mainHallOuter2 = new wallFactory.Wall(75, wallHeight, whiteStone, false, false)
+			.wall;
+			mainHallOuter2.position.z = ((-75/2)- 75) - 225/2 - 75 - 75/2 +.25 -75/2 + 25 -1 + 175 + 175 +1.25;
+			mainHallOuter2.position.x = 525 - 75/2 + .5 -75;
+			this.addToScene(mainHallOuter2);
+
+			var mainHallOuter3 = new wallFactory.Wall(75, wallHeight, whiteStone, true, false)
+			.wall;
+			mainHallOuter3.position.z = ((-75/2)- 75) - 225/2 - 75 - 75/2 +.25 -75/2 + 25 -1 + 175 + 175 +1.25;
+			mainHallOuter3.position.x = 525 - 75/2 + .5 -75 -75;
+			this.addToScene(mainHallOuter3);
+
+			var mainHallOuter4 = new wallFactory.Wall(151, wallHeight, whiteStone, false, false)
+			.wall;
+			mainHallOuter4.position.z = ((-75/2)- 75) - 225/2 - 75 - 75/2 +.25 -75/2 + 25 -1 + 175 + 175 +1.25;
+			mainHallOuter4.position.x = 525 - 75/2 + .5 -75 -75 -113;
+			this.addToScene(mainHallOuter4);
+
 	}
 
 	function loadTexture(file) {
