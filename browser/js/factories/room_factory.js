@@ -36,7 +36,9 @@ module.exports = function(wallFactory) {
 	  let wall3 = new THREE.Mesh(wallGeometry, material)
 	  wall3.rotation.set(Math.PI / 2, 0, Math.PI / 2)
 	  wall3.position.set(0, wallSize, wallSize / 2)
-	  
+	  wall3.wall = "back"; 
+	  wall2.wall = "right"; 
+	  wall1.wall = "left"; 
 	  this.container.add(wall1);
 	  this.container.add(wall2);
 	  this.container.add(wall3);

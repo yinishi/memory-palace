@@ -227,8 +227,7 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
 				let intersects = raycaster.intersectObjects(objects);
-				var wallIntersections = raycaster.intersectObjects( walls );
-				console.log(wallIntersections);
+				//var wallIntersections = raycaster.intersectObjects( walls );
 
 				if(messageShown){	
 					messageShown.visible = false;
@@ -236,7 +235,7 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 				}
 				//add check for if its in the wall
 				if (intersects.length > 0) {
-					console.log(intersects[0].object.messageMesh)
+					//console.log(intersects[0].object.messageMesh)
 					if(intersects[0].object.messageMesh && !messageShown) {
 						messageShown = intersects[0].object.messageMesh;
 						messageShown.visible = true;
@@ -258,27 +257,17 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 				raycaster.setFromCamera( mouse, camera );
 				var intersects = raycaster.intersectObjects( objects);
 				var wallIntersections = raycaster.intersectObjects( walls );
+				console.log("message", wallIntersections)
 				
-								//add check for if its in the wall
-				if ( intersects.length > 0 && wallIntersections<2) {
-					if (objectFactory.currentObject.messageMesh) {
-						let messageMesh = objectFactory.currentObject.messageMesh
-						let messageRayCaster = new THREE.Raycaster(messageMesh, camera);
-						let messageIntersects = raycaster.intersectObjects( objects );
-						console.log("test", wallIntersections);
-
-					}
+				//add check for if its in the wall
+				if ( intersects.length > 0 && wallIntersections.length <= 1) {
 					var intersect = intersects[ 0 ];
 					// delete cube
 					if ( event.originalEvent.shiftKey ) {
-						//sv floor includes retrieved objects
-						console.log("deleting", intersect.object.storingId);
 						if ( !roomInstance.objects.includes(intersect.object) && !floorObjects.includes(intersect.object)) {
-							
 							scene.remove( intersect.object );
 							storingFactory.deleteObject(intersect.object.storingId);
 							objects.splice( objects.indexOf( intersect.object ), 1 );
-
 						}
 					// create cube
 					} else {						
@@ -286,13 +275,31 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 								var myObject2 = objectFactory.currentObject.clone();
 								myObject2.position.copy( intersect.point ).add( intersect.face.normal );
 								myObject2.position.addScalar( 3/2 );
-								console.log(objectFactory.currentObject.message, "message");
 								//TEXT
-								var text = textFactory(intersect.point, objectFactory.currentObject.message);
-								myObject2.messageMesh = text;
-								messagesArray.push(obj.messageMesh);
+								if (objectFactory.currentObject.message) {
+									var messageRaycaster = new THREE.Raycaster();
+									var text = textFactory(intersect.point, objectFactory.currentObject.message);
+									
+									raycaster.setFromCamera( text.position, camera );
+									var messageIntersections = raycaster.intersectObjects( walls );
+									//if its too close to a wall
+									if (messageIntersections.length > 0) {
+										//if its too close to the x 
+										if (messageIntersections[0].point.x < 0) {
+											text.position.x -= (messageIntersections[0].point.x)/2
+										}
+										else if (messageIntersections[0].point.y < 0) {
+											text.position.y -= (messageIntersections[0].point.y)/2
+										}
+									}
+									myObject2.messageMesh = text;
+									messagesArray.push(myObject2.messageMesh);
+									console.log(messageIntersections);
+									scene.add(text);
+								}
+								
+								console.log(objectFactory.currentObject.message, "message");
 								scene.add( myObject2 );
-								scene.add(text);
 
 								objects.push( myObject2 );
 								storingFactory.storeObject({
