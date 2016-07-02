@@ -55,8 +55,8 @@ function load (link, scale, name) {
         {name: 'dress', image: "./browser/images/dress.png", scale: .5},
         {name: 'soccer-ball', image: "./browser/images/soccer-ball.png", scale: .07},
         {name: 'car', image: "./browser/images/car.png", scale: 10},
-        {name: 'nike', image: "./browser/images/nike.jpg", scale: .5},
-        {name: 'tricycle', image: "./browser/images/tricycle.jpeg", scale: 35}
+        {name: 'nike', image: "./browser/images/nike.png", scale: .5},
+        {name: 'tricycle', image: "./browser/images/tricycle.png", scale: 35}
       ];
     },
     invisibleObject: invisibleCube,
