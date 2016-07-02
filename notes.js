@@ -34,7 +34,9 @@
 
 	// 			});
 
-
+function formatLink (name) {
+  return `/browser/objects/${name}/${name}.json`
+}
 
 	// // text.position.add( intersect.face.normal );
 	// 							// var text = new Text2D(objectFactory.currentObject.message, {align: textAlign.center, font: '30px Arial', fillStyle: '#000000', antialias: true })

@@ -4,13 +4,12 @@ var THREE_Text = require('three-text2D')
 var Text2D = THREE_Text.Text2D;
 var textAlign = THREE_Text.textAlign;
 
-module.exports = function (textFactory, palacesFactory, $window, roomFactory, objectFactory, shelfFactory,	$document, storingFactory, modalFactory) {
+module.exports = function (textFactory, palacesFactory, $window, roomFactory, objectFactory, shelfFactory,	$document, storingFactory, modalFactory, lightFactory) {
 	 return {
         restrict: 'E',
         	scope: {
         },
         link: function(s,e,a) {
-			/*  ESSENTIAL THREE.JS COMPONENTS */
 			// CONSTANTS
 			var WIDTH = $window.innerWidth;
 			var HEIGHT = $window.innerHeight;
@@ -26,10 +25,8 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 			scene.fog = new THREE.Fog( 0xffffff, 0, 750 );
 		
 			//ADDING LIGHT
-			var ambientLight = new THREE.AmbientLight( 0x606060 );
-			scene.add( ambientLight );
-			var directionalLight = new THREE.DirectionalLight( 0xaabbff );
-			directionalLight.position.set( 1, 0.75, 0.5 ).normalize();
+			scene.add( lightFactory.ambientLight() );
+			var directionalLight = lightFactory. directionalLight()
 			scene.add( directionalLight );
 
 			//ADDING CAMERA

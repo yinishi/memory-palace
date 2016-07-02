@@ -1,6 +1,9 @@
 'use strict'
 
 module.exports = function(textFactory){
+function formatLink (name) {
+  return `/browser/objects/${name}/${name}.json`
+}
 
 function load (link, scale, name, message) {
     var loader = new THREE.ObjectLoader();
@@ -12,14 +15,9 @@ function load (link, scale, name, message) {
           });
         }
         else object.scale.set(scale,scale,scale);
-
-        // if (message) {
-        //   object.messageMesh = textFactory(item.message)
-        // } 
         var boundingBox = new THREE.BoundingBoxHelper(object);
         boundingBox.add(object);
         boundingBox.update();
-      
         var cube = new THREE.Mesh(new THREE.BoxGeometry(boundingBox.box.max.x-boundingBox.box.min.x, boundingBox.box.max.y-boundingBox.box.min.y, boundingBox.box.max.z-boundingBox.box.min.z), 
         new THREE.MeshBasicMaterial({visible: false})); 
         cube.add(object); 
@@ -79,7 +77,20 @@ function load (link, scale, name, message) {
         this.currentObject = obj;
       });
     },
-    load: load
+    load: load, 
+    //add props form a retrieved db item to a threejs mesh
+
+    setObjProps: function (obj, item) {
+        let positionX = parseInt(item.positionX);
+        let positionY = parseInt(item.positionY);
+        let positionZ = parseInt(item.positionZ);
+        obj.position.set(positionX, positionY, positionZ);
+        obj.rotation.set(item.rotationX, item.rotationY, item.rotationZ);
+        obj.scale.set(item.scaleX, item.scaleY, item.scaleZ);
+        obj.storingId = item.id;
+        let text = textFactory(obj.position, item.message);
+        obj.messageMesh = text;
+    }
   };
 
   return a;
