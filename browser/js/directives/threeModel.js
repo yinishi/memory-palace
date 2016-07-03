@@ -28,9 +28,7 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			//ADDING LIGHT
 			var ambientLight = new THREE.AmbientLight( 0x606060 );
 			scene.add( ambientLight );
-			var directionalLight = new THREE.DirectionalLight( 0xaabbff );
-			directionalLight.position.set( 1, 0.75, 0.5 ).normalize();
-			scene.add( directionalLight );
+			
 
 			//ADDING CAMERA
 			let camera = new THREE.PerspectiveCamera(60, ASPECT, 1, 10000);
@@ -121,24 +119,24 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			}
 
 			// SKYDOME
-				var vertexShader = document.getElementById( 'vertexShader' ).textContent;
-				var fragmentShader = document.getElementById( 'fragmentShader' ).textContent;
-				var uniforms = {
-					topColor: 	 { type: "c", value: new THREE.Color( 0x0077ff ) },
-					bottomColor: { type: "c", value: new THREE.Color( 0xffffff ) },
-					offset:		 { type: "f", value: 400 },
-					exponent:	 { type: "f", value: 0.6 }
-				};
-				uniforms.topColor.value.copy( directionalLight.color );
-				var skyGeo = new THREE.SphereGeometry( 4000, 32, 15 );
-				var skyMat = new THREE.ShaderMaterial( {
-					uniforms: uniforms,
-					vertexShader: vertexShader,
-					fragmentShader: fragmentShader,
-					side: THREE.BackSide
-				} );
-				var sky = new THREE.Mesh( skyGeo, skyMat );
-				scene.add( sky );
+			var vertexShader = document.getElementById( 'vertexShader' ).textContent;
+			var fragmentShader = document.getElementById( 'fragmentShader' ).textContent;
+			var uniforms = {
+				topColor: 	 { type: "c", value: new THREE.Color( 0x0077ff ) },
+				bottomColor: { type: "c", value: new THREE.Color( 0xffffff ) },
+				offset:		 { type: "f", value: 400 },
+				exponent:	 { type: "f", value: 0.6 }
+			};
+			uniforms.topColor.value.set(0xaabbff);
+			var skyGeo = new THREE.SphereGeometry( 4000, 32, 15 );
+			var skyMat = new THREE.ShaderMaterial( {
+				uniforms: uniforms,
+				vertexShader: vertexShader,
+				fragmentShader: fragmentShader,
+				side: THREE.BackSide
+			} );
+			var sky = new THREE.Mesh( skyGeo, skyMat );
+			scene.add( sky );
 
 			// CREATE CONTAINER
 			e[0].appendChild(renderer.domElement);
@@ -149,26 +147,26 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			var raycaster = new THREE.Raycaster();
 			var mouse = new THREE.Vector2();
 
+			// ORIGIN BOX
+			var origin = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshBasicMaterial({color: 0x000000}))
+			scene.add(origin)
+
 			// COLORFUL FLOOR
 			var geometry = new THREE.PlaneGeometry( 2000, 2000, 100, 100 );
 			geometry.rotateX( - Math.PI / 2 );
 
 			for ( var i = 0, l = geometry.vertices.length; i < l; i ++ ) {
-
 				var vertex = geometry.vertices[ i ];
 				vertex.x += Math.random() * 20 - 10;
 				vertex.y += Math.random() * 2;
 				vertex.z += Math.random() * 20 - 10;
-
 			}
 
 			for ( var i = 0, l = geometry.faces.length; i < l; i ++ ) {
-
 				var face = geometry.faces[ i ];
 				face.vertexColors[ 0 ] = new THREE.Color().setHSL( Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
 				face.vertexColors[ 1 ] = new THREE.Color().setHSL( Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
 				face.vertexColors[ 2 ] = new THREE.Color().setHSL( Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
-
 			}
 
 			var material = new THREE.MeshBasicMaterial( { vertexColors: THREE.VertexColors } );
@@ -181,7 +179,7 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 
 			// CREATE A ROOM
 			var roomInstance = new PALACE.defaultPalace().palace;
-			roomInstance.position.set(0,100,0);
+			roomInstance.position.set(-300,75/2 + 1,100);
 			scene.add(roomInstance);
 
 			objects = objects.concat(roomInstance.objects);
