@@ -20,9 +20,7 @@ module.exports = function (objectFactory) {
 		getWelcomeControls: () => welcomeControls,
 		getMessageModal: () => messageModal,
 		toggleMessageModal : () => {
-			console.log("happening")
 			messageModal.data = !messageModal.data;
 		}
-		// open up input box
 	}
 }
