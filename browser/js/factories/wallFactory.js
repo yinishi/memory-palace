@@ -66,11 +66,9 @@ function Wall (wallLength, wallHeight, material, hasDoor, hasWindow) {
     this.wall.position.set(0, wallHeight*.3, 0);
   } else {
     //SOLID WALL
-    console.log('Bthis.wall',this.wall)
     let wallGeo = new THREE.BoxGeometry(wallLength, wallHeight, 1);
     let wallMesh = new THREE.Mesh(wallGeo, material);
     this.wall.add(wallMesh);
-    console.log('Athis.wall',this.wall)
   }
 }
 
