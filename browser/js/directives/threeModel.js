@@ -244,6 +244,7 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 					var intersect = intersects[ 0 ];
 					objectFactory.currentObject.position.copy( intersect.point ).add( intersect.face.normal );
 					objectFactory.currentObject.position.addScalar( 3/2 );
+					if(objectFactory.currentObject.yPosition) objectFactory.currentObject.position.y += objectFactory.currentObject.yPosition;
 					if(objectFactory.previousObject) scene.remove(objectFactory.previousObject);
 					scene.add(objectFactory.currentObject);
 				}
@@ -281,6 +282,7 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 								var myObject2 = objectFactory.currentObject.clone();
 								myObject2.position.copy( intersect.point ).add( intersect.face.normal );
 								myObject2.position.addScalar( 3/2 );
+								if(objectFactory.currentObject.yPosition) myObject2.position.y += objectFactory.currentObject.yPosition;
 								//TEXT
 								if (objectFactory.currentObject.message) {
 									var text = textFactory(intersect.point, objectFactory.currentObject.message);

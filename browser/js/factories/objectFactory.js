@@ -32,7 +32,7 @@ function load (link, scale, name, message) {
   var a = {
     getObjects : function(){
      return [
-        {name: 'teapot', image: "./browser/images/teapot.png", scale: .3},
+        {name: 'teapot', image: "./browser/images/teapot.png", scale: .3, yPosition: 3},
         {name: 'cat-mug', image: "./browser/images/cat-mug.png", scale: 3},    
         {name: 'mug', image: "./browser/images/mug.png", scale: .2},   
         {name: 'table', image: "./browser/images/table.png", scale: 10},
@@ -70,6 +70,7 @@ function load (link, scale, name, message) {
         .then(function(obj){
           obj.name = name;
           obj.storageScale = scale;
+          if(object.yPosition) obj.yPosition = object.yPosition;
           return obj;
         })
         .then(obj => {
