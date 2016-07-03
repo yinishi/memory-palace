@@ -15,7 +15,6 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 			var HEIGHT = $window.innerHeight;
 			var ASPECT = WIDTH / HEIGHT;
 			const UNITSIZE = 250;
-			const PALACE = palacesFactory;
 			var PI_2 = Math.PI / 2;
 			let objects = [];
 
@@ -24,11 +23,9 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 			scene.fog = new THREE.Fog( 0xffffff, 0, 750 );
 		
 			//ADDING LIGHT
-			var ambientLight = new THREE.AmbientLight( 0x606060 );
-			scene.add( ambientLight );
-			var directionalLight = new THREE.DirectionalLight( 0xaabbff );
- -			directionalLight.position.set( 1, 0.75, 0.5 ).normalize();
- -			scene.add( directionalLight );
+			scene.add( lightFactory.ambientLight() );
+			var directionalLight = lightFactory. directionalLight()
+			scene.add( directionalLight );
 
 			//ADDING CAMERA
 			let camera = new THREE.PerspectiveCamera(60, ASPECT, 1, 10000);
@@ -177,11 +174,15 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 			var floorObjects = [mesh];
 
 			// CREATE A ROOM
-			var roomInstance = new PALACE.defaultPalace().palace;
-			roomInstance.position.set(-300,75/2 + 1,100);
-			scene.add(roomInstance);
+			var palaceInstance = new palacesFactory.Palace();
+			var palace = palaceInstance.palace;
+			var walls = palaceInstance.objects;
+			palace.position.set(-300,75/2 + 1,100);
+			scene.add(palace);
 
-			// objects = objects.concat(roomInstance.objects);
+			console.log('palaceInstance.objects', palaceInstance.objects);
+
+			objects = objects.concat(palaceInstance.objects);
 			
 			// // DIAMOND SHELVES
 			// var shelfInstance = new shelfFactory();
@@ -255,7 +256,7 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
 				var intersects = raycaster.intersectObjects( objects);
-				// var wallIntersections = raycaster.intersectObjects( walls );
+				var wallIntersections = raycaster.intersectObjects( walls );
 				
 				//add check for if its in the wall
 				if ( intersects.length > 0 && wallIntersections.length<=1) {
@@ -267,7 +268,7 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 					var intersect = intersects[ 0 ];
 					// delete cube
 					if ( event.originalEvent.shiftKey ) {
-						if ( !roomInstance.objects.includes(intersect.object) && !floorObjects.includes(intersect.object)) {
+						if ( !palaceInstance.objects.includes(intersect.object) && !floorObjects.includes(intersect.object)) {
 							
 							scene.remove( intersect.object );
 							storingFactory.deleteObject(intersect.object.storingId);
