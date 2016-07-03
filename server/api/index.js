@@ -17,7 +17,7 @@ router.get('/items', function(req, res, next){
 					res.send(items);
 				});
 	}
-	else res.sendStatus(200);
+	else res.sendStatus(401);
 });
 
 //save an item

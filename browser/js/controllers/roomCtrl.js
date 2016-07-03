@@ -1,15 +1,21 @@
 module.exports = function ($scope, modalFactory, objectFactory) {
 	$scope.welcomeModal = modalFactory.getWelcomeControls();
   
-      $scope.objects = objectFactory.getObjects()
-      $scope.showCarousel = modalFactory.getCarousel()
-	
+    $scope.objects = objectFactory.getObjects();
+    $scope.showCarousel = modalFactory.getCarousel();
+	  $scope.showModal = modalFactory.getMessageModal();
+    $scope.sendMessage = function () {
+      objectFactory.currentObject.message = $scope.message;
+      modalFactory.toggleMessageModal();
+      console.log(objectFactory.currentObject, "objectFactory.currentObject")
+    }
   	$scope.setCurrentObject = function (object) {
-	  objectFactory.setCurrentObject(object);
-	}
+  	  objectFactory.setCurrentObject(object);
+      modalFactory.toggleMessageModal();
+	 }
 
   	$scope.toggle = function () {
-  		modalFactory.turnOffWelcome()  		
+  		modalFactory.turnOffWelcome();  		
   	}
   	$scope.getObjects = function () {
   		modalFactory.turnOffWelcome();

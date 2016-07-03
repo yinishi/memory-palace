@@ -25,8 +25,6 @@ module.exports = function(wallFactory) {
 	  let wall1 = new THREE.Mesh(outerWallGeometry, material2)
 	  wall1.rotation.set(0, Math.PI / 2, 0)
 	  wall1.position.set(-wallSize, 0, wallSize / 2)
-
-	  
 	  //green
 	  //let wallMaterial2 = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
 	  let wall2 = new THREE.Mesh(wallGeometry, material2)
@@ -42,6 +40,8 @@ module.exports = function(wallFactory) {
 	  this.container.add(wall1);
 	  this.container.add(wall2);
 	  this.container.add(wall3);
+	  this.objects.push(wall3);
+	  this.objects.push(wall2);
 	  this.objects.push(wall1);
 	  this.container.rotation.set(-Math.PI/2, 0, 0);
 	}
