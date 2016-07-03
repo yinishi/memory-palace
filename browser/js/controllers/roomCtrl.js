@@ -7,7 +7,7 @@ module.exports = function ($scope, modalFactory, objectFactory) {
     $scope.sendMessage = function () {
       objectFactory.currentObject.message = $scope.message;
       modalFactory.toggleMessageModal();
-      console.log(objectFactory.currentObject, "objectFactory.currentObject")
+      $scope.message = null;
     }
   	$scope.setCurrentObject = function (object) {
   	  objectFactory.setCurrentObject(object);
