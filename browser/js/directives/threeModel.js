@@ -4,31 +4,28 @@ var THREE_Text = require('three-text2D')
 var Text2D = THREE_Text.Text2D;
 var textAlign = THREE_Text.textAlign;
 
-module.exports = function (palacesFactory, $window, roomFactory, tableFactory, objectFactory, shelfFactory,	$document, storingFactory) {
+module.exports = function (textFactory, palacesFactory, $window, roomFactory, objectFactory, shelfFactory,	$document, storingFactory, modalFactory, lightFactory) {
 	 return {
         restrict: 'E',
         	scope: {
         },
         link: function(s,e,a) {
-			/*  ESSENTIAL THREE.JS COMPONENTS */
 			// CONSTANTS
 			var WIDTH = $window.innerWidth;
 			var HEIGHT = $window.innerHeight;
 			var ASPECT = WIDTH / HEIGHT;
 			const UNITSIZE = 250;
-			const PALACE = palacesFactory;
 			var PI_2 = Math.PI / 2;
 			let objects = [];
-			let messagesArray = [];
 
 			// CREATING SCENE
 			const scene = new THREE.Scene();
 			scene.fog = new THREE.Fog( 0xffffff, 0, 750 );
 		
 			//ADDING LIGHT
-			var ambientLight = new THREE.AmbientLight( 0x606060 );
-			scene.add( ambientLight );
-			
+			scene.add( lightFactory.ambientLight() );
+			var directionalLight = lightFactory. directionalLight()
+			scene.add( directionalLight );
 
 			//ADDING CAMERA
 			let camera = new THREE.PerspectiveCamera(60, ASPECT, 1, 10000);
@@ -117,7 +114,6 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 				WIDTH = w
 				HEIGHT = h
 			}
-
 			// SKYDOME
 			var vertexShader = document.getElementById( 'vertexShader' ).textContent;
 			var fragmentShader = document.getElementById( 'fragmentShader' ).textContent;
@@ -178,11 +174,15 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			var floorObjects = [mesh];
 
 			// CREATE A ROOM
-			var roomInstance = new PALACE.defaultPalace().palace;
-			roomInstance.position.set(-300,75/2 + 1,100);
-			scene.add(roomInstance);
+			var palaceInstance = new palacesFactory.Palace();
+			var palace = palaceInstance.palace;
+			var walls = palaceInstance.objects;
+			palace.position.set(-300,75/2 + 1,100);
+			scene.add(palace);
 
-			objects = objects.concat(roomInstance.objects);
+			console.log('palaceInstance.objects', palaceInstance.objects);
+
+			objects = objects.concat(palaceInstance.objects);
 			
 			// // DIAMOND SHELVES
 			// var shelfInstance = new shelfFactory();
@@ -194,24 +194,23 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 
 			//RETRIVE STORED OBJECTS
 			storingFactory.retrieveObjects()
-				.then(function(items){
-					if(Array.isArray(items)){
-						items.forEach(function(item){
-							return objectFactory.load(`/browser/objects/${item.name}/${item.name}.json`, null, item.name)
-								.then(function(obj){
-									obj.position.set(item.positionX, item.positionY, item.positionZ);
-									obj.rotation.set(item.rotationX, item.rotationY, item.rotationZ);
-									obj.scale.set(item.scaleX, item.scaleY, item.scaleZ);
-									obj.storingId = item.id;
-									scene.add(obj);
-									objects.push(obj);
-								});
+			.then(function(items){
+				if(Array.isArray(items)){
+					items.forEach(function(item){
+						objectFactory.load(`/browser/objects/${item.name}/${item.name}.json`, null, item.name)
+							.then(obj => {
+								objectFactory.setObjProps(obj, item)
+								obj.hi = "hi";
+								scene.add(obj);
+								scene.add(obj.messageMesh);
+								objects.push(obj);
 						});
-					}
-				});
+					});
+				}
+			});
 
 			/////////////////////
-			/* EVENT LISTENERS */
+			 // EVENT LIS
 			/////////////////////
 
 			e.on( 'mousemove', onDocumentMouseMove);
@@ -219,19 +218,24 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			e.on('wheel', onWheel);
 			document.addEventListener( 'keydown', onKeyDown, false );
 			document.addEventListener( 'keyup', onKeyUp, false );
+
 			let messageShown = false;
+
 			function onDocumentMouseMove( event ) {
 				event.preventDefault();
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
-				let intersects = raycaster.intersectObjects( objects);
-				if(messageShown){
+				let intersects = raycaster.intersectObjects(objects);
+				var wallIntersections = raycaster.intersectObjects( walls );
+				
+				if(messageShown){	
 					messageShown.visible = false;
 					messageShown = false;
 				}
-				if (intersects.length > 0 ) {
-					if(intersects[0].object.message && !messageShown) {
-						messageShown = intersects[0].object.message;
+				//add check for if its in the wall
+				if (intersects.length > 0) {
+					if(intersects[0].object.messageMesh && !messageShown) {
+						messageShown = intersects[0].object.messageMesh;
 						messageShown.visible = true;
 					}
 					if(!objectFactory.currentObject) objectFactory.currentObject = objectFactory.invisibleObject; 
@@ -244,18 +248,26 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 			}
 
 			function onDocumentMouseDown( event ) {
+
+			if(modalFactory.getMessageModal().data){
 				event.preventDefault();
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
 				var intersects = raycaster.intersectObjects( objects);
-				console.log(intersects, "intersects")
-				if ( intersects.length > 0 ) {
+				var wallIntersections = raycaster.intersectObjects( walls );
+				
+				//add check for if its in the wall
+				if ( intersects.length > 0 && wallIntersections.length<=1) {
+					if (objectFactory.currentObject.messageMesh) {
+						let messageMesh = objectFactory.currentObject.messageMesh
+						let messageRayCaster = new THREE.Raycaster(messageMesh, camera);
+						let messageIntersects = raycaster.intersectObjects( objects );
+					}
 					var intersect = intersects[ 0 ];
 					// delete cube
 					if ( event.originalEvent.shiftKey ) {
-					
-						if ( !roomInstance.objects.includes(intersect.object) && !floorObjects.includes(intersect.object)) {
-						
+						if ( !palaceInstance.objects.includes(intersect.object) && !floorObjects.includes(intersect.object)) {
+							
 							scene.remove( intersect.object );
 							storingFactory.deleteObject(intersect.object.storingId);
 							objects.splice( objects.indexOf( intersect.object ), 1 );
@@ -267,22 +279,13 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 								var myObject2 = objectFactory.currentObject.clone();
 								myObject2.position.copy( intersect.point ).add( intersect.face.normal );
 								myObject2.position.addScalar( 3/2 );
-								
-
 								//TEXT
-								var text = new Text2D("Hello world!", {font: '30px Arial', fillStyle: '#000000', antialias: true })
-								text.material.alphaTest = 0.1;
-								text.scale.set(.3, .3, .3);
-								text.position.copy( intersect.point ).add( intersect.face.normal );
-								text.position.addScalar( 3/2 );
-								text.position.y += 20;
-								text.rotation.set(0,0,0);
-								text.visible = false;
-								myObject2.message = text;
+								if (objectFactory.currentObject.message) {
+									var text = textFactory(intersect.point, objectFactory.currentObject.message);
+									myObject2.messageMesh = text;
+									scene.add(text);
+								}
 								scene.add( myObject2 );
-								scene.add(text);
-
-
 								objects.push( myObject2 );
 								storingFactory.storeObject({
 									name: myObject2.name, 
@@ -294,149 +297,149 @@ module.exports = function (palacesFactory, $window, roomFactory, tableFactory, o
 									rotationZ: myObject2.rotation.z, 
 									scaleX: myObject2.scale.x,
 									scaleY: myObject2.scale.y,
-									scaleZ: myObject2.scale.z})
+									scaleZ: myObject2.scale.z,
+									message: objectFactory.currentObject.message})
 							}
+							// exchanging object for invisible cube (invisble pointer)
+							objectFactory.previousObject = objectFactory.currentObject;
+							objectFactory.currentObject = objectFactory.invisibleObject;
 
 					}
 				}
 			}
+		}
 
 			// useful codes: w = 87, s = 83, 32 = space, up = 38, down = 40, left = 37, right = 39
 			function onKeyDown ( event ) {
+				if(modalFactory.getMessageModal().data){
+					switch ( event.keyCode ) {
+						// deleting objects
+						case 16: // shift
+							isShiftDown = true; 
+							break;
 
-				switch ( event.keyCode ) {
-					// deleting objects
-					case 16: // shift
-						isShiftDown = true; 
-						break;
+						// exit modal
+						case 27: // esc
+							blocker.style.display = 'none';
+							break;
+						case 13: // enter
+							blocker.style.display = 'none';
+							break;
 
-					// exit modal
-					case 27: // esc
-						blocker.style.display = 'none';
-						break;
-					case 13: // enter
-						blocker.style.display = 'none';
-						break;
+						// move forward
+						case 38: // up arrow
+							moveForward = true;
+							break;
+						case 87: // w
+							moveForward = true;
+							break;
 
-					// move forward
-					case 38: // up arrow
-						moveForward = true;
-						break;
-					case 87: // w
-						moveForward = true;
-						break;
+						// move backward
+						case 40: // down arrow
+							moveBackward = true;
+							break;
+						case 83: // s
+							moveBackward = true;
+							break;
 
-					// move backward
-					case 40: // down arrow
-						moveBackward = true;
-						break;
-					case 83: // s
-						moveBackward = true;
-						break;
+						// case 65: // a - move left
+						// 	moveLeft = true;
+						// 	break;
 
-					case 90: // z - move left
-						moveLeft = true;
-						break;
+						// case 68: // d - move right
+						// 	moveRight = true;
+						// 	break;
 
-					case 67: // c - move right
-						moveRight = true;
-						break;
+						// jump
+						case 32: // space - jump
+							event.preventDefault();
+							if ( canJump === true ) velocity.y += 350;
+							canJump = false;
+							break;
 
-					// jump
-					case 32: // space - jump
-						event.preventDefault();
-						if ( canJump === true ) velocity.y += 350;
-						canJump = false;
-						break;
+						// looking up and down
+						case 81: // q, look up
+							controls.getPitchObject().rotation.x += 3 * Math.PI / 180;
+							break;
+						case 69: // e, look down
+							controls.getPitchObject().rotation.x -= 3 * Math.PI / 180;
+							break;
 
-					// looking up and down
-					case 81: // q, look up
-						controls.getPitchObject().rotation.x += 3 * Math.PI / 180;
-						break;
-					case 69: // e, look down
-						controls.getPitchObject().rotation.x -= 3 * Math.PI / 180;
-						break;
+						// rotate right
+						case 37: // right arrow
+							event.preventDefault();
+							controls.getYawObject().rotation.y += 3 * Math.PI / 180;
+							break;
+						case 65: // a
+							event.preventDefault();
+							controls.getYawObject().rotation.y += 3 * Math.PI / 180;
+							break;
 
-					// rotate right
-					case 37: // right arrow
-						event.preventDefault();
-						controls.getYawObject().rotation.y += 3 * Math.PI / 180;
-						break;
-					case 65: // a
-						event.preventDefault();
-						controls.getYawObject().rotation.y += 3 * Math.PI / 180;
-						break;
+						// rotate left
+						case 39: // left arrow
+							event.preventDefault();
+							controls.getYawObject().rotation.y -= 3 * Math.PI / 180;
+							break;
+						case 68: // d
+							event.preventDefault();
+							controls.getYawObject().rotation.y -= 3 * Math.PI / 180;
+							break;
 
-					// rotate left
-					case 39: // left arrow
-						event.preventDefault();
-						controls.getYawObject().rotation.y -= 3 * Math.PI / 180;
-						break;
-					case 68: // d
-						event.preventDefault();
-						controls.getYawObject().rotation.y -= 3 * Math.PI / 180;
-						break;
-
-					//check	180 deg for looking up and down, doesn't allow user to flip over
-					controls.getPitchObject().rotation.x = Math.max( - PI_2, Math.min( PI_2, controls.getPitchObject().rotation.x ) );
+						//check	180 deg for looking up and down, doesn't allow user to flip over
+						controls.getPitchObject().rotation.x = Math.max( - PI_2, Math.min( PI_2, controls.getPitchObject().rotation.x ) );
+					}
 				}
+			}
 
-			};
+			function onKeyUp (event) {
+				if(modalFactory.getMessageModal().data){
+					switch( event.keyCode ) {
 
-			function onKeyUp ( event ) {
+						// reset move forward
+						case 38: // up arrow
+							moveForward = false;
+							break;
+						case 87: // w
+							moveForward = false;
+							break;
 
-				switch( event.keyCode ) {
-
-					// reset move forward
-					case 38: // up arrow
-						moveForward = false;
-						break;
-					case 87: // w
-						moveForward = false;
-						break;
-
-					// reset move backward
-					case 40: // down arrow
-						moveBackward = false;
-						break;
-					case 83: // s
-						moveBackward = false;
-						break;
-					case 16: // shift
-						isShiftDown = false; 
-						break;
-
-					case 90: // z - move left
-						moveLeft = false;
-						break;
-
-					case 67: // c - move right
-						moveRight = false;
-						break;
+						// reset move backward
+						case 40: // down arrow
+							moveBackward = false;
+							break;
+						case 83: // s
+							moveBackward = false;
+							break;
+						case 16: // shift
+							isShiftDown = false; 
+							break;
+					}
 				}
-			};
+			}
 
 			function onWheel($event){
-				var event = $event.originalEvent;
+				if(modalFactory.getMessageModal().data){
+					var event = $event.originalEvent;
 
-				if(event.ctrlKey === true){ //pinch
-					$event.preventDefault();
-					var delta = -event.deltaY/2;
-					var currentScale = objectFactory.currentObject.scale;
-					objectFactory.currentObject
-						.scale.set(currentScale.x + delta, currentScale.y + delta, currentScale.z + delta)
-						.clamp(new THREE.Vector3( 0.1, 0.1, 0.1 ), new THREE.Vector3( 50, 50, 50 ))	;
-				}else if(Math.abs(event.deltaX) > .1 ){ //two finger left and right scroll
-					$event.preventDefault();
-					var delta = -event.deltaX/20;
-					if(objectFactory.currentObject){
-						objectFactory.currentObject.rotation.y += delta;
+					if(event.ctrlKey === true){ //pinch
+						$event.preventDefault();
+						var delta = -event.deltaY/2;
+						var currentScale = objectFactory.currentObject.scale;
+						objectFactory.currentObject
+							.scale.set(currentScale.x + delta, currentScale.y + delta, currentScale.z + delta)
+							.clamp(new THREE.Vector3( 0.1, 0.1, 0.1 ), new THREE.Vector3( 50, 50, 50 ))	;
+					}else if(Math.abs(event.deltaX) > .1 ){ //two finger left and right scroll
+						$event.preventDefault();
+						var delta = -event.deltaX/20;
+						if(objectFactory.currentObject){
+							objectFactory.currentObject.rotation.y += delta;
+						}
 					}
 				}
 			}		
 
 			/////////////////////
-			/* RENDER FUNCTION */
+			// RENDER FUNCTION 
 			/////////////////////
 
 			var raycasterCamera;

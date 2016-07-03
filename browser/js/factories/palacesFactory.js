@@ -25,7 +25,7 @@ function loadTexture(file) {
 
 module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory) {
 
-  function defaultPalace() {
+  function Palace() {
     this.objects = [];
     this.palace = new THREE.Object3D();
 
@@ -298,13 +298,13 @@ module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory)
 
   }
 
-  defaultPalace.prototype.addToScene = function(mesh) {
+  Palace.prototype.addToScene = function(mesh) {
     this.objects.push(mesh);
     this.palace.add(mesh);
   };
 
   return {
-    defaultPalace: defaultPalace
+    Palace: Palace
   };
 
 };
