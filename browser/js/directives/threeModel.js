@@ -318,11 +318,6 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 			function onKeyDown ( event ) {
 				if(modalFactory.getMessageModal().data){
 					switch ( event.keyCode ) {
-						// deleting objects
-						case 16: // shift
-							isShiftDown = true; 
-							break;
-
 						// exit modal
 						case 27: // esc
 							blocker.style.display = 'none';
@@ -414,9 +409,6 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 							break;
 						case 83: // s
 							moveBackward = false;
-							break;
-						case 16: // shift
-							isShiftDown = false; 
 							break;
 					}
 				}

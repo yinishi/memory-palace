@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = function(textFactory){
+module.exports = function(textFactory, modalFactory){
 function formatLink (name) {
   return `/browser/objects/${name}/${name}.json`
 }
@@ -63,7 +63,7 @@ function load (link, scale, name, message) {
     invisibleObject: invisibleCube,
     currentObject: invisibleCube,
     setCurrentObject: function(object){
-
+      modalFactory.toggleCarousel();
       var name = object.name;
       var scale = object.scale;
       (cache[name] || (cache[name] = load(`/browser/objects/${name}/${name}.json`, scale)))
