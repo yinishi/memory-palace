@@ -286,6 +286,7 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 								//TEXT
 								if (objectFactory.currentObject.message) {
 									var text = textFactory(intersect.point, objectFactory.currentObject.message);
+									if(objectFactory.currentObject.yPosition) text.position.y += objectFactory.currentObject.yPosition;
 									myObject2.messageMesh = text;
 									scene.add(text);
 								}
@@ -422,11 +423,10 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 			}
 
 			function onWheel($event){
+				$event.preventDefault();
 				if(modalFactory.getMessageModal().data){
 					var event = $event.originalEvent;
-
 					if(event.ctrlKey === true){ //pinch
-						$event.preventDefault();
 						var delta = -event.deltaY/2;
 						var currentScale = objectFactory.currentObject.scale;
 						objectFactory.currentObject
