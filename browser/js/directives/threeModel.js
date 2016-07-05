@@ -170,6 +170,7 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 			mesh.position.y = -2;
 			scene.add( mesh );
 			objects.push(mesh);
+			messageFactory.setObjects(objects)
 			var floorObjects = [mesh];
 
 			// CREATE A ROOM
@@ -178,8 +179,6 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 			var walls = palaceInstance.objects;
 			palace.position.set(-300,75/2 + 1,100);
 			scene.add(palace);
-
-			objects = objects.concat(palaceInstance.objects);
 
 			//store scene in messageFactory
 			messageFactory.storeScene(scene);

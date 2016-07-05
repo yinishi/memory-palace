@@ -22,7 +22,7 @@ function loadTexture(file) {
   return new THREE.MeshBasicMaterial({ map: texture, overdraw: 0.5 });
 };
 
-module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory) {
+module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory, messageFactory) {
 
   function Palace() {
     this.objects = [];
@@ -295,6 +295,19 @@ module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory)
     mainHallOuter4.position.x = 525 - 75 / 2 + .5 - 75 - 75 - 113;
     this.addToScene(mainHallOuter4);
 
+
+     //FURNITURE
+    var self = this;
+    var sceneObjects = messageFactory.getObjects()
+
+    objectFactory.load(`/browser/objects/sofa/sofa.json`, 2)
+      .then(function(sofa){
+        sofa.position.set(160, -36, -200);
+        sofa.rotation.set(0, Math.PI, 0)
+        self.addToScene(sofa);
+        sceneObjects.push(sofa);
+        messageFactory.setObjects(sceneObjects);
+      });
   }
 
   Palace.prototype.addToScene = function(mesh) {
