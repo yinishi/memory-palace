@@ -15,7 +15,10 @@ var Item = db.define('item', {
   rotationX: Sequelize.DECIMAL,
   rotationY: Sequelize.DECIMAL,
   rotationZ: Sequelize.DECIMAL,
-  message: Sequelize.TEXT
+  message: {
+    type: Sequelize.TEXT,
+    defaultValue: ''
+  }
 });
 
 

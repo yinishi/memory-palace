@@ -6,7 +6,7 @@ module.exports = function() {
 			return new THREE.AmbientLight( 0x606060 );
 		},
 		directionalLight: function () {
-			let directionalLight = new THREE.DirectionalLight( 0xaabbff );
+			let directionalLight = new THREE.DirectionalLight( 0xaabbff, 2 );
 			directionalLight.position.set( 1, 0.75, 0.5 ).normalize();
 			return directionalLight;
 		}
