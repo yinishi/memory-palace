@@ -11,6 +11,9 @@ module.exports = function($http) {
 		},
 		deleteObject: function(id){
 			return $http.delete('/api/items/'+ id);
+		},
+		storeMessage: function(position, message){
+			return $http.put('/api/items/', {message: message, position: position})
 		}
 	};
 
