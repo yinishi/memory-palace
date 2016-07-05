@@ -31,6 +31,8 @@ module.exports = function () {
 		toggleMessageModal : () => {
 			messageModal.data = !messageModal.data;
 		},
+		
+		//about modal
 		toggleAbout: () => {
 			console.log("here")
             showAbout.data = !showAbout.data
