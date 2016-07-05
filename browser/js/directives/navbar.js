@@ -7,6 +7,7 @@ module.exports = function ($state, authFactory, $rootScope, modalFactory) {
         },
         templateUrl: '/browser/js/templates/navbar.html',
         link: function (scope) {
+            scope.toggleAbout = modalFactory.toggleAbout
             scope.toggleControls = modalFactory.toggleControls
             scope.user = null;
             function setUser () {
