@@ -198,7 +198,7 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 							.then(obj => {
 								objectFactory.setObjProps(obj, item)
 								let text = obj.messageMesh;
-								text.lookat(camera.position);
+								text.lookAt(camera.position);
 								scene.add(obj);
 								scene.add(text);
 								objects.push(obj);

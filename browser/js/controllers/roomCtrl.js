@@ -6,11 +6,13 @@ module.exports = function ($scope, modalFactory, objectFactory, textFactory, mes
 	  $scope.showModal = modalFactory.getMessageModal();
     $scope.sendMessage = function () {
       objectFactory.currentObject.message = $scope.message; 
+      
       //CREATE TEXT
       if (objectFactory.currentObject.message) {
        var text = textFactory(messageFactory.getObject().myIntersect, objectFactory.currentObject.message);
        if(messageFactory.getObject().myObject.yPosition) text.position.y += messageFactory.getObject().myObject.yPosition;
-       text.lookat(messageFactory.getObject().myCamera.position);
+       console.log(text)
+       text.lookAt(messageFactory.getObject().myCamera.position);
        messageFactory.getObject().myObject.messageMesh = text;
        messageFactory.getObject().myScene.add(text);
       }
