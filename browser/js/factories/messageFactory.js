@@ -21,6 +21,12 @@ module.exports = function () {
 		},
 		getObjects: function () {
 			return myObjects;
+		},
+		storeScene: function(scene){
+			myScene = scene;
+		},
+		getScene: function(){
+			return myScene;
 		}
 
 	}

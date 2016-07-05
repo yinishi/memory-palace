@@ -180,6 +180,9 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 			scene.add(palace);
 
 			objects = objects.concat(palaceInstance.objects);
+
+			//store scene in messageFactory
+			messageFactory.storeScene(scene);
 			
 			//RETRIVE STORED OBJECTS
 			storingFactory.retrieveObjects()
@@ -299,6 +302,7 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 
 								scene.add( myObject2 );
 								objects.push( myObject2 );
+								messageFactory.setObjects(objects);
 								storingFactory.storeObject({
 									name: myObject2.name, 
 									positionX: myObject2.position.x, 
