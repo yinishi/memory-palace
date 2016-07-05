@@ -64,11 +64,22 @@ module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory)
       kitchenRoof.position.set(225+150, 75/2, -265)
     this.addToScene(kitchenRoof);
 
+
+    //bedroom 3 roof
+    let bedRoom3Roof = new wallFactory.Wall(150, 175, woodLight, false, false)
+    .clockwiseX()
+    .wall;
+      bedRoom3Roof.position.set(225+150+150, 75/2, -265)
+    this.addToScene(bedRoom3Roof);
+
+
+
     //main room section 2 
+    //WORKING
     let mainHallRoof = new wallFactory.Wall(225, 175, whiteStone, false, false)
     .clockwiseX()
     .wall;
-     mainHallRoof.position.set(75+sectionOneHeight+189, 75/2, -90)
+    mainHallRoof.position.set(225+187, 75/2, -87)
     this.addToScene(mainHallRoof);
 
   

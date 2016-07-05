@@ -82,10 +82,7 @@ Wall.prototype.clockwiseY = function () {
     this.wall.rotation.set(0, Math.PI / 2, 0);
     return this;
 };
-Wall.prototype.Z = function () { 
-    this.wall.rotation.z = Math.PI / 2;
-    return this;
-};
+
 
 Wall.prototype.counterClockwiseX = function () { 
     this.wall.rotation.set(-Math.PI / 2, 0, 0);
