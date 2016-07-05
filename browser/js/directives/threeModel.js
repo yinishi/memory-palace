@@ -231,6 +231,7 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 				// add check for if its in the wall
 				if (intersects.length > 0) {
 					if(intersects[0].object.messageMesh && !messageShown) {
+						console.log("message", intersects[0].object);
 						let messageLength = (msg.textContent.length*20)
 						msg.style.opacity = 1
 						msg.textContent = intersects[0].object.message;

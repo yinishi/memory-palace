@@ -92,9 +92,10 @@ function load (link, scale, name, message) {
         obj.rotation.set(item.rotationX, item.rotationY, item.rotationZ);
         obj.scale.set(item.scaleX, item.scaleY, item.scaleZ);
         obj.storingId = item.id;
+        obj.message = item.message;
         let text = textFactory(obj.position, item.message);
         obj.messageMesh = text;
-        obj.message = item.message;
+  
     }
   };
 
