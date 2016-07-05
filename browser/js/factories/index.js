@@ -11,4 +11,5 @@ app.factory('storingFactory', ['$http', 'textFactory', 'objectFactory', require(
 app.factory('palacesFactory', ['roomFactory', 'objectFactory', 'tableFactory', 'wallFactory', require("./palacesFactory")]);
 app.factory('textFactory', require("./textFactory"));
 app.factory('lightFactory', require('./lightFactory'));
+app.factory('messageFactory', require('./messageFactory'));
 
