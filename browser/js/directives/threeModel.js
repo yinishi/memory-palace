@@ -200,9 +200,10 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 						objectFactory.load(`/browser/objects/${item.name}/${item.name}.json`, null, item.name)
 							.then(obj => {
 								objectFactory.setObjProps(obj, item)
-								obj.hi = "hi";
+								let text = obj.messageMesh;
+								text.lookat(camrea.position);
 								scene.add(obj);
-								scene.add(obj.messageMesh);
+								scene.add(text);
 								objects.push(obj);
 						});
 					});
@@ -287,8 +288,8 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 								if (objectFactory.currentObject.message) {
 									var text = textFactory(intersect.point, objectFactory.currentObject.message);
 									if(objectFactory.currentObject.yPosition) text.position.y += objectFactory.currentObject.yPosition;
-									
 									myObject2.messageMesh = text;
+									text.lookat(camrea.position)
 									scene.add(text);
 								}
 								scene.add( myObject2 );
