@@ -37,7 +37,43 @@ module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory)
     tempPalaceFloor.position.set(625/2, -75/2 - 1, -450/2)
     this.addToScene(tempPalaceFloor);
 
+    //Roof
+    this.roof = new THREE.Object3D();
+    //first wing roof/floor
+    let sectionOneHeight = 150
+    let sectionOneLength = (150 + 75.5 + 75 + 1)
+    let sectionOneRoof = new wallFactory.Wall(sectionOneLength, sectionOneHeight, woodLight, false, false)
+      .clockwiseX()
+      .Z()
+      .wall
+     sectionOneRoof.position.set(75, 75/2, -150)
+    this.addToScene(sectionOneRoof);
+    //b1Outerwall1 150 +
+    //b2Outer 1 75.5 +
+    //b2outer2 75 + 1 +
+    //x
+    //b1Outerwall2 x 150 
+    ///small- 150
+    //large 375
+    let sectionTwoHeight = 375;
+    let sectionTwoLength = 150; 
+    let sectionTwoRoof = new wallFactory.Wall(sectionTwoLength, sectionTwoHeight, woodLight, false, false)
+    .clockwiseX()
+    .wall
+
+    sectionTwoRoof.position.set(75+sectionOneHeight, 75/2, -200)
+
+    this.addToScene(sectionTwoRoof);
+
+    //kitchen rook 
+    let kitchenRoof = new wallFactory.Wall(150, 175, woodLight, false, false)
+    .clockwiseX()
+    .wall;
+      sectionTwoRoof.position.set(75+sectionOneHeight, 75/2, -200)
+    this.addToScene(kitchenRoof);
+    //150 x 175
     //BEDROOM 1
+    //bedroom walls0
     var b1Outerwall1 = new wallFactory.Wall(150, wallHeight, whiteStone, false, false)
       .clockwiseY()
       .wall;
