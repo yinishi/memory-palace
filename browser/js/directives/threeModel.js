@@ -93,7 +93,7 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 
 				}();
 
-			};
+			}
 
 			// INITIALIZE RENDERER
 			let renderer = new THREE.WebGLRenderer();
@@ -328,6 +328,7 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 
 						// move forward
 						case 38: // up arrow
+							event.preventDefault();
 							moveForward = true;
 							break;
 						case 87: // w
@@ -336,6 +337,7 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 
 						// move backward
 						case 40: // down arrow
+							event.preventDefault();
 							moveBackward = true;
 							break;
 						case 83: // s
@@ -352,7 +354,7 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 
 						// jump
 						case 32: // space - jump
-							event.preventDefault();
+							//event.preventDefault();
 							if ( canJump === true ) velocity.y += 350;
 							canJump = false;
 							break;
@@ -371,7 +373,7 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 							controls.getYawObject().rotation.y += 3 * Math.PI / 180;
 							break;
 						case 65: // a
-							event.preventDefault();
+							//event.preventDefault();
 							controls.getYawObject().rotation.y += 3 * Math.PI / 180;
 							break;
 
@@ -381,7 +383,7 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 							controls.getYawObject().rotation.y -= 3 * Math.PI / 180;
 							break;
 						case 68: // d
-							event.preventDefault();
+							//event.preventDefault();
 							controls.getYawObject().rotation.y -= 3 * Math.PI / 180;
 							break;
 
