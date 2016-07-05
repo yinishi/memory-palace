@@ -287,6 +287,7 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 								if (objectFactory.currentObject.message) {
 									var text = textFactory(intersect.point, objectFactory.currentObject.message);
 									if(objectFactory.currentObject.yPosition) text.position.y += objectFactory.currentObject.yPosition;
+									
 									myObject2.messageMesh = text;
 									scene.add(text);
 								}
