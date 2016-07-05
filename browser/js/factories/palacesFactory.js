@@ -308,6 +308,16 @@ module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory,
         sceneObjects.push(sofa);
         messageFactory.setObjects(sceneObjects);
       });
+
+    objectFactory.load(`/browser/objects/table/table.json`, 15)
+      .then(function(table){
+        table.position.set(330, -40, -200);
+        table.rotation.set(0, Math.PI, 0)
+        self.addToScene(table);
+        sceneObjects.push(table);
+        messageFactory.setObjects(sceneObjects);
+      });
+  
   }
 
   Palace.prototype.addToScene = function(mesh) {
