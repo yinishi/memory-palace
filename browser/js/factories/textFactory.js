@@ -2,6 +2,7 @@ var THREE_Text = require('three-text2D');
 var Text2D = THREE_Text.Text2D;
 var textAlign = THREE_Text.textAlign;
 var SpriteText2D = THREE_Text.SpriteText2D;
+
 module.exports = function () {
 	return function (position, message, align) {
 		var sprite = new SpriteText2D(message, { align: textAlign[align],  font: '40px Arial', fillStyle: '#000000' , antialias: false })

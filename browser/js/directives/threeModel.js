@@ -189,10 +189,10 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 						objectFactory.load(`/browser/objects/${item.name}/${item.name}.json`, null, item.name)
 							.then(obj => {
 								objectFactory.setObjProps(obj, item);
-								let text = obj.messageMesh;
-								text.lookAt(camera.position);
+								// let text = obj.messageMesh;
+								// text.lookAt(camera.position);
 								scene.add(obj);
-								scene.add(text);
+								// scene.add(text);
 								objects.push(obj);
 						});
 					});
@@ -210,16 +210,17 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 			document.addEventListener( 'keyup', onKeyUp, false );
 
 			let messageShown = false;
-var msg = document.createElement('div')
-msg.style.position = 'absolute'
-msg.style.zIndex = 1000000
-e[0].appendChild(msg)
+			var msg = document.createElement('div')
+			msg.className = "message-label";
+			msg.style.position = 'absolute'
+			msg.style.zIndex = 1000000
+			e[0].appendChild(msg)
+
 			function onDocumentMouseMove( event ) {
 				event.preventDefault();
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
 				let intersects = raycaster.intersectObjects(objects);
-
 				// var wallIntersections = raycaster.intersectObjects( walls );
 				
 				if(messageShown){	
@@ -230,14 +231,23 @@ e[0].appendChild(msg)
 				// add check for if its in the wall
 				if (intersects.length > 0) {
 					if(intersects[0].object.messageMesh && !messageShown) {
+						let messageLength = (msg.textContent.length*20)
 						msg.style.opacity = 1
-						msg.textContent = 'hello'
-						msg.style.top = event.clientY + 'px'
-						msg.style.left = event.clientX + 'px'
-
-						messageShown = intersects[0].object.messageMesh;
-						//messageShown.visible = true;
+						msg.textContent = intersects[0].object.message;
+						msg.style.top = event.clientY-100 + 'px'
+						//not to far to the right
+						if (event.clientX < window.innerWidth - messageLength) {
+							msg.style.left = event.clientX + 'px'
+						}
+						//too far to the right
+						else {
+							msg.style.top = event.clientY-100 + 'px'
+							msg.style.left = event.clientX-(msg.textContent.length*20) + 'px'
+						}
+						messageShown = true; 
+						// messageShown = intersects[0].object.messageMesh;
 					}
+
 					if(!objectFactory.currentObject) objectFactory.currentObject = objectFactory.invisibleObject; 
 					var intersect = intersects[ 0 ];
 					objectFactory.currentObject.position.copy( intersect.point ).add( intersect.face.normal );
@@ -260,16 +270,11 @@ e[0].appendChild(msg)
 				
 				//add check for if its in the wall
 				if ( intersects.length > 0 && wallIntersections.length<=1) {
-					// if (objectFactory.currentObject.messageMesh) {
-					// 	let messageMesh = objectFactory.currentObject.messageMesh
-					// 	let messageRayCaster = new THREE.Raycaster(messageMesh, camera);
-					// 	let messageIntersects = raycaster.intersectObjects( objects );
-					// }
+	
 					var intersect = intersects[ 0 ];
 					// delete cube
 					if ( event.originalEvent.shiftKey ) {
 						if ( !palaceInstance.objects.includes(intersect.object) && !floorObjects.includes(intersect.object)) {
-							
 							scene.remove( intersect.object );
 							storingFactory.deleteObject(intersect.object.storingId);
 							objects.splice( objects.indexOf( intersect.object ), 1 );
@@ -289,7 +294,6 @@ e[0].appendChild(msg)
 
 
 								//TEXT;
-								messageFactory.setObjects(objects);
 								messageFactory.rememberObject(myObject2, intersect.point, scene, camera)
 								modalFactory.toggleMessageModal();
 
@@ -320,6 +324,9 @@ e[0].appendChild(msg)
 
 			// useful codes: w = 87, s = 83, 32 = space, up = 38, down = 40, left = 37, right = 39
 			function onKeyDown ( event ) {
+				messageShown = false;
+				msg.style.opacity = 0;
+
 				if(modalFactory.getMessageModal().data){
 					switch ( event.keyCode ) {
 						// exit modal
