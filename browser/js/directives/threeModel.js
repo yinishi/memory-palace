@@ -141,11 +141,7 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 			// setting up stacking capabilities
 			var raycaster = new THREE.Raycaster();
 			var mouse = new THREE.Vector2();
-
-			// ORIGIN BOX
-			var origin = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshBasicMaterial({color: 0x000000}))
-			scene.add(origin)
-
+			
 			// COLORFUL FLOOR
 			var geometry = new THREE.PlaneGeometry( 2000, 2000, 100, 100 );
 			geometry.rotateX( - Math.PI / 2 );
@@ -478,7 +474,7 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 					
 					var collidingForward = collisions.length > 1;
 
-					if (collidingForward && moveForward && collisions[0].distance < 10) {
+					if (collidingForward && moveForward && collisions[0].distance < 20) {
 						moveForward = false;
 						velocity.x = 0;
 						velocity.y = 0;
