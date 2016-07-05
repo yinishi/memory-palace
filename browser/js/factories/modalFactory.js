@@ -1,6 +1,6 @@
 "use strict"
 
-module.exports = function (objectFactory) {
+module.exports = function () {
 	var showCarousel = { data: { false } }
 	var showControls = { data: { false } }
 	var welcomeControls = { data: { true } };
