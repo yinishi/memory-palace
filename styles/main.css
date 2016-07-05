@@ -14,7 +14,10 @@ img:hover + .buttontext {
 /*.buttontext:hover {   
   display: block;
 }*/
-
+.message-label {
+  font-size: 48px;
+  position:'absolute';
+}
 .ctrlModal {
     margin: 2%;
     padding: 3%;

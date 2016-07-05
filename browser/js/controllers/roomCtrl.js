@@ -6,18 +6,21 @@ module.exports = function ($scope, modalFactory, objectFactory, textFactory, mes
 	  $scope.showModal = modalFactory.getMessageModal();
     $scope.sendMessage = function () {
       objectFactory.currentObject.message = $scope.message; 
+      
       //CREATE TEXT
       if (objectFactory.currentObject.message) {
        var text = textFactory(messageFactory.getObject().myIntersect, objectFactory.currentObject.message);
        if(messageFactory.getObject().myObject.yPosition) text.position.y += messageFactory.getObject().myObject.yPosition;
+       text.lookAt(messageFactory.getObject().myCamera.position);
+       messageFactory.getObject().myObject.message = objectFactory.currentObject.message;
        messageFactory.getObject().myObject.messageMesh = text;
-       messageFactory.getObject().myScene.add(text);
+       //messageFactory.getObject().myScene.add(text);
       }
-    
       modalFactory.toggleMessageModal();
       storingFactory.storeMessage(messageFactory.getObject().myObject.position, $scope.message)
-      $scope.message = null;
+      $scope.message = null; 
     }
+
   	$scope.setCurrentObject = function (object) {
   	  objectFactory.setCurrentObject(object);
       // modalFactory.toggleMessageModal();
