@@ -224,7 +224,7 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 				// var wallIntersections = raycaster.intersectObjects( walls );
 				
 				if(messageShown){	
-					messageShown.visible = false;
+					// messageShown.visible = false;
 					messageShown = false;
 					msg.style.opacity = 0
 				}
