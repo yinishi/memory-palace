@@ -19,7 +19,7 @@
         <li ng-hide="!user" class="navbar-brand">Welcome, {{user.name}}</li>
         <li ng-hide="user" ><a ui-sref="login">Login</a></li>
         <li ng-hide="user"><a ui-sref="signup">Signup</a></li>
-        <li ng-hide="!user" class="active" ng-click="logout()"><a>Logout</a></li>
+        <li ng-hide="!user" ng-click="logout()"><a>Logout</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
