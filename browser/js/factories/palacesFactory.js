@@ -61,16 +61,24 @@ module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory)
     .clockwiseX()
     .wall
 
-    sectionTwoRoof.position.set(75+sectionOneHeight, 75/2, -200)
-
+    sectionTwoRoof.position.set(75+sectionOneHeight, 75/2, -185)
     this.addToScene(sectionTwoRoof);
 
     //kitchen rook 
-    let kitchenRoof = new wallFactory.Wall(150, 175, woodLight, false, false)
+    let kitchenRoof = new wallFactory.Wall(150, 175, whiteStone, false, false)
     .clockwiseX()
     .wall;
-      sectionTwoRoof.position.set(75+sectionOneHeight, 75/2, -200)
+      kitchenRoof.position.set(75+sectionOneHeight+150, 75/2, -265)
     this.addToScene(kitchenRoof);
+
+    //main room section 2 
+    let mainHallRoof = new wallFactory.Wall(225, 175, whiteStone, false, false)
+    .clockwiseX()
+    .wall;
+     mainHallRoof.position.set(75+sectionOneHeight+189, 75/2, -90)
+    this.addToScene(mainHallRoof);
+
+  
     //150 x 175
     //BEDROOM 1
     //bedroom walls0
