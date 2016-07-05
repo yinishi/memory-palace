@@ -6,7 +6,10 @@ module.exports = function (modalFactory, $rootScope, authFactory) {
         templateUrl: '/browser/js/templates/login.html',
         link: function (s,a,e) {
         	s.showLogin = modalFactory.getLogin();
-
+        	s.toggleSignup = function(){
+        		modalFactory.toggleLogin();
+        		modalFactory.toggleSignup();
+        	}
 			s.submitted = false;
 			// s.signup = function(){
 			// 	s.submitted = true;

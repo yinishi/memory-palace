@@ -7,6 +7,7 @@ module.exports = function () {
 	var messageModal = { data: { false } };
 	var showAbout = { data: { false } };
 	var showLogin = { data: { false } };
+	var showSignup = { data: { false } };
 	return { 
 
 		// controls modal
@@ -41,9 +42,14 @@ module.exports = function () {
 
         //login modal
         toggleLogin: () => {
-        	console.log("here", showLogin)
             showLogin.data = !showLogin.data
         },
-        getLogin: () => showLogin
+        getLogin: () => showLogin,
+
+        //signup modal
+        toggleSignup: () => {
+            showSignup.data = !showSignup.data
+        },
+        getSignup: () => showSignup
 	}
 }

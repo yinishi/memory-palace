@@ -8,8 +8,14 @@ module.exports = function ($state, authFactory, $rootScope, modalFactory) {
         templateUrl: '/browser/js/templates/navbar.html',
         link: function (scope) {
             scope.toggleAbout = modalFactory.toggleAbout;
-            scope.toggleLogin = modalFactory.toggleLogin;
-            
+            scope.toggleLogin = function(){
+                if(modalFactory.getSignup().data === false) modalFactory.toggleSignup()
+                modalFactory.toggleLogin();
+            }
+            scope.toggleSignup = function(){
+                if(modalFactory.getLogin().data === false) modalFactory.toggleLogin()
+                    modalFactory.toggleSignup();
+            }
             scope.toggleControls = modalFactory.toggleControls;
             scope.user = null;
             function setUser () {
