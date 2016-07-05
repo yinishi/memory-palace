@@ -343,13 +343,16 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 							moveBackward = true;
 							break;
 
-						// case 65: // a - move left
-						// 	moveLeft = true;
-						// 	break;
+						// strafing
+						case 37: // left - move left
+							event.preventDefault();
+							moveLeft = true;
+							break;
 
-						// case 68: // d - move right
-						// 	moveRight = true;
-						// 	break;
+						case 39: // right arrow - move right
+							event.preventDefault();
+							moveRight = true;
+							break;
 
 						// jump
 						case 32: // space - jump
@@ -367,20 +370,12 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 							break;
 
 						// rotate right
-						case 37: // right arrow
-							event.preventDefault();
-							controls.getYawObject().rotation.y += 3 * Math.PI / 180;
-							break;
 						case 65: // a
 							//event.preventDefault();
 							controls.getYawObject().rotation.y += 3 * Math.PI / 180;
 							break;
 
 						// rotate left
-						case 39: // left arrow
-							event.preventDefault();
-							controls.getYawObject().rotation.y -= 3 * Math.PI / 180;
-							break;
 						case 68: // d
 							//event.preventDefault();
 							controls.getYawObject().rotation.y -= 3 * Math.PI / 180;
@@ -410,6 +405,14 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 							break;
 						case 83: // s
 							moveBackward = false;
+							break;
+
+						// reset strafing
+						case 37: // left - move left
+							moveLeft = false;
+							break;
+						case 39: // right arrow - move right
+							moveRight = false;
 							break;
 					}
 				}
@@ -442,8 +445,8 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 			var raycasterCamera;
 			var forward_vec = new THREE.Vector3(0, 0, -1);
 			var backward_vec = new THREE.Vector3(0, 0, -1);
-			// var left_vec = new THREE.Vector3(1, 0, 0);
-			// var right_vec = new THREE.Vector3(-1, 0, 0);
+			var left_vec = new THREE.Vector3(-1, 0, 0);
+			var right_vec = new THREE.Vector3(1, 0, 0);
 
 			function render() {
 
@@ -460,7 +463,7 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 					
 					var collidingForward = collisions.length > 1;
 
-					if (collidingForward && moveForward && collisions[0].distance < 15) {
+					if (collidingForward && moveForward && collisions[0].distance < 10) {
 						moveForward = false;
 						velocity.x = 0;
 						velocity.y = 0;
@@ -476,12 +479,48 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 					
 					var collidingBackward = collisions.length > 1;
 
-					if (collidingBackward && moveBackward && collisions[0].distance < 20) {
+					if (collidingBackward && moveBackward && collisions[0].distance < 40) {
 						moveBackward = false;
 						velocity.x = 0;
 						velocity.y = 0;
 						velocity.z = 0;
 					}
+
+					// COLLISION DETECTION - left
+					raycasterCamera = new THREE.Raycaster()
+					raycasterCamera.ray.origin.copy( controls.getYawObject().position );
+					raycasterCamera.setFromCamera(left_vec, camera)
+					raycasterCamera.ray.origin.x += 1;
+					var collisions = raycasterCamera.intersectObjects( scene.children, true );
+					
+					var collidingLeft = collisions.length > 1;
+
+					if (collidingLeft && moveLeft && collisions[0].distance < 40) {
+						moveLeft = false;
+						velocity.x = 0;
+						velocity.y = 0;
+						velocity.z = 0;
+						console.log('colliding left, velocity is', velocity, 'can move left?', moveLeft, 'collidingLeft', collidingLeft);
+					}
+
+					// COLLISION DETECTION - right
+					raycasterCamera = new THREE.Raycaster()
+					raycasterCamera.ray.origin.copy( controls.getYawObject().position );
+					raycasterCamera.setFromCamera(right_vec, camera)
+					raycasterCamera.ray.origin.x -= 1;
+					var collisions = raycasterCamera.intersectObjects( scene.children, true );
+					
+					var collidingRight = collisions.length > 1;
+
+					if (collidingRight && moveRight && collisions[0].distance < 40) {
+						moveRight = false;
+						velocity.x = 0;
+						velocity.y = 0;
+						velocity.z = 0;
+						console.log('colliding right, velocity is', velocity, 'can move right?', moveRight, 'collidingRight', collidingRight);
+					}
+
+
 					/////////////////////////
 
 					// REGULAR MOVEMENT
