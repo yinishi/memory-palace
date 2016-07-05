@@ -51,7 +51,7 @@ img:hover + .buttontext {
 }
 
 .navbar-default .navbar-nav>li>a {
-    color: white;
+    color: #A04843;
     font-size: 16px!important;
     font-weight: bold;
 }
