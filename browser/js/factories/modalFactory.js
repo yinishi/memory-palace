@@ -30,26 +30,27 @@ module.exports = function () {
 
 		// message modal
 		getMessageModal: () => messageModal,
+		
 		toggleMessageModal : () => {
 			messageModal.data = !messageModal.data;
 		},
 		
 		//about modal
 		toggleAbout: () => {
-            showAbout.data = !showAbout.data
-        },
-        getAbout: () => showAbout,
+      showAbout.data = !showAbout.data
+  	},
+    getAbout: () => showAbout,
 
-        //login modal
-        toggleLogin: () => {
-            showLogin.data = !showLogin.data
-        },
-        getLogin: () => showLogin,
+    //login modal
+    toggleLogin: () => {
+        showLogin.data = !showLogin.data
+    },
+    getLogin: () => showLogin,
 
-        //signup modal
-        toggleSignup: () => {
-            showSignup.data = !showSignup.data
-        },
-        getSignup: () => showSignup
+    //signup modal
+    toggleSignup: () => {
+        showSignup.data = !showSignup.data
+    },
+    getSignup: () => showSignup
 	}
 }
