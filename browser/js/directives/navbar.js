@@ -7,8 +7,10 @@ module.exports = function ($state, authFactory, $rootScope, modalFactory) {
         },
         templateUrl: '/browser/js/templates/navbar.html',
         link: function (scope) {
-            scope.toggleAbout = modalFactory.toggleAbout
-            scope.toggleControls = modalFactory.toggleControls
+            scope.toggleAbout = modalFactory.toggleAbout;
+            scope.toggleLogin = modalFactory.toggleLogin;
+            
+            scope.toggleControls = modalFactory.toggleControls;
             scope.user = null;
             function setUser () {
                 authFactory.getLoggedInUser()
@@ -23,9 +25,6 @@ module.exports = function ($state, authFactory, $rootScope, modalFactory) {
         	scope.logout = function () {
                 scope.user = null;
 		        return authFactory.logout()
-		        .then(function () {
-		          $state.go('login');
-		        });
 	      	};
         }
      };

@@ -6,6 +6,7 @@ module.exports = function () {
 	var welcomeControls = { data: { true } };
 	var messageModal = { data: { false } };
 	var showAbout = { data: { false } };
+	var showLogin = { data: { false } };
 	return { 
 
 		// controls modal
@@ -34,9 +35,15 @@ module.exports = function () {
 		
 		//about modal
 		toggleAbout: () => {
-			console.log("here")
             showAbout.data = !showAbout.data
         },
-        getAbout: () => showAbout
+        getAbout: () => showAbout,
+
+        //login modal
+        toggleLogin: () => {
+        	console.log("here", showLogin)
+            showLogin.data = !showLogin.data
+        },
+        getLogin: () => showLogin
 	}
 }
