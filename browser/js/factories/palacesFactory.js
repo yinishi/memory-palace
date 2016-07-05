@@ -40,35 +40,28 @@ module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory)
     //Roof
     this.roof = new THREE.Object3D();
     //first wing roof/floor
-    let sectionOneHeight = 150
-    let sectionOneLength = (150 + 75.5 + 75 + 1)
+    let sectionOneLength = 150
+    let sectionOneHeight = (150 + 75.5 + 75 + 1)
     let sectionOneRoof = new wallFactory.Wall(sectionOneLength, sectionOneHeight, woodLight, false, false)
       .clockwiseX()
-      .Z()
       .wall
      sectionOneRoof.position.set(75, 75/2, -150)
     this.addToScene(sectionOneRoof);
-    //b1Outerwall1 150 +
-    //b2Outer 1 75.5 +
-    //b2outer2 75 + 1 +
-    //x
-    //b1Outerwall2 x 150 
-    ///small- 150
+
     //large 375
     let sectionTwoHeight = 375;
     let sectionTwoLength = 150; 
-    let sectionTwoRoof = new wallFactory.Wall(sectionTwoLength, sectionTwoHeight, woodLight, false, false)
+    let sectionTwoRoof = new wallFactory.Wall(sectionTwoLength, sectionTwoHeight, whiteStone, false, false)
     .clockwiseX()
     .wall
-
-    sectionTwoRoof.position.set(75+sectionOneHeight, 75/2, -185)
+    sectionTwoRoof.position.set(225, 75/2, -185)
     this.addToScene(sectionTwoRoof);
 
     //kitchen rook 
-    let kitchenRoof = new wallFactory.Wall(150, 175, whiteStone, false, false)
+    let kitchenRoof = new wallFactory.Wall(150, 175, woodLight, false, false)
     .clockwiseX()
     .wall;
-      kitchenRoof.position.set(75+sectionOneHeight+150, 75/2, -265)
+      kitchenRoof.position.set(225+150, 75/2, -265)
     this.addToScene(kitchenRoof);
 
     //main room section 2 
