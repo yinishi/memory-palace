@@ -33,6 +33,22 @@ router.post('/items', function(req, res, next){
 
 });
 
+//add a message
+router.put('/items/', function(req, res, next){
+	if(req.user){
+		req.body.userId = req.user.id;
+		Item.update({
+			message: req.body.message
+		}, {where: {
+			positionX: req.body.position.x,
+			positionY: req.body.position.y,
+			positionZ: req.body.position.z
+		}})
+	}
+	else res.sendStatus(300);
+
+});
+
 //delete an item
 router.delete('/items/:id', function(req, res, next){
 	if(req.user){
