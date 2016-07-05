@@ -1,10 +1,11 @@
 "use strict"
 
 module.exports = function () {
-	var showCarousel = { data: { false } }
-	var showControls = { data: { false } }
+	var showCarousel = { data: { false } };
+	var showControls = { data: { false } };
 	var welcomeControls = { data: { true } };
 	var messageModal = { data: { false } };
+	var showAbout = { data: { false } };
 	return { 
 		toggleControls: function () {
 			showControls.data = !showControls.data;
@@ -21,6 +22,11 @@ module.exports = function () {
 		getMessageModal: () => messageModal,
 		toggleMessageModal : () => {
 			messageModal.data = !messageModal.data;
-		}
+		},
+		toggleAbout: () => {
+			console.log("here")
+            showAbout.data = !showAbout.data
+        },
+        getAbout: () => showAbout
 	}
 }
