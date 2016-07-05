@@ -5,6 +5,7 @@ module.exports = function () {
 	var myIntersect = null;
 	var myScene = null;
 	var myCamera= null;
+	var myObjects = null;
 	return {
 		rememberObject: function(object, intersect, scene, camera){
 			myObject = object;
@@ -14,6 +15,12 @@ module.exports = function () {
 		},
 		getObject: function(){
 			return {myObject: myObject, myIntersect: myIntersect, myScene: myScene, myCamera: myCamera}
+		}, 
+		setObjects: function (objects) {
+			myObjects = objects;
+		},
+		getObjects: function () {
+			return myObjects;
 		}
 
 	}

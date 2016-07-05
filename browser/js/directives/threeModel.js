@@ -181,14 +181,6 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 
 			objects = objects.concat(palaceInstance.objects);
 			
-			// // DIAMOND SHELVES
-			// var shelfInstance = new shelfFactory();
-			// let shelf = shelfInstance.container;
-			// shelf.position.set(10, 5, -170);
-			// shelf.rotation.set(0, Math.PI / 2, 0);
-			// scene.add(shelf);
-			// objects = objects.concat(shelfInstance.objects);
-
 			//RETRIVE STORED OBJECTS
 			storingFactory.retrieveObjects()
 			.then(function(items){
@@ -196,7 +188,7 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 					items.forEach(function(item){
 						objectFactory.load(`/browser/objects/${item.name}/${item.name}.json`, null, item.name)
 							.then(obj => {
-								objectFactory.setObjProps(obj, item)
+								objectFactory.setObjProps(obj, item);
 								let text = obj.messageMesh;
 								text.lookAt(camera.position);
 								scene.add(obj);
@@ -218,7 +210,10 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 			document.addEventListener( 'keyup', onKeyUp, false );
 
 			let messageShown = false;
-
+var msg = document.createElement('div')
+msg.style.position = 'absolute'
+msg.style.zIndex = 1000000
+e[0].appendChild(msg)
 			function onDocumentMouseMove( event ) {
 				event.preventDefault();
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
@@ -230,12 +225,18 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 				if(messageShown){	
 					messageShown.visible = false;
 					messageShown = false;
+					msg.style.opacity = 0
 				}
 				// add check for if its in the wall
 				if (intersects.length > 0) {
 					if(intersects[0].object.messageMesh && !messageShown) {
+						msg.style.opacity = 1
+						msg.textContent = 'hello'
+						msg.style.top = event.clientY + 'px'
+						msg.style.left = event.clientX + 'px'
+
 						messageShown = intersects[0].object.messageMesh;
-						messageShown.visible = true;
+						//messageShown.visible = true;
 					}
 					if(!objectFactory.currentObject) objectFactory.currentObject = objectFactory.invisibleObject; 
 					var intersect = intersects[ 0 ];
@@ -252,17 +253,18 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 			if(modalFactory.getMessageModal().data){
 				event.preventDefault();
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
+				console.log("here", mouse);
 				raycaster.setFromCamera( mouse, camera );
 				var intersects = raycaster.intersectObjects( objects);
 				var wallIntersections = raycaster.intersectObjects( walls );
 				
 				//add check for if its in the wall
 				if ( intersects.length > 0 && wallIntersections.length<=1) {
-					if (objectFactory.currentObject.messageMesh) {
-						let messageMesh = objectFactory.currentObject.messageMesh
-						let messageRayCaster = new THREE.Raycaster(messageMesh, camera);
-						let messageIntersects = raycaster.intersectObjects( objects );
-					}
+					// if (objectFactory.currentObject.messageMesh) {
+					// 	let messageMesh = objectFactory.currentObject.messageMesh
+					// 	let messageRayCaster = new THREE.Raycaster(messageMesh, camera);
+					// 	let messageIntersects = raycaster.intersectObjects( objects );
+					// }
 					var intersect = intersects[ 0 ];
 					// delete cube
 					if ( event.originalEvent.shiftKey ) {
@@ -280,8 +282,14 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 								myObject2.position.copy( intersect.point ).add( intersect.face.normal );
 								myObject2.position.addScalar( 3/2 );
 								if(objectFactory.currentObject.yPosition) myObject2.position.y += objectFactory.currentObject.yPosition;
-								//TEXT
+								
+								//check for collisions before they happen 
+								//get spot where vector is going to go
 
+
+
+								//TEXT;
+								messageFactory.setObjects(objects);
 								messageFactory.rememberObject(myObject2, intersect.point, scene, camera)
 								modalFactory.toggleMessageModal();
 

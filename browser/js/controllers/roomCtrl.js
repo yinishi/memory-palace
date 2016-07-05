@@ -11,15 +11,22 @@ module.exports = function ($scope, modalFactory, objectFactory, textFactory, mes
       if (objectFactory.currentObject.message) {
        var text = textFactory(messageFactory.getObject().myIntersect, objectFactory.currentObject.message);
        if(messageFactory.getObject().myObject.yPosition) text.position.y += messageFactory.getObject().myObject.yPosition;
-       console.log(text)
        text.lookAt(messageFactory.getObject().myCamera.position);
+       let objects = messageFactory.getObjects()
+       checkCollisions(text.position, objects);
        messageFactory.getObject().myObject.messageMesh = text;
        messageFactory.getObject().myScene.add(text);
       }
-    
       modalFactory.toggleMessageModal();
       storingFactory.storeMessage(messageFactory.getObject().myObject.position, $scope.message)
       $scope.message = null;
+    }
+
+    function checkCollisions(position, objects) {
+      // var vec = new THREE.Vector3(???);
+      // var raycaster = new THREE.Raycaster(position, vec);
+      // var intersects = raycaster.intersectObjects( objects);
+      // console.log("cpos", intersects);
     }
   	$scope.setCurrentObject = function (object) {
   	  objectFactory.setCurrentObject(object);
