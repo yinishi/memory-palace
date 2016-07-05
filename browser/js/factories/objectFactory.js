@@ -40,7 +40,6 @@ function load (link, scale, name, message) {
         {name: 'bed', image: "./browser/images/bed.png", scale: 15, yPosition: 5},
         {name: 'chair', image: "./browser/images/chair.png", scale: 15, yPosition: 0},
         {name: 'couch', image: "./browser/images/couch.png", scale: 20},
-        {name: 'sofa', image: "./browser/images/sofa.png", scale: 2, yPosition: 3},
         {name: 'computer', image: "./browser/images/computer.png", scale: 5, yPosition: 8},
         {name: 'backgammon', image: "./browser/images/backgammon.png", scale: 3},
         {name: 'book', image: "./browser/images/book.png", scale: 1},

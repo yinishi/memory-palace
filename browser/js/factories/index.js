@@ -8,7 +8,7 @@ app.factory('authFactory', ['$http', '$rootScope', require("./authFactory")]);
 app.factory('objectFactory', ['textFactory', 'modalFactory', require("./objectFactory")]);
 app.factory('shelfFactory', require("./shelf_Factory"));
 app.factory('storingFactory', ['$http', 'textFactory', 'objectFactory', require("./storing_Factory")]);
-app.factory('palacesFactory', ['roomFactory', 'objectFactory', 'tableFactory', 'wallFactory', require("./palacesFactory")]);
+app.factory('palacesFactory', ['roomFactory', 'objectFactory', 'tableFactory', 'wallFactory', 'messageFactory', require("./palacesFactory")]);
 app.factory('textFactory', require("./textFactory"));
 app.factory('lightFactory', require('./lightFactory'));
 app.factory('messageFactory', require('./messageFactory'));
