@@ -38,12 +38,20 @@ TOC:
 
 .navbar-default .navbar-brand {
   font-weight: bold;
+  color: #fff;
+  text-shadow: 1px 1px 1px #A04843;
 }
 
 .navbar-default .navbar-nav>li>a {
-  color: #A04843;
+  color: #fff;
   font-size: 16px!important;
   font-weight: bold;
+  text-shadow: 0.5px 0.5px 0.5px #000;
+}
+
+.navbar-default .navbar-nav>li>a:hover {
+  color: #A04843;
+  text-shadow: 0.5px 0.5px 0.5px #fff;
 }
 
 
@@ -159,7 +167,10 @@ img:hover + .icon-text {
 .ctrls-modal {
   margin: 10px auto;
   padding: 20px;
-  width: 40vw;
+  width: 50vw;
+  height: 45vh;
+  overflow: scroll;
+  border: 1px solid #777;
   color: #777;
   font-size: 16px;
   position: absolute;
@@ -169,25 +180,46 @@ img:hover + .icon-text {
   border-radius: 5px;
 }
 
+.row {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+h2 {
+    line-height: 100%;
+    padding: 0;
+}
+.col-md-3, .col-xs-6 {
+    padding: 2px;
+    border-bottom: 1px solid #ccc;
+}
 .about-modal {
   margin: 10px;
   padding: 20px;
   color: #777;
+  border: 1px solid #777;
   font-size: 22px;
   height: 60vh;
+  overflow: scroll;
   position: absolute;
   top: 50px;
-  overflow: scroll;
   left: 3vw;
   right: 3vw;
   background-color: rgba(238, 238, 238, .6);
   border-radius: 5px;
 }
 
+/*@media screen and (max-width: 1500px) {
+  .about-modal {
+    font-size: 50%;
+  }
+}*/
+
 .login-modal {
   margin: 10px auto;
   width: 30vw;
   padding: 20px;
+  border: 1px solid #777;
   color: #777;
   position: absolute;
   right: 5vw;
@@ -245,15 +277,6 @@ img:hover + .icon-text {
 }
 
 
-
-
-@media (min-width: 700px) and (max-height: 700px) {
-  /*.ctrlModal {
-    font-size: 80%;
-    bottom: 200px;
-    width: 200px;
-  }*/
-}
 
 /* What does this do?! */
 .col {
