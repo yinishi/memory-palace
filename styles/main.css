@@ -8,6 +8,10 @@ canvas {
   height: 100%
 }
 
+body {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+}
 
 /*
 TOC: 
@@ -37,13 +41,25 @@ TOC:
 }
 
 .navbar-default .navbar-brand {
-  font-weight: bold;
+  font-family: 'Cinzel Decorative', serif;
+  color: #A04843;
+  text-shadow: 1px 1px 1px #A04843;
+}
+
+.navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
+    color: #A04843;
 }
 
 .navbar-default .navbar-nav>li>a {
   color: #A04843;
   font-size: 16px!important;
   font-weight: bold;
+  /*text-shadow: 0.5px 0.5px 0.5px #fff;*/
+}
+
+.navbar-default .navbar-nav>li>a:hover {
+  color: #000;
+  /*text-shadow: 0.5px 0.5px 0.5px #fff;*/
 }
 
 
@@ -92,7 +108,9 @@ TOC:
 
 /*/////////////////////*/
 
+
 /*   CONTROL PANEL    */
+
 
 /*////////////////////*/
 
@@ -120,7 +138,9 @@ img:hover + .icon-text {
 
 /*/////////////*/
 
+
 /*   MODALS    */
+
 
 /*/////////////*/
 
@@ -149,6 +169,7 @@ img:hover + .icon-text {
 
 #welcome-title {
   font-size: 80px;
+  font-family: 'Cinzel Decorative', serif;
 }
 
 #welcome-subtext {
@@ -159,7 +180,10 @@ img:hover + .icon-text {
 .ctrls-modal {
   margin: 10px auto;
   padding: 20px;
-  width: 40vw;
+  width: 50vw;
+  height: 45vh;
+  overflow: scroll;
+  border: 1px solid #777;
   color: #777;
   font-size: 16px;
   position: absolute;
@@ -169,25 +193,52 @@ img:hover + .icon-text {
   border-radius: 5px;
 }
 
+.row {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+h2 {
+  line-height: 100%;
+  padding: 0;
+}
+
+.col-md-3,
+.col-xs-6 {
+  padding: 2px;
+  border-bottom: 1px solid #ccc;
+}
+
 .about-modal {
   margin: 10px;
-  padding: 20px;
+  padding: 10px;
+  word-wrap: break-word;
   color: #777;
+  border: 1px solid #777;
   font-size: 22px;
   height: 60vh;
+  overflow: scroll;
+  overflow-wrap: break-word;
   position: absolute;
   top: 50px;
-  overflow: scroll;
   left: 3vw;
   right: 3vw;
   background-color: rgba(238, 238, 238, .6);
   border-radius: 5px;
 }
 
+
+/*@media screen and (max-width: 1500px) {
+  .about-modal {
+    font-size: 50%;
+  }
+}*/
+
 .login-modal {
   margin: 10px auto;
   width: 30vw;
   padding: 20px;
+  border: 1px solid #777;
   color: #777;
   position: absolute;
   right: 5vw;
@@ -199,7 +250,9 @@ img:hover + .icon-text {
 
 /*///////////////////*/
 
+
 /*   FORM CONTROL    */
+
 
 /*///////////////////*/
 
@@ -224,7 +277,9 @@ img:hover + .icon-text {
 
 /*///////////////*/
 
+
 /*   MESSAGES    */
+
 
 /*///////////////*/
 
@@ -245,17 +300,8 @@ img:hover + .icon-text {
 }
 
 
-
-
-@media (min-width: 700px) and (max-height: 700px) {
-  /*.ctrlModal {
-    font-size: 80%;
-    bottom: 200px;
-    width: 200px;
-  }*/
-}
-
 /* What does this do?! */
+
 .col {
   border: 1px solid white;
 }
