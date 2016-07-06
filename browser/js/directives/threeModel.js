@@ -222,7 +222,7 @@ module.exports = function (palacesFactory, $window, objectFactory, storingFactor
 
 			function onDocumentMouseDown( event ) {
 
-			if(modalFactory.getMessageModal().data){
+			if(modalFactory.enableKeyEvents){
 				event.preventDefault();
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
@@ -283,7 +283,11 @@ module.exports = function (palacesFactory, $window, objectFactory, storingFactor
 				messageShown = false;
 				msg.style.opacity = 0;
 
-				if(modalFactory.getMessageModal().data){
+				console.log('-----------------------------------');
+				console.log('modalFactory.enableKeyEvents', modalFactory.enableKeyEvents);
+				// console.log('modalFactory.getLogin()', modalFactory.getLogin());
+				// console.log('modalFactory.getSignup()', modalFactory.getSignup());
+				if(modalFactory.enableKeyEvents){
 					switch ( event.keyCode ) {
 						// exit welcome
 						case 27: // esc
@@ -382,7 +386,7 @@ module.exports = function (palacesFactory, $window, objectFactory, storingFactor
 			}
 
 			function onKeyUp (event) {
-				if(modalFactory.getMessageModal().data){
+				if(modalFactory.enableKeyEvents){
 					switch( event.keyCode ) {
 
 						// reset move forward
@@ -414,7 +418,7 @@ module.exports = function (palacesFactory, $window, objectFactory, storingFactor
 
 			function onWheel($event){
 				$event.preventDefault();
-				if(modalFactory.getMessageModal().data){
+				if(modalFactory.enableKeyEvents){
 					var event = $event.originalEvent;
 					if(event.ctrlKey === true){ //pinch
 						var delta = -event.deltaY/2;
