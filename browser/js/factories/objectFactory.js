@@ -26,7 +26,7 @@ function load (link, scale, name, message) {
         // console.log(cubeGeometry.boundingSphere, "cube")
         // cube.position.set(boundingBox.position.x, boundingBox.position.y, boundingBox.position.z ) 
         // var cube = new THREE.Mesh(boundingBox.geometry, new THREE.MeshBasicMaterial());
-        cube.add(boundingBox)
+        // cube.add(boundingBox)
         cube.add(object); 
         res(cube);
       });
