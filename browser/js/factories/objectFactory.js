@@ -40,6 +40,8 @@ function load (link, scale, name, message) {
     getObjects : function(){
      return [
         {name: 'teapot', image: "./browser/images/teapot.png", scale: .3, yPosition: 1},
+        {name: 'armchair', image: "./browser/images/armchair.png", scale:10},
+        {name: 'lamp', image: "./browser/images/lamp.png", scale: 2},
         {name: 'toy-train', image: "./browser/images/toy-train.png", scale:1},
         {name: 'snowman', image: "./browser/images/snowman.png", scale: 8},
         {name: 'cat-mug', image: "./browser/images/cat-mug.png", scale: 3, yPosition: 2},    
@@ -70,8 +72,7 @@ function load (link, scale, name, message) {
         {name: 'tricycle', image: "./browser/images/tricycle.png", scale: 35},
         {name: 'candy', image: "./browser/images/candy.png", scale: 3},
         {name: 'monkey-piano', image: "./browser/images/monkey-piano.png", scale: .3},
-        {name: 'tv', image: "./browser/images/tv.jpeg", scale: 5},
-        {name: 'sofa2', image: "./browser/images/sofa2.jpeg", scale: 5}
+        {name: 'tv', image: "./browser/images/tv.png", scale: 5}
       
       ];
     },
