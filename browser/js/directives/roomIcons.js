@@ -8,11 +8,13 @@ module.exports = function (modalFactory) {
             
         	s.toggleControls = function(){
                 if(modalFactory.getAbout().data === false) modalFactory.toggleAbout();
+                if(modalFactory.getCarousel().data === false) modalFactory.toggleCarousel();
                 modalFactory.toggleControls();
             }
 
             s.toggleCarousel = function () {
                 modalFactory.toggleCarousel();
+                if(modalFactory.getControls().data === false) modalFactory.toggleControls();
             }
             
         }
