@@ -28,7 +28,7 @@ function loadTexture(file) {
 module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory) {
 
   function ceiling (w, h, positionX, positionZ) {
-    this.ceiling = new wallFactory.Wall(w, h, whiteCeiling, false, false)
+    this.ceiling = new wallFactory.Wall(w, h, woodDark, false, false)
       .clockwiseX()
       .wall;
     this.ceiling.position.set(positionX,75/2,positionZ);
@@ -44,66 +44,28 @@ module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory)
     var tempPalaceFloor = new wallFactory.Wall(625, 450, redCarpet, false, false)
       .clockwiseX()
       .wall;
-    tempPalaceFloor.position.set(625/2, -75/2 - 1, -450/2)
+    tempPalaceFloor.position.set(625/2, -75/2 - 1, -450/2);
     this.addToScene(tempPalaceFloor);
 
-    //Roof
-    this.roof = new THREE.Object3D();
-    //first wing roof/floor
-    let sectionOneLength = 150
-    let sectionOneHeight = (150 + 75.5 + 75 + 1)
-    let sectionOneRoof = new wallFactory.Wall(sectionOneLength, sectionOneHeight, woodLight, false, false)
-      .clockwiseX()
-      .wall
-     sectionOneRoof.position.set(75, 75/2, -150)
+    //ceilings
+    const sectionOneHeight = (150 + 75.5 + 75 + 1).ceiling;
+    const sectionOneRoof = new ceiling(150, 301.5, 75,  -150).ceiling;
+    const sectionTwoRoof = new ceiling(150, 375, 225, -185).ceiling;
+    const kitchenRoof = new ceiling(150, 175, 225+150, -265).ceiling;
+    const bedRoom3Roof = new ceiling(150, 175, 525, -265).ceiling;
+    const mainHallRoof = new ceiling(225, 175, 412, -87).ceiling;
+    const sunRoomRoof = new ceiling (75, 175, 562, -87).ceiling;
     this.addToScene(sectionOneRoof);
-
-    //large 375
-    // let sectionTwoHeight = 375;
-    // let sectionTwoLength = 150; 
-   const sectionTwoRoof = new ceiling(150, 375, 225, -185).ceiling;
-    // let sectionTwoRoof = new wallFactory.Wall(150, 375, whiteStone, false, false)
-    // .clockwiseX()
-    // .wall
-    // sectionTwoRoof.position.set(225, 75/2, -185)
     this.addToScene(sectionTwoRoof);
-
-    //kitchen rook 
-    let kitchenRoof = new wallFactory.Wall(150, 175, woodLight, false, false)
-    .clockwiseX()
-    .wall;
-      kitchenRoof.position.set(225+150, 75/2, -265);
     this.addToScene(kitchenRoof);
-
-
-    //bedroom 3 roof
-    let bedRoom3Roof = new wallFactory.Wall(150, 175, woodLight, false, false)
-    .clockwiseX()
-    .wall;
-      bedRoom3Roof.position.set(225+150+150, 75/2, -265)
-      this.addToScene(bedRoom3Roof);
-
-
-
-    //main room section 2 
-    let mainHallRoof = new wallFactory.Wall(225, 175, whiteStone, false, false)
-    .clockwiseX()
-    .wall;
-    mainHallRoof.position.set(225+187, 75/2, -87)
+    this.addToScene(bedRoom3Roof);
     this.addToScene(mainHallRoof);
-
-
-
-    //sunroom roof 
-    let sunRoomRoof = new wallFactory.Wall(75, 175, whiteStone, false, false)
-    .clockwiseX()
-    .wall;
-    sunRoomRoof.position.set(225+187+150, 75/2, -87);
+    this.addToScene(mainHallRoof);
     this.addToScene(sunRoomRoof);
 
-    //150 x 175
+
+
     //BEDROOM 1
-    //bedroom walls0
     var b1Outerwall1 = new wallFactory.Wall(150, wallHeight, whiteStone, false, false)
       .clockwiseY()
       .wall;
