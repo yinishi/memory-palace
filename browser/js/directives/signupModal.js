@@ -14,6 +14,7 @@ module.exports = function (modalFactory, $rootScope, authFactory, constantsFacto
 					authFactory.signup(s.userInfo)
 					.then(user => {
 						$rootScope.$broadcast('newUser', user);
+						modalFactory.toggleSignup();
 						if(constantsFactory.getObjects().length > 0) {
 							constantsFactory.getObjects().forEach(function(obj){
 								storingFactory.storeObject({
