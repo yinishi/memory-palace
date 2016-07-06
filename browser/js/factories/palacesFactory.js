@@ -30,7 +30,7 @@ function loadTexture(file) {
 module.exports = function(objectFactory, tableFactory, wallFactory, messageFactory, constantsFactory, shelfFactory) {
   
   function floor (w, h, positionX, positionZ, material) {
-    this.floor = new wallFactory.Wall(w, h, grayTile, false, false)
+    this.floor = new wallFactory.Wall(w, h, material, false, false)
       .clockwiseX()
       .wall;
     this.floor.position.set(positionX,-75/2 ,positionZ);
@@ -49,14 +49,14 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
   	
   	// TEMPORARY FLOOR _ TO BE REPLACED AND CUSTOMIZED
 
-    var tempPalaceFloor = new wallFactory.Wall(625, 450, redCarpet, false, false)
-      .clockwiseX()
-      .wall;
-    tempPalaceFloor.position.set(625/2, -75/2 - 1, -450/2);
-    this.addToScene(tempPalaceFloor);
+    // var tempPalaceFloor = new wallFactory.Wall(625, 450, redCarpet, false, false)
+    //   .clockwiseX()
+    //   .wall;
+    // tempPalaceFloor.position.set(625/2, -75/2 - 1, -450/2);
+    // this.addToScene(tempPalaceFloor);
 
     //ceilings
-    const sectionOneHeight = (150 + 75.5 + 75 + 1).ceiling;
+    // const sectionOneHeight = (150 + 75.5 + 75 + 1).ceiling;
     const sectionOneRoof = new ceiling(150, 301.5, 75,  -150).ceiling;
     const sectionTwoRoof = new ceiling(150, 375, 225, -185).ceiling;
     const kitchenRoof = new ceiling(150, 175, 225+150, -265).ceiling;
@@ -71,8 +71,19 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
     this.addToScene(mainHallRoof);
     this.addToScene(sunRoomRoof);
 
-    const kitchenFloor = new floor(150, 175, 225+150, -265).floor;
+    const sectionOneFloor = new floor(150, 301.5, 75,  -150, woodDark).floor;
+    const sectionTwoFloor = new floor(150, 375, 225, -185, woodDark).floor;
+    const kitchenFloor = new floor(150, 175, 225+150, -265, grayTile).floor;
+    const bedRoom3Floor = new floor(150, 175, 525, -265, woodDark).floor;
+    const mainHallFloor = new floor(225, 175, 412, -87, woodDark).floor;
+    const sunRoomFloor = new floor (75, 175, 562, -87, woodDark).floor;
+    this.addToScene(sectionOneFloor);
+    this.addToScene(sectionTwoFloor);
     this.addToScene(kitchenFloor);
+    this.addToScene(bedRoom3Floor);
+    this.addToScene(mainHallFloor);
+    this.addToScene(mainHallFloor);
+    this.addToScene(sunRoomFloor);
 
     //BEDROOM 1
     var b1Outerwall1 = new wallFactory.Wall(150, wallHeight, whiteStone, false, false)
