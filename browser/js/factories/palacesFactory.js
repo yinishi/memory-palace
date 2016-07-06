@@ -339,7 +339,8 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
 
    
     function addObj (object) {
-        self.addToScene(object);
+        // self.addToScene(object);
+        self.addToScene(object)
         palaceObjects.push(object);
         constantsFactory.setObjects([object]);
     }
@@ -411,7 +412,7 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
       objectFactory.load(`/browser/objects/paintings/paintings.json`, 2)
       .then(function(obj){
         obj.position.set(152, 0, -190);
-        obj.rotation.set(0, Math.PI/2, 0);
+        obj.rotation.set(0, -Math.PI/2, 0);
         obj.scale.set(2, 2, 2)
         addObj(obj);
       });
@@ -423,8 +424,9 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
       });
       //shelves
       var shelf = new shelfFactory();
-      shelf.container.position.set(295, -40, -375);
-      self.addToScene(shelf.container);
+      shelf.container.position.set(295, -50, -305);
+      this.addToScene(shelf.container)
+      // self.addToScene(shelf.container);
       palaceObjects.push(shelf.container);
       constantsFactory.setObjects([shelf.container]);
 

@@ -1107,32 +1107,6 @@
                 "geometry": "98CE0ABF-982E-3010-BF1D-01919C9CB4EF"
             }]
         },{
-            "name": "LightPreset",
-            "uuid": "1783D250-7BC6-30D0-B7CB-5461D8774CE2",
-            "matrix": [-0.156434,0,-0.987688,0,-0.987688,0,0.156434,0,0,1,0,0,-1.074,2.042,0.738,1],
-            "visible": true,
-            "type": "Object",
-            "children": [{
-                "name": "Sky_Light",
-                "uuid": "E6F99E53-23B9-39E5-916A-A64B3E57B841",
-                "matrix": [1,0,0,0,0,-0,1,0,0,-1,-0,0,-0.9737,-3.2428,1.88,1],
-                "visible": true,
-                "type": "HemisphereLight",
-                "color": 3376639,
-                "intensity": 0.7,
-                "distance": 0
-            },{
-                "name": "Sun_Light",
-                "uuid": "69DB222B-E563-3717-AE1D-6F4304516F23",
-                "matrix": [0.863248,-0.444444,0.239316,0,0.239316,0.777778,0.581196,0,-0.444444,-0.444444,0.777778,0,-1.7561,-4.1832,2.7317,1],
-                "visible": true,
-                "type": "DirectionalLight",
-                "castShadow": false,
-                "color": 16774373,
-                "intensity": 1.2,
-                "distance": 0
-            }]
-        },{
             "name": "Meuble_TV",
             "uuid": "3B014362-C317-314C-9B52-06DB10566A05",
             "matrix": [-1,0,0,0,0,0,1,0,0,1,0,0,0.0071,0.7547,0.0185,1],
