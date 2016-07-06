@@ -8,6 +8,8 @@ const woodLightTile = loadTexture('floor_tiles.jpg');
 const woodDark = loadTexture('wood-wall.jpg');
 const woodLight = loadTexture('wood-floor.jpg');
 const redCarpet = loadTexture('carpet_red.jpg');
+const blueCarpet = loadTexture('carpet_blue.jpg');
+const grayCarpet = loadTexture('carpet_gray.jpg');
 const brick = loadTexture('brownBrick.jpg');
 const wallHeight = 75;
 
@@ -23,15 +25,16 @@ var palaceObjects = [];
 
 function loadTexture(file) {
   const texture = THREE.ImageUtils.loadTexture("./browser/textures/" + file);
-  // texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-  // texture.repeat.set(2, 2);
+  texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+  texture.repeat.set(2, 2);
   return new THREE.MeshBasicMaterial({ map: texture, overdraw: 0.5 });
 };
 
 module.exports = function(objectFactory, tableFactory, wallFactory, messageFactory, constantsFactory, shelfFactory) {
   
   function floor (w, h, positionX, positionZ, material) {
-    this.floor = new wallFactory.Wall(w, h, grayTile, false, false)
+    if (!material) material = redCarpet;
+    this.floor = new wallFactory.Wall(w, h, material, false, false)
       .clockwiseX()
       .wall;
     this.floor.position.set(positionX,-75/2 ,positionZ);
@@ -49,14 +52,14 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
 
   	
   	// TEMPORARY FLOOR _ TO BE REPLACED AND CUSTOMIZED
-    var tempPalaceFloor = new wallFactory.Wall(625, 450, redCarpet, false, false)
-      .clockwiseX()
-      .wall;
-    tempPalaceFloor.position.set(625/2, -75/2 - 1, -450/2);
-    this.addToScene(tempPalaceFloor);
+    // var tempPalaceFloor = new wallFactory.Wall(625, 450, redCarpet, false, false)
+    //   .clockwiseX()
+    //   .wall;
+    // tempPalaceFloor.position.set(625/2, -75/2 - 1, -450/2);
+    // this.addToScene(tempPalaceFloor);
 
     //ceilings
-    const sectionOneHeight = (150 + 75.5 + 75 + 1).ceiling;
+    // const sectionOneHeight = (150 + 75.5 + 75 + 1).ceiling;
     const sectionOneRoof = new ceiling(150, 301.5, 75,  -150).ceiling;
     const sectionTwoRoof = new ceiling(150, 375, 225, -185).ceiling;
     const kitchenRoof = new ceiling(150, 175, 225+150, -265).ceiling;
@@ -71,8 +74,19 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
     this.addToScene(mainHallRoof);
     this.addToScene(sunRoomRoof);
 
-    const kitchenFloor = new floor(150, 175, 225+150, -265).floor;
+    const sectionOneFloor = new floor(150, 301.5, 75,  -150).floor;
+    const sectionTwoFloor = new floor(150, 375, 225, -185).floor;
+    const kitchenFloor = new floor(150, 175, 225+150, -265, grayTile).floor;
+    const bedRoom3Floor = new floor(150, 175, 525, -265).floor;
+    const mainHallFloor = new floor(225, 175, 412, -87).floor;
+    const sunRoomFloor = new floor (75, 175, 562, -87).floor;
+    this.addToScene(sectionOneFloor);
+    this.addToScene(sectionTwoFloor);
     this.addToScene(kitchenFloor);
+    this.addToScene(bedRoom3Floor);
+    this.addToScene(mainHallFloor);
+    this.addToScene(mainHallFloor);
+    this.addToScene(sunRoomFloor);
 
     //BEDROOM 1
     var b1Outerwall1 = new wallFactory.Wall(150, wallHeight, woodLight, false, false)
@@ -424,9 +438,8 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
       });
       //shelves
       var shelf = new shelfFactory();
-      shelf.container.position.set(295, -50, -305);
-      this.addToScene(shelf.container)
-      // self.addToScene(shelf.container);
+      shelf.container.position.set(294, -30, -275);
+      self.addToScene(shelf.container);
       palaceObjects.push(shelf.container);
       constantsFactory.setObjects([shelf.container]);
 

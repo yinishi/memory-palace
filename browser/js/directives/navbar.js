@@ -16,11 +16,14 @@ module.exports = function ($state, authFactory, $rootScope, modalFactory) {
             scope.toggleLogin = function(){
                 if(modalFactory.getSignup().data === false) modalFactory.toggleSignup()
                 if(modalFactory.getControls().data === false) modalFactory.toggleControls()
+                if(modalFactory.getAbout().data === false) modalFactory.toggleAbout()
                 modalFactory.toggleLogin();
             }
             scope.toggleSignup = function(){
                 if(modalFactory.getLogin().data === false) modalFactory.toggleLogin()
-                    modalFactory.toggleSignup();
+                if(modalFactory.getControls().data === false) modalFactory.toggleControls()
+                if(modalFactory.getAbout().data === false) modalFactory.toggleAbout()
+                modalFactory.toggleSignup();
             }
             scope.toggleControls = modalFactory.toggleControls;
             scope.user = null;
