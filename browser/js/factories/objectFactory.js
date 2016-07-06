@@ -33,6 +33,7 @@ function load (link, scale, name, message) {
     getObjects : function(){
      return [
         {name: 'teapot', image: "./browser/images/teapot.png", scale: .3, yPosition: 1},
+        {name: 'chicken', image: "./browser/images/chicken.jpg", scale:10},
         {name: 'armchair', image: "./browser/images/armchair.jpg", scale:10},
         {name: 'lamp', image: "./browser/images/lamp.jpg", scale: 2},
         {name: 'stove', image: "./browser/images/stove.png", scale:15},

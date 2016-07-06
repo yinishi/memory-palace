@@ -253,7 +253,7 @@ module.exports = function (palacesFactory, $window, objectFactory, storingFactor
 								//TEXT;
 								messageFactory.rememberObject(myObject2)
 								modalFactory.toggleMessageModal();
-
+								console.log("STOVE!!!", myObject2.position, "rotation", myObject2.rotation)
 								scene.add( myObject2 );
 								constantsFactory.setObjects([myObject2])
 								storingFactory.storeObject({

@@ -1,13 +1,14 @@
 'use strict'
 
 const whiteStone = loadTexture('white-stone.jpg');
+const blue = loadTexture('blue.png');
 const whiteCeiling = loadTexture('white_ceiling.jpg');
 const grayTile = loadTexture('gray_tile.jpg');
-const blueTile = loadTexture('floor_tiles.jpg');
+const woodLightTile = loadTexture('floor_tiles.jpg');
 const woodDark = loadTexture('wood-wall.jpg');
 const woodLight = loadTexture('wood-floor.jpg');
 const redCarpet = loadTexture('carpet_red.jpg');
-const bricks = loadTexture('bricks.jpg');
+const brick = loadTexture('brownBrick.jpg');
 const wallHeight = 75;
 
  // Regular meshes for non-textured walls
@@ -17,13 +18,13 @@ var palaceObjects = [];
 // const tan = new THREE.MeshLambertMaterial({color: 0xECE5CE})
 // const coral = new THREE.MeshLambertMaterial({color: 0xE08E79})
 // const peach = new THREE.MeshLambertMaterial({color: 0xF1D4AF})
-// const blue = new THREE.MeshLambertMaterial({color: 0xC5E0DC})
+// const woodLight = new THREE.MeshLambertMaterial({color: 0xC5E0DC})
 // const burgundy = new THREE.MeshLambertMaterial({color: 0x774F38})
 
 function loadTexture(file) {
   const texture = THREE.ImageUtils.loadTexture("./browser/textures/" + file);
-  texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-  texture.repeat.set(2, 2);
+  // texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+  // texture.repeat.set(2, 2);
   return new THREE.MeshBasicMaterial({ map: texture, overdraw: 0.5 });
 };
 
@@ -37,7 +38,7 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
   }
 
   function ceiling (w, h, positionX, positionZ) {
-    this.ceiling = new wallFactory.Wall(w, h, woodDark, false, false)
+    this.ceiling = new wallFactory.Wall(w, h, whiteCeiling, false, false)
       .clockwiseX()
       .wall;
     this.ceiling.position.set(positionX,75/2,positionZ);
@@ -48,7 +49,6 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
 
   	
   	// TEMPORARY FLOOR _ TO BE REPLACED AND CUSTOMIZED
-
     var tempPalaceFloor = new wallFactory.Wall(625, 450, redCarpet, false, false)
       .clockwiseX()
       .wall;
@@ -75,13 +75,13 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
     this.addToScene(kitchenFloor);
 
     //BEDROOM 1
-    var b1Outerwall1 = new wallFactory.Wall(150, wallHeight, whiteStone, false, false)
+    var b1Outerwall1 = new wallFactory.Wall(150, wallHeight, woodLight, false, false)
       .clockwiseY()
       .wall;
     b1Outerwall1.position.set(0, 0, -75);
     this.addToScene(b1Outerwall1);
 
-    var b1Outerwall2 = new wallFactory.Wall(150, wallHeight, whiteStone, false, true)
+    var b1Outerwall2 = new wallFactory.Wall(150, wallHeight, woodLight, false, true)
       .wall;
     b1Outerwall2.position.x = 75 - 0.5;
     b1Outerwall2.position.z = .5;
@@ -114,21 +114,21 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
     this.addToScene(b1InnerDoor);
 
     //BEDROOM 2
-    var b2Outer1 = new wallFactory.Wall(75.5, wallHeight, whiteStone, false, false)
+    var b2Outer1 = new wallFactory.Wall(75.5, wallHeight, woodLight, false, false)
       .clockwiseY()
       .wall;
     b2Outer1.position.z = -150 - 75/2;
     b2Outer1.position.x = 0;
     this.addToScene(b2Outer1);
 
-    var b2Outer2 = new wallFactory.Wall(75 + 1, wallHeight, whiteStone, false, true)
+    var b2Outer2 = new wallFactory.Wall(75 + 1, wallHeight, woodLight, false, true)
       .clockwiseY()
       .wall;
     b2Outer2.position.z = -225 - 75/2 - .75;
     b2Outer2.position.x = 0;
     this.addToScene(b2Outer2);
 
-    var b2Outer3 = new wallFactory.Wall(150.5 - 2.5, wallHeight, whiteStone, false, false)
+    var b2Outer3 = new wallFactory.Wall(150.5 - 2.5, wallHeight, woodLight, false, false)
       .wall;
     b2Outer3.position.z = -300 - 0.5;
     b2Outer3.position.x = 75 - 0.5;
@@ -149,7 +149,7 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
     this.addToScene(b2Inner2);
 
     //LIVING ROOM
-    var livingroomOuter1 = new wallFactory.Wall(75, wallHeight, whiteStone, false, false)
+    var livingroomOuter1 = new wallFactory.Wall(75, wallHeight, woodLight, false, false)
       .clockwiseY()
       .wall;
     livingroomOuter1.position.z = -225 - 225/2 - 0.25;
@@ -157,21 +157,21 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
 
     this.addToScene(livingroomOuter1);
 
-    var livingroomOuter2 = new wallFactory.Wall(75, wallHeight, whiteStone, true, false)
+    var livingroomOuter2 = new wallFactory.Wall(75, wallHeight, woodLight, true, false)
       .wall;
     livingroomOuter2.position.z = -375 + 0.25;
     livingroomOuter2.position.x = 150 + 75/2 - 0.5;
 
     this.addToScene(livingroomOuter2);
 
-    var livingroomOuter3 = new wallFactory.Wall(75, wallHeight, whiteStone, false, true)
+    var livingroomOuter3 = new wallFactory.Wall(75, wallHeight, woodLight, false, true)
       .wall;
     livingroomOuter3.position.z = -375 + 0.25 ;
     livingroomOuter3.position.x = 225 + 75/2 - 0.5 ;
 
     this.addToScene(livingroomOuter3);
 
-    var livingroomOuter4 = new wallFactory.Wall(25, wallHeight, whiteStone, false, false)
+    var livingroomOuter4 = new wallFactory.Wall(25, wallHeight, woodLight, false, false)
       .clockwiseY()
       .wall;
     livingroomOuter4.position.z = -250 - 225/2 - 0.25;
@@ -187,13 +187,13 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
     kitchenInner1.position.x = 300 - 0.5;
     this.addToScene(kitchenInner1);
 
-    var kitchenOuter1 = new wallFactory.Wall(75, wallHeight, whiteStone, false, true)
+    var kitchenOuter1 = new wallFactory.Wall(75, wallHeight, woodLight, false, true)
       .wall;
     kitchenOuter1.position.z = -350 + 0.25 - 1;
     kitchenOuter1.position.x = 300 - 0.5 + 75/2;
     this.addToScene(kitchenOuter1);
 
-    var kitchenOuter2 = new wallFactory.Wall(75, wallHeight, whiteStone, false, false)
+    var kitchenOuter2 = new wallFactory.Wall(75, wallHeight, woodLight, false, false)
       .wall;
     kitchenOuter2.position.z = -350 + 0.25 - 1;
     kitchenOuter2.position.x = 375 - 0.5 + 75/2;
@@ -219,19 +219,19 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
     this.addToScene(kitchenInner4);
 
     //BEDROOM 3
-    var b3Outer1 = new wallFactory.Wall(75, wallHeight, whiteStone, false, false)
+    var b3Outer1 = new wallFactory.Wall(75, wallHeight, woodLight, false, false)
       .wall;
     b3Outer1.position.z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1;
     b3Outer1.position.x = 75 - .5 + 75 + 75 / 2 + 75 + 75 / 2 + 75 / 2 + 75 + 75;
     this.addToScene(b3Outer1);
 
-    var b3Outer2 = new wallFactory.Wall(75, wallHeight, whiteStone, false, true)
+    var b3Outer2 = new wallFactory.Wall(75, wallHeight, woodLight, false, true)
       .wall;
     b3Outer2.position.z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1;
     b3Outer2.position.x = 75 - .5 + 75 + 75 / 2 + 75 + 75 / 2 + 75 / 2 + 75 + 75 + 75;
     this.addToScene(b3Outer2);
 
-    var b3Outer3 = new wallFactory.Wall(175 + 1, wallHeight, whiteStone, false, true)
+    var b3Outer3 = new wallFactory.Wall(175 + 1, wallHeight, woodLight, false, true)
       .counterClockwiseY()
       .wall;
     b3Outer3.position.z = ((-75 / 2) - 75) - 225 / 2 - 75 / 2 - .25 - 0.5;
@@ -265,21 +265,21 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
 
     // SUNROOM
 
-    var sunroomOuter1 = new wallFactory.Wall(175 / 2, wallHeight, whiteStone, false, true)
+    var sunroomOuter1 = new wallFactory.Wall(175 / 2, wallHeight, woodLight, false, true)
       .counterClockwiseY()
       .wall;
     sunroomOuter1.position.z = ((-75 / 2) - 75) - 225 / 2 - 75 / 2 - .25 - 0.5 + 150 - 75 / 4 + 0.5;
     sunroomOuter1.position.x = 600;
     this.addToScene(sunroomOuter1);
 
-    var sunroomOuter2 = new wallFactory.Wall(175 / 2 + 1, wallHeight, whiteStone, false, true)
+    var sunroomOuter2 = new wallFactory.Wall(175 / 2 + 1, wallHeight, woodLight, false, true)
       .clockwiseY()
       .wall;
     sunroomOuter2.position.z = ((-75 / 2) - 75) - 225 / 2 - 75 / 2 - .25 - 0.5 + 150 - 75 / 4 + 0.5 + 75 + 25 / 2;
     sunroomOuter2.position.x = 600;
     this.addToScene(sunroomOuter2);
 
-    var sunroomOuter3 = new wallFactory.Wall(75, wallHeight, whiteStone, false, true)
+    var sunroomOuter3 = new wallFactory.Wall(75, wallHeight, woodLight, false, true)
       .wall;
     sunroomOuter3.position.z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1 + 175 + 175 + 1.25;
     sunroomOuter3.position.x = 75 / 2 + 525 + .5;
@@ -308,25 +308,25 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
 
     //MAIN HALL
 
-    var mainHallOuter1 = new wallFactory.Wall(75, wallHeight, whiteStone, false, false)
+    var mainHallOuter1 = new wallFactory.Wall(75, wallHeight, woodLight, false, false)
       .wall;
     mainHallOuter1.position.z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1 + 175 + 175 + 1.25;
     mainHallOuter1.position.x = 525 - 75 / 2 + .5;
     this.addToScene(mainHallOuter1);
 
-    var mainHallOuter2 = new wallFactory.Wall(75, wallHeight, whiteStone, false, false)
+    var mainHallOuter2 = new wallFactory.Wall(75, wallHeight, woodLight, false, false)
       .wall;
     mainHallOuter2.position.z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1 + 175 + 175 + 1.25;
     mainHallOuter2.position.x = 525 - 75 / 2 + .5 - 75;
     this.addToScene(mainHallOuter2);
 
-    var mainHallOuter3 = new wallFactory.Wall(75, wallHeight, whiteStone, true, false)
+    var mainHallOuter3 = new wallFactory.Wall(75, wallHeight, woodLight, true, false)
       .wall;
     mainHallOuter3.position.z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1 + 175 + 175 + 1.25;
     mainHallOuter3.position.x = 525 - 75 / 2 + .5 - 75 - 75;
     this.addToScene(mainHallOuter3);
 
-    var mainHallOuter4 = new wallFactory.Wall(151, wallHeight, whiteStone, false, false)
+    var mainHallOuter4 = new wallFactory.Wall(151, wallHeight, woodLight, false, false)
       .wall;
     mainHallOuter4.position.z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1 + 175 + 175 + 1.25;
     mainHallOuter4.position.x = 525 - 75 / 2 + .5 - 75 - 75 - 113;
@@ -346,15 +346,70 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
         palaceObjects.push(sofa);
         constantsFactory.setObjects([sofa]);
       });
-
+    function addObj (object) {
+        self.addToScene(object);
+        palaceObjects.push(object);
+        constantsFactory.setObjects([object]);
+    }
     //kitchen table
     objectFactory.load(`/browser/objects/table/table.json`, 15)
       .then(function(table){
         table.position.set(330, -40, -200);
         table.rotation.set(0, Math.PI, 0)
-        self.addToScene(table);
-        palaceObjects.push(table);
-        constantsFactory.setObjects([table]);
+        addObj(table)
+      });
+
+    objectFactory.load(`/browser/objects/stove/stove.json`, 15)
+      .then(function(stove){
+        stove.position.set(425, -40, -335);
+        stove.rotation.set(0, Math.PI, 0)
+        addObj(stove)
+      });
+      //bedroom3
+      objectFactory.load(`/browser/objects/pink-bed/pink-bed.json`, 15)
+      .then(function(bed3){
+        bed3.position.set(475, -35, -315);
+        bed3.scale.set(1.5, 1.5, 1.5)
+        bed3.rotation.set(0, Math.PI, 0)
+        addObj(bed3)
+      });
+      objectFactory.load(`/browser/objects/lamp/lamp.json`, 15)
+      .then(function(lamp){
+        lamp.position.set(530, -37, -255);
+        lamp.scale.set(.15,.15, .15)
+        addObj(lamp)
+      });
+
+      objectFactory.load(`/browser/objects/shelf-tv/shelf-tv.json`, 15)
+      .then(function(shelf){
+        console.log(shelf, "shelf")
+        shelf.position.set(570, -40, -255);
+        shelf.rotation.set(0, Math.PI/2 + Math.PI, 0)
+        shelf.scale.set(1.35, 1.35, 1.35)
+        addObj(shelf)
+      });
+
+      objectFactory.load(`/browser/objects/armchair/armchair.json`, 2)
+      .then(function(armchair){
+        armchair.position.set(175, -40, -150);
+        armchair.rotation.set(0, Math.PI + Math.PI/2 + Math.PI/2/2, 0)
+        armchair.scale.set(6, 6, 6)
+        addObj(armchair);
+      });
+
+      objectFactory.load(`/browser/objects/armchair/armchair.json`, 2)
+      .then(function(armchair){
+        armchair.position.set(175, -40, -225);
+        armchair.rotation.set(0, Math.PI + Math.PI/2/2, 0)
+        armchair.scale.set(6, 6, 6)
+        addObj(armchair);
+      });
+
+       objectFactory.load(`/browser/objects/coffee-table/coffee-table.json`, 2)
+      .then(function(table){
+        table.position.set(200, -40, -190);
+        table.scale.set(.35, .35, .35)
+        addObj(table);
       });
 
     // //shelves
