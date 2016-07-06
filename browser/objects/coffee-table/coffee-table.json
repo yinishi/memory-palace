@@ -159,16 +159,6 @@
             "receiveShadow": true,
             "geometry": "614FD9D2-CF1E-399C-A987-1EFE81E24401"
         },{
-            "name": "PolyMesh.002",
-            "uuid": "B4F11A4A-A8BB-3A76-B76E-19CDA690562C",
-            "matrix": [-0.367,0,0,0,0,-0.367,-0,0,0,-0,0.367,0,3.258,1.3398,3.238,1],
-            "visible": true,
-            "type": "Mesh",
-            "material": "6887A668-9D42-3C07-8B80-620D32459640",
-            "castShadow": true,
-            "receiveShadow": true,
-            "geometry": "0F3D3FD1-A2C0-3A78-B780-C4CDED88C81B"
-        },{
             "name": "PolyMesh.003",
             "uuid": "F95924CC-4A3B-333A-AC23-B83973048B11",
             "matrix": [-1,0,0,0,0,-1,-0,0,0,-0,1,0,696.897,0,0,1],

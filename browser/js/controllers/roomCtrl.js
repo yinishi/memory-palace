@@ -16,7 +16,7 @@ module.exports = function ($scope, modalFactory, objectFactory, messageFactory, 
 
   	$scope.setCurrentObject = function (object) {
   	  objectFactory.setCurrentObject(object);
-	 }
+	  }
 
   	$scope.toggle = function () {
   		modalFactory.turnOffWelcome();  		
