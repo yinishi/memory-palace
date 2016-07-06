@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = function(textFactory, modalFactory){
+module.exports = function( modalFactory){
 function formatLink (name) {
   return `/browser/objects/${name}/${name}.json`
 }
@@ -10,7 +10,7 @@ function load (link, scale, name, message) {
     return new Promise(function (res, rej) {
       loader.load(link, function(object){
         if(!scale) {
-          a.getObjects().forEach(function(item){
+          factory.getObjects().forEach(function(item){
             if(item.name === name) object.scale.set(item.scale,item.scale,item.scale);
           });
         }
@@ -29,26 +29,27 @@ function load (link, scale, name, message) {
         new THREE.MeshBasicMaterial({visible: false})); 
   var cache = {};
 
-  var a = {
+  var factory = {
     getObjects : function(){
      return [
         {name: 'teapot', image: "./browser/images/teapot.png", scale: .3, yPosition: 1},
         {name: 'cat-mug', image: "./browser/images/cat-mug.png", scale: 3, yPosition: 2},    
-        {name: 'mug', image: "./browser/images/mug.png", scale: .2, yPosition: 2},   
-        {name: 'table', image: "./browser/images/table.png", scale: 10},
+        {name: 'mug', image: "./browser/images/mug.png", scale: .2, yPosition: 2},  
         {name: 'pink-bed', image: "./browser/images/pink-bed.png", scale: 15},
         {name: 'bed', image: "./browser/images/bed.png", scale: 15, yPosition: 5},
+        {name: 'chair', image: "./browser/images/chair.png", scale: 15, yPosition: 0},
         {name: 'couch', image: "./browser/images/couch.png", scale: 20},
-        {name: 'sofa', image: "./browser/images/sofa.png", scale: 2, yPosition: 3},
         {name: 'computer', image: "./browser/images/computer.png", scale: 5, yPosition: 8},
         {name: 'backgammon', image: "./browser/images/backgammon.png", scale: 3},
         {name: 'book', image: "./browser/images/book.png", scale: 1},
+        {name: 'ukelele', image: "./browser/images/ukelele.png", scale: 0.05, yPosition: 20},
         {name: 'pokeball', image: "./browser/images/pokeball.png", scale: .03},
         {name: 'staff', image: "./browser/images/staff.png", scale: 2, yPosition: 6},
         {name: 'headphones', image: "./browser/images/headphones.png", scale: 2},
         {name: 'monster', image: "./browser/images/monster.png", scale: 1, yPosition: 3},
         {name: 'brain', image: "./browser/images/brain.png", scale: 3, yPosition: 5},
         {name: 'fox', image: "./browser/images/fox.png", scale: .3},
+        {name: 'lion-cub', image: "./browser/images/lion-cub.png", scale: 1, yPosition: 2},
         {name: 'bull', image: "./browser/images/bull.png", scale: 2},
         {name: 'turtle', image: "./browser/images/turtle.png", scale: 12},
         {name: 'flower', image: "./browser/images/flower.png", scale: .2},
@@ -71,12 +72,9 @@ function load (link, scale, name, message) {
           obj.name = name;
           obj.storageScale = scale;
           if(object.yPosition) obj.yPosition = object.yPosition;
-          return obj;
+          factory.previousObject = factory.currentObject;
+          factory.currentObject = obj;
         })
-        .then(obj => {
-        this.previousObject = this.currentObject;
-        this.currentObject = obj;
-      });
     },
     load: load, 
     //add props form a retrieved db item to a threejs mesh
@@ -89,10 +87,9 @@ function load (link, scale, name, message) {
         obj.rotation.set(item.rotationX, item.rotationY, item.rotationZ);
         obj.scale.set(item.scaleX, item.scaleY, item.scaleZ);
         obj.storingId = item.id;
-        let text = textFactory(obj.position, item.message);
-        obj.messageMesh = text;
+        obj.message = item.message;      
     }
   };
 
-  return a;
+  return factory;
 };

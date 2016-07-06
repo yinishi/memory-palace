@@ -1,6 +1,4 @@
-<div class="container login-container">
-<div class="space"></div>
-<br>
+<div class="container login-container loginModal" ng-hide="showLogin.data">
   <div class="buffer local">
     <form name="userInfo" class="form-horizontal">
       <div class="form-group">
@@ -14,7 +12,7 @@
       <button ng-click="login()" type="submit" class="btn btn-primary">Log In</button>
       <br>
       <br>
-      <a ui-sref="signup">Don't have an account?</a>
+      <a ng-click="toggleSignup()">Don't have an account?</a>
     </form>
   </div>
 <!--   <div class="or buffer"> -->

@@ -1,7 +1,6 @@
-module.exports = function() {
+module.exports = function(constantsFactory) {
   return function() {
     this.container = new THREE.Object3D()
-    this.objects = [];
 
     var numShelves = 3;
 
@@ -24,7 +23,7 @@ module.exports = function() {
 
 
       this.container.add(shelf);
-      this.objects.push(shelf);
+      constantsFactory.setObjects([shelf]);
     }
 
     for (var i = 0; i < numShelves; i++) {
@@ -36,7 +35,7 @@ module.exports = function() {
       stepDepth += -10;
 
       this.container.add(shelf);
-      this.objects.push(shelf);
+      constantsFactory.setObjects([shelf]);
     }
 
     for (var i = 0; i < numShelves; i++) {
@@ -48,7 +47,7 @@ module.exports = function() {
       stepDepth += -10;
 
       this.container.add(shelf);
-      this.objects.push(shelf);
+      constantsFactory.setObjects([shelf]);
     }
 
     for (var i = 0; i < numShelves; i++) {
@@ -61,7 +60,7 @@ module.exports = function() {
       stepDepth += 10;
 
       this.container.add(shelf);
-      this.objects.push(shelf);
+      constantsFactory.setObjects([shelf]);
     }
   }
 }

@@ -1,11 +1,13 @@
 <div ng-controller="roomCtrl">
       <message-modal></message-modal>
-  <modal ng-show="welcomeModal.data"></modal>
+  <welcome-modal ng-show="welcomeModal.data"></welcome-modal>
   
 	<div class="room-container">
 
 
-
+  <about></about>
+  <login-modal></login-modal>
+  <signup-modal></signup-modal>
 	<three-model></three-model>
   <div class="col-sm-2 col">
        <ctrl-modal></ctrl-modal>

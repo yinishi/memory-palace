@@ -1,6 +1,5 @@
  'use strict'
- module.exports = function(modalFactory, $scope, objectFactory, $window){
-  //loadObjects.then(() => {$scope.showCarousel = modalFactory.getCarousel()});
+ module.exports = function(modalFactory, $scope, objectFactory){
  	$scope.showCarousel = modalFactory.getCarousel()
   	$scope.objects = objectFactory.getObjects();
 

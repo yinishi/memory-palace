@@ -11,6 +11,9 @@ const bricks = loadTexture('bricks.jpg');
 const wallHeight = 75;
 
  // Regular meshes for non-textured walls
+var palaceObjects = [];
+
+// Regular meshes for non-textured walls
 // const tan = new THREE.MeshLambertMaterial({color: 0xECE5CE})
 // const coral = new THREE.MeshLambertMaterial({color: 0xE08E79})
 // const peach = new THREE.MeshLambertMaterial({color: 0xF1D4AF})
@@ -24,12 +27,8 @@ function loadTexture(file) {
   return new THREE.MeshBasicMaterial({ map: texture, overdraw: 0.5 });
 };
 
-
-
-
-
-module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory) {
-
+module.exports = function(objectFactory, tableFactory, wallFactory, messageFactory, constantsFactory, shelfFactory) {
+  
   function floor (w, h, positionX, positionZ, material) {
     this.floor = new wallFactory.Wall(w, h, grayTile, false, false)
       .clockwiseX()
@@ -45,7 +44,6 @@ module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory)
   }
 
   function Palace() {
-    this.objects = [];
     this.palace = new THREE.Object3D();
 
   	
@@ -334,15 +332,47 @@ module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory)
     mainHallOuter4.position.x = 525 - 75 / 2 + .5 - 75 - 75 - 113;
     this.addToScene(mainHallOuter4);
 
+
+     //FURNITURE
+    var self = this;
+    var sceneObjects = constantsFactory.getObjects();
+
+    //living room sofa
+    objectFactory.load(`/browser/objects/sofa/sofa.json`, 2)
+      .then(function(sofa){
+        sofa.position.set(160, -36, -200);
+        sofa.rotation.set(0, Math.PI, 0)
+        self.addToScene(sofa);
+        palaceObjects.push(sofa);
+        constantsFactory.setObjects([sofa]);
+      });
+
+    //kitchen table
+    objectFactory.load(`/browser/objects/table/table.json`, 15)
+      .then(function(table){
+        table.position.set(330, -40, -200);
+        table.rotation.set(0, Math.PI, 0)
+        self.addToScene(table);
+        palaceObjects.push(table);
+        constantsFactory.setObjects([table]);
+      });
+
+    // //shelves
+    // var shelf = new shelfFactory();
+    // shelf.container.position.set(100, 0, -200);
+    // self.addToScene(shelf.container);
+    // palaceObjects.push(shelf.container);
+    // constantsFactory.setObjects([shelf.container]);
+  
   }
 
   Palace.prototype.addToScene = function(mesh) {
-    this.objects.push(mesh);
     this.palace.add(mesh);
   };
 
   return {
-    Palace: Palace
+    Palace: Palace,
+    palaceObjects: palaceObjects
   };
 
 };

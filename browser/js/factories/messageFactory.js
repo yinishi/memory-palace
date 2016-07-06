@@ -2,17 +2,13 @@
 
 module.exports = function () {
 	var myObject = null;
-	var myIntersect = null;
-	var myScene = null;
 	return {
-		rememberObject: function(object, intersect, scene){
+		rememberObject: function(object){
 			myObject = object;
-			myIntersect = intersect;
-			myScene = scene;
 		},
 		getObject: function(){
-			return {myObject: myObject, myIntersect: myIntersect, myScene: myScene}
-		}
+			return myObject
+		} 
 
 	}
 }
