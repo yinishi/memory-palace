@@ -1,9 +1,9 @@
 {
-    "animations": [{
-        "name": "default",
-        "fps": 29,
-        "tracks": []
-    }],
+    // "animations": [{
+    //     "name": "default",
+    //     "fps": 29,
+    //     "tracks": []
+    // }],
     "images": [],
     "textures": [],
     "object": {

@@ -388,7 +388,7 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
         shelf.scale.set(1.35, 1.35, 1.35)
         addObj(shelf)
       });
-
+      //living room
       objectFactory.load(`/browser/objects/armchair/armchair.json`, 2)
       .then(function(armchair){
         armchair.position.set(175, -40, -150);
@@ -404,20 +404,44 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
         armchair.scale.set(6, 6, 6)
         addObj(armchair);
       });
-
        objectFactory.load(`/browser/objects/coffee-table/coffee-table.json`, 2)
       .then(function(table){
         table.position.set(200, -40, -190);
         table.scale.set(.35, .35, .35)
         addObj(table);
       });
+      // //shelves
+      var shelf = new shelfFactory();
+      shelf.container.position.set(295, -40, -300);
+      self.addToScene(shelf.container);
+      palaceObjects.push(shelf.container);
+      constantsFactory.setObjects([shelf.container]);
 
-    // //shelves
-    // var shelf = new shelfFactory();
-    // shelf.container.position.set(100, 0, -200);
-    // self.addToScene(shelf.container);
-    // palaceObjects.push(shelf.container);
-    // constantsFactory.setObjects([shelf.container]);
+      //bedroom1
+      objectFactory.load(`/browser/objects/bed/bed.json`, 2)
+      .then(function(bed){
+        bed.position.set(65, -30, -100);
+        bed.rotation.set(0, Math.PI, 0)
+        bed.scale.set(7, 7, 7)
+        addObj(bed);
+      });
+       objectFactory.load(`/browser/objects/bean-bag/bean-bag.json`, 2)
+      .then(function(beanbag){
+        beanbag.position.set(118, -37, -130);
+        beanbag.rotation.set(0, Math.PI, 0)
+        beanbag.scale.set(7, 7, 7)
+        addObj(beanbag);
+      });
+
+      // objectFactory.load(`/browser/objects/shelf-black/shelf-black.json`, 2)
+      // .then(function(shelf){
+      //   shelf.position.set(200, -40, -190);
+      //   shelf.rotation.set(0, Math.PI/2, 0)
+      //   // table.scale.set(.35, .35, .35)
+      //   addObj(shelf);
+      // });
+
+   
   
   }
 
