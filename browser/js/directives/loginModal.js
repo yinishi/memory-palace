@@ -1,4 +1,4 @@
-module.exports = function (modalFactory, $rootScope, authFactory, storingFactory, messageFactory, objectFactory) {
+module.exports = function (modalFactory, $rootScope, authFactory, storingFactory, messageFactory, objectFactory, palacesFactory, constantsFactory) {
 	 return {
         restrict: 'E',
         scope: {
@@ -25,15 +25,13 @@ module.exports = function (modalFactory, $rootScope, authFactory, storingFactory
 								objectFactory.load(`/browser/objects/${item.name}/${item.name}.json`, null, item.name)
 									.then(obj => {
 										objectFactory.setObjProps(obj, item);
-										// let text = obj.messageMesh;
-										// text.lookAt(camera.position);
-										messageFactory.getScene().add(obj);
-										// scene.add(text);
-										objects.push(obj);
+										constantsFactory.getScene().add(obj);
+										constantsFactory.setObjects([obj]);
 									});
 						});
-						if(messageFactory.getObjects().length > 0) {
-							messageFactory.getObjects().forEach(function(obj){
+						if(constantsFactory.getObjects().length > 0) {
+							constantsFactory.getObjects().forEach(function(obj){
+								if(!palacesFactory.palaceObjects.includes(obj) && !constantsFactory.getFloor().includes(obj)){
 								storingFactory.storeObject({
 									name: obj.name, 
 									positionX: obj.position.x, 
@@ -47,9 +45,10 @@ module.exports = function (modalFactory, $rootScope, authFactory, storingFactory
 									scaleZ: obj.scale.z,
 									message: obj.message
 								})
+								}
 							})
 						}	
-						messageFactory.setObjects(objects)
+						constantsFactory.setObjects(objects);
 				}
 			});
 				});

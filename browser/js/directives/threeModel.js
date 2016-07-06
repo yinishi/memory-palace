@@ -4,10 +4,10 @@ var THREE_Text = require('three-text2D')
 var Text2D = THREE_Text.Text2D;
 var textAlign = THREE_Text.textAlign;
 
-module.exports = function (textFactory, palacesFactory, $window, roomFactory, objectFactory, shelfFactory,	$document, storingFactory, modalFactory, lightFactory, messageFactory) {
+module.exports = function (palacesFactory, $window, objectFactory, storingFactory, modalFactory, lightFactory, messageFactory, constantsFactory) {
 	 return {
         restrict: 'E',
-        	scope: {
+        scope: {
         },
         link: function(s,e,a) {
 			// CONSTANTS
@@ -16,7 +16,6 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 			var ASPECT = WIDTH / HEIGHT;
 			const UNITSIZE = 250;
 			var PI_2 = Math.PI / 2;
-			let objects = [];
 
 			// CREATING SCENE
 			const scene = new THREE.Scene();
@@ -24,16 +23,15 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 		
 			//ADDING LIGHT
 			scene.add( lightFactory.ambientLight() );
-			var directionalLight = lightFactory. directionalLight()
+			var directionalLight = lightFactory.directionalLight()
 			scene.add( directionalLight );
 
 			//ADDING CAMERA
-			let camera = new THREE.PerspectiveCamera(60, ASPECT, 1, 10000);
+			var camera = new THREE.PerspectiveCamera(60, ASPECT, 1, 10000);
 			scene.add(camera);
 
 			// CONTROLS
 			var controls = new PointerLockControls(camera);
-			objects.push(controls.getYawObject());
 			scene.add( controls.getYawObject() );
 			var controlsEnabled = true;
 			controls.enabled = true;
@@ -142,48 +140,18 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 			var raycaster = new THREE.Raycaster();
 			var mouse = new THREE.Vector2();
 
-			// ORIGIN BOX
-			var origin = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshBasicMaterial({color: 0x000000}))
-			scene.add(origin)
-
-			// COLORFUL FLOOR
-			var geometry = new THREE.PlaneGeometry( 2000, 2000, 100, 100 );
-			geometry.rotateX( - Math.PI / 2 );
-
-			for ( var i = 0, l = geometry.vertices.length; i < l; i ++ ) {
-				var vertex = geometry.vertices[ i ];
-				vertex.x += Math.random() * 20 - 10;
-				vertex.y += Math.random() * 2;
-				vertex.z += Math.random() * 20 - 10;
-			}
-
-			for ( var i = 0, l = geometry.faces.length; i < l; i ++ ) {
-				var face = geometry.faces[ i ];
-				face.vertexColors[ 0 ] = new THREE.Color().setHSL( Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
-				face.vertexColors[ 1 ] = new THREE.Color().setHSL( Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
-				face.vertexColors[ 2 ] = new THREE.Color().setHSL( Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
-			}
-
-			var material = new THREE.MeshBasicMaterial( { vertexColors: THREE.VertexColors } );
-
-			var mesh = new THREE.Mesh( geometry, material );
-			mesh.position.y = -2;
-			scene.add( mesh );
-			objects.push(mesh);
-			messageFactory.setObjects(objects)
-			var floorObjects = [mesh];
+			scene.add( constantsFactory.getFloor() );
 
 			// CREATE A ROOM
 			var palaceInstance = new palacesFactory.Palace();
 			var palace = palaceInstance.palace;
-			var walls = palaceInstance.objects;
 			palace.position.set(-300,75/2 + 1,100);
 			scene.add(palace);
 
-			//store scene in messageFactory
-			messageFactory.storeScene(scene);
+			//store scene in constantsFactory
+			constantsFactory.storeScene(scene);
 			
-			//RETRIVE STORED OBJECTS
+			//RETRIEVE STORED OBJECTS
 			storingFactory.retrieveObjects()
 			.then(function(items){
 				if(Array.isArray(items)){
@@ -191,11 +159,8 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 						objectFactory.load(`/browser/objects/${item.name}/${item.name}.json`, null, item.name)
 							.then(obj => {
 								objectFactory.setObjProps(obj, item);
-								// let text = obj.messageMesh;
-								// text.lookAt(camera.position);
 								scene.add(obj);
-								// scene.add(text);
-								objects.push(obj);
+								constantsFactory.setObjects([obj]);
 						});
 					});
 				}
@@ -222,32 +187,25 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 				event.preventDefault();
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
-				let intersects = raycaster.intersectObjects(objects);
+				let intersects = raycaster.intersectObjects(constantsFactory.getObjects());
 				// var wallIntersections = raycaster.intersectObjects( walls );
 				
 				if(messageShown){	
-					// messageShown.visible = false;
 					messageShown = false;
 					msg.style.opacity = 0
 				}
 				// add check for if its in the wall
 				if (intersects.length > 0) {
-					if(intersects[0].object.messageMesh && !messageShown) {
+					if(intersects[0].object.message && !messageShown) {
 						let messageLength = (msg.textContent.length*20)
 						msg.style.opacity = 1
 						msg.textContent = intersects[0].object.message;
 						msg.style.top = event.clientY-100 + 'px'
 						//not to far to the right
-						if (event.clientX < window.innerWidth - messageLength) {
-							msg.style.left = event.clientX + 'px'
-						}
+						if (event.clientX < window.innerWidth - messageLength) msg.style.left = event.clientX + 'px'
 						//too far to the right
-						else {
-							msg.style.top = event.clientY-100 + 'px'
-							msg.style.left = event.clientX-(msg.textContent.length*20) + 'px'
-						}
+						else msg.style.left = event.clientX-(msg.textContent.length*20) + 'px'
 						messageShown = true; 
-						// messageShown = intersects[0].object.messageMesh;
 					}
 
 					if(!objectFactory.currentObject) objectFactory.currentObject = objectFactory.invisibleObject; 
@@ -265,21 +223,21 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 			if(modalFactory.getMessageModal().data){
 				event.preventDefault();
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
-				console.log("here", mouse);
 				raycaster.setFromCamera( mouse, camera );
-				var intersects = raycaster.intersectObjects( objects);
-				var wallIntersections = raycaster.intersectObjects( walls );
-				
+				var intersects = raycaster.intersectObjects( constantsFactory.getObjects());
+				// var wallIntersections = raycaster.intersectObjects( walls );
+				//&& wallIntersections.length<=1
+
 				//add check for if its in the wall
-				if ( intersects.length > 0 && wallIntersections.length<=1) {
+				if ( intersects.length > 0 ) {
 	
 					var intersect = intersects[ 0 ];
 					// delete cube
 					if ( event.originalEvent.shiftKey ) {
-						if ( !palaceInstance.objects.includes(intersect.object) && !floorObjects.includes(intersect.object)) {
+						if ( !palacesFactory.palaceObjects.includes(intersect.object) && constantsFactory.getFloor() != intersect.object) {
 							scene.remove( intersect.object );
 							storingFactory.deleteObject(intersect.object.storingId);
-							objects.splice( objects.indexOf( intersect.object ), 1 );
+							constantsFactory.removeObject(intersect.object);
 
 						}
 					// create cube
@@ -289,19 +247,13 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 								myObject2.position.copy( intersect.point ).add( intersect.face.normal );
 								myObject2.position.addScalar( 3/2 );
 								if(objectFactory.currentObject.yPosition) myObject2.position.y += objectFactory.currentObject.yPosition;
-								
-								//check for collisions before they happen 
-								//get spot where vector is going to go
-
-
 
 								//TEXT;
-								messageFactory.rememberObject(myObject2, intersect.point, scene, camera)
+								messageFactory.rememberObject(myObject2)
 								modalFactory.toggleMessageModal();
 
 								scene.add( myObject2 );
-								objects.push( myObject2 );
-								messageFactory.setObjects(objects);
+								constantsFactory.setObjects([myObject2])
 								storingFactory.storeObject({
 									name: myObject2.name, 
 									positionX: myObject2.position.x, 
@@ -313,7 +265,6 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 									scaleX: myObject2.scale.x,
 									scaleY: myObject2.scale.y,
 									scaleZ: myObject2.scale.z
-									// message: objectFactory.currentObject.message
 								})
 							}
 							// exchanging object for invisible cube (invisble pointer)
@@ -371,7 +322,6 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 
 						// jump
 						case 32: // space - jump
-							//event.preventDefault();
 							if ( canJump === true ) velocity.y += 350;
 							canJump = false;
 							break;
@@ -386,13 +336,11 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 
 						// rotate right
 						case 65: // a
-							//event.preventDefault();
 							controls.getYawObject().rotation.y += 3 * Math.PI / 180;
 							break;
 
 						// rotate left
 						case 68: // d
-							//event.preventDefault();
 							controls.getYawObject().rotation.y -= 3 * Math.PI / 180;
 							break;
 
@@ -515,7 +463,6 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 						velocity.x = 0;
 						velocity.y = 0;
 						velocity.z = 0;
-						console.log('colliding left, velocity is', velocity, 'can move left?', moveLeft, 'collidingLeft', collidingLeft);
 					}
 
 					// COLLISION DETECTION - right
