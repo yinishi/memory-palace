@@ -42,7 +42,7 @@ function load (link, scale, name, message) {
         {name: 'teapot', image: "./browser/images/teapot.png", scale: .3, yPosition: 1},
         {name: 'armchair', image: "./browser/images/armchair.png", scale:10},
         {name: 'lamp', image: "./browser/images/lamp.png", scale: 2},
-        {name: 'stove', image: "./browser/images/stove.png", scale:15},
+        //{name: 'stove', image: "./browser/images/stove.png", scale:15},
         {name: 'small-table', image: "./browser/images/small-table.png", scale:10},
         {name: 'chicken', image: "./browser/images/chicken.png", scale:10},
         {name: 'toy-train', image: "./browser/images/toy-train.png", scale:1},
