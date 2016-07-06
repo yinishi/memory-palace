@@ -438,9 +438,8 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
       });
       //shelves
       var shelf = new shelfFactory();
-      shelf.container.position.set(295, -50, -305);
-      this.addToScene(shelf.container)
-      // self.addToScene(shelf.container);
+      shelf.container.position.set(294, -30, -275);
+      self.addToScene(shelf.container);
       palaceObjects.push(shelf.container);
       constantsFactory.setObjects([shelf.container]);
 
