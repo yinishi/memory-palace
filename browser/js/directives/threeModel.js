@@ -426,7 +426,7 @@ module.exports = function (palacesFactory, $window, objectFactory, storingFactor
 					
 					var collidingForward = collisions.length > 1;
 
-					if (collidingForward && moveForward && collisions[0].distance < 10) {
+					if (collidingForward && moveForward && collisions[0].distance < 20) {
 						moveForward = false;
 						velocity.x = 0;
 						velocity.y = 0;
