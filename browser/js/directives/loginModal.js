@@ -17,10 +17,36 @@ module.exports = function (modalFactory, $rootScope, authFactory, storingFactory
 				.then(user => {
 					$rootScope.$broadcast('newUser', user);
 					modalFactory.toggleLogin();
+					// //Store already placed objects
+					// console.log(constantsFactory.getObjects(), "objects")
+					// console.log(palacesFactory.palaceObjects, "palace")
+					// console.log(constantsFactory.getFloor(), "floor")
+					// if(constantsFactory.getObjects().length > 0) {
+					// 	constantsFactory.getObjects().forEach(function(obj, i){
+					// 		if(i === 0) console.log("starting to store")
+					// 		if(i === constantsFactory.getObjects().length-1) console.log("finished to store")
+					// 		if(!palacesFactory.palaceObjects.includes(obj) && constantsFactory.getFloor() != obj){
+					// 			storingFactory.storeObject({
+					// 				name: obj.name, 
+					// 				positionX: obj.position.x, 
+					// 				positionY: obj.position.y, 
+					// 				positionZ: obj.position.z,
+					// 				rotationX: obj.rotation.x,
+					// 				rotationY: obj.rotation.y,
+					// 				rotationZ: obj.rotation.z, 
+					// 				scaleX: obj.scale.x,
+					// 				scaleY: obj.scale.y,
+					// 				scaleZ: obj.scale.z,
+					// 				message: obj.message
+					// 			})
+					// 		}
+					// 		})
+					// }
 					//RETRIEVE STORED OBJECTS
 					storingFactory.retrieveObjects()
 					.then(function(items){
 						if(Array.isArray(items)){
+							console.log("loading")
 							items.forEach(function(item){
 								objectFactory.load(`/browser/objects/${item.name}/${item.name}.json`, null, item.name)
 									.then(obj => {
@@ -29,27 +55,9 @@ module.exports = function (modalFactory, $rootScope, authFactory, storingFactory
 										constantsFactory.setObjects([obj]);
 									});
 						});
-						if(constantsFactory.getObjects().length > 0) {
-							constantsFactory.getObjects().forEach(function(obj){
-								if(!palacesFactory.palaceObjects.includes(obj) && !constantsFactory.getFloor().includes(obj)){
-								storingFactory.storeObject({
-									name: obj.name, 
-									positionX: obj.position.x, 
-									positionY: obj.position.y, 
-									positionZ: obj.position.z,
-									rotationX: obj.rotation.x,
-									rotationY: obj.rotation.y,
-									rotationZ: obj.rotation.z, 
-									scaleX: obj.scale.x,
-									scaleY: obj.scale.y,
-									scaleZ: obj.scale.z,
-									message: obj.message
-								})
-								}
-							})
 						}	
 						constantsFactory.setObjects(objects);
-				}
+				
 			});
 				});
 			}
