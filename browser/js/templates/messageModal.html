@@ -1,6 +1,6 @@
 <div ng-show="!showModal.data" class="message">
 	<form class="form-group" name="messageForm" >
-    <label for="message" >Add a message to your object</label>
+    <label for="message" >Add a message to your object?</label>
     <textarea class="form-control" id="message" rows="3" ng-model="message" name="message" ng-maxlength="20"></textarea>
     <div role="alert">
     <span class="error" ng-show="messageForm.message.$error.maxlength">Message must be less than 20 characters.</span>

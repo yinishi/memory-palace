@@ -1,4 +1,4 @@
-module.exports = function (modalFactory){
+module.exports = function (){
   return {
         restrict: 'E',
         templateUrl: '/browser/js/templates/carousel.html',

@@ -1,4 +1,4 @@
-module.exports = function (modalFactory, $rootScope, authFactory) {
+module.exports = function (modalFactory, $rootScope, authFactory, constantsFactory) {
 	 return {
         restrict: 'E',
         scope: {
@@ -14,8 +14,8 @@ module.exports = function (modalFactory, $rootScope, authFactory) {
 					authFactory.signup(s.userInfo)
 					.then(user => {
 						$rootScope.$broadcast('newUser', user);
-						if(messageFactory.getObjects().length > 0) {
-							messageFactory.getObjects().forEach(function(obj){
+						if(constantsFactory.getObjects().length > 0) {
+							constantsFactory.getObjects().forEach(function(obj){
 								storingFactory.storeObject({
 									name: obj.name, 
 									positionX: obj.position.x, 
