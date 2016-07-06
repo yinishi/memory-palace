@@ -1,6 +1,9 @@
 'use strict'
+
 const whiteStone = loadTexture('white-stone.jpg');
-const whiteCeiling = loadTexture('white-stone.jpg');
+const whiteCeiling = loadTexture('white_ceiling.jpg');
+const grayTile = loadTexture('gray_tile.jpg');
+const blueTile = loadTexture('floor_tiles.jpg');
 const woodDark = loadTexture('wood-wall.jpg');
 const woodLight = loadTexture('wood-floor.jpg');
 const redCarpet = loadTexture('carpet_red.jpg');
@@ -26,6 +29,13 @@ function loadTexture(file) {
 
 
 module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory) {
+
+  function floor (w, h, positionX, positionZ, material) {
+    this.floor = new wallFactory.Wall(w, h, grayTile, false, false)
+      .clockwiseX()
+      .wall;
+    this.floor.position.set(positionX,-75/2 ,positionZ);
+  }
 
   function ceiling (w, h, positionX, positionZ) {
     this.ceiling = new wallFactory.Wall(w, h, woodDark, false, false)
@@ -63,7 +73,8 @@ module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory)
     this.addToScene(mainHallRoof);
     this.addToScene(sunRoomRoof);
 
-
+    const kitchenFloor = new floor(150, 175, 225+150, -265).floor;
+    this.addToScene(kitchenFloor);
 
     //BEDROOM 1
     var b1Outerwall1 = new wallFactory.Wall(150, wallHeight, whiteStone, false, false)
