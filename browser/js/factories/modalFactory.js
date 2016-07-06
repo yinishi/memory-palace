@@ -1,7 +1,7 @@
 "use strict"
 
 module.exports = function () {
-	var showCarousel = { data: { false } };
+	var showCarousel = { data: { true } };
 	var showControls = { data: { false } };
 	var welcomeControls = { data: { true } };
 	var messageModal = { data: { false } };
