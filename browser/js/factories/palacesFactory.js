@@ -1,19 +1,18 @@
 'use strict'
 const whiteStone = loadTexture('white-stone.jpg');
+const whiteCeiling = loadTexture('white-stone.jpg');
 const woodDark = loadTexture('wood-wall.jpg');
 const woodLight = loadTexture('wood-floor.jpg');
 const redCarpet = loadTexture('carpet_red.jpg');
 const bricks = loadTexture('bricks.jpg');
+const wallHeight = 75;
 
-
-// Regular meshes for non-textured walls
+ // Regular meshes for non-textured walls
 // const tan = new THREE.MeshLambertMaterial({color: 0xECE5CE})
 // const coral = new THREE.MeshLambertMaterial({color: 0xE08E79})
 // const peach = new THREE.MeshLambertMaterial({color: 0xF1D4AF})
 // const blue = new THREE.MeshLambertMaterial({color: 0xC5E0DC})
 // const burgundy = new THREE.MeshLambertMaterial({color: 0x774F38})
-
-const wallHeight = 75;
 
 function loadTexture(file) {
   const texture = THREE.ImageUtils.loadTexture("./browser/textures/" + file);
@@ -22,7 +21,18 @@ function loadTexture(file) {
   return new THREE.MeshBasicMaterial({ map: texture, overdraw: 0.5 });
 };
 
+
+
+
+
 module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory) {
+
+  function ceiling (w, h, positionX, positionZ) {
+    this.ceiling = new wallFactory.Wall(w, h, whiteCeiling, false, false)
+      .clockwiseX()
+      .wall;
+    this.ceiling.position.set(positionX,75/2,positionZ);
+  }
 
   function Palace() {
     this.objects = [];
@@ -49,19 +59,20 @@ module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory)
     this.addToScene(sectionOneRoof);
 
     //large 375
-    let sectionTwoHeight = 375;
-    let sectionTwoLength = 150; 
-    let sectionTwoRoof = new wallFactory.Wall(sectionTwoLength, sectionTwoHeight, whiteStone, false, false)
-    .clockwiseX()
-    .wall
-    sectionTwoRoof.position.set(225, 75/2, -185)
+    // let sectionTwoHeight = 375;
+    // let sectionTwoLength = 150; 
+   const sectionTwoRoof = new ceiling(150, 375, 225, -185).ceiling;
+    // let sectionTwoRoof = new wallFactory.Wall(150, 375, whiteStone, false, false)
+    // .clockwiseX()
+    // .wall
+    // sectionTwoRoof.position.set(225, 75/2, -185)
     this.addToScene(sectionTwoRoof);
 
     //kitchen rook 
     let kitchenRoof = new wallFactory.Wall(150, 175, woodLight, false, false)
     .clockwiseX()
     .wall;
-      kitchenRoof.position.set(225+150, 75/2, -265)
+      kitchenRoof.position.set(225+150, 75/2, -265);
     this.addToScene(kitchenRoof);
 
 
@@ -70,12 +81,11 @@ module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory)
     .clockwiseX()
     .wall;
       bedRoom3Roof.position.set(225+150+150, 75/2, -265)
-    this.addToScene(bedRoom3Roof);
+      this.addToScene(bedRoom3Roof);
 
 
 
     //main room section 2 
-    //WORKING
     let mainHallRoof = new wallFactory.Wall(225, 175, whiteStone, false, false)
     .clockwiseX()
     .wall;
