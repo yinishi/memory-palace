@@ -8,6 +8,11 @@ canvas {
   height: 100%
 }
 
+body {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+}
+
 
 /*
 TOC: 
@@ -23,7 +28,9 @@ TOC:
 
 /*/////////////*/
 
+
 /*   NAV BAR   */
+
 
 /*/////////////*/
 
@@ -37,9 +44,13 @@ TOC:
 }
 
 .navbar-default .navbar-brand {
-  font-weight: bold;
+  font-family: 'Cinzel Decorative', serif;
   color: #fff;
   text-shadow: 1px 1px 1px #A04843;
+}
+
+.navbar-default a:hover {
+  text-decoration: none;
 }
 
 .navbar-default .navbar-nav>li>a {
@@ -57,7 +68,9 @@ TOC:
 
 /*//////////////*/
 
+
 /*   BUTTONS    */
+
 
 /*//////////////*/
 
@@ -100,7 +113,9 @@ TOC:
 
 /*/////////////////////*/
 
+
 /*   CONTROL PANEL    */
+
 
 /*////////////////////*/
 
@@ -128,7 +143,9 @@ img:hover + .icon-text {
 
 /*/////////////*/
 
+
 /*   MODALS    */
+
 
 /*/////////////*/
 
@@ -157,6 +174,7 @@ img:hover + .icon-text {
 
 #welcome-title {
   font-size: 80px;
+  font-family: 'Cinzel Decorative', serif;
 }
 
 #welcome-subtext {
@@ -181,26 +199,31 @@ img:hover + .icon-text {
 }
 
 .row {
-    padding-left: 20px;
-    padding-right: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 h2 {
-    line-height: 100%;
-    padding: 0;
+  line-height: 100%;
+  padding: 0;
 }
-.col-md-3, .col-xs-6 {
-    padding: 2px;
-    border-bottom: 1px solid #ccc;
+
+.col-md-3,
+.col-xs-6 {
+  padding: 2px;
+  border-bottom: 1px solid #ccc;
 }
+
 .about-modal {
   margin: 10px;
-  padding: 20px;
+  padding: 10px;
+  word-wrap: break-word;
   color: #777;
   border: 1px solid #777;
   font-size: 22px;
   height: 60vh;
   overflow: scroll;
+  overflow-wrap: break-word;
   position: absolute;
   top: 50px;
   left: 3vw;
@@ -208,6 +231,7 @@ h2 {
   background-color: rgba(238, 238, 238, .6);
   border-radius: 5px;
 }
+
 
 /*@media screen and (max-width: 1500px) {
   .about-modal {
@@ -231,7 +255,9 @@ h2 {
 
 /*///////////////////*/
 
+
 /*   FORM CONTROL    */
+
 
 /*///////////////////*/
 
@@ -256,7 +282,9 @@ h2 {
 
 /*///////////////*/
 
+
 /*   MESSAGES    */
+
 
 /*///////////////*/
 
@@ -277,8 +305,8 @@ h2 {
 }
 
 
-
 /* What does this do?! */
+
 .col {
   border: 1px solid white;
 }
