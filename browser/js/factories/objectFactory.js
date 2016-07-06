@@ -33,6 +33,14 @@ function load (link, scale, name, message) {
     getObjects : function(){
      return [
         {name: 'teapot', image: "./browser/images/teapot.png", scale: .3, yPosition: 1},
+        {name: 'toothpaste', image: "./browser/images/toothpaste.jpg", scale:1},
+        {name: 'armchair', image: "./browser/images/armchair.jpg", scale:10},
+        {name: 'lamp', image: "./browser/images/lamp.jpg", scale: 2},
+        {name: 'stove', image: "./browser/images/stove.png", scale:15},
+        {name: 'small-table', image: "./browser/images/small-table.jpg", scale:10},
+        {name: 'toy-train', image: "./browser/images/toy-train.png", scale:1},
+        //{name: 'coffee-table', image: "./browser/images/coffee-table.jpg", scale: 8},
+        {name: 'snowman', image: "./browser/images/snowman.png", scale: 8},
         {name: 'cat-mug', image: "./browser/images/cat-mug.png", scale: 3, yPosition: 2},    
         {name: 'mug', image: "./browser/images/mug.png", scale: .2, yPosition: 2},  
         {name: 'pink-bed', image: "./browser/images/pink-bed.png", scale: 15},
@@ -58,7 +66,9 @@ function load (link, scale, name, message) {
         {name: 'soccer-ball', image: "./browser/images/soccer-ball.png", scale: .07, yPosition: 3},
         {name: 'car', image: "./browser/images/car.png", scale: 10},
         {name: 'nike', image: "./browser/images/nike.png", scale: .5},
-        {name: 'tricycle', image: "./browser/images/tricycle.png", scale: 35}
+        {name: 'tricycle', image: "./browser/images/tricycle.png", scale: 35},
+        {name: 'chandelier', image: "./browser/images/chandelier.jpg", scale: .3}
+      
       ];
     },
     invisibleObject: invisibleCube,
@@ -71,6 +81,7 @@ function load (link, scale, name, message) {
         .then(function(obj){
           obj.name = name;
           obj.storageScale = scale;
+          console.log("here", obj)
           if(object.yPosition) obj.yPosition = object.yPosition;
           factory.previousObject = factory.currentObject;
           factory.currentObject = obj;
