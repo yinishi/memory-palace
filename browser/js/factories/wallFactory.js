@@ -83,6 +83,7 @@ Wall.prototype.clockwiseY = function () {
     return this;
 };
 
+
 Wall.prototype.counterClockwiseX = function () { 
     this.wall.rotation.set(-Math.PI / 2, 0, 0);
     return this;
