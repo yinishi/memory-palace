@@ -18,8 +18,15 @@ function load (link, scale, name, message) {
         var boundingBox = new THREE.BoundingBoxHelper(object);
         boundingBox.add(object);
         boundingBox.update();
-        var cube = new THREE.Mesh(new THREE.BoxGeometry(boundingBox.box.max.x-boundingBox.box.min.x, boundingBox.box.max.y-boundingBox.box.min.y, boundingBox.box.max.z-boundingBox.box.min.z), 
-        new THREE.MeshBasicMaterial({visible: false})); 
+        var center = boundingBox.box.center()
+        var size = boundingBox.box.size(new THREE.Vector3(1, 1, 1));
+        var cubeGeometry = new THREE.BoxGeometry(size.x - center.x, size.y + center.y, size.z - center.z)
+        var cube = new THREE.Mesh(cubeGeometry, 
+        new THREE.MeshBasicMaterial({visible:false}));
+        // console.log(cubeGeometry.boundingSphere, "cube")
+        // cube.position.set(boundingBox.position.x, boundingBox.position.y, boundingBox.position.z ) 
+        // var cube = new THREE.Mesh(boundingBox.geometry, new THREE.MeshBasicMaterial());
+        // cube.add(boundingBox)
         cube.add(object); 
         res(cube);
       });
@@ -62,7 +69,10 @@ function load (link, scale, name, message) {
         {name: 'car', image: "./browser/images/car.png", scale: 10},
         {name: 'nike', image: "./browser/images/nike.png", scale: .5},
         {name: 'tricycle', image: "./browser/images/tricycle.png", scale: 35},
-        {name: 'chandelier', image: "./browser/images/chandelier.jpg", scale: .3}
+        {name: 'chandelier', image: "./browser/images/chandelier.jpg", scale: .3},
+        {name: 'candy', image: "./browser/images/candy.png", scale: 3},
+        {name: 'desk', image: "./browser/images/desk.png", scale: 15, yPosition: 10},
+        {name: 'nightstand', image: "./browser/images/nightstand.png", scale: .03}
       
       ];
     },

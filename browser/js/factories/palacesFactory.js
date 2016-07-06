@@ -340,7 +340,7 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
     //living room sofa
     objectFactory.load(`/browser/objects/sofa/sofa.json`, 2)
       .then(function(sofa){
-        sofa.position.set(160, -36, -200);
+        sofa.position.set(170, -36, -200);
         sofa.rotation.set(0, Math.PI, 0)
         self.addToScene(sofa);
         palaceObjects.push(sofa);
@@ -425,12 +425,34 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
         bed.scale.set(7, 7, 7)
         addObj(bed);
       });
+      objectFactory.load(`/browser/objects/desk/desk.json`, 2)
+      .then(function(desk) {
+        desk.position.set(25, -30, -60);
+        desk.rotation.set(0, Math.PI/2, 0)
+        desk.scale.set(9, 9, 9)
+        addObj(desk);
+      });
+      objectFactory.load(`/browser/objects/computer/computer.json`, 2)
+      .then(function(computer) {
+        computer.position.set(35, -90, -70);
+        // computer.rotation.set(0, Math.PI/2, 0)
+        computer.scale.set(5, 5, 5)
+        addObj(computer);
+      });
        objectFactory.load(`/browser/objects/bean-bag/bean-bag.json`, 2)
       .then(function(beanbag){
-        beanbag.position.set(118, -37, -130);
+        beanbag.position.set(135, -37, -140);
         beanbag.rotation.set(0, Math.PI, 0)
         beanbag.scale.set(7, 7, 7)
         addObj(beanbag);
+      });
+      //bedroom2
+       objectFactory.load(`/browser/objects/pink-bed/pink-bed.json`, 15)
+      .then(function(bed3){
+        bed3.position.set(60, -35, -260);
+        bed3.scale.set(.5, .5, .5)
+        bed3.rotation.set(0, Math.PI+Math.PI/2, 0)
+        addObj(bed3)
       });
 
       // objectFactory.load(`/browser/objects/shelf-black/shelf-black.json`, 2)

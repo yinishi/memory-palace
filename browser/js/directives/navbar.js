@@ -7,9 +7,15 @@ module.exports = function ($state, authFactory, $rootScope, modalFactory) {
         },
         templateUrl: '/browser/js/templates/navbar.html',
         link: function (scope) {
-            scope.toggleAbout = modalFactory.toggleAbout;
+            scope.toggleAbout = function(){
+                if(modalFactory.getSignup().data === false) modalFactory.toggleSignup()
+                if(modalFactory.getLogin().data === false) modalFactory.toggleLogin()
+                if(modalFactory.getControls().data === false) modalFactory.toggleControls()
+                modalFactory.toggleAbout();
+            }
             scope.toggleLogin = function(){
                 if(modalFactory.getSignup().data === false) modalFactory.toggleSignup()
+                if(modalFactory.getControls().data === false) modalFactory.toggleControls()
                 modalFactory.toggleLogin();
             }
             scope.toggleSignup = function(){
