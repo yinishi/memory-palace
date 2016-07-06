@@ -9,13 +9,9 @@ module.exports = function (modalFactory) {
         	s.toggleControls = modalFactory.toggleControls;
 
             s.toggleCarousel = function () {
-                console.log("carousel!!", modalFactory.getCarousel)
                 modalFactory.toggleCarousel();
             }
             
         }
     }
 }
-
-
-// ng-click="${toggleControls}"

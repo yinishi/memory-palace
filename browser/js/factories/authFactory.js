@@ -1,16 +1,7 @@
 'use strict';
 
-module.exports = function ($http, $rootScope) {
+module.exports = function ($http) {
   var user = null;
-  // $rootScope.isLoggedIn = function () {
-  //   return !!me.id;
-  // };
-  // $rootScope.isAdmin = function () {
-  //   return !!me.isAdmin;
-  // };
-  // $rootScope.isMe = function (user) {
-  //   return !!user && (me.id == user.id || me == user);
-  // };
   function toData (response) {
     return response.data;
   }

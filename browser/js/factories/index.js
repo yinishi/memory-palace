@@ -2,14 +2,13 @@ var app = require('angular').module('memoryPalace');
 
 app.factory('modalFactory', [require("./modalFactory")]);
 app.factory('wallFactory', require("./wallFactory"));
-app.factory('roomFactory', ["wallFactory", require("./room_factory")]);
-app.factory('tableFactory', require("./table_factory"));
-app.factory('authFactory', ['$http', '$rootScope', require("./authFactory")]);
-app.factory('objectFactory', ['textFactory', 'modalFactory', require("./objectFactory")]);
-app.factory('shelfFactory', require("./shelf_Factory"));
-app.factory('storingFactory', ['$http', 'textFactory', 'objectFactory', require("./storing_Factory")]);
-app.factory('palacesFactory', ['roomFactory', 'objectFactory', 'tableFactory', 'wallFactory', require("./palacesFactory")]);
-app.factory('textFactory', require("./textFactory"));
+app.factory('tableFactory', require("./tableFactory"));
+app.factory('authFactory', ['$http', require("./authFactory")]);
+app.factory('objectFactory', ['modalFactory', require("./objectFactory")]);
+app.factory('shelfFactory', ['constantsFactory', require("./shelfFactory")]);
+app.factory('storingFactory', ['$http', require("./storingFactory")]);
+app.factory('palacesFactory', ['objectFactory', 'tableFactory', 'wallFactory', 'messageFactory', 'constantsFactory', 'shelfFactory', require("./palacesFactory")]);
 app.factory('lightFactory', require('./lightFactory'));
 app.factory('messageFactory', require('./messageFactory'));
+app.factory('constantsFactory', require('./constantsFactory'));
 
