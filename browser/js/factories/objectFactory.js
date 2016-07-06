@@ -75,7 +75,8 @@ function load (link, scale, name, message) {
         {name: 'tricycle', image: "./browser/images/tricycle.png", scale: 35},
         {name: 'candy', image: "./browser/images/candy.png", scale: 3},
         {name: 'monkey-piano', image: "./browser/images/monkey-piano.png", scale: .3},
-        {name: 'tv', image: "./browser/images/tv.jpeg", scale: 5}
+        {name: 'tv', image: "./browser/images/tv.jpeg", scale: 5},
+        {name: 'sofa2', image: "./browser/images/sofa2.jpeg", scale: 5}
       
       ];
     },
