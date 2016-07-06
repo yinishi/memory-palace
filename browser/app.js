@@ -1,7 +1,6 @@
 'use strict';
 
 var angular = require('angular');
-var Text2D = require('three-text2D').Text2D;
 
 require('angular-ui-router');
 require('jquery'); 

@@ -1,8 +1,4 @@
 'use strict'
-//text2d
-var THREE_Text = require('three-text2D')
-var Text2D = THREE_Text.Text2D;
-var textAlign = THREE_Text.textAlign;
 
 module.exports = function (palacesFactory, $window, objectFactory, storingFactory, modalFactory, lightFactory, messageFactory, constantsFactory) {
 	 return {

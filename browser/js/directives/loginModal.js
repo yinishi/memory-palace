@@ -31,7 +31,7 @@ module.exports = function (modalFactory, $rootScope, authFactory, storingFactory
 						});
 						if(constantsFactory.getObjects().length > 0) {
 							constantsFactory.getObjects().forEach(function(obj){
-								if(!palacesFactory.palaceObjects.includes(obj) && !constantsFactory.getFloor().includes(obj)){
+								if(!palacesFactory.palaceObjects.includes(obj) && constantsFactory.getFloor() != obj){
 								storingFactory.storeObject({
 									name: obj.name, 
 									positionX: obj.position.x, 
