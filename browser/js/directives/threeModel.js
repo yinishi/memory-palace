@@ -336,7 +336,7 @@ module.exports = function (palacesFactory, $window, objectFactory, storingFactor
 
 						// jump
 						case 32: // space - jump
-							if ( canJump === true ) velocity.y += 350;
+							if ( canJump === true ) velocity.y += 280;
 							canJump = false;
 							break;
 
