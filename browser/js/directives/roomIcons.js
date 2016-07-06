@@ -6,7 +6,10 @@ module.exports = function (modalFactory) {
         templateUrl: '/browser/js/templates/roomIcons.html',     
         link: function (s,a,e) {
             
-        	s.toggleControls = modalFactory.toggleControls;
+        	s.toggleControls = function(){
+                if(modalFactory.getAbout().data === false) modalFactory.toggleAbout();
+                modalFactory.toggleControls();
+            }
 
             s.toggleCarousel = function () {
                 modalFactory.toggleCarousel();
