@@ -1,10 +1,16 @@
 'use strict'
+
 const whiteStone = loadTexture('white-stone.jpg');
+const whiteCeiling = loadTexture('white_ceiling.jpg');
+const grayTile = loadTexture('gray_tile.jpg');
+const blueTile = loadTexture('floor_tiles.jpg');
 const woodDark = loadTexture('wood-wall.jpg');
 const woodLight = loadTexture('wood-floor.jpg');
 const redCarpet = loadTexture('carpet_red.jpg');
 const bricks = loadTexture('bricks.jpg');
+const wallHeight = 75;
 
+ // Regular meshes for non-textured walls
 var palaceObjects = [];
 
 // Regular meshes for non-textured walls
@@ -14,8 +20,6 @@ var palaceObjects = [];
 // const blue = new THREE.MeshLambertMaterial({color: 0xC5E0DC})
 // const burgundy = new THREE.MeshLambertMaterial({color: 0x774F38})
 
-const wallHeight = 75;
-
 function loadTexture(file) {
   const texture = THREE.ImageUtils.loadTexture("./browser/textures/" + file);
   texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
@@ -24,6 +28,20 @@ function loadTexture(file) {
 };
 
 module.exports = function(objectFactory, tableFactory, wallFactory, messageFactory, constantsFactory, shelfFactory) {
+  
+  function floor (w, h, positionX, positionZ, material) {
+    this.floor = new wallFactory.Wall(w, h, grayTile, false, false)
+      .clockwiseX()
+      .wall;
+    this.floor.position.set(positionX,-75/2 ,positionZ);
+  }
+
+  function ceiling (w, h, positionX, positionZ) {
+    this.ceiling = new wallFactory.Wall(w, h, woodDark, false, false)
+      .clockwiseX()
+      .wall;
+    this.ceiling.position.set(positionX,75/2,positionZ);
+  }
 
   function Palace() {
     this.palace = new THREE.Object3D();
@@ -34,8 +52,27 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
     var tempPalaceFloor = new wallFactory.Wall(625, 450, redCarpet, false, false)
       .clockwiseX()
       .wall;
-    tempPalaceFloor.position.set(625/2, -75/2 - 1, -450/2)
+    tempPalaceFloor.position.set(625/2, -75/2 - 1, -450/2);
     this.addToScene(tempPalaceFloor);
+
+    //ceilings
+    const sectionOneHeight = (150 + 75.5 + 75 + 1).ceiling;
+    const sectionOneRoof = new ceiling(150, 301.5, 75,  -150).ceiling;
+    const sectionTwoRoof = new ceiling(150, 375, 225, -185).ceiling;
+    const kitchenRoof = new ceiling(150, 175, 225+150, -265).ceiling;
+    const bedRoom3Roof = new ceiling(150, 175, 525, -265).ceiling;
+    const mainHallRoof = new ceiling(225, 175, 412, -87).ceiling;
+    const sunRoomRoof = new ceiling (75, 175, 562, -87).ceiling;
+    this.addToScene(sectionOneRoof);
+    this.addToScene(sectionTwoRoof);
+    this.addToScene(kitchenRoof);
+    this.addToScene(bedRoom3Roof);
+    this.addToScene(mainHallRoof);
+    this.addToScene(mainHallRoof);
+    this.addToScene(sunRoomRoof);
+
+    const kitchenFloor = new floor(150, 175, 225+150, -265).floor;
+    this.addToScene(kitchenFloor);
 
     //BEDROOM 1
     var b1Outerwall1 = new wallFactory.Wall(150, wallHeight, whiteStone, false, false)
