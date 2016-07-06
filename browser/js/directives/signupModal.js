@@ -9,6 +9,7 @@ module.exports = function (modalFactory, $rootScope, authFactory, constantsFacto
 			s.submitted = false;
 			s.signup = function(){
 				s.submitted = true;
+				modalFactory.toggleSignup();
 				var pwMatch = (s.userInfo.password && (s.userInfo.password === s.userInfo.confirmPassword)); 
 				if (!s.userInfo.$invalid && pwMatch) {
 					authFactory.signup(s.userInfo)
