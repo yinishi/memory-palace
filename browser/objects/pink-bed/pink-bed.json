@@ -14,6 +14,7 @@
             "opacity": 1,
             "depthWrite": true,
             "colorSpecular": [0.5,0.5,0.5],
+            "colorSpecular": [0.5,0.5,0.5],
             "colorDiffuse": [0.690196,0.690196,0.690196],
             "colorAmbient": [0.690196,0.690196,0.690196],
             "colorEmissive": [0,0,0],
