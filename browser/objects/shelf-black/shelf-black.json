@@ -1013,30 +1013,6 @@
             "matrix": [-1,0,0,0,0,0,1,0,0,1,0,0,-1.9202,10.0396,0,1],
             "visible": true,
             "type": "Object"
-        },{
-            "name": "SpotLight",
-            "uuid": "1B18A08F-0404-3C2E-888D-7391D0AB1E6E",
-            "matrix": [0.00329,0.050688,-0.998709,0,-0.282498,-0.957987,-0.049552,0,-0.959262,0.282296,0.011167,0,-32.6547,25.6262,22.3704,1],
-            "visible": true,
-            "type": "SpotLight",
-            "castShadow": true,
-            "color": 16777215,
-            "intensity": 2,
-            "distance": 0,
-            "angle": 2.79253,
-            "decayExponent": 2
-        },{
-            "name": "SpotLight1",
-            "uuid": "D3F76104-364D-3D91-80D7-FB01739E4BBE",
-            "matrix": [-1,0,0,0,0,0.078149,0.996942,0,0,0.996942,-0.078149,0,6.6504,23.7068,12.3775,1],
-            "visible": true,
-            "type": "SpotLight",
-            "castShadow": true,
-            "color": 16777215,
-            "intensity": 0.5,
-            "distance": 0,
-            "angle": 2.0944,
-            "decayExponent": 2
         }],
         "matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]
     }

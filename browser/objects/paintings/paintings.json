@@ -45,11 +45,6 @@
         "repeat": [1,1],
         "uuid": "BBA8A7A2-F134-3FCC-96D0-22BF6A8873E5"
     }],
-    "animations": [{
-        "name": "default",
-        "tracks": [],
-        "fps": 29
-    }],
     "images": [{
         "name": "Bild_Wohnzimmer.JPG",
         "url": "Bild_Wohnzimmer.JPG",
