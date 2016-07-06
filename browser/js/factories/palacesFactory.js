@@ -402,19 +402,21 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
         armchair.scale.set(6, 6, 6)
         addObj(armchair);
       });
-       objectFactory.load(`/browser/objects/coffee-table/coffee-table.json`, 2)
+
+      objectFactory.load(`/browser/objects/coffee-table/coffee-table.json`, 2)
       .then(function(table){
         table.position.set(200, -40, -190);
         table.scale.set(.35, .35, .35)
         addObj(table);
       });
-      objectFactory.load(`/browser/objects/paintings/paintings.json`, 2)
-      .then(function(obj){
-        obj.position.set(152, 0, -190);
-        obj.rotation.set(0, Math.PI/2, 0);
-        obj.scale.set(2, 2, 2)
-        addObj(obj);
-      });
+
+      // objectFactory.load(`/browser/objects/paintings/paintings.json`, 2)
+      // .then(function(obj){
+      //   obj.position.set(152, 0, -190);
+      //   obj.rotation.set(0, Math.PI/2, 0);
+      //   obj.scale.set(2, 2, 2)
+      //   addObj(obj);
+      // });
       objectFactory.load(`/browser/objects/lamp/lamp.json`, 15)
       .then(function(lamp){
         lamp.position.set(170, -37, -300);
@@ -423,7 +425,7 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
       });
       //shelves
       var shelf = new shelfFactory();
-      shelf.container.position.set(295, -40, -375);
+      shelf.container.position.set(295, -30, -305);
       self.addToScene(shelf.container);
       palaceObjects.push(shelf.container);
       constantsFactory.setObjects([shelf.container]);
@@ -449,7 +451,7 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
         computer.scale.set(2, 2, 2)
         addObj(computer);
       });
-       objectFactory.load(`/browser/objects/bean-bag/bean-bag.json`, 2)
+      objectFactory.load(`/browser/objects/bean-bag/bean-bag.json`, 2)
       .then(function(beanbag){
         beanbag.position.set(135, -37, -140);
         beanbag.rotation.set(0, Math.PI, 0)
