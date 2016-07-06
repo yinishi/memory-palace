@@ -140,6 +140,8 @@ module.exports = function (palacesFactory, $window, objectFactory, storingFactor
 			var raycaster = new THREE.Raycaster();
 			var mouse = new THREE.Vector2();
 
+
+			// ADD THE COLORFUL WORLD FLOOR
 			scene.add( constantsFactory.getFloor() );
 
 			// CREATE A ROOM
@@ -283,12 +285,24 @@ module.exports = function (palacesFactory, $window, objectFactory, storingFactor
 
 				if(modalFactory.getMessageModal().data){
 					switch ( event.keyCode ) {
-						// exit modal
+						// exit welcome
 						case 27: // esc
-							blocker.style.display = 'none';
+							welcome.style.display = 'none';
 							break;
 						case 13: // enter
-							blocker.style.display = 'none';
+							welcome.style.display = 'none';
+							break;
+
+						// toggle carousel modal
+						case 49: // 1
+							modalFactory.toggleCarousel();
+							s.$apply(); // necessary for modal to appear
+							break;
+
+						// toggle controls modal
+						case 50: // 2
+							modalFactory.toggleControls();
+							s.$apply(); // necessary for modal to appear
 							break;
 
 						// move forward
@@ -322,7 +336,7 @@ module.exports = function (palacesFactory, $window, objectFactory, storingFactor
 
 						// jump
 						case 32: // space - jump
-							if ( canJump === true ) velocity.y += 350;
+							if ( canJump === true ) velocity.y += 280;
 							canJump = false;
 							break;
 

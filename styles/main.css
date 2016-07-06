@@ -1,99 +1,135 @@
 * {
-	margin: 0;
-	padding: 0;
+  margin: 0;
+  padding: 0;
 }
-.buttontext {
-  text-align: center;
-  color: white;
-  display: none;
-  text-shadow: 2px 2px 1px rgba(0,0,0, 1);
+
+canvas {
+  width: 100%;
+  height: 100%
 }
-img:hover + .buttontext {
-    display: block;
+
+
+/*
+TOC: 
+1. Nav bar
+2. Buttons
+3. Control panel
+4. Modals
+5. Form control
+6. Messages
+
+*/
+
+
+/*/////////////*/
+
+/*   NAV BAR   */
+
+/*/////////////*/
+
+.navbar-default {
+  top: 0;
+  position: fixed;
+  width: 100%;
+  height: 50px;
+  background-color: transparent;
+  border: 0px;
 }
-/*.buttontext:hover {   
-  display: block;
-}*/
-.message-label {
-  font-size: 48px;
-  position:'absolute';
+
+.navbar-default .navbar-brand {
+  font-weight: bold;
 }
-.ctrlModal {
-    margin: 2%;
-    padding: 3%;
-    color: #777;
-    font-size: 16px;
-    position: absolute;
-    left: 3%;
-    bottom: 300px;
-    background-color: rgba(238, 238, 238, .6);
-    border-radius: 5px;
+
+.navbar-default .navbar-nav>li>a {
+  color: #A04843;
+  font-size: 16px!important;
+  font-weight: bold;
 }
-.col {
-  border: 1px solid white;
+
+
+/*//////////////*/
+
+/*   BUTTONS    */
+
+/*//////////////*/
+
+.big-btn {
+  width: 156px;
+  height: 65px;
 }
+
+.btn-transparent {
+  border: 3px solid #ffffff;
+  background: transparent;
+  font-size: 30px;
+  color: #ffffff;
+}
+
+.btn-transparent:hover {
+  background: #ffffff;
+  border: 3px solid #ffffff;
+  font-size: 30px;
+  color: #000000;
+  cursor: pointer;
+}
+
+.btn-primary-outline:hover {
+  background: #ffffff;
+}
+
+.btn-message-submit {
+  background-color: #0961B2;
+  /*blue*/
+  color: #ffffff;
+}
+
+.btn-message-none {
+  background-color: #A04843;
+  /*maroon - matches navbar links*/
+  color: #ffffff;
+}
+
+
+/*/////////////////////*/
+
+/*   CONTROL PANEL    */
+
+/*////////////////////*/
 
 .roomIcon {
   width: 90px;
   height: 90px;
-/*  background-color: red;*/
-
 }
+
 .roomIcons {
   width: 10%;
-/*  border: 3px solid white;*/
   margin-bottom: 5px;
 }
 
-.navbar-default {
-    background-color: transparent;
-    border: 0px;
-}
-.navbar-default .navbar-brand {
- /*   color: white;*/
-    font-weight: bold;
+.icon-text {
+  text-align: center;
+  color: white;
+  display: none;
+  text-shadow: 2px 2px 1px rgba(0, 0, 0, 1);
 }
 
-.navbar-default .navbar-nav>li>a {
-    color: #A04843;
-    font-size: 16px!important;
-    font-weight: bold;
+img:hover + .icon-text {
+  display: block;
 }
 
-body { 
-  margin: 0;
-}
 
-#memory {
-  font-size:80px;
-/*  font-family: fantasy;*/
-}
+/*/////////////*/
 
-#memory-subtext{
-  font-size:20px;
-  line-height:200%;
-}
+/*   MODALS    */
 
-/*//#168BEE*//*#2C2C80 #284DB2*/
-/*#image {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0)
-  url('browser/icons/pretty-palace-wallpaper-46161-47469-hd-wallpapers.jpg');
-  size:cover;
-}*/
+/*/////////////*/
 
-#blocker {
+#welcome {
   position: absolute;
   width: 100%;
   height: 100%;
   z-index: 1;
-  background-color: rgba(102,0,204,0.6);
-}
-#instructions {
-  width: 100%;
-  height: 100%;
+  background-color: rgba(35, 73, 109, 0.6);
   display: -webkit-box;
   display: -moz-box;
   display: box;
@@ -111,115 +147,115 @@ body {
   cursor: pointer;
 }
 
-.big-btn {
-  width: 156px;
-  height: 65px;
+#welcome-title {
+  font-size: 80px;
 }
 
-.btn-transparent {
-  border: 3px solid #ffffff;
-  background: transparent;
-  font-size: 30px;
-  color: #ffffff;
+#welcome-subtext {
+  font-size: 25px;
+  line-height: 200%;
 }
 
-.btn-transparent:hover{ 
-  background: #ffffff;
-  border: 3px solid #ffffff;
-  font-size: 30px;
-  color: #000000;
-  cursor: pointer;
+.ctrls-modal {
+  margin: 10px auto;
+  padding: 20px;
+  width: 40vw;
+  color: #777;
+  font-size: 16px;
+  position: absolute;
+  left: 3%;
+  bottom: 250px;
+  background-color: rgba(238, 238, 238, .6);
+  border-radius: 5px;
 }
 
-.btn-primary-outline:hover{ 
-  background: #ffffff;
+.about-modal {
+  margin: 10px;
+  padding: 20px;
+  color: #777;
+  font-size: 22px;
+  height: 60vh;
+  position: absolute;
+  top: 50px;
+  overflow: scroll;
+  left: 3vw;
+  right: 3vw;
+  background-color: rgba(238, 238, 238, .6);
+  border-radius: 5px;
 }
 
-.btn-message-submit {
-  background-color: #0961B2; /*blue*/
-  color: #ffffff;
+.login-modal {
+  margin: 10px auto;
+  width: 30vw;
+  padding: 20px;
+  color: #777;
+  position: absolute;
+  right: 5vw;
+  top: 50px;
+  background-color: rgba(238, 238, 238, .6);
+  border-radius: 5px;
 }
 
-.btn-message-none {
-  background-color: #A04843; /*maroon - matches navbar links*/
-  color: #ffffff;
-}
 
-canvas { width: 100%; height: 100% }
+/*///////////////////*/
 
-.form-control {
-  width: 50%;
-  margin: 5px;
-}
+/*   FORM CONTROL    */
 
-.login-container {
-  margin: 2% 10%;
-  width: 30%;
-}
+/*///////////////////*/
 
-.btn {
-  margin: 0 0;
-}
-navbar {
-  top: 0;
-  position: fixed;
-  width: 100%;
-}
 
-.space {
-  margin: 6%;
+/* Exists to override bootstrap defaults. */
+
+.form-horizontal {
+  margin: 15px;
+  padding: 0;
 }
 
 .form-group {
-  margin: 0 10px;
-  color: #777;
+  margin: 15px;
+  padding: 0;
 }
+
+.form-control {
+  width: 80%;
+  margin: 5px;
+}
+
+
+/*///////////////*/
+
+/*   MESSAGES    */
+
+/*///////////////*/
+
+.message-label {
+  font-size: 48px;
+  position: 'absolute';
+}
+
 .message {
   padding: 10px 10px;
   margin: 0 10px;
   position: absolute;
-   top:30%;
-  left:40%;
-  width:30%;
-/*  margin: 40% auto 0 auto;*/
-  /*background-color: transparent;*/
+  top: 30%;
+  left: 40%;
+  width: 30%;
   background-color: rgba(238, 238, 238, .6);
   border-radius: 5px;
-
-}
-.message textarea.form-control {
-  width: 90%;
 }
 
-.aboutModal {
-    margin: 2%;
-    padding: 3%;
-    color: #777;
-    font-size: 22px;
-    position: absolute;
-    left: 3%;
-    bottom: 30%;
-    background-color: rgba(238, 238, 238, .6);
-    border-radius: 5px;
-}
 
-.loginModal {
-    margin: 2%;
-    padding: 2%;
-    padding-right: 0%;
-    color: #777;
-    font-size: 22px;
-    position: absolute;
-    left: 60%;
-    bottom: 40%;
-    background-color: rgba(238, 238, 238, .6);
-    border-radius: 5px;
-  }
+
 
 @media (min-width: 700px) and (max-height: 700px) {
-  .ctrlModal {
+  /*.ctrlModal {
     font-size: 80%;
     bottom: 200px;
     width: 200px;
-  }
+  }*/
+}
+
+/* What does this do?! */
+.col {
+  border: 1px solid white;
 }
