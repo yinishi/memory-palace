@@ -13,7 +13,6 @@ body {
   font-weight: 300;
 }
 
-
 /*
 TOC: 
 1. Nav bar
@@ -28,9 +27,7 @@ TOC:
 
 /*/////////////*/
 
-
 /*   NAV BAR   */
-
 
 /*/////////////*/
 
@@ -49,8 +46,8 @@ TOC:
   text-shadow: 1px 1px 1px #A04843;
 }
 
-.navbar-default a:hover {
-  text-decoration: none;
+.navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
+    color: #fff;
 }
 
 .navbar-default .navbar-nav>li>a {
@@ -68,9 +65,7 @@ TOC:
 
 /*//////////////*/
 
-
 /*   BUTTONS    */
-
 
 /*//////////////*/
 
