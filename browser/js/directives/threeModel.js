@@ -330,10 +330,10 @@ module.exports = function (textFactory, palacesFactory, $window, roomFactory, ob
 					switch ( event.keyCode ) {
 						// exit welcome
 						case 27: // esc
-							blocker.style.display = 'none';
+							welcome.style.display = 'none';
 							break;
 						case 13: // enter
-							blocker.style.display = 'none';
+							welcome.style.display = 'none';
 							break;
 
 						// toggle carousel modal
