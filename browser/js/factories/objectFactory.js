@@ -26,7 +26,7 @@ function load (link, scale, name, message) {
         // console.log(cubeGeometry.boundingSphere, "cube")
         // cube.position.set(boundingBox.position.x, boundingBox.position.y, boundingBox.position.z ) 
         // var cube = new THREE.Mesh(boundingBox.geometry, new THREE.MeshBasicMaterial());
-        cube.add(boundingBox)
+        // cube.add(boundingBox)
         cube.add(object); 
         res(cube);
       });
@@ -73,7 +73,8 @@ function load (link, scale, name, message) {
         {name: 'car', image: "./browser/images/car.png", scale: 10},
         {name: 'nike', image: "./browser/images/nike.png", scale: .5},
         {name: 'tricycle', image: "./browser/images/tricycle.png", scale: 35},
-        {name: 'chandelier', image: "./browser/images/chandelier.jpg", scale: .3}
+        {name: 'chandelier', image: "./browser/images/chandelier.jpg", scale: .3},
+        {name: 'candy', image: "./browser/images/candy.png", scale: 3}
       
       ];
     },
