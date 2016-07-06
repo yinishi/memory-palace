@@ -42,24 +42,24 @@ TOC:
 
 .navbar-default .navbar-brand {
   font-family: 'Cinzel Decorative', serif;
-  color: #fff;
+  color: #A04843;
   text-shadow: 1px 1px 1px #A04843;
 }
 
 .navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
-    color: #fff;
+    color: #A04843;
 }
 
 .navbar-default .navbar-nav>li>a {
-  color: #fff;
+  color: #A04843;
   font-size: 16px!important;
   font-weight: bold;
-  text-shadow: 0.5px 0.5px 0.5px #000;
+  /*text-shadow: 0.5px 0.5px 0.5px #fff;*/
 }
 
 .navbar-default .navbar-nav>li>a:hover {
-  color: #A04843;
-  text-shadow: 0.5px 0.5px 0.5px #fff;
+  color: #000;
+  /*text-shadow: 0.5px 0.5px 0.5px #fff;*/
 }
 
 
