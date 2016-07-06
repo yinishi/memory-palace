@@ -82,7 +82,15 @@ module.exports = function(roomFactory, objectFactory, tableFactory, wallFactory)
     mainHallRoof.position.set(225+187, 75/2, -87)
     this.addToScene(mainHallRoof);
 
-  
+
+
+    //sunroom roof 
+    let sunRoomRoof = new wallFactory.Wall(75, 175, whiteStone, false, false)
+    .clockwiseX()
+    .wall;
+    sunRoomRoof.position.set(225+187+150, 75/2, -87);
+    this.addToScene(sunRoomRoof);
+
     //150 x 175
     //BEDROOM 1
     //bedroom walls0
