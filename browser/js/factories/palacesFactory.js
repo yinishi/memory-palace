@@ -337,15 +337,7 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
     var self = this;
     var sceneObjects = constantsFactory.getObjects();
 
-    //living room sofa
-    objectFactory.load(`/browser/objects/sofa/sofa.json`, 2)
-      .then(function(sofa){
-        sofa.position.set(170, -36, -200);
-        sofa.rotation.set(0, Math.PI, 0)
-        self.addToScene(sofa);
-        palaceObjects.push(sofa);
-        constantsFactory.setObjects([sofa]);
-      });
+   
     function addObj (object) {
         self.addToScene(object);
         palaceObjects.push(object);
@@ -389,6 +381,12 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
         addObj(shelf)
       });
       //living room
+      objectFactory.load(`/browser/objects/sofa/sofa.json`, 2)
+      .then(function(sofa){
+        sofa.position.set(170, -36, -200);
+        sofa.rotation.set(0, Math.PI, 0)
+        addObj(sofa);
+      });
       objectFactory.load(`/browser/objects/armchair/armchair.json`, 2)
       .then(function(armchair){
         armchair.position.set(175, -40, -150);
@@ -410,9 +408,22 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
         table.scale.set(.35, .35, .35)
         addObj(table);
       });
-      // //shelves
+      objectFactory.load(`/browser/objects/paintings/paintings.json`, 2)
+      .then(function(obj){
+        obj.position.set(152, 0, -190);
+        obj.rotation.set(0, Math.PI/2, 0);
+        obj.scale.set(2, 2, 2)
+        addObj(obj);
+      });
+      objectFactory.load(`/browser/objects/lamp/lamp.json`, 15)
+      .then(function(lamp){
+        lamp.position.set(170, -37, -300);
+        lamp.scale.set(.15,.15, .15)
+        addObj(lamp)
+      });
+      //shelves
       var shelf = new shelfFactory();
-      shelf.container.position.set(295, -40, -300);
+      shelf.container.position.set(295, -40, -375);
       self.addToScene(shelf.container);
       palaceObjects.push(shelf.container);
       constantsFactory.setObjects([shelf.container]);
@@ -427,16 +438,15 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
       });
       objectFactory.load(`/browser/objects/desk/desk.json`, 2)
       .then(function(desk) {
-        desk.position.set(25, -30, -60);
+        desk.position.set(25, -30, -50);
         desk.rotation.set(0, Math.PI/2, 0)
         desk.scale.set(9, 9, 9)
         addObj(desk);
       });
       objectFactory.load(`/browser/objects/computer/computer.json`, 2)
       .then(function(computer) {
-        computer.position.set(35, -90, -70);
-        // computer.rotation.set(0, Math.PI/2, 0)
-        computer.scale.set(5, 5, 5)
+        computer.position.set(28, -16, -48);
+        computer.scale.set(2, 2, 2)
         addObj(computer);
       });
        objectFactory.load(`/browser/objects/bean-bag/bean-bag.json`, 2)
