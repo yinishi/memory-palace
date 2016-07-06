@@ -287,28 +287,29 @@ module.exports = function (palacesFactory, $window, objectFactory, storingFactor
 				console.log('modalFactory.enableKeyEvents', modalFactory.enableKeyEvents);
 				// console.log('modalFactory.getLogin()', modalFactory.getLogin());
 				// console.log('modalFactory.getSignup()', modalFactory.getSignup());
+
+
+				// escape key exits out of modals
+				if (event.keyCode === 27) {
+					welcome.style.display = 'none';
+
+					// escape modals
+					if (!modalFactory.getAbout().data) {
+						modalFactory.toggleAbout();
+						s.$apply();
+					}
+					if (!modalFactory.getLogin().data) {
+						modalFactory.toggleLogin();
+						s.$apply();
+					}
+					if (!modalFactory.getSignup().data) {
+						modalFactory.toggleSignup();
+						s.$apply();
+					}
+				}
+
 				if(modalFactory.enableKeyEvents){
 					switch ( event.keyCode ) {
-						// exit welcome
-						case 27: // esc
-
-							// exit welcome modal
-							welcome.style.display = 'none';
-
-							// escape modals
-							if (!modalFactory.getAbout().data) {
-								modalFactory.toggleAbout();
-								s.$apply();
-							}
-							if (!modalFactory.getLogin().data) {
-								modalFactory.toggleLogin();
-								s.$apply();
-							}
-							if (!modalFactory.getSignup().data) {
-								modalFactory.toggleSignup();
-								s.$apply();
-							}
-							break;
 							
 						case 13: // enter
 							welcome.style.display = 'none';
