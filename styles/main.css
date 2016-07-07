@@ -13,6 +13,13 @@ body {
   font-weight: 300;
 }
 
+h2 {
+  line-height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+
 /*
 TOC: 
 1. Nav bar
@@ -181,43 +188,61 @@ img:hover + .icon-text {
   margin: 10px auto;
   padding: 20px;
   width: 50vw;
-  height: 45vh;
+  height: 60vh;
   overflow: scroll;
   border: 1px solid #777;
   color: #777;
   font-size: 16px;
   position: absolute;
-  left: 3%;
-  bottom: 250px;
-  background-color: rgba(238, 238, 238, .6);
+  left: 25vw;
+  right: 3vw;
+  bottom: 30vh;
+  background-color: rgba(238, 238, 238, .7);
   border-radius: 5px;
 }
 
+table {
+  margin: 0px auto;
+}
 .row {
   padding-left: 20px;
   padding-right: 20px;
+  height: 30px;
 }
 
-h2 {
-  line-height: 100%;
-  padding: 0;
+.key {
+  margin: 5px auto;
+  padding: 5px;
+  display: inline-block;
+  border: 2px solid black;
+  border-radius: 6px;
+  width: 30px;
+  height: 30px;
+  background-color: rgba(238, 238, 238, .9);
+  box-shadow: 1px 1px 1px #000;
+  color: black;
+  justify-content: center;
 }
 
-.col-md-3,
-.col-xs-6 {
-  padding: 2px;
-  border-bottom: 1px solid #ccc;
+.key-long {
+  width: 60px;
+}
+
+td {
+  padding-left: 10px;
+  padding-right: 30px;
 }
 
 .about-modal {
-  margin: 10px;
+  margin: 10px auto;
   padding: 10px;
   word-wrap: break-word;
   color: #777;
   border: 1px solid #777;
-  font-size: 22px;
+  font-size: 16px;
   height: 60vh;
-  overflow: scroll;
+  width: 70vw;
+  /*overflow: scroll;*/
   overflow-wrap: break-word;
   position: absolute;
   top: 50px;
@@ -226,14 +251,6 @@ h2 {
   background-color: rgba(238, 238, 238, .6);
   border-radius: 5px;
 }
-
-
-
-/*@media screen and (max-width: 1500px) {
-  .about-modal {
-    font-size: 50%;
-  }
-}*/
 
 .login-modal {
   margin: 10px auto;
