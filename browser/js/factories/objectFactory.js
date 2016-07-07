@@ -15,6 +15,7 @@ function load (link, scale, name, message) {
           });
         }
         else object.scale.set(scale,scale,scale);
+        object.name = name;
         var boundingBox = new THREE.BoundingBoxHelper(object);
         boundingBox.add(object);
         boundingBox.update();
@@ -23,6 +24,10 @@ function load (link, scale, name, message) {
         var cubeGeometry = new THREE.BoxGeometry(size.x - center.x, size.y + center.y, size.z - center.z)
         var cube = new THREE.Mesh(cubeGeometry, 
         new THREE.MeshBasicMaterial({visible:false}));
+        cube.name = "cube"
+        
+
+        cube.childName = object.name;
         // console.log(cubeGeometry.boundingSphere, "cube")
         // cube.position.set(boundingBox.position.x, boundingBox.position.y, boundingBox.position.z ) 
         // var cube = new THREE.Mesh(boundingBox.geometry, new THREE.MeshBasicMaterial());
@@ -34,6 +39,7 @@ function load (link, scale, name, message) {
   }
   var invisibleCube = new THREE.Mesh(new THREE.BoxGeometry(50, 50, 50), 
         new THREE.MeshBasicMaterial({visible: false})); 
+
   var cache = {};
 
   var factory = {
@@ -45,6 +51,7 @@ function load (link, scale, name, message) {
         {name: 'toy-train', image: "./browser/images/toy-train.png", scale:1},
         {name: 'snowman', image: "./browser/images/snowman.png", scale: 8},
         {name: 'cat-mug', image: "./browser/images/cat-mug.png", scale: 3, yPosition: 2},    
+        {name: 'bull', image: "./browser/images/bull.png", scale: 2},
         {name: 'mug', image: "./browser/images/mug.png", scale: .2, yPosition: 2},  
         {name: 'pink-bed', image: "./browser/images/pink-bed.png", scale: 15},
         {name: 'bed', image: "./browser/images/bed.png", scale: 15, yPosition: 5},
@@ -61,7 +68,6 @@ function load (link, scale, name, message) {
         {name: 'brain', image: "./browser/images/brain.png", scale: 3, yPosition: 5},
         {name: 'fox', image: "./browser/images/fox.png", scale: .3},
         {name: 'lion-cub', image: "./browser/images/lion-cub.png", scale: 1, yPosition: 2},
-        {name: 'bull', image: "./browser/images/bull.png", scale: 2},
         {name: 'turtle', image: "./browser/images/turtle.png", scale: 12},
         {name: 'flower', image: "./browser/images/flower.png", scale: .2},
         {name: 'tree', image: "./browser/images/tree.png", scale: .1},

@@ -147,6 +147,8 @@ module.exports = function (palacesFactory, $window, objectFactory, storingFactor
 			// CREATE A ROOM
 			var palaceInstance = new palacesFactory.Palace();
 			var palace = palaceInstance.palace;
+			var walls = palaceInstance.walls;
+			console.log("HERE", palaceInstance)
 			palace.position.set(-300,75/2 + 1,100);
 			scene.add(palace);
 
@@ -227,10 +229,8 @@ module.exports = function (palacesFactory, $window, objectFactory, storingFactor
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
 				var intersects = raycaster.intersectObjects( constantsFactory.getObjects());
-				// var wallIntersections = raycaster.intersectObjects( walls );
-				//&& wallIntersections.length<=1
-
-				//add check for if its in the wall
+				var wallIntersects = raycaster.intersectObjects( palacesFactory.palaceObjects );
+				//if its intersecting with an object
 				if ( intersects.length > 0 ) {
 	
 					var intersect = intersects[ 0 ];
@@ -240,11 +240,16 @@ module.exports = function (palacesFactory, $window, objectFactory, storingFactor
 							scene.remove( intersect.object );
 							storingFactory.deleteObject(intersect.object.storingId);
 							constantsFactory.removeObject(intersect.object);
-
 						}
 					// create cube
-					} else {						
+					} else {	
+						console.log("object", intersects, constantsFactory.getObjects());			
+						console.log("walls", wallIntersects);
+						//its only intersecting with one object the mouse object and floor
+						if (intersects.length <= 2) {
+							//what is this line doing?
 							if (objectFactory.currentObject.children.length > 0) {
+
 								var myObject2 = objectFactory.currentObject.clone();
 								myObject2.position.copy( intersect.point ).add( intersect.face.normal );
 								myObject2.position.addScalar( 3/2 );
@@ -272,7 +277,7 @@ module.exports = function (palacesFactory, $window, objectFactory, storingFactor
 							// exchanging object for invisible cube (invisble pointer)
 							objectFactory.previousObject = objectFactory.currentObject;
 							objectFactory.currentObject = objectFactory.invisibleObject;
-
+						}
 					}
 				}
 			}
@@ -363,10 +368,10 @@ module.exports = function (palacesFactory, $window, objectFactory, storingFactor
 
 						// looking up and down
 						case 81: // q, look up
-							controls.getPitchObject().rotation.x += 3 * Math.PI / 180;
+							controls.getPitchObject().rotation.x += 1 * Math.PI / 180;
 							break;
 						case 69: // e, look down
-							controls.getPitchObject().rotation.x -= 3 * Math.PI / 180;
+							controls.getPitchObject().rotation.x -= 1 * Math.PI / 180;
 							break;
 
 						// rotate right
