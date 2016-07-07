@@ -1,14 +1,17 @@
 "use strict"
 
 module.exports = function () {
-	var showCarousel = { data: { false } };
+	var showCarousel = { data: { true } };
 	var showControls = { data: { false } };
 	var welcomeControls = { data: { true } };
 	var messageModal = { data: { false } };
 	var showAbout = { data: { false } };
 	var showLogin = { data: { false } };
 	var showSignup = { data: { false } };
-	return { 
+	
+	var fac =  { 
+
+		enableKeyEvents: true,
 
 		// controls modal
 		toggleControls: function () {
@@ -32,25 +35,59 @@ module.exports = function () {
 		getMessageModal: () => messageModal,
 		
 		toggleMessageModal : () => {
+			if (messageModal.data) {
+				console.log('make it false');
+				fac.enableKeyEvents = false;
+			} 
+			else {
+				console.log('make it true');
+				fac.enableKeyEvents = true;
+			}
 			messageModal.data = !messageModal.data;
+			console.log('message modal toggled, ', messageModal.data);
 		},
 		
 		//about modal
 		toggleAbout: () => {
-	    	showAbout.data = !showAbout.data
-	  	},
-	    getAbout: () => showAbout,
+    	showAbout.data = !showAbout.data
+  	},
+    getAbout: () => showAbout,
 
-	    //login modal
-	    toggleLogin: () => {
-	        showLogin.data = !showLogin.data
-	    },
-	    getLogin: () => showLogin,
+    
+    getLogin: () => showLogin,
 
-	    //signup modal
-	    toggleSignup: () => {
-	        showSignup.data = !showSignup.data
-	    },
-	    getSignup: () => showSignup
-		}
+    
+    getSignup: () => showSignup
+	}
+
+	//signup modal
+    fac.toggleSignup = () => {
+    	if (showSignup.data) {
+				console.log('make it false');
+				fac.enableKeyEvents = false;
+			} 
+			else {
+				console.log('make it true');
+				fac.enableKeyEvents = true;
+			}
+      showSignup.data = !showSignup.data;
+
+    }
+    //login modal
+    fac.toggleLogin = () => {
+    	if (showLogin.data) {
+				console.log('make it false');
+				fac.enableKeyEvents = false;
+			} 
+			else {
+				console.log('make it true');
+				fac.enableKeyEvents = true;
+			}
+      showLogin.data = !showLogin.data;
+
+    }
+
+    
+
+	return fac;
 }

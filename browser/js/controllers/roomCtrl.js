@@ -23,6 +23,7 @@ module.exports = function ($scope, modalFactory, objectFactory, messageFactory, 
   	}
   	$scope.getObjects = function () {
   		modalFactory.turnOffWelcome();
+      modalFactory.toggleCarousel();
   		$scope.objects = objectFactory.getObjects();
   	}
 }

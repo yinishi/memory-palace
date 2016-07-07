@@ -228,6 +228,7 @@ h2 {
 }
 
 
+
 /*@media screen and (max-width: 1500px) {
   .about-modal {
     font-size: 50%;
@@ -247,12 +248,35 @@ h2 {
   border-radius: 5px;
 }
 
+/*///////////////*/
+
+/*   MESSAGES    */
+
+/*///////////////*/
+
+.message-label {
+  font-size: 48px;
+  width: 10vw;
+  position: 'absolute';
+}
+
+.message {
+  padding: 10px 10px;
+  margin: 0 10px;
+  position: absolute;
+  top: 30%;
+  left: 40%;
+  width: 30%;
+  border: 1px solid #777;
+  background-color: rgba(238, 238, 238, .6);
+  border-radius: 5px;
+}
+
+
 
 /*///////////////////*/
 
-
 /*   FORM CONTROL    */
-
 
 /*///////////////////*/
 
@@ -275,29 +299,6 @@ h2 {
 }
 
 
-/*///////////////*/
-
-
-/*   MESSAGES    */
-
-
-/*///////////////*/
-
-.message-label {
-  font-size: 48px;
-  position: 'absolute';
-}
-
-.message {
-  padding: 10px 10px;
-  margin: 0 10px;
-  position: absolute;
-  top: 30%;
-  left: 40%;
-  width: 30%;
-  background-color: rgba(238, 238, 238, .6);
-  border-radius: 5px;
-}
 
 
 /* What does this do?! */
