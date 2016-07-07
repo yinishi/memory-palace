@@ -220,7 +220,7 @@ table {
   height: 30px;
   background-color: rgba(238, 238, 238, .9);
   box-shadow: 1px 1px 1px #000;
-  color: black;
+  color: #000;
   justify-content: center;
 }
 
@@ -235,21 +235,27 @@ td {
 
 .about-modal {
   margin: 10px auto;
-  padding: 10px;
+  padding: 20px;
   word-wrap: break-word;
   color: #777;
   border: 1px solid #777;
-  font-size: 16px;
+  font-size: 20px;
   height: 60vh;
   width: 70vw;
-  /*overflow: scroll;*/
+  overflow: scroll;
   overflow-wrap: break-word;
   position: absolute;
   top: 50px;
   left: 3vw;
   right: 3vw;
-  background-color: rgba(238, 238, 238, .6);
+  background-color: rgba(238, 238, 238, .7);
   border-radius: 5px;
+}
+
+@media screen and (max-width: 1000px) {
+  .about-modal {
+    font-size: 16px;
+  }
 }
 
 .login-modal {
@@ -261,7 +267,7 @@ td {
   position: absolute;
   right: 5vw;
   top: 50px;
-  background-color: rgba(238, 238, 238, .6);
+  background-color: rgba(238, 238, 238, .7);
   border-radius: 5px;
 }
 
