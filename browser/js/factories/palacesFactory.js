@@ -41,8 +41,9 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
     this.floor.position.set(positionX,-75/2 ,positionZ);
   }
 
-  function ceiling (w, h, positionX, positionZ) {
-    this.ceiling = new wallFactory.Wall(w, h, whiteCeiling, false, false)
+  function ceiling (w, h, positionX, positionZ, material) {
+    if (!material) material = whiteCeiling;
+    this.ceiling = new wallFactory.Wall(w, h, material, false, false)
       .clockwiseX()
       .wall;
     this.ceiling.name = "ceiling"
@@ -54,7 +55,7 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
     this.walls = [];
     //ceilings
     const sectionOneRoof = new ceiling(150, 301.5, 75,  -150).ceiling;
-    const sectionTwoRoof = new ceiling(150, 375, 225, -185).ceiling;
+    const sectionTwoRoof = new ceiling(150, 374, 225, -187.5).ceiling;
     const kitchenRoof = new ceiling(150, 175, 225+150, -265).ceiling;
     const bedRoom3Roof = new ceiling(150, 175, 525, -265).ceiling;
     const mainHallRoof = new ceiling(225, 175, 412, -87).ceiling;
@@ -67,18 +68,17 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
     this.addToScene(mainHallRoof);
     this.addToScene(sunRoomRoof);
     //floor
-    const sectionOneFloor = new floor(150, 301.5, 75,  -150).floor;
-    const sectionTwoFloor = new floor(150, 375, 225, -185).floor;
-    const kitchenFloor = new floor(150, 175, 225+150, -265, grayTile).floor;
-    const bedRoom3Floor = new floor(150, 175, 525, -265).floor;
-    const mainHallFloor = new floor(225, 175, 412, -87).floor;
+    const sectionOneFloor = new floor(150, 301.5, 75,  -149).floor;
+    const mainHallOneFloor = new floor(149, 374, 224.75, -187.5, redCarpet).floor;
+    const kitchenFloor = new floor(150, 175, 225+150, -263, grayTile).floor;
+    const bedRoom3Floor = new floor(150, 175, 525, -262).floor;
+    const mainHallTwoFloor = new floor(225, 175, 412, -88).floor;
     const sunRoomFloor = new floor (75, 175, 562, -87).floor;
     this.addToScene(sectionOneFloor);
-    this.addToScene(sectionTwoFloor);
+    this.addToScene(mainHallOneFloor);
     this.addToScene(kitchenFloor);
     this.addToScene(bedRoom3Floor);
-    this.addToScene(mainHallFloor);
-    this.addToScene(mainHallFloor);
+    this.addToScene(mainHallTwoFloor);
     this.addToScene(sunRoomFloor);
 
     function addWall (wall, positionX, positionY, positionZ) {
@@ -221,17 +221,17 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
     var sunroomInner1 = new wallFactory.Wall(75, wallHeight, whiteStone, false, true)
       .counterClockwiseY()
     z = ((-75 / 2) - 75) - 225 / 2 - 75 / 2 - .25 - 0.5 + 150 - 75 / 4 + 0.5 - 25 / 4;
-    addWall.call(this, sunroomInner1, 625, 0, z)
+    addWall.call(this, sunroomInner1, 500, 0, z)
 
     var sunroomDoor = new wallFactory.Wall(75, wallHeight, whiteStone, true, false)
       .clockwiseY()
     z = ((-75 / 2) - 75) - 225 / 2 - 75 / 2 - .25 - 0.5 + 150 - 75 / 2 + 0.5 + 75 + 25 / 2;
-    addWall.call(this, sunroomDoor,625, 0, z)
+    addWall.call(this, sunroomDoor,500, 0, z)
 
     var sunroomInner3 = new wallFactory.Wall(25.5, wallHeight, whiteStone, false, false)
       .clockwiseY()
     z = ((-75 / 2) - 75) - 225 / 2 - 75 / 2 - .25 - 0.5 + 150 - 75 / 4 + 0.5 + 75 + 50 - 25 / 4;
-    addWall.call(this, sunroomInner3,625, 0, z)
+    addWall.call(this, sunroomInner3,500, 0, z)
 
     //MAIN HALL
 
