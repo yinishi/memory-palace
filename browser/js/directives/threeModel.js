@@ -85,8 +85,8 @@ module.exports = function (palacesFactory, $window, objectFactory, storingFactor
 					};
 
 				}();
-
 			}
+
 			// INITIALIZE RENDERER
 			let renderer = constantsFactory.initializeRenderer(WIDTH, HEIGHT);
 
@@ -101,6 +101,7 @@ module.exports = function (palacesFactory, $window, objectFactory, storingFactor
 				WIDTH = w
 				HEIGHT = h
 			}
+
 			// SKYDOME
 			var vertexShader = document.getElementById( 'vertexShader' ).textContent;
 			var fragmentShader = document.getElementById( 'fragmentShader' ).textContent;
@@ -110,6 +111,7 @@ module.exports = function (palacesFactory, $window, objectFactory, storingFactor
 				offset:		 { type: "f", value: 400 },
 				exponent:	 { type: "f", value: 0.6 }
 			};
+
 			uniforms.topColor.value.set(0xaabbff);
 			var skyGeo = new THREE.SphereGeometry( 4000, 32, 15 );
 			var skyMat = new THREE.ShaderMaterial( {
@@ -210,57 +212,58 @@ module.exports = function (palacesFactory, $window, objectFactory, storingFactor
 
 			function onDocumentMouseDown( event ) {
 
-			if(modalFactory.enableKeyEvents){
-				event.preventDefault();
-				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
-				raycaster.setFromCamera( mouse, camera );
-				var intersects = raycaster.intersectObjects( constantsFactory.getObjects(), true);
-				//if its intersecting with an object
-				if ( intersects.length > 0 ) {
-					var intersect = intersects[ 0 ];
-					// delete cube
-					if ( event.originalEvent.shiftKey ) {
-						if ( !palacesFactory.palaceObjects.includes(intersect.object) && constantsFactory.getFloor() != intersect.object) {
-							scene.remove( intersect.object );
-							storingFactory.deleteObject(intersect.object.storingId);
-							constantsFactory.removeObject(intersect.object);
-						}
-					// create cube
-					} 
-					else {	
-						//what is this line doing?
-						if (objectFactory.currentObject.children.length > 0) {
+				if(modalFactory.enableKeyEvents){
+					event.preventDefault();
+					mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
+					raycaster.setFromCamera( mouse, camera );
+					var intersects = raycaster.intersectObjects( constantsFactory.getObjects(), true);
+					//if its intersecting with an object
+					if ( intersects.length > 0 ) {
+						var intersect = intersects[ 0 ];
+						// delete cube
+						if ( event.originalEvent.shiftKey ) {
+							if ( !palacesFactory.palaceObjects.includes(intersect.object) && constantsFactory.getFloor() != intersect.object) {
+								scene.remove( intersect.object );
+								storingFactory.deleteObject(intersect.object.storingId);
+								constantsFactory.removeObject(intersect.object);
+							}
+						// create cube
+						} 
+						else {	
+							//what is this line doing?
+							if (objectFactory.currentObject.children.length > 0) {
 
-							var myObject2 = objectFactory.currentObject.clone();
-							myObject2.position.copy( intersect.point ).add( intersect.face.normal );
-							myObject2.position.addScalar( 3/2 );
-							if(objectFactory.currentObject.yPosition) myObject2.position.y += objectFactory.currentObject.yPosition;
+								var myObject2 = objectFactory.currentObject.clone();
+								myObject2.position.copy( intersect.point ).add( intersect.face.normal );
+								myObject2.position.addScalar( 3/2 );
+								
+								if(objectFactory.currentObject.yPosition) myObject2.position.y += objectFactory.currentObject.yPosition;
 
-							//TEXT;
-							messageFactory.rememberObject(myObject2)
-							modalFactory.toggleMessageModal();
-							scene.add( myObject2 );
-							constantsFactory.setObjects([myObject2])
-							storingFactory.storeObject({
-								name: myObject2.name, 
-								positionX: myObject2.position.x, 
-								positionY: myObject2.position.y, 
-								positionZ: myObject2.position.z,
-								rotationX: myObject2.rotation.x,
-								rotationY: myObject2.rotation.y,
-								rotationZ: myObject2.rotation.z, 
-								scaleX: myObject2.scale.x,
-								scaleY: myObject2.scale.y,
-								scaleZ: myObject2.scale.z
-							});
-							// exchanging object for invisible cube (invisble pointer)
-							objectFactory.previousObject = objectFactory.currentObject;
-							objectFactory.currentObject = objectFactory.invisibleObject;
+									//TEXT;
+									messageFactory.rememberObject(myObject2);
+									modalFactory.toggleMessageModal();
+									scene.add( myObject2 );
+									constantsFactory.setObjects([myObject2]);
+									storingFactory.storeObject({
+										name: myObject2.name, 
+										positionX: myObject2.position.x, 
+										positionY: myObject2.position.y, 
+										positionZ: myObject2.position.z,
+										rotationX: myObject2.rotation.x,
+										rotationY: myObject2.rotation.y,
+										rotationZ: myObject2.rotation.z, 
+										scaleX: myObject2.scale.x,
+										scaleY: myObject2.scale.y,
+										scaleZ: myObject2.scale.z
+									});
+									// exchanging object for invisible cube (invisble pointer)
+									objectFactory.previousObject = objectFactory.currentObject;
+									objectFactory.currentObject = objectFactory.invisibleObject;
+								}
+							}
 						}
 					}
 				}
-			}
-		}
 
 			// useful codes: w = 87, s = 83, 32 = space, up = 38, down = 40, left = 37, right = 39
 			function onKeyDown ( event ) {
@@ -271,6 +274,7 @@ module.exports = function (palacesFactory, $window, objectFactory, storingFactor
 					switch ( event.keyCode ) {
 						// exit welcome
 						case 27: // esc
+
 				// escape key exits out of modals
 				if (event.keyCode === 27) {
 					welcome.style.display = 'none';
@@ -547,5 +551,5 @@ module.exports = function (palacesFactory, $window, objectFactory, storingFactor
 
 			render();
 	    }
-    };
-};
+    }
+}
