@@ -4,8 +4,8 @@
   <br />
   <br />
 
-  <span class="welcome-subtext" ng-show="!loaded">Please wait while your palace is loading...</span>
-<!--   loaded {{ numLoaded }} % -->
+  <span class="welcome-subtext" ng-show="!loaded">  loaded {{ numLoaded }} %</span>
+<!--   loaded {{ numLoaded/100 }} % -->
   <button ng-show="loaded" ng-click="toggle()" type="button" class="btn btn-default big-btn btn-transparent">ENTER</button>
   <button ng-show="loaded" ng-click="signIn()" type="button" class="btn btn-default big-btn btn-transparent">SIGN IN</button>
 
