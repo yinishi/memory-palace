@@ -273,29 +273,28 @@ module.exports = function(palacesFactory, $window, objectFactory, storingFactory
         if (modalFactory.enableKeyEvents) {
           switch (event.keyCode) {
             // exit welcome
-            case 27: // esc
+            // case 27: // esc
+            //   // exit welcome modal
+            //   welcome.style.display = 'none';
 
-              // exit welcome modal
-              welcome.style.display = 'none';
+              // // escape modals
+              // if (!modalFactory.getAbout().data) {
+              //   modalFactory.toggleAbout();
+              //   s.$apply();
+              // }
+              // if (!modalFactory.getLogin().data) {
+              //   modalFactory.toggleLogin();
+              //   s.$apply();
+              // }
+              // if (!modalFactory.getSignup().data) {
+              //   modalFactory.toggleSignup();
+              //   s.$apply();
+              // }
+              // break;
 
-              // escape modals
-              if (!modalFactory.getAbout().data) {
-                modalFactory.toggleAbout();
-                s.$apply();
-              }
-              if (!modalFactory.getLogin().data) {
-                modalFactory.toggleLogin();
-                s.$apply();
-              }
-              if (!modalFactory.getSignup().data) {
-                modalFactory.toggleSignup();
-                s.$apply();
-              }
-              break;
-
-            case 13: // enter
-              welcome.style.display = 'none';
-              break;
+            // case 13: // enter
+            //   welcome.style.display = 'none';
+            //   break;
 
               // toggle carousel modal
             case 49: // 1
