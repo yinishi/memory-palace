@@ -53,7 +53,6 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
     this.palace = new THREE.Object3D();
     this.walls = [];
     //ceilings
-    // const sectionOneHeight = (150 + 75.5 + 75 + 1).ceiling;
     const sectionOneRoof = new ceiling(150, 301.5, 75,  -150).ceiling;
     const sectionTwoRoof = new ceiling(150, 375, 225, -185).ceiling;
     const kitchenRoof = new ceiling(150, 175, 225+150, -265).ceiling;
@@ -82,266 +81,180 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
     this.addToScene(mainHallFloor);
     this.addToScene(sunRoomFloor);
 
-    function addWall (wall) {
-      this.addToScene(wall);
+    function addWall (wall, positionX, positionY, positionZ) {
+      if (!wall.wall)console.log(wall.wall)
+      wall.wall.position.z = positionZ
+      wall.wall.position.x = positionX
+      this.addToScene(wall.wall);
       this.walls.push(wall);
     }
 
     //BEDROOM 1
     var b1Outerwall1 = new wallFactory.Wall(150, wallHeight, woodLight, false, false)
-      .clockwiseY()
-      .wall;
-    b1Outerwall1.position.set(0, 0, -75);
-    addWall.call(this, b1Outerwall1)
+      .clockwiseY();
+    addWall.call(this, b1Outerwall1, 0, 0, -75 );
 
     var b1Outerwall2 = new wallFactory.Wall(150, wallHeight, woodLight, false, true)
-      .wall;
-    b1Outerwall2.position.x = 75 - 0.5;
-    b1Outerwall2.position.z = .5;
-    addWall.call(this, b1Outerwall2)
+    addWall.call(this, b1Outerwall2, (75 - 0.5), 0, .5);
 
     var b1Door = new wallFactory.Wall(75, wallHeight, woodLight, true, false)
       .clockwiseY()
-      .wall;
-    b1Door.position.z = (-75 / 2);
-    b1Door.position.x = (150 - 1);
-    addWall.call(this, b1Door)
+    addWall.call(this, b1Door, 149, 0, (-75 / 2));
 
     var b1Inner1 = new wallFactory.Wall(225.5, wallHeight, woodLight, false, false)
       .clockwiseY()
-      .wall;
-    b1Inner1.position.z = - 75 - 225/2;
-    b1Inner1.position.x = 150 - 1;
-    addWall.call(this, b1Inner1)
+    addWall.call(this, b1Inner1, 149, 0, (- 75 - 225/2));
 
     var b1Inner2 = new wallFactory.Wall(75 - 1, wallHeight, woodLight, false, false)
-      .wall;
-    b1Inner2.position.z = (-150 - 1);
-    b1Inner2.position.x = (75 / 2);
-    addWall.call(this, b1Inner2)
+    addWall.call(this, b1Inner2, (75 / 2), 0, (-150 - 1));
 
     var b1InnerDoor = new wallFactory.Wall(75 - 1, wallHeight, woodLight, true, false)
-      .wall;
-    b1InnerDoor.position.z = -150 - 1;
-    b1InnerDoor.position.x = 75/2 + 75 - 1;
-    addWall.call(this, b1InnerDoor)
+    addWall.call(this, b1InnerDoor, (75/2 + 75 - 1), 0, (-150 - 1));
 
     //BEDROOM 2
     var b2Outer1 = new wallFactory.Wall(75.5, wallHeight, woodLight, false, false)
       .clockwiseY()
-      .wall;
-    b2Outer1.position.z = -150 - 75/2;
-    b2Outer1.position.x = 0;
-    addWall.call(this, b2Outer1)
+    addWall.call(this, b2Outer1, 0, 0, -150 - 75/2)
 
     var b2Outer2 = new wallFactory.Wall(75 + 1, wallHeight, woodLight, false, true)
-      .clockwiseY()
-      .wall;
-    b2Outer2.position.z = -225 - 75/2 - .75;
-    b2Outer2.position.x = 0;
-    addWall.call(this, b2Outer2)
+      .clockwiseY();
+    addWall.call(this, b2Outer2, 0, 0, (-225 - 75/2 - .75));
 
     var b2Outer3 = new wallFactory.Wall(150.5 - 2.5, wallHeight, woodLight, false, false)
-      .wall;
-    b2Outer3.position.z = -300 - 0.5;
-    b2Outer3.position.x = 75 - 0.5;
-    addWall.call(this, b2Outer3)
+    addWall.call(this, b2Outer3, 75 - 0.5, 0 ,-300 - 0.5 )
 
     var b2Inner1 = new wallFactory.Wall(75 - 1, wallHeight, woodLight, false, false)
-      .wall;
-    b2Inner1.position.z = -225 - 1;
-    b2Inner1.position.x = 75/2;
-    addWall.call(this, b2Inner1)
+    addWall.call(this, b2Inner1, 75/2, 0, -225 - 1)
 
     var b2Inner2 = new wallFactory.Wall(75 - 0.5, wallHeight, woodLight, true, false)
       .clockwiseY()
-      .wall
-    b2Inner2.position.z = -150 - 75/2 - 1;
-    b2Inner2.position.x = 75 - 1;
-    addWall.call(this, b2Inner2)
+    addWall.call(this, b2Inner2, 75 - 1, 0 ,  -150 - 75/2 - 1)
 
     //LIVING ROOM
     var livingroomOuter1 = new wallFactory.Wall(75, wallHeight, woodLight, false, false)
       .clockwiseY()
-      .wall;
-    livingroomOuter1.position.z = -225 - 225/2 - 0.25;
-    livingroomOuter1.position.x = 150 - 1;
-    addWall.call(this, livingroomOuter1)
+    addWall.call(this, livingroomOuter1, 149, 0, -225 - 225/2 - 0.25)
 
     var livingroomOuter2 = new wallFactory.Wall(75, wallHeight, woodLight, true, false)
-      .wall;
-    livingroomOuter2.position.z = -375 + 0.25;
-    livingroomOuter2.position.x = 150 + 75/2 - 0.5;
-
-    addWall.call(this, livingroomOuter2);
+    addWall.call(this, livingroomOuter2, 150 + 75/2 - 0.5, 0, -375 + 0.25);
 
     var livingroomOuter3 = new wallFactory.Wall(75, wallHeight, woodLight, false, true)
-      .wall;
-    livingroomOuter3.position.z = -375 + 0.25 ;
-    livingroomOuter3.position.x = 225 + 75/2 - 0.5 ;
-
-    addWall.call(this, livingroomOuter3);
+    addWall.call(this, livingroomOuter3, 225 + 75/2 - 0.5, 0, -375 + 0.25);
 
     var livingroomOuter4 = new wallFactory.Wall(25, wallHeight, woodLight, false, false)
       .clockwiseY()
-      .wall;
-    livingroomOuter4.position.z = -250 - 225/2 - 0.25;
-    livingroomOuter4.position.x = 300 - .5;
-
-    addWall.call(this, livingroomOuter4);
+    addWall.call(this, livingroomOuter4, 300 - .5, 0, -250 - 225/2 - 0.25);
 
     //KITCHEN
     var kitchenInner1 = new wallFactory.Wall(175, wallHeight, woodLight, false, false)
       .clockwiseY()
-      .wall;
-    kitchenInner1.position.z = -150 - 225/2 - 0.25;
-    kitchenInner1.position.x = 300 - 0.5;
-    addWall.call(this, kitchenInner1)
+    addWall.call(this, kitchenInner1, 300 - 0.5, 0, -150 - 225/2 - 0.25)
 
     var kitchenOuter1 = new wallFactory.Wall(75, wallHeight, woodLight, false, true)
-      .wall;
-    kitchenOuter1.position.z = -350 + 0.25 - 1;
-    kitchenOuter1.position.x = 300 - 0.5 + 75/2;
-    addWall.call(this, kitchenOuter1)
+    addWall.call(this, kitchenOuter1, 300 - 0.5 + 75/2, 0, -350 + 0.25 - 1)
 
     var kitchenOuter2 = new wallFactory.Wall(75, wallHeight, woodLight, false, false)
-      .wall;
-    kitchenOuter2.position.z = -350 + 0.25 - 1;
-    kitchenOuter2.position.x = 375 - 0.5 + 75/2;
-    addWall.call(this, kitchenOuter2)
+    addWall.call(this, kitchenOuter2, 375 - 0.5 + 75/2, 0, -350 + 0.25 - 1)
 
     var kitchenInner2 = new wallFactory.Wall(75, wallHeight, woodLight, false, false)
-      .wall;
-    kitchenInner2.position.z = -175 + 0.25 - 1;
-    kitchenInner2.position.x = 300 - 0.5 + 75/2;
-    addWall.call(this, kitchenInner2)
+    addWall.call(this, kitchenInner2, 300 - 0.5 + 75/2, 0, -175 + 0.25 - 1)
 
     var kitchenInner3 = new wallFactory.Wall(75 - 1, wallHeight, woodLight, true, false)
-      .wall;
-    kitchenInner3.position.z = -175 + 0.25 - 1;
-    kitchenInner3.position.x = 375 + 75/2 - 1;
-    addWall.call(this, kitchenInner3)
+    addWall.call(this, kitchenInner3, 375 + 75/2 - 1, 0, -175 + 0.25 - 1)
 
     var kitchenInner4 = new wallFactory.Wall(175, wallHeight, woodLight, false, false)
       .clockwiseY()
-      .wall;
-    kitchenInner4.position.z = -150 - 225/2 - 0.25;
-    kitchenInner4.position.x = 400 - 0.5 + 75/2 + 12;
-    addWall.call(this, kitchenInner4)
+    addWall.call(this, kitchenInner4, 400 - 0.5 + 75/2 + 12, 0, -150 - 225/2 - 0.25)
+   
 
     //BEDROOM 3
+    var z, x
     var b3Outer1 = new wallFactory.Wall(75, wallHeight, woodLight, false, false)
-      .wall;
-    b3Outer1.position.z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1;
-    b3Outer1.position.x = 75 - .5 + 75 + 75 / 2 + 75 + 75 / 2 + 75 / 2 + 75 + 75;
-    addWall.call(this, b3Outer1)
+    z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1;
+    x = 75 - .5 + 75 + 75 / 2 + 75 + 75 / 2 + 75 / 2 + 75 + 75;
+    addWall.call(this, b3Outer1, x, 0, z)
 
     var b3Outer2 = new wallFactory.Wall(75, wallHeight, woodLight, false, true)
-      .wall;
-    b3Outer2.position.z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1;
-    b3Outer2.position.x = 75 - .5 + 75 + 75 / 2 + 75 + 75 / 2 + 75 / 2 + 75 + 75 + 75;
-    addWall.call(this, b3Outer2)
+    z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1;
+    x = 75 - .5 + 75 + 75 / 2 + 75 + 75 / 2 + 75 / 2 + 75 + 75 + 75;
+    addWall.call(this, b3Outer2, x, 0, z);
 
     var b3Outer3 = new wallFactory.Wall(175 + 1, wallHeight, woodLight, false, true)
       .counterClockwiseY()
-      .wall;
-    b3Outer3.position.z = ((-75 / 2) - 75) - 225 / 2 - 75 / 2 - .25 - 0.5;
-    b3Outer3.position.x = 75 + 75 + 75 / 2 + 75 + 75 / 2 + 300;
-    addWall.call(this, b3Outer3)
+    z = ((-75 / 2) - 75) - 225 / 2 - 75 / 2 - .25 - 0.5;
+    x = 75 + 75 + 75 / 2 + 75 + 75 / 2 + 300;
+    addWall.call(this, b3Outer3, x, 0, z)
 
     var b3Inner1 = new wallFactory.Wall(75 - 1, wallHeight, woodLight, false, false)
-      .wall;
-    b3Inner1.position.z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1 + 175 - 75;
-    b3Inner1.position.x = 75 / 2 + 525;
-    addWall.call(this, b3Inner1)
+    z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1 + 175 - 75;
+    addWall.call(this, b3Inner1, 75 / 2 + 525, 0, z)
 
     var b3Inner2 = new wallFactory.Wall(75, wallHeight, woodLight, true, false)
       .clockwiseY()
-      .wall;
-    b3Inner2.position.z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1 + 175 - 75 / 2;
-    b3Inner2.position.x = 525;
-    addWall.call(this, b3Inner2)
+    z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1 + 175 - 75 / 2;
+    addWall.call(this, b3Inner2, 525, 0, z)
 
     var b3Inner3 = new wallFactory.Wall(75 - 1, wallHeight, woodLight, false, false)
-      .wall;
-    b3Inner3.position.z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1 + 175;
-    b3Inner3.position.x = 75 / 2 + 525;
-    addWall.call(this, b3Inner3)
+    z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1 + 175;
+    addWall.call(this, b3Inner3, 75 / 2 + 525, 0, z)
 
     var b3Inner4 = new wallFactory.Wall(75 + 1, wallHeight, woodLight, true, false)
-      .wall;
-    b3Inner4.position.z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1 + 175;
-    b3Inner4.position.x = 75 / 2 + 525 - 75 - 1;
-    addWall.call(this, b3Inner4)
+    z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1 + 175;
+    x = 75 / 2 + 525 - 75 - 1;
+    addWall.call(this, b3Inner4, x, 0, z)
 
     // SUNROOM
-
     var sunroomOuter1 = new wallFactory.Wall(175 / 2, wallHeight, woodLight, false, true)
       .counterClockwiseY()
-      .wall;
-    sunroomOuter1.position.z = ((-75 / 2) - 75) - 225 / 2 - 75 / 2 - .25 - 0.5 + 150 - 75 / 4 + 0.5;
-    sunroomOuter1.position.x = 600;
-    addWall.call(this, sunroomOuter1)
+    z = ((-75 / 2) - 75) - 225 / 2 - 75 / 2 - .25 - 0.5 + 150 - 75 / 4 + 0.5;
+    addWall.call(this, sunroomOuter1, 600, 0, z)
 
     var sunroomOuter2 = new wallFactory.Wall(175 / 2 + 1, wallHeight, woodLight, false, true)
       .clockwiseY()
-      .wall;
-    sunroomOuter2.position.z = ((-75 / 2) - 75) - 225 / 2 - 75 / 2 - .25 - 0.5 + 150 - 75 / 4 + 0.5 + 75 + 25 / 2;
-    sunroomOuter2.position.x = 600;
-    addWall.call(this, sunroomOuter2)
+    z = ((-75 / 2) - 75) - 225 / 2 - 75 / 2 - .25 - 0.5 + 150 - 75 / 4 + 0.5 + 75 + 25 / 2;
+    addWall.call(this, sunroomOuter2, 600, 0, z)
 
     var sunroomOuter3 = new wallFactory.Wall(75, wallHeight, woodLight, false, true)
-      .wall;
-    sunroomOuter3.position.z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1 + 175 + 175 + 1.25;
-    sunroomOuter3.position.x = 75 / 2 + 525 + .5;
-    addWall.call(this, sunroomOuter3)
+    z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1 + 175 + 175 + 1.25;
+    x = 75 / 2 + 525 + .5;
+    addWall.call(this, sunroomOuter3, x, 0, z)
 
     var sunroomInner1 = new wallFactory.Wall(75, wallHeight, woodLight, false, true)
       .counterClockwiseY()
-      .wall;
-    sunroomInner1.position.z = ((-75 / 2) - 75) - 225 / 2 - 75 / 2 - .25 - 0.5 + 150 - 75 / 4 + 0.5 - 25 / 4;
-    sunroomInner1.position.x = 600 - 75;
-    addWall.call(this, sunroomInner1)
+    z = ((-75 / 2) - 75) - 225 / 2 - 75 / 2 - .25 - 0.5 + 150 - 75 / 4 + 0.5 - 25 / 4;
+    addWall.call(this, sunroomInner1, 625, 0, z)
 
     var sunroomDoor = new wallFactory.Wall(75, wallHeight, woodLight, true, false)
       .clockwiseY()
-      .wall;
-    sunroomDoor.position.z = ((-75 / 2) - 75) - 225 / 2 - 75 / 2 - .25 - 0.5 + 150 - 75 / 2 + 0.5 + 75 + 25 / 2;
-    sunroomDoor.position.x = 600 - 75;
-    addWall.call(this, sunroomDoor)
+    z = ((-75 / 2) - 75) - 225 / 2 - 75 / 2 - .25 - 0.5 + 150 - 75 / 2 + 0.5 + 75 + 25 / 2;
+    addWall.call(this, sunroomDoor,625, 0, z)
 
     var sunroomInner3 = new wallFactory.Wall(25.5, wallHeight, woodLight, false, false)
       .clockwiseY()
-      .wall;
-    sunroomInner3.position.z = ((-75 / 2) - 75) - 225 / 2 - 75 / 2 - .25 - 0.5 + 150 - 75 / 4 + 0.5 + 75 + 50 - 25 / 4;
-    sunroomInner3.position.x = 600 - 75;
-    addWall.call(this, sunroomInner3)
+    z = ((-75 / 2) - 75) - 225 / 2 - 75 / 2 - .25 - 0.5 + 150 - 75 / 4 + 0.5 + 75 + 50 - 25 / 4;
+    addWall.call(this, sunroomInner3,625, 0, z)
 
     //MAIN HALL
 
     var mainHallOuter1 = new wallFactory.Wall(75, wallHeight, woodLight, false, false)
-      .wall;
-    mainHallOuter1.position.z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1 + 175 + 175 + 1.25;
-    mainHallOuter1.position.x = 525 - 75 / 2 + .5;
-    addWall.call(this, mainHallOuter1)
+    z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1 + 175 + 175 + 1.25;
+    x = 525 - 75 / 2 + .5;
+    addWall.call(this, mainHallOuter1, x, 0, z)
 
     var mainHallOuter2 = new wallFactory.Wall(75, wallHeight, woodLight, false, false)
-      .wall;
-    mainHallOuter2.position.z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1 + 175 + 175 + 1.25;
-    mainHallOuter2.position.x = 525 - 75 / 2 + .5 - 75;
-    addWall.call(this, mainHallOuter2)
+    z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1 + 175 + 175 + 1.25;
+    x = 525 - 75 / 2 + .5 - 75;
+    addWall.call(this, mainHallOuter2, x, 0,z)
 
     var mainHallOuter3 = new wallFactory.Wall(75, wallHeight, woodLight, true, false)
-      .wall;
-    mainHallOuter3.position.z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1 + 175 + 175 + 1.25;
-    mainHallOuter3.position.x = 525 - 75 / 2 + .5 - 75 - 75;
-    addWall.call(this, mainHallOuter3)
+    z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1 + 175 + 175 + 1.25;
+    x = 525 - 75 / 2 + .5 - 75 - 75;
+    addWall.call(this, mainHallOuter3, x, 0, z)
 
     var mainHallOuter4 = new wallFactory.Wall(151, wallHeight, woodLight, false, false)
-      .wall;
-    mainHallOuter4.position.z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1 + 175 + 175 + 1.25;
-    mainHallOuter4.position.x = 525 - 75 / 2 + .5 - 75 - 75 - 113;
-    addWall.call(this, mainHallOuter4)
+    z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1 + 175 + 175 + 1.25;
+    x = 525 - 75 / 2 + .5 - 75 - 75 - 113;
+    addWall.call(this, mainHallOuter4, x, 0, z)
 
 
      //FURNITURE
@@ -356,7 +269,6 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
               })
     }
     function addObj (object) {
-        // self.addToScene(object);
         self.addToScene(object)
         palaceObjects.push(object);
         constantsFactory.setObjects([object]);
