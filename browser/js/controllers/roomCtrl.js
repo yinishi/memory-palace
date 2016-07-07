@@ -1,6 +1,15 @@
-module.exports = function ($scope, modalFactory, objectFactory, messageFactory, storingFactory) {
-	$scope.welcomeModal = modalFactory.getWelcomeControls();
-  
+module.exports = function ($scope, modalFactory, objectFactory, messageFactory, storingFactory, palacesFactory) {
+    $scope.welcomeModal = modalFactory.getWelcomeControls();
+    $scope.loaded = function(){
+      if(palacesFactory.palaceObjects.length >= 10){
+        return true
+      }
+      else return false;
+    }; 
+    $scope.signIn = function(){
+      modalFactory.turnOffWelcome();
+      modalFactory.toggleLogin();
+    }
     $scope.objects = objectFactory.getObjects();
     $scope.showCarousel = modalFactory.getCarousel();
 	  $scope.showModal = modalFactory.getMessageModal();
@@ -19,7 +28,7 @@ module.exports = function ($scope, modalFactory, objectFactory, messageFactory, 
 	  }
 
   	$scope.toggle = function () {
-  		modalFactory.turnOffWelcome();  		
+  		modalFactory.turnOffWelcome();	
   	}
   	$scope.getObjects = function () {
   		modalFactory.turnOffWelcome();
