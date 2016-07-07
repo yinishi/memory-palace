@@ -42,15 +42,15 @@ module.exports = function () {
 		
 		toggleMessageModal : () => {
 			if (messageModal.data) {
-				console.log('make it false');
+				// console.log('make it false');
 				fac.enableKeyEvents = false;
 			} 
 			else {
-				console.log('make it true');
+				// console.log('make it true');
 				fac.enableKeyEvents = true;
 			}
 			messageModal.data = !messageModal.data;
-			console.log('message modal toggled, ', messageModal.data);
+			// console.log('message modal toggled, ', messageModal.data);
 		},
 		
 		//about modal
