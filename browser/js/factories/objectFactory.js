@@ -24,9 +24,7 @@ function load (link, scale, name, message) {
         var cubeGeometry = new THREE.BoxGeometry(size.x - center.x, size.y + center.y, size.z - center.z)
         var cube = new THREE.Mesh(cubeGeometry, 
         new THREE.MeshBasicMaterial({visible:false}));
-        cube.name = "cube"
-        
-
+        cube.name = "cube";
         cube.childName = object.name;
         // console.log(cubeGeometry.boundingSphere, "cube")
         // cube.position.set(boundingBox.position.x, boundingBox.position.y, boundingBox.position.z ) 
@@ -88,11 +86,10 @@ function load (link, scale, name, message) {
       modalFactory.toggleCarousel();
       var name = object.name;
       var scale = object.scale;
-      (cache[name] || (cache[name] = load(`/browser/objects/${name}/${name}.json`, scale)))
+      (cache[name] || (cache[name] = load(`/browser/objects/${name}/${name}.json`, scale, name)))
         .then(function(obj){
           obj.name = name;
           obj.storageScale = scale;
-          console.log("here", obj)
           if(object.yPosition) obj.yPosition = object.yPosition;
           factory.previousObject = factory.currentObject;
           factory.currentObject = obj;

@@ -41,6 +41,12 @@ module.exports = function () {
 		getObjects: function () {
 			return myObjects;
 		},
+		initializeRenderer: function (WIDTH, HEIGHT) {
+			let renderer = new THREE.WebGLRenderer();
+			renderer.setClearColor( 0x7ec0ee );
+			renderer.setSize( WIDTH, HEIGHT);
+			return renderer;
+		},
 		//to make sure floor isn't added to database when you login
 		getFloor: function(){
 			return myFloor;

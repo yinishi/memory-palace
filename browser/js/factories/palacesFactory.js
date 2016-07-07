@@ -4,7 +4,7 @@ const whiteStone = loadTexture('white-stone.jpg');
 const blue = loadTexture('blue.png');
 const whiteCeiling = loadTexture('white_ceiling.jpg');
 const grayTile = loadTexture('gray_tile.jpg');
-const woodLightTile = loadTexture('floor_tiles.jpg');
+const whiteStoneTile = loadTexture('floor_tiles.jpg');
 const woodDark = loadTexture('wood-wall.jpg');
 const woodLight = loadTexture('wood-floor.jpg');
 const redCarpet = loadTexture('carpet_red.jpg');
@@ -20,7 +20,7 @@ var walls = [];
 // const tan = new THREE.MeshLambertMaterial({color: 0xECE5CE})
 // const coral = new THREE.MeshLambertMaterial({color: 0xE08E79})
 // const peach = new THREE.MeshLambertMaterial({color: 0xF1D4AF})
-// const woodLight = new THREE.MeshLambertMaterial({color: 0xC5E0DC})
+// const whiteStone = new THREE.MeshLambertMaterial({color: 0xC5E0DC})
 // const burgundy = new THREE.MeshLambertMaterial({color: 0x774F38})
 
 function loadTexture(file) {
@@ -33,7 +33,7 @@ function loadTexture(file) {
 module.exports = function(objectFactory, tableFactory, wallFactory, messageFactory, constantsFactory, shelfFactory) {
   
   function floor (w, h, positionX, positionZ, material) {
-    if (!material) material = redCarpet;
+    if (!material) material = woodDark;
     this.floor = new wallFactory.Wall(w, h, material, false, false)
       .clockwiseX()
       .wall;
@@ -66,7 +66,7 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
     this.addToScene(mainHallRoof);
     this.addToScene(mainHallRoof);
     this.addToScene(sunRoomRoof);
-
+    //floor
     const sectionOneFloor = new floor(150, 301.5, 75,  -150).floor;
     const sectionTwoFloor = new floor(150, 375, 225, -185).floor;
     const kitchenFloor = new floor(150, 175, 225+150, -265, grayTile).floor;
@@ -82,176 +82,175 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
     this.addToScene(sunRoomFloor);
 
     function addWall (wall, positionX, positionY, positionZ) {
-      if (!wall.wall)console.log(wall.wall)
-      wall.wall.position.z = positionZ
-      wall.wall.position.x = positionX
+      wall.wall.position.z = positionZ;
+      wall.wall.position.x = positionX;
       this.addToScene(wall.wall);
-      this.walls.push(wall);
+      this.walls.push(wall.wall);
     }
 
     //BEDROOM 1
-    var b1Outerwall1 = new wallFactory.Wall(150, wallHeight, woodLight, false, false)
+    var b1Outerwall1 = new wallFactory.Wall(150, wallHeight, whiteStone, false, false)
       .clockwiseY();
     addWall.call(this, b1Outerwall1, 0, 0, -75 );
 
-    var b1Outerwall2 = new wallFactory.Wall(150, wallHeight, woodLight, false, true)
+    var b1Outerwall2 = new wallFactory.Wall(150, wallHeight, whiteStone, false, true)
     addWall.call(this, b1Outerwall2, (75 - 0.5), 0, .5);
 
-    var b1Door = new wallFactory.Wall(75, wallHeight, woodLight, true, false)
+    var b1Door = new wallFactory.Wall(75, wallHeight, whiteStone, true, false)
       .clockwiseY()
     addWall.call(this, b1Door, 149, 0, (-75 / 2));
 
-    var b1Inner1 = new wallFactory.Wall(225.5, wallHeight, woodLight, false, false)
+    var b1Inner1 = new wallFactory.Wall(225.5, wallHeight, whiteStone, false, false)
       .clockwiseY()
     addWall.call(this, b1Inner1, 149, 0, (- 75 - 225/2));
 
-    var b1Inner2 = new wallFactory.Wall(75 - 1, wallHeight, woodLight, false, false)
+    var b1Inner2 = new wallFactory.Wall(75 - 1, wallHeight, whiteStone, false, false)
     addWall.call(this, b1Inner2, (75 / 2), 0, (-150 - 1));
 
-    var b1InnerDoor = new wallFactory.Wall(75 - 1, wallHeight, woodLight, true, false)
+    var b1InnerDoor = new wallFactory.Wall(75 - 1, wallHeight, whiteStone, true, false)
     addWall.call(this, b1InnerDoor, (75/2 + 75 - 1), 0, (-150 - 1));
 
     //BEDROOM 2
-    var b2Outer1 = new wallFactory.Wall(75.5, wallHeight, woodLight, false, false)
+    var b2Outer1 = new wallFactory.Wall(75.5, wallHeight, whiteStone, false, false)
       .clockwiseY()
     addWall.call(this, b2Outer1, 0, 0, -150 - 75/2)
 
-    var b2Outer2 = new wallFactory.Wall(75 + 1, wallHeight, woodLight, false, true)
+    var b2Outer2 = new wallFactory.Wall(75 + 1, wallHeight, whiteStone, false, true)
       .clockwiseY();
     addWall.call(this, b2Outer2, 0, 0, (-225 - 75/2 - .75));
 
-    var b2Outer3 = new wallFactory.Wall(150.5 - 2.5, wallHeight, woodLight, false, false)
+    var b2Outer3 = new wallFactory.Wall(150.5 - 2.5, wallHeight, whiteStone, false, false)
     addWall.call(this, b2Outer3, 75 - 0.5, 0 ,-300 - 0.5 )
 
-    var b2Inner1 = new wallFactory.Wall(75 - 1, wallHeight, woodLight, false, false)
+    var b2Inner1 = new wallFactory.Wall(75 - 1, wallHeight, whiteStone, false, false)
     addWall.call(this, b2Inner1, 75/2, 0, -225 - 1)
 
-    var b2Inner2 = new wallFactory.Wall(75 - 0.5, wallHeight, woodLight, true, false)
+    var b2Inner2 = new wallFactory.Wall(75 - 0.5, wallHeight, whiteStone, true, false)
       .clockwiseY()
     addWall.call(this, b2Inner2, 75 - 1, 0 ,  -150 - 75/2 - 1)
 
     //LIVING ROOM
-    var livingroomOuter1 = new wallFactory.Wall(75, wallHeight, woodLight, false, false)
+    var livingroomOuter1 = new wallFactory.Wall(75, wallHeight, whiteStone, false, false)
       .clockwiseY()
     addWall.call(this, livingroomOuter1, 149, 0, -225 - 225/2 - 0.25)
 
-    var livingroomOuter2 = new wallFactory.Wall(75, wallHeight, woodLight, true, false)
+    var livingroomOuter2 = new wallFactory.Wall(75, wallHeight, whiteStone, true, false)
     addWall.call(this, livingroomOuter2, 150 + 75/2 - 0.5, 0, -375 + 0.25);
 
-    var livingroomOuter3 = new wallFactory.Wall(75, wallHeight, woodLight, false, true)
+    var livingroomOuter3 = new wallFactory.Wall(75, wallHeight, whiteStone, false, true)
     addWall.call(this, livingroomOuter3, 225 + 75/2 - 0.5, 0, -375 + 0.25);
 
-    var livingroomOuter4 = new wallFactory.Wall(25, wallHeight, woodLight, false, false)
+    var livingroomOuter4 = new wallFactory.Wall(25, wallHeight, whiteStone, false, false)
       .clockwiseY()
     addWall.call(this, livingroomOuter4, 300 - .5, 0, -250 - 225/2 - 0.25);
 
     //KITCHEN
-    var kitchenInner1 = new wallFactory.Wall(175, wallHeight, woodLight, false, false)
+    var kitchenInner1 = new wallFactory.Wall(175, wallHeight, whiteStone, false, false)
       .clockwiseY()
     addWall.call(this, kitchenInner1, 300 - 0.5, 0, -150 - 225/2 - 0.25)
 
-    var kitchenOuter1 = new wallFactory.Wall(75, wallHeight, woodLight, false, true)
+    var kitchenOuter1 = new wallFactory.Wall(75, wallHeight, whiteStone, false, true)
     addWall.call(this, kitchenOuter1, 300 - 0.5 + 75/2, 0, -350 + 0.25 - 1)
 
-    var kitchenOuter2 = new wallFactory.Wall(75, wallHeight, woodLight, false, false)
+    var kitchenOuter2 = new wallFactory.Wall(75, wallHeight, whiteStone, false, false)
     addWall.call(this, kitchenOuter2, 375 - 0.5 + 75/2, 0, -350 + 0.25 - 1)
 
-    var kitchenInner2 = new wallFactory.Wall(75, wallHeight, woodLight, false, false)
+    var kitchenInner2 = new wallFactory.Wall(75, wallHeight, whiteStone, false, false)
     addWall.call(this, kitchenInner2, 300 - 0.5 + 75/2, 0, -175 + 0.25 - 1)
 
-    var kitchenInner3 = new wallFactory.Wall(75 - 1, wallHeight, woodLight, true, false)
+    var kitchenInner3 = new wallFactory.Wall(75 - 1, wallHeight, whiteStone, true, false)
     addWall.call(this, kitchenInner3, 375 + 75/2 - 1, 0, -175 + 0.25 - 1)
 
-    var kitchenInner4 = new wallFactory.Wall(175, wallHeight, woodLight, false, false)
+    var kitchenInner4 = new wallFactory.Wall(175, wallHeight, whiteStone, false, false)
       .clockwiseY()
     addWall.call(this, kitchenInner4, 400 - 0.5 + 75/2 + 12, 0, -150 - 225/2 - 0.25)
    
 
     //BEDROOM 3
     var z, x
-    var b3Outer1 = new wallFactory.Wall(75, wallHeight, woodLight, false, false)
+    var b3Outer1 = new wallFactory.Wall(75, wallHeight, whiteStone, false, false)
     z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1;
     x = 75 - .5 + 75 + 75 / 2 + 75 + 75 / 2 + 75 / 2 + 75 + 75;
     addWall.call(this, b3Outer1, x, 0, z)
 
-    var b3Outer2 = new wallFactory.Wall(75, wallHeight, woodLight, false, true)
+    var b3Outer2 = new wallFactory.Wall(75, wallHeight, whiteStone, false, true)
     z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1;
     x = 75 - .5 + 75 + 75 / 2 + 75 + 75 / 2 + 75 / 2 + 75 + 75 + 75;
     addWall.call(this, b3Outer2, x, 0, z);
 
-    var b3Outer3 = new wallFactory.Wall(175 + 1, wallHeight, woodLight, false, true)
+    var b3Outer3 = new wallFactory.Wall(175 + 1, wallHeight, whiteStone, false, true)
       .counterClockwiseY()
     z = ((-75 / 2) - 75) - 225 / 2 - 75 / 2 - .25 - 0.5;
     x = 75 + 75 + 75 / 2 + 75 + 75 / 2 + 300;
     addWall.call(this, b3Outer3, x, 0, z)
 
-    var b3Inner1 = new wallFactory.Wall(75 - 1, wallHeight, woodLight, false, false)
+    var b3Inner1 = new wallFactory.Wall(75 - 1, wallHeight, whiteStone, false, false)
     z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1 + 175 - 75;
     addWall.call(this, b3Inner1, 75 / 2 + 525, 0, z)
 
-    var b3Inner2 = new wallFactory.Wall(75, wallHeight, woodLight, true, false)
+    var b3Inner2 = new wallFactory.Wall(75, wallHeight, whiteStone, true, false)
       .clockwiseY()
     z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1 + 175 - 75 / 2;
     addWall.call(this, b3Inner2, 525, 0, z)
 
-    var b3Inner3 = new wallFactory.Wall(75 - 1, wallHeight, woodLight, false, false)
+    var b3Inner3 = new wallFactory.Wall(75 - 1, wallHeight, whiteStone, false, false)
     z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1 + 175;
     addWall.call(this, b3Inner3, 75 / 2 + 525, 0, z)
 
-    var b3Inner4 = new wallFactory.Wall(75 + 1, wallHeight, woodLight, true, false)
+    var b3Inner4 = new wallFactory.Wall(75 + 1, wallHeight, whiteStone, true, false)
     z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1 + 175;
     x = 75 / 2 + 525 - 75 - 1;
     addWall.call(this, b3Inner4, x, 0, z)
 
     // SUNROOM
-    var sunroomOuter1 = new wallFactory.Wall(175 / 2, wallHeight, woodLight, false, true)
+    var sunroomOuter1 = new wallFactory.Wall(175 / 2, wallHeight, whiteStone, false, true)
       .counterClockwiseY()
     z = ((-75 / 2) - 75) - 225 / 2 - 75 / 2 - .25 - 0.5 + 150 - 75 / 4 + 0.5;
     addWall.call(this, sunroomOuter1, 600, 0, z)
 
-    var sunroomOuter2 = new wallFactory.Wall(175 / 2 + 1, wallHeight, woodLight, false, true)
+    var sunroomOuter2 = new wallFactory.Wall(175 / 2 + 1, wallHeight, whiteStone, false, true)
       .clockwiseY()
     z = ((-75 / 2) - 75) - 225 / 2 - 75 / 2 - .25 - 0.5 + 150 - 75 / 4 + 0.5 + 75 + 25 / 2;
     addWall.call(this, sunroomOuter2, 600, 0, z)
 
-    var sunroomOuter3 = new wallFactory.Wall(75, wallHeight, woodLight, false, true)
+    var sunroomOuter3 = new wallFactory.Wall(75, wallHeight, whiteStone, false, true)
     z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1 + 175 + 175 + 1.25;
     x = 75 / 2 + 525 + .5;
     addWall.call(this, sunroomOuter3, x, 0, z)
 
-    var sunroomInner1 = new wallFactory.Wall(75, wallHeight, woodLight, false, true)
+    var sunroomInner1 = new wallFactory.Wall(75, wallHeight, whiteStone, false, true)
       .counterClockwiseY()
     z = ((-75 / 2) - 75) - 225 / 2 - 75 / 2 - .25 - 0.5 + 150 - 75 / 4 + 0.5 - 25 / 4;
     addWall.call(this, sunroomInner1, 625, 0, z)
 
-    var sunroomDoor = new wallFactory.Wall(75, wallHeight, woodLight, true, false)
+    var sunroomDoor = new wallFactory.Wall(75, wallHeight, whiteStone, true, false)
       .clockwiseY()
     z = ((-75 / 2) - 75) - 225 / 2 - 75 / 2 - .25 - 0.5 + 150 - 75 / 2 + 0.5 + 75 + 25 / 2;
     addWall.call(this, sunroomDoor,625, 0, z)
 
-    var sunroomInner3 = new wallFactory.Wall(25.5, wallHeight, woodLight, false, false)
+    var sunroomInner3 = new wallFactory.Wall(25.5, wallHeight, whiteStone, false, false)
       .clockwiseY()
     z = ((-75 / 2) - 75) - 225 / 2 - 75 / 2 - .25 - 0.5 + 150 - 75 / 4 + 0.5 + 75 + 50 - 25 / 4;
     addWall.call(this, sunroomInner3,625, 0, z)
 
     //MAIN HALL
 
-    var mainHallOuter1 = new wallFactory.Wall(75, wallHeight, woodLight, false, false)
+    var mainHallOuter1 = new wallFactory.Wall(75, wallHeight, whiteStone, false, false)
     z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1 + 175 + 175 + 1.25;
     x = 525 - 75 / 2 + .5;
     addWall.call(this, mainHallOuter1, x, 0, z)
 
-    var mainHallOuter2 = new wallFactory.Wall(75, wallHeight, woodLight, false, false)
+    var mainHallOuter2 = new wallFactory.Wall(75, wallHeight, whiteStone, false, false)
     z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1 + 175 + 175 + 1.25;
     x = 525 - 75 / 2 + .5 - 75;
     addWall.call(this, mainHallOuter2, x, 0,z)
 
-    var mainHallOuter3 = new wallFactory.Wall(75, wallHeight, woodLight, true, false)
+    var mainHallOuter3 = new wallFactory.Wall(75, wallHeight, whiteStone, true, false)
     z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1 + 175 + 175 + 1.25;
     x = 525 - 75 / 2 + .5 - 75 - 75;
     addWall.call(this, mainHallOuter3, x, 0, z)
 
-    var mainHallOuter4 = new wallFactory.Wall(151, wallHeight, woodLight, false, false)
+    var mainHallOuter4 = new wallFactory.Wall(151, wallHeight, whiteStone, false, false)
     z = ((-75 / 2) - 75) - 225 / 2 - 75 - 75 / 2 + .25 - 75 / 2 + 25 - 1 + 175 + 175 + 1.25;
     x = 525 - 75 / 2 + .5 - 75 - 75 - 113;
     addWall.call(this, mainHallOuter4, x, 0, z)
