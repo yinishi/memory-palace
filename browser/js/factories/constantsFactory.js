@@ -62,6 +62,9 @@ module.exports = function () {
 		},
 		getPlacedObjects: function(){
 			return placedObjects;
+		},
+		resetPlacedObjects: function(){
+			placedObjects = [];
 		}
 	}
 	consts.setObjects(myFloor);

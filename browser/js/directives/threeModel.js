@@ -492,7 +492,6 @@ module.exports = function(palacesFactory, $window, objectFactory, storingFactory
             velocity.x = 0;
             velocity.y = 0;
             velocity.z = 0;
-            console.log('colliding right, velocity is', velocity, 'can move right?', moveRight, 'collidingRight', collidingRight);
           }
 
 

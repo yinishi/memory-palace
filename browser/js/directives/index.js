@@ -9,4 +9,4 @@ app.directive('objCarousel', require('./objCarousel'));
 app.directive('messageModal', ['modalFactory', 'objectFactory', require('./messageModal')]);
 app.directive('about', ['modalFactory', require('./about')]);
 app.directive('loginModal', ['modalFactory', '$rootScope', 'authFactory', 'storingFactory', 'messageFactory', 'objectFactory', 'palacesFactory', 'constantsFactory', require('./loginModal')]);
-app.directive('signupModal', ['modalFactory', '$rootScope', 'authFactory', 'constantsFactory', require('./signupModal')]);
+app.directive('signupModal', ['modalFactory', '$rootScope', 'authFactory', 'constantsFactory', 'storingFactory', require('./signupModal')]);

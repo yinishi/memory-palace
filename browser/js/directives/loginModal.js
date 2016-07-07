@@ -17,31 +17,26 @@ module.exports = function (modalFactory, $rootScope, authFactory, storingFactory
 				.then(user => {
 					$rootScope.$broadcast('newUser', user);
 					modalFactory.toggleLogin();
-					// //Store already placed objects
-					// console.log(constantsFactory.getObjects(), "objects")
-					// console.log(palacesFactory.palaceObjects, "palace")
-					// console.log(constantsFactory.getFloor(), "floor")
-					// if(constantsFactory.getObjects().length > 0) {
-					// 	constantsFactory.getObjects().forEach(function(obj, i){
-					// 		if(i === 0) console.log("starting to store")
-					// 		if(i === constantsFactory.getObjects().length-1) console.log("finished to store")
-					// 		if(!palacesFactory.palaceObjects.includes(obj) && constantsFactory.getFloor() != obj){
-					// 			storingFactory.storeObject({
-					// 				name: obj.name, 
-					// 				positionX: obj.position.x, 
-					// 				positionY: obj.position.y, 
-					// 				positionZ: obj.position.z,
-					// 				rotationX: obj.rotation.x,
-					// 				rotationY: obj.rotation.y,
-					// 				rotationZ: obj.rotation.z, 
-					// 				scaleX: obj.scale.x,
-					// 				scaleY: obj.scale.y,
-					// 				scaleZ: obj.scale.z,
-					// 				message: obj.message
-					// 			})
-					// 		}
-					// 		})
-					// }
+					//Store already placed objects
+					if(constantsFactory.getPlacedObjects().length >0){
+
+						constantsFactory.getPlacedObjects().forEach(function(obj){
+							storingFactory.storeObject({
+								name: obj.name, 
+								positionX: obj.position.x, 
+								positionY: obj.position.y, 
+								positionZ: obj.position.z,
+								rotationX: obj.rotation.x,
+								rotationY: obj.rotation.y,
+								rotationZ: obj.rotation.z, 
+								scaleX: obj.scale.x,
+								scaleY: obj.scale.y,
+								scaleZ: obj.scale.z,
+								message: obj.message
+							})
+						})
+					}
+					
 					//RETRIEVE STORED OBJECTS
 					storingFactory.retrieveObjects()
 					.then(function(items){
@@ -51,7 +46,7 @@ module.exports = function (modalFactory, $rootScope, authFactory, storingFactory
 									.then(obj => {
 										objectFactory.setObjProps(obj, item);
 										constantsFactory.getScene().add(obj);
-										constantsFactory.setObjects([obj]);
+                  						constantsFactory.placeObject(obj);
 									});
 						});
 						}	

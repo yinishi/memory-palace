@@ -40,9 +40,9 @@ module.exports = function ($state, authFactory, $rootScope, modalFactory, consta
         	scope.logout = function () {
                 scope.user = null;
                 constantsFactory.getPlacedObjects().forEach(function(obj){
-                    constantsFactory.removeObject(obj);
                     constantsFactory.getScene().remove(obj);
                 })
+                constantsFactory.resetPlacedObjects();
 		        return authFactory.logout()
 	      	};
         }
