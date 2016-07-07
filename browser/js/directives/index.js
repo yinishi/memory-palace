@@ -1,6 +1,6 @@
 var app = require('angular').module('memoryPalace');
  
-app.directive('navbar', ["$state",  "authFactory", "$rootScope", "modalFactory", require("./navbar")]);
+app.directive('navbar', ["$state",  "authFactory", "$rootScope", "modalFactory", "constantsFactory", require("./navbar")]);
 app.directive('threeModel', ['palacesFactory','$window', 'objectFactory', 'storingFactory', 'modalFactory', 'lightFactory', 'messageFactory', 'constantsFactory', require("./threeModel")]);
 app.directive('ctrlModal', ['modalFactory', require("./ctrlModal")]);
 app.directive('welcomeModal', require('./welcomeModal'));

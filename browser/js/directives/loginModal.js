@@ -46,7 +46,6 @@ module.exports = function (modalFactory, $rootScope, authFactory, storingFactory
 					storingFactory.retrieveObjects()
 					.then(function(items){
 						if(Array.isArray(items)){
-							console.log("loading")
 							items.forEach(function(item){
 								objectFactory.load(`/browser/objects/${item.name}/${item.name}.json`, null, item.name)
 									.then(obj => {
