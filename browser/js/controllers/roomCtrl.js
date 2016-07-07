@@ -1,11 +1,17 @@
-module.exports = function ($scope, modalFactory, objectFactory, messageFactory, storingFactory, palacesFactory) {
+module.exports = function ($scope, modalFactory, objectFactory, messageFactory, storingFactory, palacesFactory, constantsFactory) {
     $scope.welcomeModal = modalFactory.getWelcomeControls();
-    $scope.loaded = function(){
-      if(palacesFactory.palaceObjects.length >= 10){
-        return true
-      }
-      else return false;
-    }; 
+    $scope.numLoaded = constantsFactory.getPalaceObjs().length;
+
+    palacesFactory.on("load", (obj) => {
+      $scope.numLoaded = palacesFactory.palaceObjects.length;
+      $scope.$digest();
+    });
+
+    palacesFactory.on("sceneLoaded", () => {
+      $scope.loaded = true;
+      $scope.$digest();
+    });
+
     $scope.signIn = function(){
       modalFactory.turnOffWelcome();
       modalFactory.toggleLogin();

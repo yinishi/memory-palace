@@ -3,7 +3,7 @@
 module.exports = function () {
 	var myScene = null;
 	var myObjects = [];
-
+	var palaceObjs = []; 
 	// COLORFUL FLOOR
 		var geometry = new THREE.PlaneGeometry( 2000, 2000, 100, 100 );
 		geometry.rotateX( - Math.PI / 2 );
@@ -40,6 +40,12 @@ module.exports = function () {
 		},
 		getObjects: function () {
 			return myObjects;
+		},
+		addPalaceObj: function(item) {
+			palaceObjs.push(item)
+		},
+		getPalaceObjs: function () {
+			return palaceObjs
 		},
 		initializeRenderer: function (WIDTH, HEIGHT) {
 			let renderer = new THREE.WebGLRenderer();
