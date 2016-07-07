@@ -8,6 +8,7 @@ module.exports = function(){
 
 function Wall (wallLength, wallHeight, material, hasDoor, hasWindow) {
   this.wall = new THREE.Object3D();
+  this.wall.name = "wall";
 
   if (hasDoor) {
     //TOP  

@@ -37,7 +37,6 @@ module.exports = function (palacesFactory, $window, objectFactory, storingFactor
 			var moveLeft = false;
 			var moveRight = false;
 			var canJump = false;
-
 			var prevTime = performance.now();
 			var velocity = new THREE.Vector3();
 
@@ -88,19 +87,14 @@ module.exports = function (palacesFactory, $window, objectFactory, storingFactor
 				}();
 
 			}
-
 			// INITIALIZE RENDERER
-			let renderer = new THREE.WebGLRenderer();
-			renderer.setClearColor( 0x7ec0ee );
-			renderer.setSize( WIDTH, HEIGHT);
+			let renderer = constantsFactory.initializeRenderer(WIDTH, HEIGHT);
 
 			//RESIZE WINDOW
 			$window.addEventListener( 'resize', onWindowResize, false );
 
 			function onWindowResize() {
-				// const w = renderer.domElement.offsetWidth, h = renderer.domElement.offsetHeight
 				const w = $window.innerWidth, h = $window.innerHeight;
-				// camera.aspect = $window.innerWidth / $window.innerHeight * 0.93;
 				camera.aspect = w / h
 				camera.updateProjectionMatrix();
 				renderer.setSize(w, h)
@@ -135,7 +129,6 @@ module.exports = function (palacesFactory, $window, objectFactory, storingFactor
 			// setting up stacking capabilities
 			var raycaster = new THREE.Raycaster();
 			var mouse = new THREE.Vector2();
-
 
 			// ADD THE COLORFUL WORLD FLOOR
 			scene.add( constantsFactory.getFloor() );
@@ -186,8 +179,7 @@ module.exports = function (palacesFactory, $window, objectFactory, storingFactor
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
 				let intersects = raycaster.intersectObjects(constantsFactory.getObjects());
-				// var wallIntersections = raycaster.intersectObjects( walls );
-				
+	
 				if(messageShown){	
 					messageShown = false;
 					msg.style.opacity = 0
@@ -222,13 +214,9 @@ module.exports = function (palacesFactory, $window, objectFactory, storingFactor
 				event.preventDefault();
 				mouse.set( ( event.clientX / WIDTH ) * 2 - 1, - ( event.clientY / HEIGHT ) * 2 + 1 );
 				raycaster.setFromCamera( mouse, camera );
-				var intersects = raycaster.intersectObjects( constantsFactory.getObjects());
-				// var wallIntersections = raycaster.intersectObjects( walls );
-				//&& wallIntersections.length<=1
-
-				//add check for if its in the wall
+				var intersects = raycaster.intersectObjects( constantsFactory.getObjects(), true);
+				//if its intersecting with an object
 				if ( intersects.length > 0 ) {
-	
 					var intersect = intersects[ 0 ];
 					// delete cube
 					if ( event.originalEvent.shiftKey ) {
@@ -236,39 +224,39 @@ module.exports = function (palacesFactory, $window, objectFactory, storingFactor
 							scene.remove( intersect.object );
 							storingFactory.deleteObject(intersect.object.storingId);
 							constantsFactory.removeObject(intersect.object);
-
 						}
 					// create cube
-					} else {						
-							if (objectFactory.currentObject.children.length > 0) {
-								var myObject2 = objectFactory.currentObject.clone();
-								myObject2.position.copy( intersect.point ).add( intersect.face.normal );
-								myObject2.position.addScalar( 3/2 );
-								if(objectFactory.currentObject.yPosition) myObject2.position.y += objectFactory.currentObject.yPosition;
+					} 
+					else {	
+						//what is this line doing?
+						if (objectFactory.currentObject.children.length > 0) {
 
-								//TEXT;
-								messageFactory.rememberObject(myObject2)
-								modalFactory.toggleMessageModal();
-								console.log("STOVE!!!", myObject2.position, "rotation", myObject2.rotation)
-								scene.add( myObject2 );
-								constantsFactory.setObjects([myObject2])
-								storingFactory.storeObject({
-									name: myObject2.name, 
-									positionX: myObject2.position.x, 
-									positionY: myObject2.position.y, 
-									positionZ: myObject2.position.z,
-									rotationX: myObject2.rotation.x,
-									rotationY: myObject2.rotation.y,
-									rotationZ: myObject2.rotation.z, 
-									scaleX: myObject2.scale.x,
-									scaleY: myObject2.scale.y,
-									scaleZ: myObject2.scale.z
-								})
-							}
+							var myObject2 = objectFactory.currentObject.clone();
+							myObject2.position.copy( intersect.point ).add( intersect.face.normal );
+							myObject2.position.addScalar( 3/2 );
+							if(objectFactory.currentObject.yPosition) myObject2.position.y += objectFactory.currentObject.yPosition;
+
+							//TEXT;
+							messageFactory.rememberObject(myObject2)
+							modalFactory.toggleMessageModal();
+							scene.add( myObject2 );
+							constantsFactory.setObjects([myObject2])
+							storingFactory.storeObject({
+								name: myObject2.name, 
+								positionX: myObject2.position.x, 
+								positionY: myObject2.position.y, 
+								positionZ: myObject2.position.z,
+								rotationX: myObject2.rotation.x,
+								rotationY: myObject2.rotation.y,
+								rotationZ: myObject2.rotation.z, 
+								scaleX: myObject2.scale.x,
+								scaleY: myObject2.scale.y,
+								scaleZ: myObject2.scale.z
+							});
 							// exchanging object for invisible cube (invisble pointer)
 							objectFactory.previousObject = objectFactory.currentObject;
 							objectFactory.currentObject = objectFactory.invisibleObject;
-
+						}
 					}
 				}
 			}
@@ -358,10 +346,10 @@ module.exports = function (palacesFactory, $window, objectFactory, storingFactor
 
 						// looking up and down
 						case 81: // q, look up
-							controls.getPitchObject().rotation.x += 3 * Math.PI / 180;
+							controls.getPitchObject().rotation.x += 1 * Math.PI / 180;
 							break;
 						case 69: // e, look down
-							controls.getPitchObject().rotation.x -= 3 * Math.PI / 180;
+							controls.getPitchObject().rotation.x -= 1 * Math.PI / 180;
 							break;
 
 						// rotate right
