@@ -174,7 +174,7 @@ img:hover + .icon-text {
   font-family: 'Cinzel Decorative', serif;
 }
 
-#welcome-subtext {
+.welcome-subtext {
   font-size: 25px;
   line-height: 200%;
 }
