@@ -3,6 +3,7 @@
 module.exports = function () {
 	var myScene = null;
 	var myObjects = [];
+	var placedObjects = [];
 
 	// COLORFUL FLOOR
 		var geometry = new THREE.PlaneGeometry( 2000, 2000, 100, 100 );
@@ -53,6 +54,17 @@ module.exports = function () {
 		},
 		removeObject: function(object){
 			myObjects.splice(myObjects.indexOf(object), 1);
+			placedObjects.splice(placedObjects.indexOf(object), 1);
+		},
+		placeObject: function(object){
+			placedObjects.push(object);
+			myObjects.push(object);
+		},
+		getPlacedObjects: function(){
+			return placedObjects;
+		},
+		resetPlacedObjects: function(){
+			placedObjects = [];
 		}
 	}
 	consts.setObjects(myFloor);

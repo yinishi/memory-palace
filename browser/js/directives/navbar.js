@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function ($state, authFactory, $rootScope, modalFactory) {
+module.exports = function ($state, authFactory, $rootScope, modalFactory, constantsFactory) {
 	 return {
         restrict: 'E',
         scope: {
@@ -39,6 +39,10 @@ module.exports = function ($state, authFactory, $rootScope, modalFactory) {
             setUser();
         	scope.logout = function () {
                 scope.user = null;
+                constantsFactory.getPlacedObjects().forEach(function(obj){
+                    constantsFactory.getScene().remove(obj);
+                })
+                constantsFactory.resetPlacedObjects();
 		        return authFactory.logout()
 	      	};
 
