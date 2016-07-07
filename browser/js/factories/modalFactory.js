@@ -16,6 +16,12 @@ module.exports = function () {
 		// controls modal
 		toggleControls: function () {
 			showControls.data = !showControls.data;
+			if(showControls.data){
+				document.getElementById("controlsIcon").className += "openControls";
+				console.log(showControls.data, "controls are:")
+			}else{
+
+			}
 		},
 		getControls: () => showControls, 
 

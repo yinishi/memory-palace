@@ -59,6 +59,7 @@ TOC:
 
 .navbar-default .navbar-nav>li>a:hover {
   color: #000;
+  cursor: pointer;
   /*text-shadow: 0.5px 0.5px 0.5px #fff;*/
 }
 
@@ -117,6 +118,7 @@ TOC:
 .roomIcon {
   width: 90px;
   height: 90px;
+  cursor: pointer;
 }
 
 .roomIcons {
@@ -129,6 +131,10 @@ TOC:
   color: white;
   display: none;
   text-shadow: 2px 2px 1px rgba(0, 0, 0, 1);
+}
+
+.openControls:hover div:before{
+  content: 'open & close'
 }
 
 img:hover + .icon-text {
