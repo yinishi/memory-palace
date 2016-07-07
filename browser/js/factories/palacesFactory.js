@@ -2,7 +2,7 @@
 
 const whiteStone = loadTexture('white-stone.jpg');
 const blue = loadTexture('blue.png');
-const whiteCeiling = loadTexture('white_ceiling.jpg');
+const whiteCeiling = loadTexture('white_ceiling2.jpg');
 const grayTile = loadTexture('gray_tile.jpg');
 const whiteStoneTile = loadTexture('floor_tiles.jpg');
 const woodDark = loadTexture('wood-wall.jpg');
