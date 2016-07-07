@@ -45,6 +45,8 @@ module.exports = function ($state, authFactory, $rootScope, modalFactory, consta
                 constantsFactory.resetPlacedObjects();
 		        return authFactory.logout()
 	      	};
+
+            scope.welcomeModal = modalFactory.getWelcomeControls();
         }
      };
 };

@@ -268,29 +268,28 @@ module.exports = function(palacesFactory, $window, objectFactory, storingFactory
         if (modalFactory.enableKeyEvents) {
           switch (event.keyCode) {
             // exit welcome
-            case 27: // esc
+            // case 27: // esc
+            //   // exit welcome modal
+            //   welcome.style.display = 'none';
 
-              // exit welcome modal
-              welcome.style.display = 'none';
+              // // escape modals
+              // if (!modalFactory.getAbout().data) {
+              //   modalFactory.toggleAbout();
+              //   s.$apply();
+              // }
+              // if (!modalFactory.getLogin().data) {
+              //   modalFactory.toggleLogin();
+              //   s.$apply();
+              // }
+              // if (!modalFactory.getSignup().data) {
+              //   modalFactory.toggleSignup();
+              //   s.$apply();
+              // }
+              // break;
 
-              // escape modals
-              if (!modalFactory.getAbout().data) {
-                modalFactory.toggleAbout();
-                s.$apply();
-              }
-              if (!modalFactory.getLogin().data) {
-                modalFactory.toggleLogin();
-                s.$apply();
-              }
-              if (!modalFactory.getSignup().data) {
-                modalFactory.toggleSignup();
-                s.$apply();
-              }
-              break;
-
-            case 13: // enter
-              welcome.style.display = 'none';
-              break;
+            // case 13: // enter
+            //   welcome.style.display = 'none';
+            //   break;
 
               // toggle carousel modal
             case 49: // 1
@@ -323,13 +322,11 @@ module.exports = function(palacesFactory, $window, objectFactory, storingFactory
               break;
 
               // strafing
-            case 37: // left - move left
-              event.preventDefault();
+            case 65: // a - move left
               moveLeft = true;
               break;
 
-            case 39: // right arrow - move right
-              event.preventDefault();
+            case 68: // d - move right
               moveRight = true;
               break;
 
@@ -347,13 +344,15 @@ module.exports = function(palacesFactory, $window, objectFactory, storingFactory
               controls.getPitchObject().rotation.x -= 3 * Math.PI / 180;
               break;
 
-              // rotate right
-            case 65: // a
+              // rotate left
+            case 37: // left arrow
+            	event.preventDefault();
               controls.getYawObject().rotation.y += 3 * Math.PI / 180;
               break;
 
-              // rotate left
-            case 68: // d
+              // rotate right
+            case 39: // right arrow
+           	  event.preventDefault();
               controls.getYawObject().rotation.y -= 3 * Math.PI / 180;
               break;
 
@@ -384,10 +383,10 @@ module.exports = function(palacesFactory, $window, objectFactory, storingFactory
               break;
 
               // reset strafing
-            case 37: // left - move left
+            case 65: // a - move left
               moveLeft = false;
               break;
-            case 39: // right arrow - move right
+            case 68: // d - move right
               moveRight = false;
               break;
           }
