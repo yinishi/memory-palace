@@ -32,6 +32,8 @@ slick{
 
     margin: 0;
     padding: 0;
+    cursor: move; /* fallback if grab cursor is unsupported */
+    cursor: grab;
 }
 .slick-list:focus
 {

@@ -59,6 +59,7 @@ TOC:
 
 .navbar-default .navbar-nav>li>a:hover {
   color: #000;
+  cursor: pointer;
   /*text-shadow: 0.5px 0.5px 0.5px #fff;*/
 }
 
@@ -117,6 +118,7 @@ TOC:
 .roomIcon {
   width: 90px;
   height: 90px;
+  cursor: pointer;
 }
 
 .roomIcons {
@@ -172,7 +174,7 @@ img:hover + .icon-text {
   font-family: 'Cinzel Decorative', serif;
 }
 
-#welcome-subtext {
+.welcome-subtext {
   font-size: 25px;
   line-height: 200%;
 }

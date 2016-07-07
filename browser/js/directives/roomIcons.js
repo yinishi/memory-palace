@@ -10,12 +10,17 @@ module.exports = function (modalFactory) {
                 if(modalFactory.getAbout().data === false) modalFactory.toggleAbout();
                 if(modalFactory.getCarousel().data === true) modalFactory.toggleCarousel();
                 modalFactory.toggleControls();
+                s.showControls = !s.showControls;
             }
 
             s.toggleCarousel = function () {
                 modalFactory.toggleCarousel();
                 if(modalFactory.getControls().data === false) modalFactory.toggleControls();
+                s.showCarousel = !s.showCarousel;
             }
+
+            s.showControls = true;
+            s.showCarousel = false;
             
         }
     }
