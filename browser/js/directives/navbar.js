@@ -41,6 +41,8 @@ module.exports = function ($state, authFactory, $rootScope, modalFactory) {
                 scope.user = null;
 		        return authFactory.logout()
 	      	};
+
+            scope.welcomeModal = modalFactory.getWelcomeControls();
         }
      };
 };
