@@ -68,12 +68,12 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
     this.addToScene(mainHallRoof);
     this.addToScene(sunRoomRoof);
     //floor
-    const sectionOneFloor = new floor(150, 301.5, 75,  -149).floor;
+    const sectionOneFloor = new floor(148.5, 299.25, 75,  -149.85).floor;
     const mainHallOneFloor = new floor(149, 374, 224.75, -187.5, redCarpet).floor;
+    const mainHallTwoFloor = new floor(200, 175, 400, -88).floor;
     const kitchenFloor = new floor(150, 175, 225+150, -263, grayTile).floor;
-    const bedRoom3Floor = new floor(150, 175, 525, -262).floor;
-    const mainHallTwoFloor = new floor(225, 175, 412, -88).floor;
-    const sunRoomFloor = new floor (75, 175, 562, -87).floor;
+    const bedRoom3Floor = new floor(150, 175, 525, -263).floor;
+    const sunRoomFloor = new floor (75, 175, 562, -86.75, redCarpet).floor;
     this.addToScene(sectionOneFloor);
     this.addToScene(mainHallOneFloor);
     this.addToScene(kitchenFloor);
