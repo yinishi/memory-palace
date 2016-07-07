@@ -36,15 +36,12 @@ module.exports = function () {
 		
 		toggleMessageModal : () => {
 			if (messageModal.data) {
-				// console.log('make it false');
 				fac.enableKeyEvents = false;
 			} 
 			else {
-				// console.log('make it true');
 				fac.enableKeyEvents = true;
 			}
 			messageModal.data = !messageModal.data;
-			// console.log('message modal toggled, ', messageModal.data);
 		},
 		
 		//about modal
@@ -63,11 +60,9 @@ module.exports = function () {
 	//signup modal
     fac.toggleSignup = () => {
     	if (showSignup.data) {
-				console.log('make it false');
 				fac.enableKeyEvents = false;
 			} 
 			else {
-				console.log('make it true');
 				fac.enableKeyEvents = true;
 			}
       showSignup.data = !showSignup.data;
@@ -76,11 +71,9 @@ module.exports = function () {
     //login modal
     fac.toggleLogin = () => {
     	if (showLogin.data) {
-				console.log('make it false');
 				fac.enableKeyEvents = false;
 			} 
 			else {
-				console.log('make it true');
 				fac.enableKeyEvents = true;
 			}
       showLogin.data = !showLogin.data;
