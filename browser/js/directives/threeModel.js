@@ -278,28 +278,32 @@ module.exports = function (palacesFactory, $window, objectFactory, storingFactor
 			function onKeyDown ( event ) {
 				messageShown = false;
 				msg.style.opacity = 0;
+
 				if(modalFactory.enableKeyEvents){
 					switch ( event.keyCode ) {
 						// exit welcome
 						case 27: // esc
+				// escape key exits out of modals
+				if (event.keyCode === 27) {
+					welcome.style.display = 'none';
 
-							// exit welcome modal
-							welcome.style.display = 'none';
+					// escape modals
+					if (!modalFactory.getAbout().data) {
+						modalFactory.toggleAbout();
+						s.$apply();
+					}
+					if (!modalFactory.getLogin().data) {
+						modalFactory.toggleLogin();
+						s.$apply();
+					}
+					if (!modalFactory.getSignup().data) {
+						modalFactory.toggleSignup();
+						s.$apply();
+					}
+				}
 
-							// escape modals
-							if (!modalFactory.getAbout().data) {
-								modalFactory.toggleAbout();
-								s.$apply();
-							}
-							if (!modalFactory.getLogin().data) {
-								modalFactory.toggleLogin();
-								s.$apply();
-							}
-							if (!modalFactory.getSignup().data) {
-								modalFactory.toggleSignup();
-								s.$apply();
-							}
-							break;
+				if(modalFactory.enableKeyEvents){
+					switch ( event.keyCode ) {
 							
 						case 13: // enter
 							welcome.style.display = 'none';
