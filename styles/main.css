@@ -136,14 +136,14 @@ TOC:
 .icon-text {
   text-align: center;
   color: white;
-  display: none;
+  display: block;
   text-shadow: 2px 2px 1px rgba(0, 0, 0, 1);
 }
 
-img:hover + .icon-text {
+/*img:hover + .icon-text {
   display: block;
 }
-
+*/
 
 /*/////////////*/
 
