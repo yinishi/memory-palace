@@ -5,12 +5,11 @@
   <br />
   <span class="welcome-subtext" ng-show="!loaded()">Please wait while your palace is loading...</span>
   <button ng-show="loaded()" ng-click="toggle()" type="button" class="btn btn-default big-btn btn-transparent">ENTER</button>
+  <button ng-show="loaded()" ng-click="signIn()" type="button" class="btn btn-default big-btn btn-transparent">SIGN IN</button>
   <br />
   <br />
   <span class="welcome-subtext">Use the buttons in the control panel to the left to see controls and select objects.</span>
   <br/> 
-  <span class="welcome-subtext" ng-show="!loaded()"><strong>Sign in to save your palace!</strong></span>
-  <span class="welcome-subtext" ng-show="loaded()"><strong><span ng-click="signIn()">Sign in </span>to save your palace!</strong></span>
 </div>
 <div id="image">
 </div>
