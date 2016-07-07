@@ -70,7 +70,7 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
     //floor
     const sectionOneFloor = new floor(148.5, 299.25, 75,  -149.85).floor;
     const mainHallOneFloor = new floor(149, 374, 224.75, -187.5, redCarpet).floor;
-    const mainHallTwoFloor = new floor(200, 175, 398.65, -88).floor;
+    const mainHallTwoFloor = new floor(200, 175, 399.25, -87).floor;
     const kitchenFloor = new floor(150, 175, 225+150, -263, grayTile).floor;
     const bedRoom3Floor = new floor(150, 175, 525, -263).floor;
     const sunRoomFloor = new floor (100, 175, 550, -86.75, redCarpet).floor;
@@ -362,7 +362,7 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
       //bedroom2
     loadObject("pink-bed", 15, function(bed3){
       bed3.position.set(60, -35, -260);
-      bed3.scale.set(.5, .5, .5)
+      bed3.scale.set(1, 1, 1)
       bed3.rotation.set(0, Math.PI+Math.PI/2, 0)
     });
   
