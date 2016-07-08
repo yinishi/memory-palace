@@ -1,3 +1,4 @@
+
 'use strict'
 
 const whiteStone = loadTexture('white-stone.jpg');
@@ -276,6 +277,7 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
     function addObj (object) {
         self.addToScene(object)
         palaceObjects.push(object);
+        constantsFactory.setObjects([object]);
         constantsFactory.addPalaceObj(object);
     }
     //kitchen table
