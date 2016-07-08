@@ -3,5 +3,6 @@ module.exports = function (){
         restrict: 'E',
         templateUrl: '/browser/js/templates/carousel.html',
         controller: 'roomCtrl'
+
   }
 }

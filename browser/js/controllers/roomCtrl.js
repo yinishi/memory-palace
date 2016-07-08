@@ -1,4 +1,4 @@
-module.exports = function ($scope, modalFactory, objectFactory, messageFactory, storingFactory, palacesFactory) {
+module.exports = function ($scope,$window, modalFactory, objectFactory, messageFactory, storingFactory, palacesFactory) {
     $scope.welcomeModal = modalFactory.getWelcomeControls();
     $scope.loaded = function(){
       if(palacesFactory.palaceObjects.length >= 10){
@@ -23,6 +23,9 @@ module.exports = function ($scope, modalFactory, objectFactory, messageFactory, 
       $scope.message = null; 
     }
 
+    $scope.iframeHeight = window.innerHeight;
+
+    console.log("height", $scope.iframeHeight)
   	$scope.setCurrentObject = function (object) {
   	  objectFactory.setCurrentObject(object);
 	  }
@@ -35,4 +38,5 @@ module.exports = function ($scope, modalFactory, objectFactory, messageFactory, 
       modalFactory.toggleCarousel();
   		$scope.objects = objectFactory.getObjects();
   	}
+
 }

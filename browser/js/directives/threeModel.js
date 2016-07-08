@@ -366,6 +366,7 @@ module.exports = function(palacesFactory, $window, objectFactory, storingFactory
           }
         }
       }
+      console.log("hi kim")
 
       function onKeyUp(event) {
         if (modalFactory.enableKeyEvents) {

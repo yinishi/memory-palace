@@ -20,6 +20,7 @@ h2 {
 }
 
 
+
 /*
 TOC: 
 1. Nav bar
@@ -30,8 +31,24 @@ TOC:
 6. Messages
 
 */
+/*/////////////*/
 
+/*   vertical carousel   */
 
+/*/////////////*/
+.verticalMenu {
+  width: 100%;
+  position: absolute;
+  left: 300;
+  bottom: 90;
+}
+
+.verticalMenuImage {
+  width: 90px;
+  margin: 0 auto;
+  height: 100px;
+  background-size: cover;
+}
 /*/////////////*/
 
 /*   NAV BAR   */
@@ -260,6 +277,36 @@ td {
   }
 }
 
+@media screen and (max-width: 880px) {
+  .welcome-subtext {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 610px) {
+  .welcome-subtext {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 964px) {
+
+  slick {
+    bottom: 800; 
+  }
+
+  .slick-slider {
+    width: 40%;
+    position: absolute;
+    bottom: 20;
+    right: 4;
+
+  }
+  .objectImg .imgDiv {
+    background-size: contain;
+  }
+
+}
 .login-modal {
   margin: 10px auto;
   width: 30vw;
@@ -322,9 +369,6 @@ td {
   width: 80%;
   margin: 5px;
 }
-
-
-
 
 /* What does this do?! */
 
