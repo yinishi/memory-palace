@@ -71,8 +71,8 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
     this.addToScene(mainHallRoof);
     this.addToScene(sunRoomRoof);
     //floor
-    const sectionOneFloor = new floor(148.5, 299.25, 75,  -149.85).floor;
-    const mainHallOneFloor = new floor(149, 374, 224.75, -187.5, redCarpet).floor;
+    const sectionOneFloor = new floor(148.5, 299.25, 75,  -149.85, redCarpet).floor;
+    const mainHallOneFloor = new floor(149, 374, 224.75, -187.5).floor;
     const mainHallTwoFloor = new floor(200, 175, 399.25, -87).floor;
     const kitchenFloor = new floor(150, 175, 225+150, -263, grayTile).floor;
     const bedRoom3Floor = new floor(150, 175, 525, -263).floor;
