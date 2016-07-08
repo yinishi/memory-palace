@@ -7,7 +7,6 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var passport = require('passport');
 var User = require('./db/models/User');
-var favicon = require('serve-favicon');
 
 var port = process.env.PORT || 8080;
 
@@ -54,8 +53,6 @@ app.use(Express.static(path.join(__dirname, '../bower-components')));
 app.use('/minjs', Express.static(path.join(__dirname, '../minjs')));
 
 app.use(Express.static(path.join(__dirname, '../styles')));
-
-// app.use(favicon(__dirname + '../browser/favicon.ico'));
 
 app.use('/api', require('./api'));
 
