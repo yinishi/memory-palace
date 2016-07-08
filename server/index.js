@@ -4,9 +4,12 @@ var app = Express();
 var path = require('path');
 var db = require('./db/index.js');
 var bodyParser = require('body-parser');
+var device = require('express-device');
 var session = require('express-session');
+
 var passport = require('passport');
 var User = require('./db/models/User');
+
 
 var port = process.env.PORT || 8080;
 
@@ -56,6 +59,15 @@ app.use(Express.static(path.join(__dirname, '../styles')));
 
 app.use('/api', require('./api'));
 
+app.use(device.capture());
+
 app.get('/*', function (req, res) {
-        res.sendFile(path.join(__dirname, '../index.html'));
-    });
+  if (req.device.type === 'phone' || req.device.type === 'tablet')  {
+    console.log('that type is', req.device.type);
+    res.sendFile(path.join(__dirname, '../mobile_index.html'));
+  }
+  else {
+    console.log('this type is', req.device.type);
+    res.sendFile(path.join(__dirname, '../index.html'));
+  }
+});
