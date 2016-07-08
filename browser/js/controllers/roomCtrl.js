@@ -1,4 +1,5 @@
 module.exports = function ($scope, modalFactory, objectFactory, messageFactory, storingFactory, palacesFactory, constantsFactory) {
+
     $scope.welcomeModal = modalFactory.getWelcomeControls();
     $scope.numLoaded = percent(constantsFactory.getPalaceObjs().length, 17);
     function percent(a, total) {
