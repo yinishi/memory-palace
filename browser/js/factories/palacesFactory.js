@@ -266,7 +266,6 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
     function loadObject (name, scale, cb) {
       return objectFactory.load(`/browser/objects/${name}/${name}.json`, scale, name)
         .then(object => {
-          console.log("loaded", object.childName, palaceObjects.length);
           cb(object)
           addObj(object);
           emitter.emit("load", object.childName)
@@ -367,7 +366,6 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
       bed3.rotation.set(0, Math.PI+Math.PI/2, 0)
     })])
      .then(stuff =>  {
-      console.log("done")
       emitter.emit("sceneLoaded")
     })
      .catch(err => console.log(err));
@@ -381,7 +379,6 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
 
   }
 
-  // console.log("herewalls", this.walls)
   Palace.prototype.addToScene = function(mesh) {
     this.palace.add(mesh);
   };
