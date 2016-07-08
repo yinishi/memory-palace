@@ -22,10 +22,7 @@ module.exports = function ($scope,$window, modalFactory, objectFactory, messageF
       storingFactory.storeMessage(messageFactory.getObject().position, $scope.message)
       $scope.message = null; 
     }
-
-    $scope.iframeHeight = window.innerHeight;
-
-    console.log("height", $scope.iframeHeight)
+    
   	$scope.setCurrentObject = function (object) {
   	  objectFactory.setCurrentObject(object);
 	  }

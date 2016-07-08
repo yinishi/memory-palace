@@ -117,3 +117,24 @@ slick{
 
     border: 1px solid transparent;
 }
+
+
+@media screen and (max-width: 800px) {
+
+  slick {
+    bottom: 800; 
+  }
+
+  .slick-slider {
+    width: 20%;
+    position: absolute;
+    bottom: 25!important;
+    right: 5;
+
+  }
+  .objectImg .imgDiv {
+/*    background-size: contain;*/
+/*    width: 80%;*/
+  }
+
+}

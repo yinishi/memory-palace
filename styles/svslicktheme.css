@@ -247,3 +247,25 @@
     opacity: .75;
     color: black;
 }
+
+@media screen and (max-width: 800px) {
+    .slick-prev {
+       top: 0;
+    }
+    .slick-next {
+        top: 550;
+
+    }
+ .slick-next, .slick-prev {
+    left: 100;
+    -ms-transform: rotate(90deg); /* IE 9 */
+        -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
+        transform: rotate(90deg);
+    }
+    .slick-prev:before, .slick-next:before {
+        color: black;
+        border-top: 0.5em solid black;
+        
+    }
+
+}
