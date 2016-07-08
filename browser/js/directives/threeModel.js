@@ -151,7 +151,7 @@ module.exports = function(palacesFactory, $window, objectFactory, storingFactory
                 .then(obj => {
                   objectFactory.setObjProps(obj, item);
                   scene.add(obj);
-                  constantsFactory.setObjects([obj]);
+                  constantsFactory.placeObject(obj);
                 });
             });
           }
@@ -239,7 +239,7 @@ module.exports = function(palacesFactory, $window, objectFactory, storingFactory
                 messageFactory.rememberObject(myObject2)
                 modalFactory.toggleMessageModal();
                 scene.add(myObject2);
-                constantsFactory.setObjects([myObject2])
+                constantsFactory.placeObject(myObject2)
                 storingFactory.storeObject({
                   name: myObject2.name,
                   positionX: myObject2.position.x,
@@ -265,11 +265,6 @@ module.exports = function(palacesFactory, $window, objectFactory, storingFactory
       function onKeyDown(event) {
         messageShown = false;
         msg.style.opacity = 0;
-
-        console.log('-----------------------------------');
-        console.log('modalFactory.enableKeyEvents', modalFactory.enableKeyEvents);
-        // console.log('modalFactory.getLogin()', modalFactory.getLogin());
-        // console.log('modalFactory.getSignup()', modalFactory.getSignup());
         if (modalFactory.enableKeyEvents) {
           switch (event.keyCode) {
             // exit welcome
@@ -496,7 +491,6 @@ module.exports = function(palacesFactory, $window, objectFactory, storingFactory
             velocity.x = 0;
             velocity.y = 0;
             velocity.z = 0;
-            console.log('colliding right, velocity is', velocity, 'can move right?', moveRight, 'collidingRight', collidingRight);
           }
 
 
