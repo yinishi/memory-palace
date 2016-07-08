@@ -3,13 +3,18 @@
   <span id="welcome-title">Memory Palace</span>
   <br />
   <br />
-  <span class="welcome-subtext" ng-show="!loaded()">Please wait while your palace is loading...</span>
-  <button ng-show="loaded()" ng-click="toggle()" type="button" class="btn btn-default big-btn btn-transparent">ENTER</button>
-  <button ng-show="loaded()" ng-click="signIn()" type="button" class="btn btn-default big-btn btn-transparent">SIGN IN</button>
+
+  <span class="welcome-subtext" ng-show="!loaded">  loaded {{ numLoaded }} %</span>
+<!--   loaded {{ numLoaded/100 }} % -->
+  <button ng-show="loaded" ng-click="toggle()" type="button" class="btn btn-default big-btn btn-transparent">ENTER</button>
+  <button ng-show="loaded" ng-click="signIn()" type="button" class="btn btn-default big-btn btn-transparent">SIGN IN</button>
+
   <br />
   <br />
   <span class="welcome-subtext">Use the buttons in the control panel to the left to see controls and select objects.</span>
   <br/> 
+
 </div>
 <div id="image">
 </div>
+

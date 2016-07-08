@@ -12,10 +12,10 @@ const blueCarpet = loadTexture('carpet_blue.jpg');
 const grayCarpet = loadTexture('carpet_gray.jpg');
 const brick = loadTexture('brownBrick.jpg');
 const wallHeight = 75;
+const EventEmitter = require("events").EventEmitter;
 
  // Regular meshes for non-textured walls
-var palaceObjects = [];
-var walls = [];
+
 // Regular meshes for non-textured walls
 // const tan = new THREE.MeshLambertMaterial({color: 0xECE5CE})
 // const coral = new THREE.MeshLambertMaterial({color: 0xE08E79})
@@ -31,7 +31,10 @@ function loadTexture(file) {
 };
 
 module.exports = function(objectFactory, tableFactory, wallFactory, messageFactory, constantsFactory, shelfFactory) {
-  
+  var palaceObjects = [];
+  var walls = [];
+  var emitter = new EventEmitter(); 
+
   function floor (w, h, positionX, positionZ, material) {
     if (!material) material = woodDark;
     this.floor = new wallFactory.Wall(w, h, material, false, false)
@@ -262,75 +265,113 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
 
     function loadObject (name, scale, cb) {
       return objectFactory.load(`/browser/objects/${name}/${name}.json`, scale, name)
-              .then(object => {
-                cb(object)
-                addObj(object)
-              })
+        .then(object => {
+          console.log("loaded", object.childName, palaceObjects.length);
+          cb(object)
+          addObj(object);
+          emitter.emit("load", object.childName)
+          return object;
+        });
     }
+
     function addObj (object) {
         self.addToScene(object)
         palaceObjects.push(object);
-        constantsFactory.setObjects([object]);
+        constantsFactory.addPalaceObj(object);
     }
     //kitchen table
-    loadObject("table", 15, function(table){
+    Promise.all([loadObject("table", 15, function(table){
         table.position.set(330, -40, -200);
         table.rotation.set(0, Math.PI, 0)
-    });
+    }),
 
     loadObject("stove", 15, function(stove){
         stove.position.set(425, -40, -335);
         stove.rotation.set(0, Math.PI, 0)
-    });
+    }),
     //bedroom3
     loadObject("pink-bed", 15, function(bed3){
       bed3.position.set(475, -35, -315);
       bed3.scale.set(1.5, 1.5, 1.5)
       bed3.rotation.set(0, Math.PI, 0)
-    });
+    }),
 
     loadObject("lamp", 15, function(lamp){
       lamp.position.set(530, -37, -255);
       lamp.scale.set(.15,.15, .15)
-    });
+    }),
 
     loadObject("shelf-tv", 15, function(shelf){
       shelf.position.set(570, -40, -255);
       shelf.rotation.set(0, Math.PI/2 + Math.PI, 0)
       shelf.scale.set(1.35, 1.35, 1.35)
-    });
+    }),
       //living room
     loadObject("sofa", 2, function(sofa){
       sofa.position.set(170, -36, -200);
       sofa.rotation.set(0, Math.PI, 0)
-    });
+    }),
 
     loadObject("armchair", 2, function(armchair){
       armchair.position.set(175, -40, -150);
       armchair.rotation.set(0, Math.PI + Math.PI/2 + Math.PI/2/2, 0)
       armchair.scale.set(6, 6, 6)
-    });
+    }),
 
     loadObject("armchair", 2, function(armchair){
       armchair.position.set(175, -40, -225);
       armchair.rotation.set(0, Math.PI + Math.PI/2/2, 0)
       armchair.scale.set(6, 6, 6)
-    });
+    }),
     loadObject("coffee-table", 2, function(table){
       table.position.set(200, -40, -190);
       table.scale.set(.35, .35, .35)
-    });
+    }),
 
     loadObject("paintings", 2, function(obj){
       obj.position.set(152, 0, -190);
       obj.rotation.set(0, -Math.PI/2, 0);
       obj.scale.set(2, 2, 2)
-    });
+    }),
 
     loadObject("lamp", 15, function(lamp){
       lamp.position.set(170, -37, -300);
       lamp.scale.set(.15,.15, .15)
-    });
+    }),
+ 
+    //bedroom1
+    loadObject ("bed", 2, function(bed){
+      bed.position.set(65, -30, -100);
+      bed.rotation.set(0, Math.PI, 0)
+      bed.scale.set(7, 7, 7)}),
+
+    loadObject ("desk", 2, function(desk) {
+      desk.position.set(25, -30, -50);
+      desk.rotation.set(0, Math.PI/2, 0)
+      desk.scale.set(9, 9, 9)
+    }),
+
+    loadObject("computer", 2,function(computer) {
+      computer.position.set(28, -16, -48);
+      computer.scale.set(2, 2, 2)
+    }),
+    loadObject("bean-bag", 2, function(beanbag){
+      beanbag.position.set(135, -37, -140);
+      beanbag.rotation.set(0, Math.PI, 0)
+      beanbag.scale.set(7, 7, 7)
+    }),
+      //bedroom2
+    loadObject("pink-bed", 15, function(bed3){
+      bed3.position.set(60, -35, -260);
+      bed3.scale.set(1, 1, 1)
+      bed3.rotation.set(0, Math.PI+Math.PI/2, 0)
+    })])
+     .then(stuff =>  {
+      console.log("done")
+      emitter.emit("sceneLoaded")
+    })
+     .catch(err => console.log(err));
+
     //shelves
     var shelf = new shelfFactory();
     shelf.container.position.set(294, -30, -275);
@@ -338,43 +379,17 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
     palaceObjects.push(shelf.container);
     constantsFactory.setObjects([shelf.container]);
 
-    //bedroom1
-    loadObject ("bed", 2, function(bed){
-      bed.position.set(65, -30, -100);
-      bed.rotation.set(0, Math.PI, 0)
-      bed.scale.set(7, 7, 7)})
-
-    loadObject ("desk", 2, function(desk) {
-      desk.position.set(25, -30, -50);
-      desk.rotation.set(0, Math.PI/2, 0)
-      desk.scale.set(9, 9, 9)
-    });
-
-    loadObject("computer", 2,function(computer) {
-      computer.position.set(28, -16, -48);
-      computer.scale.set(2, 2, 2)
-    });
-    loadObject("bean-bag", 2, function(beanbag){
-      beanbag.position.set(135, -37, -140);
-      beanbag.rotation.set(0, Math.PI, 0)
-      beanbag.scale.set(7, 7, 7)
-    });
-      //bedroom2
-    loadObject("pink-bed", 15, function(bed3){
-      bed3.position.set(60, -35, -260);
-      bed3.scale.set(1, 1, 1)
-      bed3.rotation.set(0, Math.PI+Math.PI/2, 0)
-    });
-  
   }
+
   // console.log("herewalls", this.walls)
   Palace.prototype.addToScene = function(mesh) {
     this.palace.add(mesh);
   };
 
-  return {
-    Palace: Palace,
-    palaceObjects: palaceObjects
-  };
 
+  emitter.Palace = Palace;
+  emitter.palaceObjects = palaceObjects;
+
+
+  return emitter
 };
