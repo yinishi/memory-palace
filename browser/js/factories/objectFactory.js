@@ -53,7 +53,7 @@ function load (link, scale, name, message) {
         {name: 'tree', image: "./browser/images/tree.png", scale: .1},
         {name: 'snowman', image: "./browser/images/snowman.png", scale: 8},
         {name: 'bull', image: "./browser/images/bull.png", scale: 2},
-        {name: 'lion-cub', image: "./browser/images/lion-cub.png", scale: 1, yPosition: 2},
+        //{name: 'lion-cub', image: "./browser/images/lion-cub.png", scale: 1, yPosition: 2},
         {name: 'mug', image: "./browser/images/mug.png", scale: .2, yPosition: 2},  
         {name: 'cat-mug', image: "./browser/images/cat-mug.png", scale: 3, yPosition: 2},    
         {name: 'pink-bed', image: "./browser/images/pink-bed.png", scale: 15},
