@@ -1,22 +1,30 @@
-<div class="roomIcons carousel carousel-container">
- <div class="ctrlsIcon roomIcon">
- 	<!-- there are three options -->
-    <img ng-click="toggleControls()" width="100%" src="/browser/icons/controlls01-01.png"/>
+<div class="roomIcons carousel">
+
+  <div class="roomIcon">
+    <!-- there are three options -->
+    <img width="100%" src="/browser/icons/esc.png" />
+    <div class="icon-text">
+      <span>toggle pointer lock mode</span>
+    </div>
+  </div>
+
+  <div class="roomIcon">
+    <!-- there are three options -->
+    <img ng-click="toggleControls()" width="100%" src="/browser/icons/controlls01-01.png" />
     <div class="icon-text">
       <span>controls</span>
       <!-- <span ng-show="showControls">open controls</span>
       <span ng-hide="showControls">close controls</span> -->
     </div>
- </div>
+  </div>
 
-
- <div class="objectsIcon roomIcon">
-    <img ng-click="toggleCarousel()" width="100%" src="/browser/icons/teapot-icon-01.png"/>
+  <div class="roomIcon">
+    <img ng-click="toggleCarousel()" width="100%" src="/browser/icons/teapot-icon-01.png" />
     <div id="carouselIconText" class="icon-text">
       <span>carousel</span>
       <!-- <span ng-show="showCarousel">open carousel</span>
       <span ng-hide="showCarousel">close carousel</span> -->
     </div>
- </div>
+  </div>
 
 </div>
