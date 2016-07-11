@@ -241,27 +241,21 @@ td {
 
 .about-modal {
   margin: 10px auto;
-  padding: 20px;
+  padding: 20px 25px;
   word-wrap: break-word;
   color: #777;
   border: 1px solid #777;
   font-size: 20px;
-  height: 60vh;
-  width: 70vw;
+  height: 400px;
+  width: 800px;
   overflow: scroll;
   overflow-wrap: break-word;
   position: absolute;
-  top: 50px;
+  top: 40px;
   left: 3vw;
   right: 3vw;
   background-color: rgba(238, 238, 238, .7);
   border-radius: 5px;
-}
-
-@media screen and (max-width: 1000px) {
-  .about-modal {
-    font-size: 16px;
-  }
 }
 
 .login-modal {
