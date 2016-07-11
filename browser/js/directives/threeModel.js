@@ -50,6 +50,7 @@ module.exports = function(palacesFactory, $window, objectFactory, storingFactory
         var yawObject = new THREE.Object3D();
         yawObject.add(pitchObject);
         pitchObject.position.y = 10;
+        pitchObject.rotation.y += 30 * Math.PI/180;
 
         this.dispose = function() {
           document.removeEventListener('keydown', onKeyDown, false);
