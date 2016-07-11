@@ -16,18 +16,18 @@ function load (link, scale, name, message) {
         }
         else object.scale.set(scale,scale,scale);
         object.name = name;
-        var boundingBox = new THREE.BoundingBoxHelper(object);
-        boundingBox.add(object);
-        boundingBox.update();
-        var center = boundingBox.box.center()
-        var size = boundingBox.box.size(new THREE.Vector3(1, 1, 1));
-        var cubeGeometry = new THREE.BoxGeometry(size.x - center.x, size.y + center.y, size.z - center.z)
-        var cube = new THREE.Mesh(cubeGeometry, 
-        new THREE.MeshBasicMaterial({visible:false}));
-        cube.name = "cube";
-        cube.childName = object.name;
-        cube.add(object); 
-        res(cube);
+        // var boundingBox = new THREE.BoundingBoxHelper(object);
+        // boundingBox.add(object);
+        // boundingBox.update();
+        // var center = boundingBox.box.center()
+        // var size = boundingBox.box.size(new THREE.Vector3(1, 1, 1));
+        // var cubeGeometry = new THREE.BoxGeometry(size.x - center.x, size.y + center.y, size.z - center.z)
+        // var cube = new THREE.Mesh(cubeGeometry, 
+        // new THREE.MeshBasicMaterial({visible:false}));
+        // cube.name = "cube";
+        // cube.childName = object.name;
+        // cube.add(object); 
+        res(object);
       });
     });
   }
