@@ -28,7 +28,7 @@ module.exports = function(palacesFactory, $window, objectFactory, storingFactory
       // CONTROLS
       var controls = new PointerLockControls(camera);
       scene.add(controls.getYawObject());
-      var pointerLockEnabled = true;
+      var pointerLockEnabled = false;
 
       var moveForward = false;
       var moveBackward = false;
