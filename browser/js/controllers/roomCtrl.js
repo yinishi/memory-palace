@@ -1,12 +1,12 @@
 module.exports = function ($scope, modalFactory, objectFactory, messageFactory, storingFactory, palacesFactory, constantsFactory) {
 
     $scope.welcomeModal = modalFactory.getWelcomeControls();
-    $scope.numLoaded = percent(constantsFactory.getPalaceObjs().length, 17);
+    $scope.numLoaded = percent(constantsFactory.getPalaceObjs().length, 19);
     function percent(a, total) {
       return Math.floor(a/total*100)
     }
     palacesFactory.on("load", (obj) => {
-      $scope.numLoaded = percent(palacesFactory.palaceObjects.length, 17);
+      $scope.numLoaded = percent(palacesFactory.palaceObjects.length, 19);
       $scope.$digest();
     });
 

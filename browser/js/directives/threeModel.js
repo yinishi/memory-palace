@@ -136,7 +136,8 @@ module.exports = function(palacesFactory, $window, objectFactory, storingFactory
       // CREATE A ROOM
       var palaceInstance = new palacesFactory.Palace();
       var palace = palaceInstance.palace;
-      palace.position.set(-300, 75 / 2 + 1, 100);
+      palace.position.set(-300, 75 / 2 + 1, -70);
+      palace.rotation.y += -30 * Math.PI/180;
       scene.add(palace);
 
       //store scene in constantsFactory
