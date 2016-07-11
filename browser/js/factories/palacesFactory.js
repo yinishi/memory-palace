@@ -366,6 +366,15 @@ module.exports = function(objectFactory, tableFactory, wallFactory, messageFacto
       bed3.position.set(60, -35, -260);
       bed3.scale.set(1, 1, 1)
       bed3.rotation.set(0, Math.PI+Math.PI/2, 0)
+    }),
+      //playground
+    loadObject("playground", 30, function(playground){
+      playground.position.set(150, -35, 120);
+      playground.rotation.set(0, Math.PI+Math.PI/2, 0)
+    }),
+      //tree
+    loadObject("tree", .1, function(tree){
+      tree.position.set(210, -36, -390);
     })])
      .then(stuff =>  {
       emitter.emit("sceneLoaded")
