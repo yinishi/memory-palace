@@ -28,8 +28,7 @@ module.exports = function(palacesFactory, $window, objectFactory, storingFactory
       // CONTROLS
       var controls = new PointerLockControls(camera);
       scene.add(controls.getYawObject());
-      var controlsEnabled = true;
-      controls.enabled = true;
+      var pointerLockEnabled = false;
 
       var moveForward = false;
       var moveBackward = false;
@@ -158,7 +157,7 @@ module.exports = function(palacesFactory, $window, objectFactory, storingFactory
         });
 
       /////////////////////
-      // EVENT LIS
+      // EVENT LISTENERS //
       /////////////////////
 
       e.on('mousemove', onDocumentMouseMove);
@@ -175,7 +174,9 @@ module.exports = function(palacesFactory, $window, objectFactory, storingFactory
       e[0].appendChild(msg)
 
       function onDocumentMouseMove(event) {
+
         event.preventDefault();
+
         mouse.set((event.clientX / WIDTH) * 2 - 1, -(event.clientY / HEIGHT) * 2 + 1);
         raycaster.setFromCamera(mouse, camera);
         let intersects = raycaster.intersectObjects(constantsFactory.getObjects());
@@ -206,6 +207,19 @@ module.exports = function(palacesFactory, $window, objectFactory, storingFactory
           if (objectFactory.previousObject) scene.remove(objectFactory.previousObject);
           scene.add(objectFactory.currentObject);
         }
+
+        ///// if pointer lock controls are ENABLED, mouse moves camera
+        if (pointerLockEnabled) {
+
+          var movementX = event.originalEvent.movementX || event.mozMovementX || event.webkitMovementX || 0;
+          var movementY = event.originalEvent.movementY || event.mozMovementY || event.webkitMovementY || 0;
+
+          controls.getYawObject().rotation.y -= movementX * 0.002;
+          controls.getPitchObject().rotation.x -= movementY * 0.002;
+
+          controls.getPitchObject().rotation.x = Math.max(-PI_2, Math.min(PI_2, controls.getPitchObject().rotation.x));
+        }
+
       }
 
       function onDocumentMouseDown(event) {
@@ -267,31 +281,32 @@ module.exports = function(palacesFactory, $window, objectFactory, storingFactory
         msg.style.opacity = 0;
         if (modalFactory.enableKeyEvents) {
           switch (event.keyCode) {
-            // exit welcome
-            // case 27: // esc
-            //   // exit welcome modal
-            //   welcome.style.display = 'none';
 
-              // // escape modals
-              // if (!modalFactory.getAbout().data) {
-              //   modalFactory.toggleAbout();
-              //   s.$apply();
-              // }
-              // if (!modalFactory.getLogin().data) {
-              //   modalFactory.toggleLogin();
-              //   s.$apply();
-              // }
-              // if (!modalFactory.getSignup().data) {
-              //   modalFactory.toggleSignup();
-              //   s.$apply();
-              // }
-              // break;
+            // toggle pointer lock
+            case 27: // esc
+              pointerLockEnabled = !pointerLockEnabled;
+              break;
+
+            // // escape modals
+            // if (!modalFactory.getAbout().data) {
+            //   modalFactory.toggleAbout();
+            //   s.$apply();
+            // }
+            // if (!modalFactory.getLogin().data) {
+            //   modalFactory.toggleLogin();
+            //   s.$apply();
+            // }
+            // if (!modalFactory.getSignup().data) {
+            //   modalFactory.toggleSignup();
+            //   s.$apply();
+            // }
+            // break;
 
             // case 13: // enter
             //   welcome.style.display = 'none';
             //   break;
 
-              // toggle carousel modal
+            // toggle carousel modal
             case 49: // 1
               modalFactory.toggleCarousel();
               s.$apply(); // necessary for modal to appear
@@ -336,27 +351,38 @@ module.exports = function(palacesFactory, $window, objectFactory, storingFactory
               canJump = false;
               break;
 
-              // looking up and down
-            case 81: // q, look up
-              controls.getPitchObject().rotation.x += 3 * Math.PI / 180;
-              break;
-            case 69: // e, look down
-              controls.getPitchObject().rotation.x -= 3 * Math.PI / 180;
-              break;
+                // looking up and down
+              case 81: // q, look up
+                if (!pointerLockEnabled) {
+                  controls.getPitchObject().rotation.x += 3 * Math.PI / 180;
+                }
+                break;
+              case 69: // e, look down
+                if (!pointerLockEnabled) {
+                  controls.getPitchObject().rotation.x -= 3 * Math.PI / 180;
+                }
+                break;
 
-              // rotate left
-            case 37: // left arrow
-            	event.preventDefault();
-              controls.getYawObject().rotation.y += 3 * Math.PI / 180;
-              break;
+              // left and right arrows
+              case 37: // left arrow - rotates if PL disabled; strafes otherwise
+                event.preventDefault();
+                if (!pointerLockEnabled) {
+                  controls.getYawObject().rotation.y += 3 * Math.PI / 180;
+                } else {
+                  moveLeft = true;
+                }
+                break;
 
-              // rotate right
-            case 39: // right arrow
-           	  event.preventDefault();
-              controls.getYawObject().rotation.y -= 3 * Math.PI / 180;
-              break;
+              case 39: // right arrow - rotates if PL disabled; strafes otherwise
+                event.preventDefault();
+                if (!pointerLockEnabled) {
+                  controls.getYawObject().rotation.y -= 3 * Math.PI / 180;
+                } else {
+                  moveRight = true;
+                }
+                break;
 
-              //check	180 deg for looking up and down, doesn't allow user to flip over
+              //check 180 deg for looking up and down, doesn't allow user to flip over
               controls.getPitchObject().rotation.x = Math.max(-PI_2, Math.min(PI_2, controls.getPitchObject().rotation.x));
           }
         }
@@ -388,6 +414,16 @@ module.exports = function(palacesFactory, $window, objectFactory, storingFactory
               break;
             case 68: // d - move right
               moveRight = false;
+              break;
+            case 37: // a - move left
+              if (pointerLockEnabled) {
+                moveLeft = false;
+              }
+              break;
+            case 39: // d - move right
+              if (pointerLockEnabled) {
+                moveRight = false;
+              }
               break;
           }
         }
@@ -427,112 +463,110 @@ module.exports = function(palacesFactory, $window, objectFactory, storingFactory
 
         requestAnimationFrame(render);
 
-        if (controlsEnabled) {
+        // COLLISION DETECTION - FORWARD
+        raycasterCamera = new THREE.Raycaster()
+        raycasterCamera.ray.origin.copy(controls.getYawObject().position);
+        raycasterCamera.setFromCamera(forward_vec, camera)
+        raycasterCamera.ray.origin.z -= 1;
+        var collisions = raycasterCamera.intersectObjects(scene.children, true);
 
-          // COLLISION DETECTION - FORWARD
-          raycasterCamera = new THREE.Raycaster()
-          raycasterCamera.ray.origin.copy(controls.getYawObject().position);
-          raycasterCamera.setFromCamera(forward_vec, camera)
-          raycasterCamera.ray.origin.z -= 1;
-          var collisions = raycasterCamera.intersectObjects(scene.children, true);
+        var collidingForward = collisions.length > 1;
 
-          var collidingForward = collisions.length > 1;
+        if (collidingForward && moveForward && collisions[0].distance < 20) {
+          moveForward = false;
+          velocity.x = 0;
+          velocity.y = 0;
+          velocity.z = 0;
+        }
 
-          if (collidingForward && moveForward && collisions[0].distance < 20) {
-            moveForward = false;
-            velocity.x = 0;
-            velocity.y = 0;
-            velocity.z = 0;
-          }
+        // COLLISION DETECTION - BACKWARD
+        raycasterCamera = new THREE.Raycaster()
+        raycasterCamera.ray.origin.copy(controls.getYawObject().position);
+        raycasterCamera.setFromCamera(backward_vec, camera)
+        raycasterCamera.ray.origin.z += 5;
+        var collisions = raycasterCamera.intersectObjects(scene.children, true);
 
-          // COLLISION DETECTION - BACKWARD
-          raycasterCamera = new THREE.Raycaster()
-          raycasterCamera.ray.origin.copy(controls.getYawObject().position);
-          raycasterCamera.setFromCamera(backward_vec, camera)
-          raycasterCamera.ray.origin.z += 5;
-          var collisions = raycasterCamera.intersectObjects(scene.children, true);
+        var collidingBackward = collisions.length > 1;
 
-          var collidingBackward = collisions.length > 1;
+        if (collidingBackward && moveBackward && collisions[0].distance < 40) {
+          moveBackward = false;
+          velocity.x = 0;
+          velocity.y = 0;
+          velocity.z = 0;
+        }
 
-          if (collidingBackward && moveBackward && collisions[0].distance < 40) {
-            moveBackward = false;
-            velocity.x = 0;
-            velocity.y = 0;
-            velocity.z = 0;
-          }
+        // COLLISION DETECTION - left
+        raycasterCamera = new THREE.Raycaster()
+        raycasterCamera.ray.origin.copy(controls.getYawObject().position);
+        raycasterCamera.setFromCamera(left_vec, camera)
+        raycasterCamera.ray.origin.x += 1;
+        var collisions = raycasterCamera.intersectObjects(scene.children, true);
 
-          // COLLISION DETECTION - left
-          raycasterCamera = new THREE.Raycaster()
-          raycasterCamera.ray.origin.copy(controls.getYawObject().position);
-          raycasterCamera.setFromCamera(left_vec, camera)
-          raycasterCamera.ray.origin.x += 1;
-          var collisions = raycasterCamera.intersectObjects(scene.children, true);
+        var collidingLeft = collisions.length > 1;
 
-          var collidingLeft = collisions.length > 1;
+        if (collidingLeft && moveLeft && collisions[0].distance < 40) {
+          moveLeft = false;
+          velocity.x = 0;
+          velocity.y = 0;
+          velocity.z = 0;
+        }
 
-          if (collidingLeft && moveLeft && collisions[0].distance < 40) {
-            moveLeft = false;
-            velocity.x = 0;
-            velocity.y = 0;
-            velocity.z = 0;
-          }
+        // COLLISION DETECTION - right
+        raycasterCamera = new THREE.Raycaster()
+        raycasterCamera.ray.origin.copy(controls.getYawObject().position);
+        raycasterCamera.setFromCamera(right_vec, camera)
+        raycasterCamera.ray.origin.x -= 1;
+        var collisions = raycasterCamera.intersectObjects(scene.children, true);
 
-          // COLLISION DETECTION - right
-          raycasterCamera = new THREE.Raycaster()
-          raycasterCamera.ray.origin.copy(controls.getYawObject().position);
-          raycasterCamera.setFromCamera(right_vec, camera)
-          raycasterCamera.ray.origin.x -= 1;
-          var collisions = raycasterCamera.intersectObjects(scene.children, true);
+        var collidingRight = collisions.length > 1;
 
-          var collidingRight = collisions.length > 1;
-
-          if (collidingRight && moveRight && collisions[0].distance < 40) {
-            moveRight = false;
-            velocity.x = 0;
-            velocity.y = 0;
-            velocity.z = 0;
-          }
+        if (collidingRight && moveRight && collisions[0].distance < 40) {
+          moveRight = false;
+          velocity.x = 0;
+          velocity.y = 0;
+          velocity.z = 0;
+        }
 
 
-          /////////////////////////
+        /////////////////////////
 
-          // REGULAR MOVEMENT
+        // REGULAR MOVEMENT
 
-          var time = performance.now();
-          var delta = (time - prevTime) / 1000;
+        var time = performance.now();
+        var delta = (time - prevTime) / 1000;
 
-          velocity.x -= velocity.x * 10.0 * delta;
-          velocity.z -= velocity.z * 10.0 * delta;
+        velocity.x -= velocity.x * 10.0 * delta;
+        velocity.z -= velocity.z * 10.0 * delta;
 
-          velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
+        velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
 
-          if (moveForward) velocity.z -= 400.0 * delta;
-          if (moveBackward) velocity.z += 400.0 * delta;
+        if (moveForward) velocity.z -= 400.0 * delta;
+        if (moveBackward) velocity.z += 400.0 * delta;
 
-          if (moveLeft) velocity.x -= 400.0 * delta;
-          if (moveRight) velocity.x += 400.0 * delta;
+        if (moveLeft) velocity.x -= 400.0 * delta;
+        if (moveRight) velocity.x += 400.0 * delta;
 
-          // if ( isOnObject === true ) {
-          // 	velocity.y = Math.max( 0, velocity.y );
-          // 	canJump = true;
-          // }
+        // if ( isOnObject === true ) {
+        //  velocity.y = Math.max( 0, velocity.y );
+        //  canJump = true;
+        // }
 
-          controls.getYawObject().translateX(velocity.x * delta);
-          controls.getYawObject().translateY(velocity.y * delta);
-          controls.getYawObject().translateZ(velocity.z * delta);
+        controls.getYawObject().translateX(velocity.x * delta);
+        controls.getYawObject().translateY(velocity.y * delta);
+        controls.getYawObject().translateZ(velocity.z * delta);
 
-          if (controls.getYawObject().position.y < 10) {
+        if (controls.getYawObject().position.y < 10) {
 
-            velocity.y = 0;
-            controls.getYawObject().position.y = 10;
+          velocity.y = 0;
+          controls.getYawObject().position.y = 10;
 
-            canJump = true;
-
-          }
-
-          prevTime = time;
+          canJump = true;
 
         }
+
+        prevTime = time;
+
+
 
         renderer.render(scene, camera);
 
