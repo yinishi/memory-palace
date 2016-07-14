@@ -418,11 +418,18 @@ module.exports = function(palacesFactory, $window, objectFactory, storingFactory
       // RENDER FUNCTION 
       /////////////////////
 
-      var raycasterCamera;
+      var raycasterCamera = new THREE.Raycaster();
+      raycasterCamera.ray.origin.copy(controls.getYawObject().position);
       var forward_vec = new THREE.Vector3(0, 0, -1);
       var backward_vec = new THREE.Vector3(0, 0, -1);
       var left_vec = new THREE.Vector3(-1, 0, 0);
       var right_vec = new THREE.Vector3(1, 0, 0);
+
+      function stopCamera() {
+        velocity.x = 0;
+        velocity.y = 0;
+        velocity.z = 0;
+      }
 
       function render() {
 
@@ -431,70 +438,62 @@ module.exports = function(palacesFactory, $window, objectFactory, storingFactory
         if (controlsEnabled) {
 
           // COLLISION DETECTION - FORWARD
-          raycasterCamera = new THREE.Raycaster()
-          raycasterCamera.ray.origin.copy(controls.getYawObject().position);
-          raycasterCamera.setFromCamera(forward_vec, camera)
-          raycasterCamera.ray.origin.z -= 1;
-          var collisions = raycasterCamera.intersectObjects(scene.children, true);
+          
+          if (moveForward) {
+            raycasterCamera.setFromCamera(forward_vec, camera)
+            raycasterCamera.ray.origin.z -= 1;
 
-          var collidingForward = collisions.length > 1;
+            var collisions = raycasterCamera.intersectObjects(scene.children, true);
+            var collidingForward = collisions.length > 0;
 
-          if (collidingForward && moveForward && collisions[0].distance < 20) {
-            moveForward = false;
-            velocity.x = 0;
-            velocity.y = 0;
-            velocity.z = 0;
+            if (collidingForward && collisions[0].distance < 20) {
+              moveForward = false;
+              stopCamera();
+            }
           }
 
           // COLLISION DETECTION - BACKWARD
-          raycasterCamera = new THREE.Raycaster()
-          raycasterCamera.ray.origin.copy(controls.getYawObject().position);
-          raycasterCamera.setFromCamera(backward_vec, camera)
-          raycasterCamera.ray.origin.z += 5;
-          var collisions = raycasterCamera.intersectObjects(scene.children, true);
+          if (moveBackward) {
+            raycasterCamera.setFromCamera(backward_vec, camera)
+            raycasterCamera.ray.origin.z += 5;
 
-          var collidingBackward = collisions.length > 1;
+            var collisions = raycasterCamera.intersectObjects(scene.children, true);
+            var collidingBackward = collisions.length > 0;
 
-          if (collidingBackward && moveBackward && collisions[0].distance < 40) {
-            moveBackward = false;
-            velocity.x = 0;
-            velocity.y = 0;
-            velocity.z = 0;
+            if (collidingBackward && collisions[0].distance < 40) {
+              moveBackward = false;
+              stopCamera();
+            }
           }
 
           // COLLISION DETECTION - left
-          raycasterCamera = new THREE.Raycaster()
-          raycasterCamera.ray.origin.copy(controls.getYawObject().position);
-          raycasterCamera.setFromCamera(left_vec, camera)
-          raycasterCamera.ray.origin.x += 1;
-          var collisions = raycasterCamera.intersectObjects(scene.children, true);
+          if (moveLeft) {
+            raycasterCamera.setFromCamera(left_vec, camera)
+            raycasterCamera.ray.origin.x += 1;
 
-          var collidingLeft = collisions.length > 1;
+            var collisions = raycasterCamera.intersectObjects(scene.children, true);
+            var collidingLeft = collisions.length > 0;
 
-          if (collidingLeft && moveLeft && collisions[0].distance < 40) {
-            moveLeft = false;
-            velocity.x = 0;
-            velocity.y = 0;
-            velocity.z = 0;
+            if (collidingLeft && collisions[0].distance < 40) {
+              moveLeft = false;
+              stopCamera();
+            }
           }
 
           // COLLISION DETECTION - right
-          raycasterCamera = new THREE.Raycaster()
-          raycasterCamera.ray.origin.copy(controls.getYawObject().position);
-          raycasterCamera.setFromCamera(right_vec, camera)
-          raycasterCamera.ray.origin.x -= 1;
-          var collisions = raycasterCamera.intersectObjects(scene.children, true);
+          if (moveRight) {
+            raycasterCamera.setFromCamera(right_vec, camera)
+            raycasterCamera.ray.origin.x -= 1;
 
-          var collidingRight = collisions.length > 1;
+            var collisions = raycasterCamera.intersectObjects(scene.children, true);
+            var collidingRight = collisions.length > 0;
 
-          if (collidingRight && moveRight && collisions[0].distance < 40) {
-            moveRight = false;
-            velocity.x = 0;
-            velocity.y = 0;
-            velocity.z = 0;
+            if (collidingRight && collisions[0].distance < 40) {
+              moveRight = false;
+              stopCamera();
+            }
           }
-
-
+          
           /////////////////////////
 
           // REGULAR MOVEMENT
